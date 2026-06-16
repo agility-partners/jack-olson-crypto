@@ -56,14 +56,22 @@
   flex-shrink: 0;
 }
 
-.btc  { background: #f7931a22; color: #f7931a; border: 1px solid #f7931a33; }
-.eth  { background: #627eea22; color: #627eea; border: 1px solid #627eea33; }
-.sol  { background: #9945ff22; color: #9945ff; border: 1px solid #9945ff33; }
-.ada  { background: #0033ad22; color: #4d8aff; border: 1px solid #4d8aff33; }
-.dot  { background: #e6007a22; color: #e6007a; border: 1px solid #e6007a33; }
-.avax { background: #e8412122; color: #e84122; border: 1px solid #e8412233; }
-.bnb  { background: #f3ba2f22; color: #f3ba2f; border: 1px solid #f3ba2f33; }
-.xrp  { background: #00aae422; color: #00aae4; border: 1px solid #00aae433; }
+.btc   { background: #f7931a22; color: #f7931a; border: 1px solid #f7931a33; }
+.eth   { background: #627eea22; color: #627eea; border: 1px solid #627eea33; }
+.bnb   { background: #f3ba2f22; color: #f3ba2f; border: 1px solid #f3ba2f33; }
+.sol   { background: #9945ff22; color: #9945ff; border: 1px solid #9945ff33; }
+.xrp   { background: #00aae422; color: #00aae4; border: 1px solid #00aae433; }
+.ada   { background: #0033ad22; color: #4d8aff; border: 1px solid #4d8aff33; }
+.avax  { background: #e8412122; color: #e84122; border: 1px solid #e8412233; }
+.dot   { background: #e6007a22; color: #e6007a; border: 1px solid #e6007a33; }
+.doge  { background: #ba941f22; color: #ba941f; border: 1px solid #ba941f33; }
+.ltc   { background: #345d9d22; color: #345d9d; border: 1px solid #345d9d33; }
+.uni   { background: #ff007a22; color: #ff007a; border: 1px solid #ff007a33; }
+.link  { background: #375bd222; color: #375bd2; border: 1px solid #375bd233; }
+.matic { background: #8247e522; color: #8247e5; border: 1px solid #8247e533; }
+.xmr   { background: #ff6600cc22; color: #ff6600; border: 1px solid #ff660033; }
+.atom  { background: #16abb922; color: #16abb9; border: 1px solid #16abb933; }
+.vet   { background: #15aabf22; color: #15aabf; border: 1px solid #15aabf33; }
 
 .coinNameWrap { display: flex; flex-direction: column; gap: 1px; }
 
