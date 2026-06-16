@@ -1,30 +1,42 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Coin } from "@/app/lib/mockData";
-import CryptoCard from "./CryptoCard";
+import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
+import CryptoCard from "./CryptoCard";
 
 type Filter = "all" | "gainers" | "losers";
 
-type Props = { coins: Coin[] };
+type Props = { initialCoins: Coin[] };
 
-export default function WatchlistClient({ coins }: Props) {
-  const [search, setSearch]   = useState("");
-  const [filter, setFilter]   = useState<Filter>("all");
-  const [isGrid, setIsGrid]   = useState(true);
+export default function WatchlistClient({ initialCoins }: Props) {
+  const [coins, setCoins] = useState<Coin[]>(initialCoins);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
+  const [isGrid, setIsGrid] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
 
-  const filtered = useMemo(() => {
+  const handleAddCoin = (newCoin: Coin) => {
+    // Check if coin already exists
+    if (coins.some((c) => c.id === newCoin.id)) {
+      alert("This coin is already in your watchlist!");
+      return;
+    }
+    setCoins([...coins, newCoin]);
+    setShowAddModal(false);
+  };
+
+  const filtered = coins.filter((c) => {
     const q = search.toLowerCase().trim();
-    return coins.filter((c) => {
-      const matchesSearch = !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
-      const matchesFilter =
-        filter === "all" ||
-        (filter === "gainers" && c.change24h >= 0) ||
-        (filter === "losers"  && c.change24h < 0);
-      return matchesSearch && matchesFilter;
-    });
-  }, [coins, search, filter]);
+    const matchesSearch =
+      !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
+    const matchesFilter =
+      filter === "all" ||
+      (filter === "gainers" && c.change24h >= 0) ||
+      (filter === "losers" && c.change24h < 0);
+    return matchesSearch && matchesFilter;
+  });
 
   return (
     <>
@@ -56,6 +68,18 @@ export default function WatchlistClient({ coins }: Props) {
         ))}
 
         <div className={styles.toolbarRight}>
+          <button
+            className={styles.addCoinBtn}
+            onClick={() => setShowAddModal(true)}
+            title="Add a coin to your watchlist"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Add Coin
+          </button>
+
           <div className={styles.viewToggle} role="group" aria-label="View mode">
             <button
               className={`${styles.viewBtn} ${isGrid ? styles.active : ""}`}
@@ -99,6 +123,9 @@ export default function WatchlistClient({ coins }: Props) {
           )}
         </div>
       </main>
+
+      {/* ── Add Coin Modal ── */}
+      {showAddModal && <AddCoinModal onClose={() => setShowAddModal(false)} onAddCoin={handleAddCoin} currentCoins={coins} />}
     </>
   );
 }
