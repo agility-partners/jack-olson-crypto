@@ -1,1 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap");
 
+/* ─── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --bg-base:       #0a0f0a;
+  --bg-card:       #0d1f0f;
+  --bg-elevated:   #1a3d1e;
+  --bg-input:      #111a11;
+
+  --green-primary: #22c55e;
+  --green-muted:   #16a34a;
+  --green-bright:  #4ade80;
+  --green-dim:     #166534;
+
+  --red:           #ef4444;
+  --red-dim:       #7f1d1d;
+
+  --text-primary:  #f0fdf4;
+  --text-secondary:#86efac;
+  --text-muted:    #4b7a55;
+  --text-dim:      #2d4a33;
+
+  --border:        #1a3d1e;
+  --border-bright: #22c55e33;
+
+  --font-display:  'Space Grotesk', sans-serif;
+  --font-body:     'Inter', sans-serif;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ─── Shared utilities ───────────────────────────────────────────────────────── */
+.up { color: var(--green-bright); }
+.dn { color: var(--red); }
