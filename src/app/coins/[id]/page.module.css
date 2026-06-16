@@ -1,0 +1,370 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.backButton {
+  display: inline-block;
+  color: #60a5fa;
+  text-decoration: none;
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: rgba(96, 165, 250, 0.1);
+  color: #93c5fd;
+}
+
+.errorContainer {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.errorContainer h1 {
+  color: #f87171;
+  font-size: 1.875rem;
+  margin-bottom: 1rem;
+}
+
+.errorContainer p {
+  color: #9ca3af;
+  margin-bottom: 2rem;
+}
+
+.backLink {
+  color: #60a5fa;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #60a5fa;
+  border-radius: 6px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.backLink:hover {
+  background-color: #60a5fa;
+  color: white;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.coinIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.coinIcon.btc {
+  background: linear-gradient(135deg, #f7931a 0%, #f9a825 100%);
+}
+
+.coinIcon.eth {
+  background: linear-gradient(135deg, #627eea 0%, #6b8fe3 100%);
+}
+
+.coinIcon.sol {
+  background: linear-gradient(135deg, #14f195 0%, #00d4aa 100%);
+}
+
+.coinIcon.ada {
+  background: linear-gradient(135deg, #0033ad 0%, #0047ba 100%);
+}
+
+.coinIcon.dot {
+  background: linear-gradient(135deg, #e6007a 0%, #e31b7d 100%);
+}
+
+.coinIcon.avax {
+  background: linear-gradient(135deg, #e84142 0%, #ec3434 100%);
+}
+
+.coinIcon.bnb {
+  background: linear-gradient(135deg, #f3ba2f 0%, #f0b90b 100%);
+}
+
+.coinIcon.xrp {
+  background: linear-gradient(135deg, #23292f 0%, #1a1f27 100%);
+}
+
+.titleContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.titleContent h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #f0fdf4;
+  margin: 0;
+}
+
+.symbol {
+  font-size: 1.25rem;
+  color: #9ca3af;
+}
+
+.rank {
+  font-size: 0.875rem;
+  color: #6b7280;
+  background-color: rgba(107, 114, 128, 0.1);
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* Price Section */
+.priceSection {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.priceMain {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: right;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #34d399;
+}
+
+.currency {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.changes {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.changeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.changeItem.up {
+  background-color: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.changeItem.down {
+  background-color: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.changeLabel {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.changeValue {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.changeItem.up .changeValue {
+  color: #34d399;
+}
+
+.changeItem.down .changeValue {
+  color: #f87171;
+}
+
+/* Chart Section */
+.chartSection {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.chartSection h3 {
+  font-size: 1.125rem;
+  color: #f0fdf4;
+  margin: 0 0 1.5rem 0;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 200px;
+}
+
+/* Description */
+.description {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.description h3 {
+  font-size: 1.25rem;
+  color: #f0fdf4;
+  margin: 0 0 1rem 0;
+}
+
+.description p {
+  color: #d1d5db;
+  line-height: 1.6;
+  margin: 0 0 0.75rem 0;
+}
+
+.description p:last-child {
+  margin-bottom: 0;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(34, 197, 94, 0.05) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+  border-color: rgba(74, 222, 128, 0.4);
+  transform: translateY(-2px);
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #34d399;
+  word-break: break-word;
+}
+
+.websiteLink {
+  color: #60a5fa;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  overflow-wrap: break-word;
+}
+
+.websiteLink:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .priceSection {
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .priceMain {
+    text-align: left;
+  }
+
+  .titleContent h1 {
+    font-size: 1.875rem;
+  }
+
+  .changes {
+    width: 100%;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .chartContainer {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .changes {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .changeItem {
+    padding: 0.5rem;
+  }
+
+  .price {
+    font-size: 1.5rem;
+  }
+
+  .titleContent h1 {
+    font-size: 1.5rem;
+  }
+}
