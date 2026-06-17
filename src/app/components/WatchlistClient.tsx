@@ -6,7 +6,7 @@ import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
-type Filter = "all" | "gainers" | "losers" | "sorted";
+type Filter = "value" | "percentchange" | "marketcap" | "24hvolume" | "gainers" | "losers";
 
 type Props = {
   initialCoins: Coin[];
@@ -17,7 +17,7 @@ type Props = {
 export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
   const [coins, setCoins] = useState<Coin[]>(initialCoins);
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<Filter>("all");
+  const [filter, setFilter] = useState<Filter>("value");
   const [isGrid, setIsGrid] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
 
@@ -41,17 +41,37 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     const matchesSearch =
       !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
     const matchesFilter =
-      filter === "all" ||
+      filter === "value" ||
+      filter === "percentchange" ||
+      filter === "marketcap" ||
+      filter === "24hvolume" ||
       (filter === "gainers" && c.change24h >= 0) ||
-      (filter === "losers" && c.change24h < 0) ||
-      filter === "sorted";
+      (filter === "losers" && c.change24h < 0);
     return matchesSearch && matchesFilter;
   });
 
-  const visibleCoins =
-    filter === "sorted"
-      ? [...filtered].sort((a, b) => b.change24h - a.change24h) // Sort by percent change
-      : [...filtered].sort((a, b) => b.price - a.price); // Sort by price descending
+  const visibleCoins = (() => {
+    const sorted = [...filtered];
+    switch (filter) {
+      case "percentchange":
+        return sorted.sort((a, b) => b.change24h - a.change24h);
+      case "marketcap":
+        return sorted.sort((a, b) => {
+          const aMarket = parseFloat(a.marketCap.replace(/[^0-9.]/g, "")) || 0;
+          const bMarket = parseFloat(b.marketCap.replace(/[^0-9.]/g, "")) || 0;
+          return bMarket - aMarket;
+        });
+      case "24hvolume":
+        return sorted.sort((a, b) => {
+          const aVol = parseFloat(a.volume.replace(/[^0-9.]/g, "")) || 0;
+          const bVol = parseFloat(b.volume.replace(/[^0-9.]/g, "")) || 0;
+          return bVol - aVol;
+        });
+      case "value":
+      default:
+        return sorted.sort((a, b) => b.price - a.price);
+    }
+  })();
 
   const biggestGainer = filtered.reduce<Coin | null>(
     (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
@@ -61,6 +81,15 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
     null
   );
+
+  const filterLabels: Record<Filter, string> = {
+    value: "Value",
+    percentchange: "Percent Change",
+    marketcap: "Market Cap",
+    "24hvolume": "24h Volume",
+    gainers: "Gainers",
+    losers: "Losers",
+  };
 
   return (
     <>
@@ -81,13 +110,13 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
           />
         </div>
 
-        {(["all", "gainers", "losers", "sorted"] as Filter[]).map((f) => (
+        {(["value", "percentchange", "marketcap", "24hvolume", "gainers", "losers"] as Filter[]).map((f) => (
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}
             onClick={() => setFilter(f)}
           >
-            {f.charAt(0).toUpperCase() + f.slice(1)}
+            {filterLabels[f]}
           </button>
         ))}
 
