@@ -1,0 +1,159 @@
+.gameContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 400px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #0f3460;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.gameHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.scores {
+  display: flex;
+  gap: 20px;
+}
+
+.scoreItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.scoreLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #8892b0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scoreValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00d9ff;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.playBtn {
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #00d9ff 0%, #0099cc 100%);
+  color: #0f3460;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+}
+
+.playBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 217, 255, 0.5);
+}
+
+.playBtn:active {
+  transform: translateY(0);
+}
+
+.gameCanvas {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: linear-gradient(to bottom, #0f2438, #1a3a52);
+  border: 1px solid #0f3460;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.bitcoin {
+  position: absolute;
+  left: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+  transition: transform 0.1s ease-out;
+  z-index: 10;
+}
+
+.bitcoin:hover {
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+}
+
+.obstacleContainer {
+  position: absolute;
+  width: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.obstacle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.obstacle.red {
+  color: #ef4444;
+  filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.4));
+}
+
+.obstacle.green {
+  color: #22c55e;
+  filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.4));
+}
+
+.obstacle svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gameOverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 36, 56, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  backdrop-filter: blur(2px);
+}
+
+.gameOverText {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ef4444;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+  letter-spacing: 1px;
+}
+
+.instructions {
+  font-size: 12px;
+  color: #8892b0;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
