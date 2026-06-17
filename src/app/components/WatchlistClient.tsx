@@ -18,7 +18,7 @@ type Props = {
 export default function WatchlistClient({ initialCoins, onStatsChange }: Props) {
   const [coins, setCoins] = useState<Coin[]>([]);
   useEffect(() => {
-    setCoins(getRandomWatchList(8));
+    setCoins(getRandomWatchList());
   }, []);
 
   useEffect(() => {
