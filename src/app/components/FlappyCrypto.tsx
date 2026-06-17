@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./FlappyCrypto.module.css";
 import { useEffect, useRef, useState } from "react";
 
