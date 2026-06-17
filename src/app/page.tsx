@@ -8,6 +8,9 @@ import styles from "./page.module.css";
 export default function WatchlistPage() {
   // Pre-shuffle coins on server ONLY (no client-side execution)
   const initialWatchlist = getRandomWatchList(12);
+  
+  // Calculate gainer count from initial watchlist
+  const gainerCount = initialWatchlist.filter((c) => c.change24h >= 0).length;
 
   return (
     <>
@@ -19,7 +22,7 @@ export default function WatchlistPage() {
         <p>Tracking {initialWatchlist.length} assets · Last updated just now</p>
       </div>
 
-      <StatsBar />
+      <StatsBar coinCount={initialWatchlist.length} gainerCount={gainerCount} />
 
       <WatchlistClient initialCoins={initialWatchlist} />
     </>
