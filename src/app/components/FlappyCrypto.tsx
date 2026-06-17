@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./FlappyCrypto.module.css";
 import { useEffect, useRef, useState } from "react";
 
@@ -13,9 +15,10 @@ export default function FlappyCrypto() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [score, setScore] = useState(0);
   const [topScore, setTopScore] = useState(0);
+  const [frameCount, setFrameCount] = useState(0);
 
   const gameState = useRef({
-    bitcoinY: 150,
+    bitcoinY: 125,
     bitcoinVelocity: 0,
     obstacles: [] as Obstacle[],
     nextObstacleId: 0,
@@ -24,15 +27,15 @@ export default function FlappyCrypto() {
   });
 
   const gameConstants = {
-    gravity: 0.6,
-    flapPower: -12,
-    obstacleWidth: 60,
-    gapHeight: 120,
-    obstacleSpeed: 5,
-    spawnRate: 90,
-    bitcoinSize: 32,
-    containerHeight: 300,
-    containerWidth: 400,
+    gravity: 0.5,
+    flapPower: -10,
+    obstacleWidth: 50,
+    gapHeight: 90,
+    obstacleSpeed: 4,
+    spawnRate: 80,
+    bitcoinSize: 28,
+    containerHeight: 250,
+    containerWidth: 800,
   };
 
   // Load top score from localStorage
@@ -89,13 +92,13 @@ export default function FlappyCrypto() {
         obs.x -= gameConstants.obstacleSpeed;
 
         // Check if passed
-        if (!obs.passed && obs.x + gameConstants.obstacleWidth < gameConstants.bitcoinSize) {
+        if (!obs.passed && obs.x + gameConstants.obstacleWidth < 20) {
           obs.passed = true;
           setScore((s) => s + 1);
         }
 
         // Collision detection
-        if (obs.x < gameConstants.bitcoinSize + gameConstants.bitcoinSize) {
+        if (obs.x < 20 + gameConstants.bitcoinSize && obs.x + gameConstants.obstacleWidth > 20) {
           const bitcoinTop = state.bitcoinY;
           const bitcoinBottom = state.bitcoinY + gameConstants.bitcoinSize;
 
@@ -110,7 +113,7 @@ export default function FlappyCrypto() {
       });
 
       // Force re-render
-      canvasRef.current?.setAttribute("data-frame", String(Date.now()));
+      setFrameCount((f) => f + 1);
     }, 30);
 
     return () => clearInterval(interval);
@@ -128,7 +131,7 @@ export default function FlappyCrypto() {
 
   const startGame = () => {
     gameState.current = {
-      bitcoinY: 150,
+      bitcoinY: 125,
       bitcoinVelocity: 0,
       obstacles: [],
       nextObstacleId: 0,
@@ -174,37 +177,41 @@ export default function FlappyCrypto() {
         {gameState.current.obstacles.map((obs) => (
           <div key={obs.id} className={styles.obstacleContainer} style={{ left: `${obs.x}px` }}>
             {/* Top obstacle (Red - Loser) */}
-            <div
-              className={`${styles.obstacle} ${styles.red}`}
-              style={{
-                height: `${obs.gapY}px`,
-              }}
-            >
-              <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-                <path
-                  d="M0,20 Q5,10 10,20 T20,20 T30,20 T40,20 T50,20 T60,20 T70,20 T80,20 T90,20 T100,20 L100,40 L0,40 Z"
-                  fill="currentColor"
-                  opacity="0.8"
-                />
-              </svg>
-            </div>
+            {obs.gapY > 0 && (
+              <div
+                className={`${styles.obstacle} ${styles.red}`}
+                style={{
+                  height: `${obs.gapY}px`,
+                }}
+              >
+                <svg viewBox="0 0 50 40" preserveAspectRatio="none">
+                  <path
+                    d="M0,20 Q5,10 10,20 T20,20 T30,20 T40,20 T50,20 L50,40 L0,40 Z"
+                    fill="currentColor"
+                    opacity="0.9"
+                  />
+                </svg>
+              </div>
+            )}
 
             {/* Bottom obstacle (Green - Gainer) */}
-            <div
-              className={`${styles.obstacle} ${styles.green}`}
-              style={{
-                height: `${gameConstants.containerHeight - obs.gapY - gameConstants.gapHeight}px`,
-                marginTop: `${gameConstants.gapHeight}px`,
-              }}
-            >
-              <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-                <path
-                  d="M0,20 Q5,30 10,20 T20,20 T30,20 T40,20 T50,20 T60,20 T70,20 T80,20 T90,20 T100,20 L100,0 L0,0 Z"
-                  fill="currentColor"
-                  opacity="0.8"
-                />
-              </svg>
-            </div>
+            {obs.gapY + gameConstants.gapHeight < gameConstants.containerHeight && (
+              <div
+                className={`${styles.obstacle} ${styles.green}`}
+                style={{
+                  height: `${gameConstants.containerHeight - obs.gapY - gameConstants.gapHeight}px`,
+                  marginTop: `${gameConstants.gapHeight}px`,
+                }}
+              >
+                <svg viewBox="0 0 50 40" preserveAspectRatio="none">
+                  <path
+                    d="M0,20 Q5,30 10,20 T20,20 T30,20 T40,20 T50,20 L50,0 L0,0 Z"
+                    fill="currentColor"
+                    opacity="0.9"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         ))}
 
