@@ -10,13 +10,21 @@ import { useEffect } from "react";
 
 type Filter = "all" | "gainers" | "losers";
 
-type Props = { initialCoins: Coin[] };
+type Props = {
+  initialCoins: Coin[];
+  onStatsChange?: (coinCount: number, gainerCount: number) => void;
+};
 
-export default function WatchlistClient({ initialCoins }: Props) {
+export default function WatchlistClient({ initialCoins, onStatsChange }: Props) {
   const [coins, setCoins] = useState<Coin[]>([]);
   useEffect(() => {
     setCoins(getRandomWatchList(8));
   }, []);
+
+  useEffect(() => {
+    const gainerCount = coins.filter((c) => c.change24h >= 0).length;
+    onStatsChange?.(coins.length, gainerCount);
+  }, [coins]); // eslint-disable-line react-hooks/exhaustive-deps
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [isGrid, setIsGrid] = useState(true);

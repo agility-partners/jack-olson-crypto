@@ -7,14 +7,24 @@ type Stat = {
   changeDir?: "up" | "dn";
 };
 
-const stats: Stat[] = [
-  { label: "Total market cap", value: "$2.41T", change: "↑ 1.4%", changeDir: "up" },
-  { label: "24h volume",       value: "$94.2B" },
-  { label: "BTC dominance",    value: "52.3%" },
-  { label: "Gainers",    value: "10 / 16", changeDir: "up" },
-];
+type Props = {
+  coinCount?: number;
+  gainerCount?: number;
+};
 
-export default function StatsBar() {
+export default function StatsBar({ coinCount, gainerCount }: Props) {
+  const gainersValue =
+    coinCount !== undefined && gainerCount !== undefined
+      ? `${gainerCount} / ${coinCount}`
+      : "— / —";
+
+  const stats: Stat[] = [
+    { label: "Total market cap", value: "$2.41T", change: "↑ 1.4%", changeDir: "up" },
+    { label: "24h volume",       value: "$94.2B" },
+    { label: "BTC dominance",    value: "52.3%" },
+    { label: "Gainers",          value: gainersValue, changeDir: "up" },
+  ];
+
   return (
     <div className={styles.statsBar}>
       {stats.map((stat) => (

@@ -34,9 +34,19 @@
   border-color: #d49e17f2;
 }
 
+.biggestGainer:hover {
+  background: #d4a01768;
+  border-color: #d4a017;
+}
+
 .biggestLoser {
   background: #7f1d1d40;
   border-color: #991b1b80;
+}
+
+.biggestLoser:hover {
+  background: #991b1b70;
+  border-color: #ef4444;
 }
 
 /* ── Card top ── */
