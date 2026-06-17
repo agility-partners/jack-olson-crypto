@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
+import { useEffect } from "react";
 
 type Filter = "all" | "gainers" | "losers" | "sorted";
 
@@ -16,15 +17,15 @@ type Props = {
 
 export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
   const [coins, setCoins] = useState<Coin[]>(initialCoins);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
+  const [isGrid, setIsGrid] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
     const gainerCount = coins.filter((c) => c.change24h >= 0).length;
     onStatsChange?.(coins.length, gainerCount);
   }, [coins, onStatsChange]);
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState<Filter>("all");
-  const [isGrid, setIsGrid] = useState(true);
-  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleAddCoin = (newCoin: Coin) => {
     // Check if coin already exists
@@ -42,9 +43,9 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
     const matchesFilter =
       filter === "all" ||
-      filter === "sorted" ||
       (filter === "gainers" && c.change24h >= 0) ||
-      (filter === "losers" && c.change24h < 0);
+      (filter === "losers" && c.change24h < 0) ||
+      filter === "sorted";
     return matchesSearch && matchesFilter;
   });
 
@@ -53,11 +54,11 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       ? [...filtered].sort((a, b) => b.change24h - a.change24h)
       : filtered;
 
-  const biggestGainer = visibleCoins.reduce<Coin | null>(
+  const biggestGainer = filtered.reduce<Coin | null>(
     (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
     null
   );
-  const biggestLoser = visibleCoins.reduce<Coin | null>(
+  const biggestLoser = filtered.reduce<Coin | null>(
     (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
     null
   );
