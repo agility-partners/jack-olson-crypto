@@ -5,7 +5,6 @@ import { Coin } from "@/app/lib/mockData";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
-import { getRandomWatchList } from "@/app/lib/mockData";
 
 type Filter = "all" | "gainers" | "losers";
 
@@ -16,9 +15,7 @@ type Props = {
 };
 
 export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
-  const [coins, setCoins] = useState<Coin[]>(() =>
-    useAllCoins ? initialCoins : getRandomWatchList()
-  );
+  const [coins, setCoins] = useState<Coin[]>(initialCoins);
 
   useEffect(() => {
     const gainerCount = coins.filter((c) => c.change24h >= 0).length;
