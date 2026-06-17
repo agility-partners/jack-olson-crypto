@@ -6,7 +6,7 @@ import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
-type Filter = "all" | "gainers" | "losers";
+type Filter = "all" | "gainers" | "losers" | "sorted";
 
 type Props = {
   initialCoins: Coin[];
@@ -42,16 +42,22 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
     const matchesFilter =
       filter === "all" ||
+      filter === "sorted" ||
       (filter === "gainers" && c.change24h >= 0) ||
       (filter === "losers" && c.change24h < 0);
     return matchesSearch && matchesFilter;
   });
 
-  const biggestGainer = filtered.reduce<Coin | null>(
+  const visibleCoins =
+    filter === "sorted"
+      ? [...filtered].sort((a, b) => b.change24h - a.change24h)
+      : filtered;
+
+  const biggestGainer = visibleCoins.reduce<Coin | null>(
     (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
     null
   );
-  const biggestLoser = filtered.reduce<Coin | null>(
+  const biggestLoser = visibleCoins.reduce<Coin | null>(
     (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
     null
   );
@@ -75,7 +81,7 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
           />
         </div>
 
-        {(["all", "gainers", "losers"] as Filter[]).map((f) => (
+        {(["all", "gainers", "losers", "sorted"] as Filter[]).map((f) => (
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}
@@ -133,13 +139,13 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       {/* ── Grid / List ── */}
       <main>
         <div className={`${styles.coinGrid} ${!isGrid ? styles.listView : ""}`}>
-          {filtered.length === 0 ? (
+          {visibleCoins.length === 0 ? (
             <div className={styles.emptyState}>
               <h2>No coins found</h2>
               <p>Try adjusting your search or filter.</p>
             </div>
           ) : (
-            filtered.map((coin) => (
+            visibleCoins.map((coin) => (
               <CryptoCard
                 key={coin.id}
                 coin={coin}

@@ -67,6 +67,12 @@
   border-color: #ef4444;
 }
 
+.biggestLoser .coinRank {
+  color: #ef4444;
+  background: #991b1b20;
+  border-color: #ef444455;
+}
+
 /* ── Card top ── */
 .cardTop {
   display: flex;
