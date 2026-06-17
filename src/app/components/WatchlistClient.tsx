@@ -14,6 +14,22 @@ type Props = {
   useAllCoins?: boolean;
 };
 
+const parseValue = (str: string): number => {
+  const match = str.match(/(\d+\.?\d*)\s*([MBT])/i);
+  if (!match) return 0;
+
+  const value = parseFloat(match[1]);
+  const suffix = match[2].toUpperCase();
+
+  const multipliers: Record<string, number> = {
+    M: 1_000_000,
+    B: 1_000_000_000,
+    T: 1_000_000_000_000,
+  };
+
+  return value * (multipliers[suffix] || 1);
+};
+
 export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
   const [coins, setCoins] = useState<Coin[]>(initialCoins);
   const [search, setSearch] = useState("");
@@ -56,17 +72,9 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       case "percentchange":
         return sorted.sort((a, b) => b.change24h - a.change24h);
       case "marketcap":
-        return sorted.sort((a, b) => {
-          const aMarket = parseFloat(a.marketCap.replace(/[^0-9.]/g, "")) || 0;
-          const bMarket = parseFloat(b.marketCap.replace(/[^0-9.]/g, "")) || 0;
-          return bMarket - aMarket;
-        });
+        return sorted.sort((a, b) => parseValue(b.marketCap) - parseValue(a.marketCap));
       case "24hvolume":
-        return sorted.sort((a, b) => {
-          const aVol = parseFloat(a.volume.replace(/[^0-9.]/g, "")) || 0;
-          const bVol = parseFloat(b.volume.replace(/[^0-9.]/g, "")) || 0;
-          return bVol - aVol;
-        });
+        return sorted.sort((a, b) => parseValue(b.volume) - parseValue(a.volume));
       case "value":
       default:
         return sorted.sort((a, b) => b.price - a.price);
