@@ -16,6 +16,7 @@ export default function FlappyCrypto() {
   const [score, setScore] = useState(0);
   const [topScore, setTopScore] = useState(0);
   const [frameCount, setFrameCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const gameState = useRef({
     bitcoinY: 125,
@@ -54,13 +55,15 @@ export default function FlappyCrypto() {
       }
     };
 
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [isPlaying]);
+    if (isModalOpen) {
+      window.addEventListener("keydown", handleKeyPress);
+      return () => window.removeEventListener("keydown", handleKeyPress);
+    }
+  }, [isPlaying, isModalOpen]);
 
   // Game loop
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !isModalOpen) return;
 
     const interval = setInterval(() => {
       const state = gameState.current;
@@ -117,7 +120,7 @@ export default function FlappyCrypto() {
     }, 30);
 
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, isModalOpen]);
 
   const endGame = () => {
     setIsPlaying(false);
@@ -142,88 +145,119 @@ export default function FlappyCrypto() {
     setIsPlaying(true);
   };
 
+  const closeGame = () => {
+    setIsModalOpen(false);
+    setIsPlaying(false);
+    setScore(0);
+    gameState.current.gameOver = false;
+  };
+
+  const openGame = () => {
+    setIsModalOpen(true);
+  };
+
+  if (!isModalOpen) {
+    return (
+      <button className={styles.miniGameBtn} onClick={openGame}>
+        ₿ Play Mini Game
+      </button>
+    );
+  }
+
   return (
-    <div className={styles.gameContainer}>
-      <div className={styles.gameHeader}>
-        <div className={styles.scores}>
-          <div className={styles.scoreItem}>
-            <span className={styles.scoreLabel}>Score</span>
-            <span className={styles.scoreValue}>{score}</span>
-          </div>
-          <div className={styles.scoreItem}>
-            <span className={styles.scoreLabel}>Top</span>
-            <span className={styles.scoreValue}>{topScore}</span>
-          </div>
-        </div>
-        {!isPlaying && (
-          <button className={styles.playBtn} onClick={startGame}>
-            {gameState.current.gameOver ? "Retry" : "Play"}
-          </button>
-        )}
-      </div>
+    <>
+      {/* Backdrop */}
+      <div className={styles.backdrop} onClick={closeGame} />
 
-      <div className={styles.gameCanvas} ref={canvasRef}>
-        {/* Bitcoin */}
-        <div
-          className={styles.bitcoin}
-          style={{
-            top: `${gameState.current.bitcoinY}px`,
-          }}
-        >
-          ₿
-        </div>
+      {/* Modal */}
+      <div className={styles.modal}>
+        <button className={styles.closeBtn} onClick={closeGame}>
+          ✕
+        </button>
 
-        {/* Obstacles */}
-        {gameState.current.obstacles.map((obs) => (
-          <div key={obs.id} className={styles.obstacleContainer} style={{ left: `${obs.x}px` }}>
-            {/* Top obstacle (Red - Loser) */}
-            {obs.gapY > 0 && (
-              <div
-                className={`${styles.obstacle} ${styles.red}`}
-                style={{
-                  height: `${obs.gapY}px`,
-                }}
-              >
-                <svg viewBox="0 0 50 40" preserveAspectRatio="none">
-                  <path
-                    d="M0,20 Q5,10 10,20 T20,20 T30,20 T40,20 T50,20 L50,40 L0,40 Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                </svg>
+        <div className={styles.gameContainer}>
+          <div className={styles.gameHeader}>
+            <div className={styles.scores}>
+              <div className={styles.scoreItem}>
+                <span className={styles.scoreLabel}>Score</span>
+                <span className={styles.scoreValue}>{score}</span>
               </div>
-            )}
-
-            {/* Bottom obstacle (Green - Gainer) */}
-            {obs.gapY + gameConstants.gapHeight < gameConstants.containerHeight && (
-              <div
-                className={`${styles.obstacle} ${styles.green}`}
-                style={{
-                  height: `${gameConstants.containerHeight - obs.gapY - gameConstants.gapHeight}px`,
-                  marginTop: `${gameConstants.gapHeight}px`,
-                }}
-              >
-                <svg viewBox="0 0 50 40" preserveAspectRatio="none">
-                  <path
-                    d="M0,20 Q5,30 10,20 T20,20 T30,20 T40,20 T50,20 L50,0 L0,0 Z"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                </svg>
+              <div className={styles.scoreItem}>
+                <span className={styles.scoreLabel}>Top</span>
+                <span className={styles.scoreValue}>{topScore}</span>
               </div>
+            </div>
+            {!isPlaying && (
+              <button className={styles.playBtn} onClick={startGame}>
+                {gameState.current.gameOver ? "Retry" : "Play"}
+              </button>
             )}
           </div>
-        ))}
 
-        {/* Game Over overlay */}
-        {gameState.current.gameOver && !isPlaying && (
-          <div className={styles.gameOverOverlay}>
-            <div className={styles.gameOverText}>Game Over</div>
+          <div className={styles.gameCanvas} ref={canvasRef}>
+            {/* Bitcoin */}
+            <div
+              className={styles.bitcoin}
+              style={{
+                top: `${gameState.current.bitcoinY}px`,
+              }}
+            >
+              ₿
+            </div>
+
+            {/* Obstacles */}
+            {gameState.current.obstacles.map((obs) => (
+              <div key={obs.id} className={styles.obstacleContainer} style={{ left: `${obs.x}px` }}>
+                {/* Top obstacle (Red - Loser) */}
+                {obs.gapY > 0 && (
+                  <div
+                    className={`${styles.obstacle} ${styles.red}`}
+                    style={{
+                      height: `${obs.gapY}px`,
+                    }}
+                  >
+                    <svg viewBox="0 0 50 40" preserveAspectRatio="none">
+                      <path
+                        d="M0,20 Q5,10 10,20 T20,20 T30,20 T40,20 T50,20 L50,40 L0,40 Z"
+                        fill="currentColor"
+                        opacity="0.9"
+                      />
+                    </svg>
+                  </div>
+                )}
+
+                {/* Bottom obstacle (Green - Gainer) */}
+                {obs.gapY + gameConstants.gapHeight < gameConstants.containerHeight && (
+                  <div
+                    className={`${styles.obstacle} ${styles.green}`}
+                    style={{
+                      height: `${gameConstants.containerHeight - obs.gapY - gameConstants.gapHeight}px`,
+                      marginTop: `${gameConstants.gapHeight}px`,
+                    }}
+                  >
+                    <svg viewBox="0 0 50 40" preserveAspectRatio="none">
+                      <path
+                        d="M0,20 Q5,30 10,20 T20,20 T30,20 T40,20 T50,20 L50,0 L0,0 Z"
+                        fill="currentColor"
+                        opacity="0.9"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Game Over overlay */}
+            {gameState.current.gameOver && !isPlaying && (
+              <div className={styles.gameOverOverlay}>
+                <div className={styles.gameOverText}>Game Over</div>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <div className={styles.instructions}>Press SPACE to flap</div>
-    </div>
+          <div className={styles.instructions}>Press SPACE to flap</div>
+        </div>
+      </div>
+    </>
   );
 }
