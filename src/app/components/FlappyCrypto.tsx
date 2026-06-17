@@ -29,13 +29,13 @@ export default function FlappyCrypto() {
   });
 
   const gameConstants = {
-    gravity: 0.5,
-    flapPower: -10,
+    gravity: 0.35,
+    flapPower: -6,
     obstacleWidth: 50,
     gapHeight: 90,
     obstacleSpeed: 4,
-    spawnRate: 80,
-    bitcoinSize: 28,
+    spawnRate: 60,
+    bitcoinSize: 22,
     containerHeight: 250,
     containerWidth: 800,
   };
