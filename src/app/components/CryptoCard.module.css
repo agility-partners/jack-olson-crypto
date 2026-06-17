@@ -77,6 +77,16 @@
   color: #c24949;
 }
 
+.loser {
+  background: #5c1a1a20;
+  border-color: #8b2e2e55;
+}
+
+.loser:hover {
+  background: #5c1a1a40;
+  border-color: #8b2e2e80;
+}
+
 /* ── Card top ── */
 .cardTop {
   display: flex;
