@@ -85,67 +85,99 @@
 }
 
 .coinIcon.btc {
-  background: linear-gradient(135deg, #f7931a 0%, #f9a825 100%);
+  background: linear-gradient(135deg, #f7931a 0%, #ffa500 100%);
 }
 
 .coinIcon.eth {
-  background: linear-gradient(135deg, #627eea 0%, #6b8fe3 100%);
+  background: linear-gradient(135deg, #627eea 0%, #7c8ff5 100%);
 }
 
 .coinIcon.bnb {
-  background: linear-gradient(135deg, #f3ba2f 0%, #f0b90b 100%);
+  background: linear-gradient(135deg, #f3ba2f 0%, #ffc857 100%);
 }
 
 .coinIcon.sol {
-  background: linear-gradient(135deg, #14f195 0%, #00d4aa 100%);
+  background: linear-gradient(135deg, #14f195 0%, #00e5a0 100%);
 }
 
 .coinIcon.xrp {
-  background: linear-gradient(135deg, #23292f 0%, #1a1f27 100%);
+  background: linear-gradient(135deg, #23292f 0%, #3a4556 100%);
 }
 
 .coinIcon.ada {
-  background: linear-gradient(135deg, #0033ad 0%, #0047ba 100%);
+  background: linear-gradient(135deg, #0033ad 0%, #1a5fb8 100%);
 }
 
 .coinIcon.avax {
-  background: linear-gradient(135deg, #e84142 0%, #ec3434 100%);
+  background: linear-gradient(135deg, #e84142 0%, #ff5252 100%);
 }
 
 .coinIcon.dot {
-  background: linear-gradient(135deg, #e6007a 0%, #e31b7d 100%);
+  background: linear-gradient(135deg, #e6007a 0%, #e91e87 100%);
 }
 
 .coinIcon.doge {
-  background: linear-gradient(135deg, #ba941f 0%, #d4a540 100%);
+  background: linear-gradient(135deg, #ba941f 0%, #e8b923 100%);
 }
 
 .coinIcon.ltc {
-  background: linear-gradient(135deg, #345d9d 0%, #4a7bb8 100%);
+  background: linear-gradient(135deg, #345d9d 0%, #5a8dd8 100%);
 }
 
 .coinIcon.uni {
-  background: linear-gradient(135deg, #ff007a 0%, #ff3699 100%);
+  background: linear-gradient(135deg, #ff007a 0%, #ff4081 100%);
 }
 
 .coinIcon.link {
-  background: linear-gradient(135deg, #375bd2 0%, #4c73e8 100%);
+  background: linear-gradient(135deg, #375bd2 0%, #5d7fff 100%);
 }
 
 .coinIcon.matic {
-  background: linear-gradient(135deg, #8247e5 0%, #9b68f0 100%);
+  background: linear-gradient(135deg, #8247e5 0%, #a78bfa 100%);
 }
 
 .coinIcon.xmr {
-  background: linear-gradient(135deg, #ff6600 0%, #ff8533 100%);
+  background: linear-gradient(135deg, #ff6600 0%, #ff8c42 100%);
 }
 
 .coinIcon.atom {
-  background: linear-gradient(135deg, #16abb9 0%, #2ebfd4 100%);
+  background: linear-gradient(135deg, #16abb9 0%, #2dd4d4 100%);
 }
 
 .coinIcon.vet {
-  background: linear-gradient(135deg, #15aabf 0%, #2ecfd4 100%);
+  background: linear-gradient(135deg, #15aabf 0%, #2dd5d5 100%);
+}
+
+.coinIcon.theta {
+  background: linear-gradient(135deg, #2e3338 0%, #3d4451 100%);
+}
+
+.coinIcon.grt {
+  background: linear-gradient(135deg, #6b5b95 0%, #8b7fad 100%);
+}
+
+.coinIcon.hbar {
+  background: linear-gradient(135deg, #1a1625 0%, #2d1f42 100%);
+}
+
+.coinIcon.algo {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+}
+
+.coinIcon.egld {
+  background: linear-gradient(135deg, #25d8de 0%, #2ee8e8 100%);
+}
+
+.coinIcon.fil {
+  background: linear-gradient(135deg, #0b9fe8 0%, #1db7ff 100%);
+}
+
+.coinIcon.icp {
+  background: linear-gradient(135deg, #29abe2 0%, #3bbfff 100%);
+}
+
+.coinIcon.xtz {
+  background: linear-gradient(135deg, #2c7df7 0%, #5b9dff 100%);
 }
 
 .titleContent {
