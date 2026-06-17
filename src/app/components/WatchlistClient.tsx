@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
-import { useEffect } from "react";
 
 type Filter = "all" | "gainers" | "losers" | "sorted";
 
@@ -51,8 +50,8 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
 
   const visibleCoins =
     filter === "sorted"
-      ? [...filtered].sort((a, b) => b.change24h - a.change24h)
-      : filtered;
+      ? [...filtered].sort((a, b) => b.change24h - a.change24h) // Sort by percent change
+      : [...filtered].sort((a, b) => b.price - a.price); // Sort by price descending
 
   const biggestGainer = filtered.reduce<Coin | null>(
     (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
