@@ -25,6 +25,7 @@ export default function FlappyCrypto() {
     nextObstacleId: 0,
     gameOver: false,
     frameCount: 0,
+    currentScore: 0,
   });
 
   const gameConstants = {
@@ -97,7 +98,8 @@ export default function FlappyCrypto() {
         // Check if passed
         if (!obs.passed && obs.x + gameConstants.obstacleWidth < 20) {
           obs.passed = true;
-          setScore((s) => s + 1);
+          state.currentScore++;
+          setScore(state.currentScore);
         }
 
         // Collision detection
@@ -126,9 +128,10 @@ export default function FlappyCrypto() {
     setIsPlaying(false);
     gameState.current.gameOver = true;
 
-    if (score > topScore) {
-      setTopScore(score);
-      localStorage.setItem("flappyCryptoTopScore", String(score));
+    const finalScore = gameState.current.currentScore;
+    if (finalScore > topScore) {
+      setTopScore(finalScore);
+      localStorage.setItem("flappyCryptoTopScore", String(finalScore));
     }
   };
 
@@ -140,6 +143,7 @@ export default function FlappyCrypto() {
       nextObstacleId: 0,
       gameOver: false,
       frameCount: 0,
+      currentScore: 0,
     };
     setScore(0);
     setIsPlaying(true);
