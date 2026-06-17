@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useCallback } from "react";
 import { watchlistCoins } from "@/app/lib/mockData";
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
@@ -6,6 +9,14 @@ import WatchlistClient from "@/app/components/WatchlistClient";
 import styles from "./page.module.css";
 
 export default function WatchlistPage() {
+  const [coinCount, setCoinCount] = useState(0);
+  const [gainerCount, setGainerCount] = useState(0);
+
+  const handleStatsChange = useCallback((count: number, gainers: number) => {
+    setCoinCount(count);
+    setGainerCount(gainers);
+  }, []);
+
   return (
     <>
       <TickerStrip coins={watchlistCoins} />
@@ -13,12 +24,12 @@ export default function WatchlistPage() {
 
       <div className={styles.pageHeader}>
         <h1>My Watchlist</h1>
-        <p>Tracking {watchlistCoins.length} assets · Last updated just now</p>
+        <p>Tracking {coinCount} assets · Last updated just now</p>
       </div>
 
-      <StatsBar />
+      <StatsBar coinCount={coinCount} gainerCount={gainerCount} />
 
-      <WatchlistClient coins={watchlistCoins} />
+      <WatchlistClient initialCoins={watchlistCoins} onStatsChange={handleStatsChange} />
     </>
   );
 }
