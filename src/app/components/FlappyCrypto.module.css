@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 400px;
+  width: 800px;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   border: 2px solid #0f3460;
   border-radius: 12px;
@@ -19,7 +19,7 @@
 
 .scores {
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
 .scoreItem {
@@ -57,6 +57,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+  white-space: nowrap;
 }
 
 .playBtn:hover {
@@ -71,7 +72,7 @@
 .gameCanvas {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 250px;
   background: linear-gradient(to bottom, #0f2438, #1a3a52);
   border: 1px solid #0f3460;
   border-radius: 8px;
@@ -82,12 +83,12 @@
 .bitcoin {
   position: absolute;
   left: 20px;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 24px;
   color: #ffd700;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
   transition: transform 0.1s ease-out;
@@ -100,10 +101,11 @@
 
 .obstacleContainer {
   position: absolute;
-  width: 60px;
+  width: 50px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  top: 0;
 }
 
 .obstacle {
