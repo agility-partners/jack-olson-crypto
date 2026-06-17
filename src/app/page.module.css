@@ -1,6 +1,14 @@
 .pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
   padding: 40px 32px 28px;
   border-bottom: 1px solid var(--border);
+}
+
+.pageHeaderContent {
+  flex: 1;
 }
 
 .pageHeader h1 {
@@ -17,6 +25,16 @@
   color: var(--text-muted);
 }
 
+@media (max-width: 1200px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 @media (max-width: 640px) {
-  .pageHeader { padding-left: 16px; padding-right: 16px; }
+  .pageHeader {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
