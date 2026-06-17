@@ -120,6 +120,41 @@
 
 .emptyState p { font-size: 14px; }
 
+.addCoinBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1rem;
+
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.2) 0%,
+    rgba(74, 222, 128, 0.2) 100%
+  );
+
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  border-radius: 12px;
+
+  color: #4ade80;
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addCoinBtn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.3) 0%,
+    rgba(74, 222, 128, 0.3) 100%
+  );
+
+  border-color: rgba(74, 222, 128, 0.6);
+  box-shadow: 0 0 16px rgba(74, 222, 128, 0.2);
+}
+
 @media (max-width: 640px) {
   .toolbar { padding-left: 16px; padding-right: 16px; }
   .coinGrid { padding: 16px; gap: 12px; }

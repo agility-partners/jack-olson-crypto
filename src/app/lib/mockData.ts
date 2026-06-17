@@ -24,6 +24,21 @@ export type CoinDetail = Coin & {
   founded: number;
 };
 
+export function getRandomWatchList(count = 8): Coin[] {
+  const shuffled = [...watchlistCoins];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+
+    [shuffled[i], shuffled[j]] = [
+      shuffled[j],
+      shuffled[i],
+    ];
+  }
+
+  return shuffled.slice(0, count);
+}
+
 export type SparkPath = {
   d: string;
   up: boolean;
@@ -416,7 +431,7 @@ export const sparkPaths: Record<string, SparkPath> = {
   ltc:  { d: "M0,18 C20,16 40,14 60,16 C80,18 100,16 120,18 C140,20 160,18 180,20 C200,22 220,20 240,22", up: false },
   uni:  { d: "M0,24 C20,20 40,16 60,12 C80,8  100,6  120,4  C140,2  160,2  180,0  C200,0  220,2  240,0",  up: true  },
   link: { d: "M0,28 C20,26 40,22 60,20 C80,16 100,12 120,10 C140,8  160,6  180,4  C200,4  220,6  240,4",  up: true  },
-  matic:{ d: "M0,12 C20,14 40,16 60,18 C80,20 100,22 120,24 C140,26 160,28 180,30 C200,32 220,34 240,36", up: true  },
+  matic:{ d: "M0,12 C20,14 40,16 60,18 C80,20 100,22 120,24 C140,26 160,28 180,30 C200,32 220,34 240,36", up: false  },
   xmr:  { d: "M0,16 C20,14 40,12 60,10 C80,8  100,6  120,4  C140,2  160,2  180,0  C200,0  220,2  240,2",  up: true  },
   atom: { d: "M0,20 C20,18 40,16 60,14 C80,10 100,8  120,6  C140,4  160,4  180,2  C200,2  220,4  240,2",  up: true  },
   vet:  { d: "M0,24 C20,22 40,20 60,18 C80,16 100,18 120,20 C140,22 160,20 180,22 C200,24 220,22 240,24", up: false },

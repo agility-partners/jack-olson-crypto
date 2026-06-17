@@ -14,8 +14,6 @@ export default function Navigation() {
         <li><Link href="/markets">Markets</Link></li>
         <li><Link href="/portfolio">Portfolio</Link></li>
       </ul>
-
-      <Link href="/add" className={styles.navAddBtn}>+ Add coin</Link>
     </nav>
   );
 }

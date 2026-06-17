@@ -5,13 +5,18 @@ import { Coin } from "@/app/lib/mockData";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
+import { getRandomWatchList } from "@/app/lib/mockData";
+import { useEffect } from "react";
 
 type Filter = "all" | "gainers" | "losers";
 
 type Props = { initialCoins: Coin[] };
 
 export default function WatchlistClient({ initialCoins }: Props) {
-  const [coins, setCoins] = useState<Coin[]>(initialCoins);
+  const [coins, setCoins] = useState<Coin[]>([]);
+  useEffect(() => {
+    setCoins(getRandomWatchList(8));
+  }, []);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [isGrid, setIsGrid] = useState(true);

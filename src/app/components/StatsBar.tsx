@@ -11,7 +11,7 @@ const stats: Stat[] = [
   { label: "Total market cap", value: "$2.41T", change: "↑ 1.4%", changeDir: "up" },
   { label: "24h volume",       value: "$94.2B" },
   { label: "BTC dominance",    value: "52.3%" },
-  { label: "Gainers today",    value: "5 / 8", changeDir: "up" },
+  { label: "Gainers today",    value: "10 / 16", changeDir: "up" },
 ];
 
 export default function StatsBar() {
