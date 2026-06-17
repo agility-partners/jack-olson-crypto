@@ -92,6 +92,14 @@
 .xmr   { background: #ff66cc22; color: #ff6600; border: 1px solid #ff660033; }
 .atom  { background: #16abb922; color: #16abb9; border: 1px solid #16abb933; }
 .vet   { background: #15aabf22; color: #15aabf; border: 1px solid #15aabf33; }
+.theta { background: #2ab8e622; color: #2ab8e6; border: 1px solid #2ab8e633; }
+.grt   { background: #6747ed22; color: #6747ed; border: 1px solid #6747ed33; }
+.hbar  { background: #11111122; color: #d1d5db; border: 1px solid #9ca3af33; }
+.algo  { background: #11182722; color: #e5e7eb; border: 1px solid #9ca3af33; }
+.egld  { background: #23f7dd22; color: #23f7dd; border: 1px solid #23f7dd33; }
+.fil   { background: #0090ff22; color: #0090ff; border: 1px solid #0090ff33; }
+.icp   { background: #7c3aed22; color: #ff6bcb; border: 1px solid #c084fc33; }
+.xtz   { background: #2c7df722; color: #2c7df7; border: 1px solid #2c7df733; }
 
 .coinNameWrap { display: flex; flex-direction: column; gap: 1px; }
 
