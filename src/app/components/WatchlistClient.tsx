@@ -13,13 +13,14 @@ type Filter = "all" | "gainers" | "losers";
 type Props = {
   initialCoins: Coin[];
   onStatsChange?: (coinCount: number, gainerCount: number) => void;
+  useAllCoins?: boolean;
 };
 
-export default function WatchlistClient({ initialCoins, onStatsChange }: Props) {
+export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
   const [coins, setCoins] = useState<Coin[]>([]);
   useEffect(() => {
-    setCoins(getRandomWatchList());
-  }, []);
+    setCoins(useAllCoins ? initialCoins : getRandomWatchList());
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const gainerCount = coins.filter((c) => c.change24h >= 0).length;
