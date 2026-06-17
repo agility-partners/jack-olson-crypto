@@ -43,6 +43,15 @@ export default function WatchlistClient({ initialCoins }: Props) {
     return matchesSearch && matchesFilter;
   });
 
+  const biggestGainer = filtered.reduce<Coin | null>(
+    (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
+    null
+  );
+  const biggestLoser = filtered.reduce<Coin | null>(
+    (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
+    null
+  );
+
   return (
     <>
       {/* ── Toolbar ── */}
@@ -124,7 +133,14 @@ export default function WatchlistClient({ initialCoins }: Props) {
               <p>Try adjusting your search or filter.</p>
             </div>
           ) : (
-            filtered.map((coin) => <CryptoCard key={coin.id} coin={coin} />)
+            filtered.map((coin) => (
+              <CryptoCard
+                key={coin.id}
+                coin={coin}
+                isBiggestGainer={biggestGainer?.id === coin.id}
+                isBiggestLoser={biggestLoser?.id === coin.id}
+              />
+            ))
           )}
         </div>
       </main>

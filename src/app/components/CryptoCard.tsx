@@ -4,14 +4,20 @@ import { formatPrice } from "@/app/lib/utils";
 import Sparkline from "./Sparkline";
 import styles from "./CryptoCard.module.css";
 
-type Props = { coin: Coin };
+type Props = { coin: Coin; isBiggestGainer?: boolean; isBiggestLoser?: boolean };
 
-export default function CryptoCard({ coin }: Props) {
+export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser }: Props) {
   const up = coin.change24h >= 0;
   const spark = sparkPaths[coin.iconClass];
 
+  const cardClass = [
+    styles.coinCard,
+    isBiggestGainer ? styles.biggestGainer : "",
+    isBiggestLoser ? styles.biggestLoser : "",
+  ].filter(Boolean).join(" ");
+
   return (
-    <Link href={`/coins/${coin.id}`} className={styles.coinCard}>
+    <Link href={`/coins/${coin.id}`} className={cardClass}>
       <div className={styles.cardTop}>
         <div className={styles.coinIdentity}>
           <div className={`${styles.coinIcon} ${styles[coin.iconClass]}`}>

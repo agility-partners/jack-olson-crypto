@@ -29,6 +29,16 @@
 
 .coinCard:hover::before { opacity: 0.04; }
 
+.biggestGainer {
+  background: #d4a01730;
+  border-color: #d4a01766;
+}
+
+.biggestLoser {
+  background: #7f1d1d40;
+  border-color: #991b1b80;
+}
+
 /* ── Card top ── */
 .cardTop {
   display: flex;
