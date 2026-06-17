@@ -1,13 +1,17 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
+
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: "http://localhost:3000",
+    channel: "chrome",
+    headless: false,
   },
+
   webServer: {
-    command: 'bun run dev',
-    url: 'http://localhost:3000',
+    command: "bun run dev",
+    url: "http://localhost:3000",
     reuseExistingServer: true,
   },
 });

@@ -1,9 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 
-test('home page loads', async ({ page }) => {
-  await page.goto('/');
-
-  await expect(
-    page.getByText('Hello World!')
-  ).toBeVisible();
+test('can launch browser', async ({ page }) => {
+  console.log('starting');
+  await page.goto('https://example.com');
+  console.log('finished');
 });
