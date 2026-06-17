@@ -6,7 +6,7 @@ import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
-type Filter = "all" | "gainers" | "losers" | "sorted";
+type Filter = "all" | "gainers" | "losers" | "percent-Change";
 
 type Props = {
   initialCoins: Coin[];
@@ -44,12 +44,12 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       filter === "all" ||
       (filter === "gainers" && c.change24h >= 0) ||
       (filter === "losers" && c.change24h < 0) ||
-      filter === "sorted";
+      filter === "percent-Change";
     return matchesSearch && matchesFilter;
   });
 
   const visibleCoins =
-    filter === "sorted"
+    filter === "percent-Change"
       ? [...filtered].sort((a, b) => b.change24h - a.change24h) // Sort by percent change
       : [...filtered].sort((a, b) => b.price - a.price); // Sort by price descending
 
@@ -81,7 +81,7 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
           />
         </div>
 
-        {(["all", "gainers", "losers", "sorted"] as Filter[]).map((f) => (
+        {(["all", "gainers", "losers", "percent-Change"] as Filter[]).map((f) => (
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}

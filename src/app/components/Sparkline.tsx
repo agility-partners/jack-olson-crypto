@@ -11,7 +11,7 @@ export default function Sparkline({ spark, id }: Props) {
 
   return (
     <div className={styles.sparkline}>
-      <svg viewBox="0 0 240 44" preserveAspectRatio="none">
+      <svg viewBox="0 0 220 40" preserveAspectRatio="none">
         <defs>
           <linearGradient id={`sg-${id}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%"   stopColor={strokeColor} stopOpacity={0.3} />
