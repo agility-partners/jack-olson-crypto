@@ -3,6 +3,7 @@ import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import StatsBar from "@/app/components/StatsBar";
 import WatchlistClient from "@/app/components/WatchlistClient";
+import FlappyCrypto from "@/app/components/FlappyCrypto";
 import styles from "./page.module.css";
 
 export default function WatchlistPage() {
@@ -18,8 +19,11 @@ export default function WatchlistPage() {
       <Navigation />
 
       <div className={styles.pageHeader}>
-        <h1>My Watchlist</h1>
-        <p>Tracking {initialWatchlist.length} assets · Last updated just now</p>
+        <div className={styles.pageHeaderContent}>
+          <h1>My Watchlist</h1>
+          <p>Tracking {initialWatchlist.length} assets · Last updated just now</p>
+        </div>
+        <FlappyCrypto />
       </div>
 
       <StatsBar coinCount={initialWatchlist.length} gainerCount={gainerCount} />
