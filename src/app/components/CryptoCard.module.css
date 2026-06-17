@@ -58,19 +58,23 @@
 }
 
 .biggestLoser {
-  background: #7f1d1d40;
-  border-color: #991b1b80;
+  background: #5c1a1a40;
+  border-color: #8b2e2e80;
 }
 
 .biggestLoser:hover {
-  background: #991b1b70;
-  border-color: #ef4444;
+  background: #6b242460;
+  border-color: #c24949;
 }
 
 .biggestLoser .coinRank {
-  color: #ef4444;
-  background: #991b1b20;
-  border-color: #ef444455;
+  color: #c24949;
+  background: #5c1a1a20;
+  border-color: #c2494955;
+}
+
+.biggestLoser .changeBadge {
+  color: #c24949;
 }
 
 /* ── Card top ── */
@@ -188,7 +192,7 @@
 }
 
 .up { background: #14532d40; color: var(--green-bright); }
-.dn { background: #7f1d1d40; color: #f87171; }
+.dn { background: #5c1a1a40; color: #ff7a7a; }
 
 /* ── Card meta ── */
 .cardMeta {
