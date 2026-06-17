@@ -14,6 +14,7 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser }: Pr
     styles.coinCard,
     isBiggestGainer ? styles.biggestGainer : "",
     isBiggestLoser ? styles.biggestLoser : "",
+    !up && !isBiggestGainer && !isBiggestLoser ? styles.loser : "",
   ].filter(Boolean).join(" ");
 
   return (
