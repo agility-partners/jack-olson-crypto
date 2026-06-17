@@ -11,8 +11,7 @@ export default function Navigation() {
 
       <ul className={styles.navLinks}>
         <li><Link href="/" className={styles.active}>Watchlist</Link></li>
-        <li><Link href="/markets">Markets</Link></li>
-        <li><Link href="/portfolio">Portfolio</Link></li>
+        <li><Link href="/coins/browse">All Coins</Link></li>
       </ul>
     </nav>
   );
