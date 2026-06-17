@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 import { getRandomWatchList } from "@/app/lib/mockData";
-import { useEffect } from "react";
 
 type Filter = "all" | "gainers" | "losers";
 
@@ -17,15 +16,14 @@ type Props = {
 };
 
 export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
-  const [coins, setCoins] = useState<Coin[]>([]);
-  useEffect(() => {
-    setCoins(useAllCoins ? initialCoins : getRandomWatchList());
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const [coins, setCoins] = useState<Coin[]>(() =>
+    useAllCoins ? initialCoins : getRandomWatchList()
+  );
 
   useEffect(() => {
     const gainerCount = coins.filter((c) => c.change24h >= 0).length;
     onStatsChange?.(coins.length, gainerCount);
-  }, [coins]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [coins, onStatsChange]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("all");
   const [isGrid, setIsGrid] = useState(true);
@@ -91,17 +89,19 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
         ))}
 
         <div className={styles.toolbarRight}>
-          <button
-            className={styles.addCoinBtn}
-            onClick={() => setShowAddModal(true)}
-            title="Add a coin to your watchlist"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            Add Coin
-          </button>
+          {!useAllCoins && (
+            <button
+              className={styles.addCoinBtn}
+              onClick={() => setShowAddModal(true)}
+              title="Add a coin to your watchlist"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Add Coin
+            </button>
+          )}
 
           <div className={styles.viewToggle} role="group" aria-label="View mode">
             <button
