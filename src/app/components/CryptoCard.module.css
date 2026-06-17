@@ -39,6 +39,24 @@
   border-color: #d4a017;
 }
 
+.biggestGainer .coinRank {
+  color: #d4a017;
+  background: #d4a01720;
+  border-color: #d4a01755;
+}
+
+.biggestGainer .changeBadge {
+  color: #d4a017;
+}
+
+.biggestGainer svg stop {
+  stop-color: #d4a017;
+}
+
+.biggestGainer svg path:last-of-type {
+  stroke: #d4a017;
+}
+
 .biggestLoser {
   background: #7f1d1d40;
   border-color: #991b1b80;
