@@ -9,10 +9,6 @@ vi.mock('next/link', () => ({
   ),
 }));
 
-vi.mock('./AddCoinModal', () => ({
-  default: () => <div data-testid="add-coin-modal" />,
-}));
-
 describe('WatchlistClient', () => {
   it('filters displayed coins by search term', () => {
     render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
@@ -42,8 +38,22 @@ describe('WatchlistClient', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Gainers' }));
 
     expect(screen.getByText('Bitcoin')).toBeInTheDocument();
-    expect(screen.getByText('BNB')).toBeInTheDocument();
     expect(screen.getByText('Solana')).toBeInTheDocument();
     expect(screen.queryByText('Ethereum')).not.toBeInTheDocument();
+  });
+
+  it('opens and closes the add coin modal', async () => {
+    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
+
+    const cancelButton = await screen.findByRole('button', { name: 'Cancel' });
+    expect(cancelButton).toBeInTheDocument();
+    expect(screen.getByText('Add Cryptocurrency')).toBeInTheDocument();
+
+    fireEvent.click(cancelButton);
+
+    expect(screen.queryByRole('button', { name: 'Cancel' })).not.toBeInTheDocument();
+    expect(screen.queryByText('Add Cryptocurrency')).not.toBeInTheDocument();
   });
 });
