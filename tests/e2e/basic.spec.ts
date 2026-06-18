@@ -54,4 +54,57 @@ test.describe('Crypto Watchlist App', () => {
       await expect(allCoinsHeading).toBeVisible({ timeout: 10000 });
     }
   });
+
+  test('should filter the watchlist by search term', async ({ page }) => {
+    await page.goto('/');
+
+    const searchInput = page.getByRole('searchbox', { name: /search watchlist/i });
+    await expect(searchInput).toBeVisible({ timeout: 10000 });
+
+    const cards = page.locator('a[href*="/coins/"]');
+    const initialCount = await cards.count();
+    expect(initialCount).toBeGreaterThan(0);
+
+    await searchInput.fill('Bitcoin');
+
+    await expect(page.locator('text=Bitcoin').first()).toBeVisible({ timeout: 10000 });
+
+    const filteredCount = await cards.count();
+    expect(filteredCount).toBeGreaterThan(0);
+    expect(filteredCount).toBeLessThanOrEqual(initialCount);
+  });
+
+  test('should apply the Gainers filter and show it as active', async ({ page }) => {
+    await page.goto('/');
+
+    const gainersButton = page.getByRole('button', { name: 'Gainers' });
+    await expect(gainersButton).toBeVisible({ timeout: 10000 });
+
+    await gainersButton.click();
+
+    await expect(gainersButton).toHaveClass(/active/, { timeout: 10000 });
+
+    const cards = page.locator('a[href*="/coins/"]');
+    await expect(cards.first()).toBeVisible({ timeout: 10000 });
+    expect(await cards.count()).toBeGreaterThan(0);
+  });
+
+  test('should open and close the add coin modal', async ({ page }) => {
+    await page.goto('/');
+
+    const addCoinButton = page.getByRole('button', { name: /\+/ });
+    await expect(addCoinButton).toBeVisible({ timeout: 10000 });
+
+    await addCoinButton.click();
+
+    const modalHeading = page.getByRole('heading', { name: 'Add Cryptocurrency' });
+    await expect(modalHeading).toBeVisible({ timeout: 10000 });
+
+    const cancelButton = page.getByRole('button', { name: 'Cancel' });
+    await expect(cancelButton).toBeVisible();
+
+    await cancelButton.click();
+
+    await expect(modalHeading).not.toBeVisible({ timeout: 10000 });
+  });
 });
