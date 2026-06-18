@@ -63,6 +63,12 @@ describe('watchlistUtils', () => {
       expect(result[0].id).toBe('ethereum');
     });
 
+    it('filters coins case-insensitively', () => {
+      const result = filterCoins(sampleCoins, 'eth', 'value');
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('ethereum');
+    });
+
     it('filters only gainers', () => {
       const result = filterCoins(sampleCoins, '', 'gainers');
       expect(result.map((coin) => coin.id)).toEqual(['bitcoin', 'solana']);
