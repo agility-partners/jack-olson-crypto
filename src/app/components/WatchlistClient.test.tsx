@@ -9,6 +9,13 @@ vi.mock('next/link', () => ({
   ),
 }));
 
+const deterministicInitialCoins = [
+  watchlistCoins.find((coin) => coin.id === 'bitcoin')!,
+  watchlistCoins.find((coin) => coin.id === 'ethereum')!,
+  watchlistCoins.find((coin) => coin.id === 'bnb')!,
+  watchlistCoins.find((coin) => coin.id === 'solana')!,
+];
+
 describe('WatchlistClient', () => {
   it('filters displayed coins by search term', () => {
     render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
@@ -60,7 +67,7 @@ describe('WatchlistClient', () => {
   });
 
   it('adds a coin through the modal and shows it in the watchlist', async () => {
-    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
 
     fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
 
@@ -83,7 +90,7 @@ describe('WatchlistClient', () => {
   });
 
   it('does not allow adding a duplicate coin', async () => {
-    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
 
     fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
 
