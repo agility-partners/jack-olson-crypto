@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import WatchlistClient from './WatchlistClient';
 import { watchlistCoins } from '@/app/lib/mockData';
@@ -53,7 +53,32 @@ describe('WatchlistClient', () => {
 
     fireEvent.click(cancelButton);
 
-    expect(screen.queryByRole('button', { name: 'Cancel' })).not.toBeInTheDocument();
-    expect(screen.queryByText('Add Cryptocurrency')).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByRole('button', { name: 'Cancel' })).not.toBeInTheDocument();
+      expect(screen.queryByText('Add Cryptocurrency')).not.toBeInTheDocument();
+    });
+  });
+
+  it('adds a coin through the modal and shows it in the watchlist', async () => {
+    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
+
+    await screen.findByRole('button', { name: 'Cancel' });
+
+    fireEvent.change(screen.getByLabelText('Select Cryptocurrency'), {
+      target: { value: 'dogecoin' },
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
+
+    await screen.findByRole('button', { name: 'Adding...' });
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Dogecoin')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
   });
 });
