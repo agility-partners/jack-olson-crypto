@@ -1,0 +1,49 @@
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import WatchlistClient from './WatchlistClient';
+import { watchlistCoins } from '@/app/lib/mockData';
+
+vi.mock('next/link', () => ({
+  default: ({ children, href, ...props }: { children: React.ReactNode; href: string }) => (
+    <a href={href} {...props}>{children}</a>
+  ),
+}));
+
+vi.mock('./AddCoinModal', () => ({
+  default: () => <div data-testid="add-coin-modal" />,
+}));
+
+describe('WatchlistClient', () => {
+  it('filters displayed coins by search term', () => {
+    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+
+    fireEvent.change(screen.getByLabelText('Search watchlist'), {
+      target: { value: 'Ethereum' },
+    });
+
+    expect(screen.getByText('Ethereum')).toBeInTheDocument();
+    expect(screen.queryByText('Bitcoin')).not.toBeInTheDocument();
+  });
+
+  it('shows empty state when no coins match the search', () => {
+    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+
+    fireEvent.change(screen.getByLabelText('Search watchlist'), {
+      target: { value: 'NotACoin' },
+    });
+
+    expect(screen.getByText('No coins found')).toBeInTheDocument();
+    expect(screen.getByText('Try adjusting your search or filter.')).toBeInTheDocument();
+  });
+
+  it('filters to gainers when the Gainers button is clicked', () => {
+    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Gainers' }));
+
+    expect(screen.getByText('Bitcoin')).toBeInTheDocument();
+    expect(screen.getByText('BNB')).toBeInTheDocument();
+    expect(screen.getByText('Solana')).toBeInTheDocument();
+    expect(screen.queryByText('Ethereum')).not.toBeInTheDocument();
+  });
+});
