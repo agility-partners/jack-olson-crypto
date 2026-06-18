@@ -58,12 +58,12 @@
 }
 
 .biggestLoser {
-  background: #5c1a1a40;
-  border-color: #8b2e2e80;
+  background: #49010137;
+  border-color: #ff0000;
 }
 
 .biggestLoser:hover {
-  background: #6b242460;
+  background: #0000007d;
   border-color: #c24949;
 }
 
@@ -74,17 +74,17 @@
 }
 
 .biggestLoser .changeBadge {
-  color: #c24949;
+  color: #da2121;
 }
 
 .loser {
-  background: #5c1a1a20;
-  border-color: #8b2e2e55;
+  background: #ff000020;
+  border-color: #a022229c;
 }
 
 .loser:hover {
-  background: #5c1a1a40;
-  border-color: #8b2e2e80;
+  background: #b2090957;
+  border-color: #d90d0de6;
 }
 
 /* ── Card top ── */
