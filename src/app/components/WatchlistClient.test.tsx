@@ -81,4 +81,21 @@ describe('WatchlistClient', () => {
       { timeout: 3000 }
     );
   });
+
+  it('does not allow adding a duplicate coin', async () => {
+    render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
+
+    await screen.findByRole('button', { name: 'Cancel' });
+
+    const select = screen.getByLabelText('Select Cryptocurrency') as HTMLSelectElement;
+    const optionValues = Array.from(select.options).map((option) => option.value);
+
+    expect(optionValues).not.toContain('bitcoin');
+    expect(optionValues).not.toContain('ethereum');
+    expect(optionValues).not.toContain('bnb');
+    expect(optionValues).not.toContain('solana');
+    expect(optionValues).toContain('dogecoin');
+  });
 });
