@@ -14,7 +14,13 @@ export function parseValue(str: string): number {
   return value * (multipliers[suffix] || 1);
 }
 
-export type Filter = 'value' | 'percentchange' | 'marketcap' | '24hvolume' | 'gainers' | 'losers';
+export type Filter =
+  | "value"
+  | "percentchange"
+  | "marketcap"
+  | "24hvolume"
+  | "gainers"
+  | "losers";
 
 export type CoinLike = {
   id: string;
@@ -26,32 +32,38 @@ export type CoinLike = {
   volume: string;
 };
 
-export function filterCoins(coins: CoinLike[], search: string, filter: Filter): CoinLike[] {
+export function filterCoins<T extends CoinLike>(
+  coins: T[],
+  search: string,
+  filter: Filter
+): T[] {
   return coins.filter((c) => {
     const q = search.toLowerCase().trim();
     const matchesSearch =
       !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
     const matchesFilter =
-      filter === 'value' ||
-      filter === 'percentchange' ||
-      filter === 'marketcap' ||
-      filter === '24hvolume' ||
-      (filter === 'gainers' && c.change24h >= 0) ||
-      (filter === 'losers' && c.change24h < 0);
+      filter === "value" ||
+      filter === "percentchange" ||
+      filter === "marketcap" ||
+      filter === "24hvolume" ||
+      (filter === "gainers" && c.change24h >= 0) ||
+      (filter === "losers" && c.change24h < 0);
+
     return matchesSearch && matchesFilter;
   });
 }
 
-export function sortCoins(coins: CoinLike[], filter: Filter): CoinLike[] {
+export function sortCoins<T extends CoinLike>(coins: T[], filter: Filter): T[] {
   const sorted = [...coins];
+
   switch (filter) {
-    case 'percentchange':
+    case "percentchange":
       return sorted.sort((a, b) => b.change24h - a.change24h);
-    case 'marketcap':
+    case "marketcap":
       return sorted.sort((a, b) => parseValue(b.marketCap) - parseValue(a.marketCap));
-    case '24hvolume':
+    case "24hvolume":
       return sorted.sort((a, b) => parseValue(b.volume) - parseValue(a.volume));
-    case 'value':
+    case "value":
     default:
       return sorted.sort((a, b) => b.price - a.price);
   }
