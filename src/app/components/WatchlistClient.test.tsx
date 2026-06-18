@@ -105,4 +105,77 @@ describe('WatchlistClient', () => {
     expect(optionValues).not.toContain('solana');
     expect(optionValues).toContain('dogecoin');
   });
+
+  it('calls onStatsChange on initial render', async () => {
+    const onStatsChange = vi.fn();
+
+    render(
+      <WatchlistClient
+        initialCoins={deterministicInitialCoins}
+        onStatsChange={onStatsChange}
+      />
+    );
+
+    await waitFor(() => {
+      expect(onStatsChange).toHaveBeenCalledWith(4, 3);
+    });
+  });
+
+  it('updates onStatsChange after adding a coin', async () => {
+    const onStatsChange = vi.fn();
+
+    render(
+      <WatchlistClient
+        initialCoins={deterministicInitialCoins}
+        onStatsChange={onStatsChange}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
+
+    await screen.findByRole('button', { name: 'Cancel' });
+
+    fireEvent.change(screen.getByLabelText('Select Cryptocurrency'), {
+      target: { value: 'dogecoin' },
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
+
+    await waitFor(() => {
+      expect(onStatsChange).toHaveBeenCalledWith(5, 4);
+    }, { timeout: 3000 });
+  });
+
+  it('shows a validation error when submitting without selecting a coin', async () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
+
+    await screen.findByRole('button', { name: 'Cancel' });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
+
+    expect(screen.getByText('Please select a cryptocurrency')).toBeInTheDocument();
+    expect(screen.queryByText('Dogecoin')).not.toBeInTheDocument();
+  });
+
+  it('closes the modal after a successful add', async () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
+
+    await screen.findByRole('button', { name: 'Cancel' });
+
+    fireEvent.change(screen.getByLabelText('Select Cryptocurrency'), {
+      target: { value: 'dogecoin' },
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Dogecoin')).toBeInTheDocument();
+      expect(screen.queryByText('Add Cryptocurrency')).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'Cancel' })).not.toBeInTheDocument();
+    }, { timeout: 3000 });
+  });
 });
