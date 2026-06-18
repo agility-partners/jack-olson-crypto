@@ -2,32 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
+import { filterCoins, sortCoins, type Filter } from "@/app/lib/watchlistUtils";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
-
-type Filter = "value" | "percentchange" | "marketcap" | "24hvolume" | "gainers" | "losers";
 
 type Props = {
   initialCoins: Coin[];
   onStatsChange?: (coinCount: number, gainerCount: number) => void;
   useAllCoins?: boolean;
-};
-
-const parseValue = (str: string): number => {
-  const match = str.match(/(\d+\.?\d*)\s*([MBT])/i);
-  if (!match) return 0;
-
-  const value = parseFloat(match[1]);
-  const suffix = match[2].toUpperCase();
-
-  const multipliers: Record<string, number> = {
-    M: 1_000_000,
-    B: 1_000_000_000,
-    T: 1_000_000_000_000,
-  };
-
-  return value * (multipliers[suffix] || 1);
 };
 
 export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
@@ -43,7 +26,6 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
   }, [coins, onStatsChange]);
 
   const handleAddCoin = (newCoin: Coin) => {
-    // Check if coin already exists
     if (coins.some((c) => c.id === newCoin.id)) {
       alert("This coin is already in your watchlist!");
       return;
@@ -52,34 +34,8 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     setShowAddModal(false);
   };
 
-  const filtered = coins.filter((c) => {
-    const q = search.toLowerCase().trim();
-    const matchesSearch =
-      !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
-    const matchesFilter =
-      filter === "value" ||
-      filter === "percentchange" ||
-      filter === "marketcap" ||
-      filter === "24hvolume" ||
-      (filter === "gainers" && c.change24h >= 0) ||
-      (filter === "losers" && c.change24h < 0);
-    return matchesSearch && matchesFilter;
-  });
-
-  const visibleCoins = (() => {
-    const sorted = [...filtered];
-    switch (filter) {
-      case "percentchange":
-        return sorted.sort((a, b) => b.change24h - a.change24h);
-      case "marketcap":
-        return sorted.sort((a, b) => parseValue(b.marketCap) - parseValue(a.marketCap));
-      case "24hvolume":
-        return sorted.sort((a, b) => parseValue(b.volume) - parseValue(a.volume));
-      case "value":
-      default:
-        return sorted.sort((a, b) => b.price - a.price);
-    }
-  })();
+  const filtered = filterCoins(coins, search, filter);
+  const visibleCoins = sortCoins(filtered, filter);
 
   const biggestGainer = filtered.reduce<Coin | null>(
     (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
@@ -101,7 +57,6 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
 
   return (
     <>
-      {/* ── Toolbar ── */}
       <div className={styles.toolbar}>
         <div className={styles.searchWrap}>
           <svg className={styles.searchIcon} width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -173,7 +128,6 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
         </div>
       </div>
 
-      {/* ── Grid / List ── */}
       <main>
         <div className={`${styles.coinGrid} ${!isGrid ? styles.listView : ""}`}>
           {visibleCoins.length === 0 ? (
@@ -194,7 +148,6 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
         </div>
       </main>
 
-      {/* ── Add Coin Modal ── */}
       {showAddModal && <AddCoinModal onClose={() => setShowAddModal(false)} onAddCoin={handleAddCoin} currentCoins={coins} />}
     </>
   );
