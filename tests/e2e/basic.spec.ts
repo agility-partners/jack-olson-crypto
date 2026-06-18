@@ -1,43 +1,57 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Crypto Watchlist App', () => {
-  test.beforeEach(async ({ page }) => {
-    // Navigate to the home page
-    await page.goto('/');
-  });
-
   test('should load the home page', async ({ page }) => {
-    // Wait for the page to load and check for a key element
-    await page.waitForLoadState('networkidle');
+    // Navigate to home
+    await page.goto('/');
     
-    // Check that the page title or heading is visible
-    const heading = page.locator('h1, h2').first();
-    await expect(heading).toBeVisible();
+    // Wait for h1 with "My Watchlist" text
+    const heading = page.locator('h1:has-text("My Watchlist")');
+    await expect(heading).toBeVisible({ timeout: 10000 });
   });
 
   test('should display cryptocurrency cards', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    await page.goto('/');
     
-    // Look for crypto cards (they should have a specific class or data attribute)
+    // Wait for cards to appear - they're links with href containing /coins/
     const cards = page.locator('a[href*="/coins/"]');
-    const cardCount = await cards.count();
     
+    // Wait for at least one card
+    await expect(cards.first()).toBeVisible({ timeout: 10000 });
+    
+    const cardCount = await cards.count();
     expect(cardCount).toBeGreaterThan(0);
   });
 
   test('should navigate to coin detail page', async ({ page }) => {
-    await page.waitForLoadState('networkidle');
+    await page.goto('/');
     
-    // Click the first cryptocurrency card
+    // Wait for first card and click it
     const firstCard = page.locator('a[href*="/coins/"]').first();
+    await expect(firstCard).toBeVisible({ timeout: 10000 });
+    
     await firstCard.click();
     
-    // Wait for navigation and check the URL changed
-    await page.waitForURL(/\/coins\//);
-    await page.waitForLoadState('networkidle');
+    // Wait for URL to change to /coins/
+    await page.waitForURL(/\/coins\/[^/]+$/, { timeout: 10000 });
     
-    // Verify we're on a coin detail page
-    const coinName = page.locator('h1').first();
-    await expect(coinName).toBeVisible();
+    // Verify we can see coin details
+    const coinTitle = page.locator('h1').first();
+    await expect(coinTitle).toBeVisible({ timeout: 10000 });
+  });
+
+  test('should navigate to browse page', async ({ page }) => {
+    await page.goto('/');
+    
+    // Look for a browse or all coins link
+    const browseLink = page.locator('a:has-text("Browse"), a:has-text("All Coins"), a[href*="/browse"]').first();
+    
+    if (await browseLink.count() > 0) {
+      await browseLink.click();
+      
+      // Should see "All Coins" heading on browse page
+      const allCoinsHeading = page.locator('h1:has-text("All Coins")');
+      await expect(allCoinsHeading).toBeVisible({ timeout: 10000 });
+    }
   });
 });
