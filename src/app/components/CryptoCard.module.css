@@ -1,3 +1,7 @@
+.coinCardWrap {
+  position: relative;
+}
+
 .coinCard {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -9,6 +13,10 @@
   transition: border-color 0.18s, background 0.18s, transform 0.18s;
   position: relative;
   overflow: hidden;
+}
+
+.removableCard {
+  padding-right: 56px;
 }
 
 .coinCard::before {
@@ -28,6 +36,29 @@
 }
 
 .coinCard:hover::before { opacity: 0.04; }
+
+.removeBtn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(10, 18, 25, 0.92);
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.removeBtn:hover {
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(127, 29, 29, 0.92);
+  color: #fca5a5;
+}
 
 .biggestGainer {
   background: #d4a01730;

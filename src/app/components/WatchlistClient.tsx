@@ -45,6 +45,19 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     setShowAddModal(false);
   };
 
+  const handleRemoveCoin = (coinId: string) => {
+    const updatedCoins = coins.filter((coin) => coin.id !== coinId);
+
+    if (updatedCoins.length === coins.length) {
+      return;
+    }
+
+    setCoins(updatedCoins);
+
+    const gainerCount = updatedCoins.filter((coin) => coin.change24h >= 0).length;
+    onStatsChange?.(updatedCoins.length, gainerCount);
+  };
+
   const filtered = filterCoins(coins, search, filter);
   const visibleCoins = sortCoins(filtered, filter);
 
@@ -166,6 +179,7 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
                 coin={coin}
                 isBiggestGainer={biggestGainer?.id === coin.id}
                 isBiggestLoser={biggestLoser?.id === coin.id}
+                onRemove={!useAllCoins ? handleRemoveCoin : undefined}
               />
             ))
           )}
