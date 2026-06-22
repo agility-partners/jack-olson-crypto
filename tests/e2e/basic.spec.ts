@@ -64,10 +64,22 @@ test.describe('Crypto Watchlist App', () => {
     const searchInput = page.getByRole('searchbox', { name: /search watchlist/i });
     await expect(searchInput).toBeVisible({ timeout: 10000 });
 
-    await searchInput.fill('Bitcoin');
+    // Use an actual coin from the current randomized watchlist
+    const firstCardText = (await cards.first().innerText()).trim();
+    const searchTerm = firstCardText.split(/\s+/)[0]; // first word is usually enough and robust
 
-    await expect(searchInput).toHaveValue('Bitcoin');
-    await expect(page.getByText('Bitcoin').first()).toBeVisible({ timeout: 10000 });
+    await searchInput.fill(searchTerm);
+    await expect(searchInput).toHaveValue(searchTerm);
+
+    // Verify at least one visible filtered result contains the term
+    const matchingCards = cards.filter({ hasText: new RegExp(searchTerm, 'i') });
+    await expect(matchingCards.first()).toBeVisible({ timeout: 10000 });
+
+    // Optional: ensure all visible cards match search term (if app truly filters)
+    const visibleCount = await cards.count();
+    for (let i = 0; i < visibleCount; i++) {
+      await expect(cards.nth(i)).toContainText(new RegExp(searchTerm, 'i'));
+    }
   });
 
   test('should apply the Gainers filter and show it as active', async ({ page }) => {
