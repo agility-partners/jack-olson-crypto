@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Coin, sparkPaths } from "@/app/lib/mockData";
 import { formatPrice } from "@/app/lib/utils";
+import CoinIcon from "./CoinIcon";
 import Sparkline from "./Sparkline";
 import styles from "./CryptoCard.module.css";
 
@@ -21,9 +22,7 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser }: Pr
     <Link href={`/coins/${coin.id}`} className={cardClass}>
       <div className={styles.cardTop}>
         <div className={styles.coinIdentity}>
-          <div className={`${styles.coinIcon} ${styles[coin.iconClass]}`}>
-            {coin.symbol.slice(0, 3)}
-          </div>
+          <CoinIcon iconClass={coin.iconClass} symbol={coin.symbol} />
           <div className={styles.coinNameWrap}>
             <span className={styles.coinName}>{coin.name}</span>
             <span className={styles.coinSymbol}>{coin.symbol}</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./FlappyCrypto.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface Obstacle {
@@ -11,12 +11,25 @@ interface Obstacle {
   passed: boolean;
 }
 
+// Module-level constants — not recreated on every render
+const GRAVITY = 0.35;
+const FLAP_POWER = -6;
+const OBSTACLE_WIDTH = 50;
+const GAP_HEIGHT = 90;
+const OBSTACLE_SPEED = 4;
+const SPAWN_RATE = 60;
+const BITCOIN_SIZE = 22;
+const CANVAS_HEIGHT = 250;
+const CANVAS_WIDTH = 800;
+
 export default function FlappyCrypto() {
-  const canvasRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rafRef = useRef<number>(0);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [score, setScore] = useState(0);
   const [topScore, setTopScore] = useState(0);
-  const [frameCount, setFrameCount] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -25,22 +38,16 @@ export default function FlappyCrypto() {
     bitcoinVelocity: 0,
     obstacles: [] as Obstacle[],
     nextObstacleId: 0,
-    gameOver: false,
     frameCount: 0,
     currentScore: 0,
   });
 
-  const gameConstants = {
-    gravity: 0.35,
-    flapPower: -6,
-    obstacleWidth: 50,
-    gapHeight: 90,
-    obstacleSpeed: 4,
-    spawnRate: 60,
-    bitcoinSize: 22,
-    containerHeight: 250,
-    containerWidth: 800,
-  };
+  // Refs for values needed inside the rAF loop without stale closures
+  const isPlayingRef = useRef(false);
+  const topScoreRef = useRef(0);
+
+  useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
+  useEffect(() => { topScoreRef.current = topScore; }, [topScore]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -49,113 +56,171 @@ export default function FlappyCrypto() {
   // Load top score from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("flappyCryptoTopScore");
-    if (saved) setTopScore(parseInt(saved));
+    if (saved) {
+      const val = parseInt(saved, 10);
+      setTopScore(val);
+      topScoreRef.current = val;
+    }
   }, []);
 
   // Lock page scroll while modal is open
   useEffect(() => {
     if (!isModalOpen) return;
-
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
-
     return () => {
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
     };
   }, [isModalOpen]);
 
-  // Handle space bar input
+  // Draw a single frame onto the canvas
+  const drawFrame = useCallback((gameOver: boolean) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const state = gameState.current;
+
+    // Clear to transparent — CSS background of the canvas element shows through
+    ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+    // Bitcoin emoji
+    ctx.save();
+    ctx.font = "24px serif";
+    ctx.fillStyle = "#ffd700";
+    ctx.textBaseline = "top";
+    ctx.shadowColor = "rgba(255, 215, 0, 0.6)";
+    ctx.shadowBlur = 8;
+    ctx.fillText("₿", 20, state.bitcoinY);
+    ctx.restore();
+
+    // Obstacles
+    for (const obs of state.obstacles) {
+      // Top bar (red)
+      if (obs.gapY > 0) {
+        ctx.fillStyle = "#ef4444";
+        ctx.fillRect(obs.x, 0, OBSTACLE_WIDTH, obs.gapY);
+      }
+      // Bottom bar (green)
+      const bottomY = obs.gapY + GAP_HEIGHT;
+      if (bottomY < CANVAS_HEIGHT) {
+        ctx.fillStyle = "#22c55e";
+        ctx.fillRect(obs.x, bottomY, OBSTACLE_WIDTH, CANVAS_HEIGHT - bottomY);
+      }
+    }
+
+    // Game-over overlay
+    if (gameOver) {
+      ctx.save();
+      ctx.fillStyle = "rgba(15, 36, 56, 0.85)";
+      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      ctx.font = "bold 32px sans-serif";
+      ctx.fillStyle = "#ef4444";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.shadowColor = "rgba(239, 68, 68, 0.6)";
+      ctx.shadowBlur = 12;
+      ctx.fillText("Game Over", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+      ctx.restore();
+    }
+  }, []);
+
+  const endGame = useCallback(() => {
+    isPlayingRef.current = false;
+    setIsPlaying(false);
+    setIsGameOver(true);
+    cancelAnimationFrame(rafRef.current);
+
+    const finalScore = gameState.current.currentScore;
+    if (finalScore > topScoreRef.current) {
+      setTopScore(finalScore);
+      topScoreRef.current = finalScore;
+      localStorage.setItem("flappyCryptoTopScore", String(finalScore));
+    }
+
+    // Draw the final game-over frame synchronously
+    drawFrame(true);
+  }, [drawFrame]);
+
+  // Handle space-bar input — uses ref so we don't need to re-register on every isPlaying change
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.code === "Space") {
         e.preventDefault();
-        if (!isPlaying) return;
-        gameState.current.bitcoinVelocity = gameConstants.flapPower;
+        if (!isPlayingRef.current) return;
+        gameState.current.bitcoinVelocity = FLAP_POWER;
       }
     };
-
     if (isModalOpen) {
       window.addEventListener("keydown", handleKeyPress);
       return () => window.removeEventListener("keydown", handleKeyPress);
     }
-  }, [isPlaying, isModalOpen]);
+  }, [isModalOpen]);
 
-  // Game loop
+  // Game loop — requestAnimationFrame replaces setInterval; canvas replaces React DOM re-renders
   useEffect(() => {
     if (!isPlaying || !isModalOpen) return;
 
-    const interval = setInterval(() => {
+    const loop = () => {
+      if (!isPlayingRef.current) return;
+
       const state = gameState.current;
 
-      // Update bitcoin physics
-      state.bitcoinVelocity += gameConstants.gravity;
+      // Physics
+      state.bitcoinVelocity += GRAVITY;
       state.bitcoinY += state.bitcoinVelocity;
 
-      // Boundary check (death)
-      if (state.bitcoinY < 0 || state.bitcoinY + gameConstants.bitcoinSize > gameConstants.containerHeight) {
+      // Boundary death
+      if (state.bitcoinY < 0 || state.bitcoinY + BITCOIN_SIZE > CANVAS_HEIGHT) {
         endGame();
         return;
       }
 
       // Spawn obstacles
       state.frameCount++;
-      if (state.frameCount % gameConstants.spawnRate === 0) {
-        const gapY = Math.random() * (gameConstants.containerHeight - gameConstants.gapHeight - 40) + 20;
+      if (state.frameCount % SPAWN_RATE === 0) {
+        const gapY = Math.random() * (CANVAS_HEIGHT - GAP_HEIGHT - 40) + 20;
         state.obstacles.push({
           id: state.nextObstacleId++,
-          x: gameConstants.containerWidth,
+          x: CANVAS_WIDTH,
           gapY,
           passed: false,
         });
       }
 
-      // Update obstacles
+      // Move obstacles, detect collisions, score points
       state.obstacles = state.obstacles.filter((obs) => {
-        obs.x -= gameConstants.obstacleSpeed;
+        obs.x -= OBSTACLE_SPEED;
 
-        // Check if passed
-        if (!obs.passed && obs.x + gameConstants.obstacleWidth < 20) {
+        if (!obs.passed && obs.x + OBSTACLE_WIDTH < 20) {
           obs.passed = true;
           state.currentScore++;
           setScore(state.currentScore);
         }
 
-        // Collision detection
-        if (obs.x < 20 + gameConstants.bitcoinSize && obs.x + gameConstants.obstacleWidth > 20) {
+        if (obs.x < 20 + BITCOIN_SIZE && obs.x + OBSTACLE_WIDTH > 20) {
           const bitcoinTop = state.bitcoinY;
-          const bitcoinBottom = state.bitcoinY + gameConstants.bitcoinSize;
-
-          // Check if in safe gap
-          if (bitcoinTop < obs.gapY || bitcoinBottom > obs.gapY + gameConstants.gapHeight) {
+          const bitcoinBottom = state.bitcoinY + BITCOIN_SIZE;
+          if (bitcoinTop < obs.gapY || bitcoinBottom > obs.gapY + GAP_HEIGHT) {
             endGame();
             return false;
           }
         }
 
-        return obs.x > -gameConstants.obstacleWidth;
+        return obs.x > -OBSTACLE_WIDTH;
       });
 
-      // Force re-render
-      setFrameCount((f) => f + 1);
-    }, 30);
+      // Draw once per frame — no React re-render needed
+      drawFrame(false);
+      rafRef.current = requestAnimationFrame(loop);
+    };
 
-    return () => clearInterval(interval);
-  }, [isPlaying, isModalOpen]);
-
-  const endGame = () => {
-    setIsPlaying(false);
-    gameState.current.gameOver = true;
-
-    const finalScore = gameState.current.currentScore;
-    if (finalScore > topScore) {
-      setTopScore(finalScore);
-      localStorage.setItem("flappyCryptoTopScore", String(finalScore));
-    }
-  };
+    rafRef.current = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [isPlaying, isModalOpen, endGame, drawFrame]);
 
   const startGame = () => {
     gameState.current = {
@@ -163,23 +228,32 @@ export default function FlappyCrypto() {
       bitcoinVelocity: 0,
       obstacles: [],
       nextObstacleId: 0,
-      gameOver: false,
       frameCount: 0,
       currentScore: 0,
     };
     setScore(0);
+    setIsGameOver(false);
+    isPlayingRef.current = true;
     setIsPlaying(true);
   };
 
   const closeGame = () => {
+    cancelAnimationFrame(rafRef.current);
+    isPlayingRef.current = false;
     setIsModalOpen(false);
     setIsPlaying(false);
+    setIsGameOver(false);
     setScore(0);
-    gameState.current.gameOver = false;
   };
 
   const openGame = () => {
     setIsModalOpen(true);
+  };
+
+  // Tap/click on canvas also flaps
+  const handleCanvasInteract = () => {
+    if (!isPlayingRef.current) return;
+    gameState.current.bitcoinVelocity = FLAP_POWER;
   };
 
   const modalContent = (
@@ -207,73 +281,21 @@ export default function FlappyCrypto() {
             </div>
             {!isPlaying && (
               <button className={styles.playBtn} onClick={startGame}>
-                {gameState.current.gameOver ? "Retry" : "Play"}
+                {isGameOver ? "Retry" : "Play"}
               </button>
             )}
           </div>
 
-          <div className={styles.gameCanvas} ref={canvasRef}>
-            {/* Bitcoin */}
-            <div
-              className={styles.bitcoin}
-              style={{
-                top: `${gameState.current.bitcoinY}px`,
-              }}
-            >
-              ₿
-            </div>
+          {/* Canvas replaces the DOM-based game rendering */}
+          <canvas
+            ref={canvasRef}
+            className={styles.gameCanvas}
+            width={CANVAS_WIDTH}
+            height={CANVAS_HEIGHT}
+            onClick={handleCanvasInteract}
+          />
 
-            {/* Obstacles */}
-            {gameState.current.obstacles.map((obs) => (
-              <div key={obs.id} className={styles.obstacleContainer} style={{ left: `${obs.x}px` }}>
-                {/* Top obstacle (Red - Loser) */}
-                {obs.gapY > 0 && (
-                  <div
-                    className={`${styles.obstacle} ${styles.red}`}
-                    style={{
-                      height: `${obs.gapY}px`,
-                    }}
-                  >
-                    <svg viewBox="0 0 50 40" preserveAspectRatio="none">
-                      <path
-                        d="M0,20 Q5,10 10,20 T20,20 T30,20 T40,20 T50,20 L50,40 L0,40 Z"
-                        fill="currentColor"
-                        opacity="0.9"
-                      />
-                    </svg>
-                  </div>
-                )}
-
-                {/* Bottom obstacle (Green - Gainer) */}
-                {obs.gapY + gameConstants.gapHeight < gameConstants.containerHeight && (
-                  <div
-                    className={`${styles.obstacle} ${styles.green}`}
-                    style={{
-                      height: `${gameConstants.containerHeight - obs.gapY - gameConstants.gapHeight}px`,
-                      marginTop: `${gameConstants.gapHeight}px`,
-                    }}
-                  >
-                    <svg viewBox="0 0 50 40" preserveAspectRatio="none">
-                      <path
-                        d="M0,20 Q5,30 10,20 T20,20 T30,20 T40,20 T50,20 L50,0 L0,0 Z"
-                        fill="currentColor"
-                        opacity="0.9"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {/* Game Over overlay */}
-            {gameState.current.gameOver && !isPlaying && (
-              <div className={styles.gameOverOverlay}>
-                <div className={styles.gameOverText}>Game Over</div>
-              </div>
-            )}
-          </div>
-
-          <div className={styles.instructions}>Press SPACE to flap</div>
+          <div className={styles.instructions}>Press SPACE or click/tap to flap</div>
         </div>
       </div>
     </>

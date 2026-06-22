@@ -109,44 +109,6 @@
   gap: 10px;
 }
 
-.coinIcon {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-.btc   { background: #ff9d1a33; color: #ffb638; border: 1px solid #ff9d1a55; }
-.eth   { background: #7c94ff33; color: #7c94ff; border: 1px solid #7c94ff55; }
-.bnb   { background: #ffd43b33; color: #ffe066; border: 1px solid #ffd43b55; }
-.sol   { background: #b366ff33; color: #d4a0ff; border: 1px solid #b366ff55; }
-.xrp   { background: #00d9ff33; color: #00ffff; border: 1px solid #00d9ff55; }
-.ada   { background: #6b9aff33; color: #6b9aff; border: 1px solid #6b9aff55; }
-.avax  { background: #ff555533; color: #ff6b6b; border: 1px solid #ff555555; }
-.dot   { background: #ff00aa33; color: #ff00cc; border: 1px solid #ff00aa55; }
-.doge  { background: #cc9d1a33; color: #d4a535; border: 1px solid #cc9d1a55; }
-.ltc   { background: #4d9eff33; color: #4dccff; border: 1px solid #4d9eff55; }
-.uni   { background: #d9337755; color: #ff6b9d; border: 1px solid #d9337755; }
-.link  { background: #6b9aff33; color: #6b9aff; border: 1px solid #6b9aff55; }
-.matic { background: #a855ff33; color: #d494ff; border: 1px solid #a855ff55; }
-.xmr   { background: #ff6b9b33; color: #ff6b9b; border: 1px solid #ff6b9b55; }
-.atom  { background: #00dddd33; color: #00ffff; border: 1px solid #00dddd55; }
-.vet   { background: #00eedd33; color: #00ffee; border: 1px solid #00eedd55; }
-.theta { background: #00d9ff33; color: #00ffff; border: 1px solid #00d9ff55; }
-.grt   { background: #8b5aff33; color: #b896ff; border: 1px solid #8b5aff55; }
-.hbar  { background: #d946ef33; color: #f77dff; border: 1px solid #d946ef55; }
-.algo  { background: #7c3aed33; color: #a78bfa; border: 1px solid #7c3aed55; }
-.egld  { background: #06c58333; color: #06d6a0; border: 1px solid #06c58355; }
-.fil   { background: #00b8e633; color: #00d9ff; border: 1px solid #00b8e655; }
-.icp   { background: #5a7cff33; color: #7b9dff; border: 1px solid #5a7cff55; }
-.xtz   { background: #5a7cff33; color: #7b9dff; border: 1px solid #5a7cff55; }
-
 .coinNameWrap { display: flex; flex-direction: column; gap: 1px; }
 
 .coinName {
