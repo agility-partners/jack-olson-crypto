@@ -34,7 +34,13 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       dismissTimerRef.current = setTimeout(() => setDuplicateError(null), 4000);
       return;
     }
-    setCoins([...coins, newCoin]);
+    const updatedCoins = [...coins, newCoin];
+    setCoins(updatedCoins);
+    
+    // Immediately call onStatsChange with updated values
+    const gainerCount = updatedCoins.filter((c) => c.change24h >= 0).length;
+    onStatsChange?.(updatedCoins.length, gainerCount);
+    
     setDuplicateError(null);
     setShowAddModal(false);
   };
