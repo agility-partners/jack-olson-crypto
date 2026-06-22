@@ -1,3 +1,6 @@
+"use client";
+
+import { useMemo } from "react";
 import { Coin } from "@/app/lib/mockData";
 import { formatPrice } from "@/app/lib/utils";
 import styles from "./TickerStrip.module.css";
@@ -5,8 +8,18 @@ import styles from "./TickerStrip.module.css";
 type Props = { coins: Coin[] };
 
 export default function TickerStrip({ coins }: Props) {
+  // Shuffle coins on each render using Fisher-Yates algorithm
+  const shuffledCoins = useMemo(() => {
+    const shuffled = [...coins];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }, [coins]);
+
   // Duplicate items for seamless loop
-  const items = [...coins, ...coins];
+  const items = [...shuffledCoins, ...shuffledCoins];
 
   return (
     <div className={styles.tickerWrap} aria-hidden="true">
