@@ -1,7 +1,8 @@
 "use client";
 
 import styles from "./FlappyCrypto.module.css";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 interface Obstacle {
   id: number;
@@ -17,6 +18,7 @@ export default function FlappyCrypto() {
   const [topScore, setTopScore] = useState(0);
   const [frameCount, setFrameCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const gameState = useRef({
     bitcoinY: 125,
@@ -40,20 +42,29 @@ export default function FlappyCrypto() {
     containerWidth: 800,
   };
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Load top score from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("flappyCryptoTopScore");
     if (saved) setTopScore(parseInt(saved));
   }, []);
 
+  // Lock page scroll while modal is open
   useEffect(() => {
     if (!isModalOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
     };
   }, [isModalOpen]);
 
@@ -171,15 +182,7 @@ export default function FlappyCrypto() {
     setIsModalOpen(true);
   };
 
-  if (!isModalOpen) {
-    return (
-      <button className={styles.miniGameBtn} onClick={openGame}>
-        ₿ Play Mini Game
-      </button>
-    );
-  }
-
-  return (
+  const modalContent = (
     <>
       {/* Backdrop */}
       <div className={styles.backdrop} onClick={closeGame} />
@@ -273,6 +276,16 @@ export default function FlappyCrypto() {
           <div className={styles.instructions}>Press SPACE to flap</div>
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <>
+      <button className={styles.miniGameBtn} onClick={openGame}>
+        ₿ Play Mini Game
+      </button>
+
+      {isModalOpen && isMounted ? createPortal(modalContent, document.body) : null}
     </>
   );
 }
