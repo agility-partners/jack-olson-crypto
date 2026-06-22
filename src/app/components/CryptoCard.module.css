@@ -15,10 +15,6 @@
   overflow: hidden;
 }
 
-.removableCard {
-  padding-right: 56px;
-}
-
 .coinCard::before {
   content: '';
   position: absolute;
@@ -132,6 +128,10 @@
   align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 16px;
+}
+
+.removableCardTop {
+  padding-right: 40px;
 }
 
 .coinIdentity {
