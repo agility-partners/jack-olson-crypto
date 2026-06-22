@@ -134,6 +134,10 @@
   margin-bottom: 16px;
 }
 
+.removableCardTop {
+  padding-right: 40px;
+}
+
 .coinIdentity {
   display: flex;
   align-items: center;
