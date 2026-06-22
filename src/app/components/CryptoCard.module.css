@@ -39,8 +39,8 @@
 
 .removeBtn {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 13px;
+  right: 58px;
   z-index: 1;
   width: 28px;
   height: 28px;
@@ -165,7 +165,7 @@
 .coinRank {
   position: absolute;
   top: 16px;
-  right: 48px;
+  right: 16px;
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 600;
