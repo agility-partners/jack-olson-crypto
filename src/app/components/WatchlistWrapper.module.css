@@ -1,13 +1,11 @@
 .trackingText {
-  padding: 0 32px 16px;
-  margin: 0;
   font-size: 14px;
   color: var(--text-muted);
+  margin: 4px 0 0 0;
+  padding: 0;
 }
 
 @media (max-width: 640px) {
   .trackingText {
-    padding-left: 16px;
-    padding-right: 16px;
   }
 }
