@@ -45,9 +45,11 @@ export default function FlappyCrypto() {
   // Refs for values needed inside the rAF loop without stale closures
   const isPlayingRef = useRef(false);
   const topScoreRef = useRef(0);
+  const isGameOverRef = useRef(false);
 
   useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
   useEffect(() => { topScoreRef.current = topScore; }, [topScore]);
+  useEffect(() => { isGameOverRef.current = isGameOver; }, [isGameOver]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -124,6 +126,10 @@ export default function FlappyCrypto() {
       ctx.shadowColor = "rgba(239, 68, 68, 0.6)";
       ctx.shadowBlur = 12;
       ctx.fillText("Game Over", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+      ctx.font = "18px sans-serif";
+      ctx.fillStyle = "#00d9ff";
+      ctx.shadowColor = "rgba(0, 217, 255, 0.4)";
+      ctx.fillText("Final Score: " + gameState.current.currentScore, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 40);
       ctx.restore();
     }
   }, []);
@@ -132,6 +138,7 @@ export default function FlappyCrypto() {
     isPlayingRef.current = false;
     setIsPlaying(false);
     setIsGameOver(true);
+    isGameOverRef.current = true;
     cancelAnimationFrame(rafRef.current);
 
     const finalScore = gameState.current.currentScore;
@@ -213,8 +220,8 @@ export default function FlappyCrypto() {
         return obs.x > -OBSTACLE_WIDTH;
       });
 
-      // Draw once per frame — no React re-render needed
-      drawFrame(false);
+      // Draw once per frame — pass isGameOverRef to show game-over overlay if needed
+      drawFrame(isGameOverRef.current);
       rafRef.current = requestAnimationFrame(loop);
     };
 
@@ -233,6 +240,7 @@ export default function FlappyCrypto() {
     };
     setScore(0);
     setIsGameOver(false);
+    isGameOverRef.current = false;
     isPlayingRef.current = true;
     setIsPlaying(true);
   };
