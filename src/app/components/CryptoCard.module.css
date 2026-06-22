@@ -16,7 +16,7 @@
 }
 
 .removableCard {
-  padding-right: 56px;
+  padding-right: 20px;
 }
 
 .coinCard::before {
@@ -159,6 +159,9 @@
 }
 
 .coinRank {
+  position: absolute;
+  top: 16px;
+  right: 48px;
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 600;
