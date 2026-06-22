@@ -146,6 +146,33 @@ describe('WatchlistClient', () => {
     }, { timeout: 3000 });
   });
 
+  it('removes a coin from the watchlist and updates stats', async () => {
+    const onStatsChange = vi.fn();
+
+    render(
+      <WatchlistClient
+        initialCoins={deterministicInitialCoins}
+        onStatsChange={onStatsChange}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Remove Bitcoin from watchlist' }));
+
+    expect(screen.queryByText('Bitcoin')).not.toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(onStatsChange).toHaveBeenLastCalledWith(3, 2);
+    });
+  });
+
+  it('does not show remove buttons on the all coins view', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} useAllCoins />);
+
+    expect(
+      screen.queryByRole('button', { name: /remove .* from watchlist/i })
+    ).not.toBeInTheDocument();
+  });
+
   it('shows a validation error when submitting without selecting a coin', async () => {
     render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
 
