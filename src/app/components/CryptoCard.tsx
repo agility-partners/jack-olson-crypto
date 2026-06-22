@@ -46,9 +46,9 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRe
 
       <Link
         href={`/coins/${coin.id}`}
-        className={`${cardClass} ${onRemove ? styles.removableCard : ""}`.trim()}
+        className={cardClass}
       >
-        <div className={styles.cardTop}>
+        <div className={`${styles.cardTop} ${onRemove ? styles.removableCardTop : ""}`.trim()}>
           <div className={styles.coinIdentity}>
             <CoinIcon iconClass={coin.iconClass} symbol={coin.symbol} />
             <div className={styles.coinNameWrap}>
