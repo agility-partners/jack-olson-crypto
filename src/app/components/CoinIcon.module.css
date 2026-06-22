@@ -55,28 +55,28 @@
 .xtz   { background: #5a7cff33; color: #7b9dff; border: 1px solid #5a7cff55; }
 
 /* ── Per-coin colours — detail (lg) variant ── */
-/* Solid gradient background, white text (colour: white from .lg) */
-.lg.btc   { background: linear-gradient(135deg, #ffb638 0%, #ffa500 100%); border: none; }
-.lg.eth   { background: linear-gradient(135deg, #7c94ff 0%, #5a7cff 100%); border: none; }
-.lg.bnb   { background: linear-gradient(135deg, #ffe066 0%, #ffd43b 100%); border: none; }
-.lg.sol   { background: linear-gradient(135deg, #d4a0ff 0%, #b366ff 100%); border: none; }
-.lg.xrp   { background: linear-gradient(135deg, #00ffff 0%, #00d9ff 100%); border: none; }
-.lg.ada   { background: linear-gradient(135deg, #6b9aff 0%, #4d7fff 100%); border: none; }
-.lg.avax  { background: linear-gradient(135deg, #ff6b6b 0%, #ff5555 100%); border: none; }
-.lg.dot   { background: linear-gradient(135deg, #ff00cc 0%, #ff00aa 100%); border: none; }
-.lg.doge  { background: linear-gradient(135deg, #ffdd66 0%, #ffcc33 100%); border: none; }
-.lg.ltc   { background: linear-gradient(135deg, #4dccff 0%, #4d9eff 100%); border: none; }
-.lg.uni   { background: linear-gradient(135deg, #ff1493 0%, #ff0080 100%); border: none; }
-.lg.link  { background: linear-gradient(135deg, #6b9aff 0%, #4d7fff 100%); border: none; }
-.lg.matic { background: linear-gradient(135deg, #d494ff 0%, #a855ff 100%); border: none; }
-.lg.xmr   { background: linear-gradient(135deg, #ff6b9b 0%, #ff4477 100%); border: none; }
-.lg.atom  { background: linear-gradient(135deg, #00ffff 0%, #00dddd 100%); border: none; }
-.lg.vet   { background: linear-gradient(135deg, #00ffee 0%, #00eedd 100%); border: none; }
-.lg.theta { background: linear-gradient(135deg, #00ffff 0%, #00d9ff 100%); border: none; }
-.lg.grt   { background: linear-gradient(135deg, #b896ff 0%, #8b5aff 100%); border: none; }
-.lg.hbar  { background: linear-gradient(135deg, #f77dff 0%, #d946ef 100%); border: none; }
-.lg.algo  { background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); border: none; }
-.lg.egld  { background: linear-gradient(135deg, #06d6a0 0%, #06c583 100%); border: none; }
-.lg.fil   { background: linear-gradient(135deg, #00d9ff 0%, #00b8e6 100%); border: none; }
-.lg.icp   { background: linear-gradient(135deg, #7b9dff 0%, #5a7cff 100%); border: none; }
-.lg.xtz   { background: linear-gradient(135deg, #7b9dff 0%, #5a7cff 100%); border: none; }
+/* Solid gradient background, white text (colour: white from .lg, forced with !important) */
+.lg.btc   { background: linear-gradient(135deg, #ffb638 0%, #ffa500 100%); color: white !important; border: none; }
+.lg.eth   { background: linear-gradient(135deg, #7c94ff 0%, #5a7cff 100%); color: white !important; border: none; }
+.lg.bnb   { background: linear-gradient(135deg, #ffe066 0%, #ffd43b 100%); color: white !important; border: none; }
+.lg.sol   { background: linear-gradient(135deg, #d4a0ff 0%, #b366ff 100%); color: white !important; border: none; }
+.lg.xrp   { background: linear-gradient(135deg, #00ffff 0%, #00d9ff 100%); color: white !important; border: none; }
+.lg.ada   { background: linear-gradient(135deg, #6b9aff 0%, #4d7fff 100%); color: white !important; border: none; }
+.lg.avax  { background: linear-gradient(135deg, #ff6b6b 0%, #ff5555 100%); color: white !important; border: none; }
+.lg.dot   { background: linear-gradient(135deg, #ff00cc 0%, #ff00aa 100%); color: white !important; border: none; }
+.lg.doge  { background: linear-gradient(135deg, #ffdd66 0%, #ffcc33 100%); color: white !important; border: none; }
+.lg.ltc   { background: linear-gradient(135deg, #4dccff 0%, #4d9eff 100%); color: white !important; border: none; }
+.lg.uni   { background: linear-gradient(135deg, #ff1493 0%, #ff0080 100%); color: white !important; border: none; }
+.lg.link  { background: linear-gradient(135deg, #6b9aff 0%, #4d7fff 100%); color: white !important; border: none; }
+.lg.matic { background: linear-gradient(135deg, #d494ff 0%, #a855ff 100%); color: white !important; border: none; }
+.lg.xmr   { background: linear-gradient(135deg, #ff6b9b 0%, #ff4477 100%); color: white !important; border: none; }
+.lg.atom  { background: linear-gradient(135deg, #00ffff 0%, #00dddd 100%); color: white !important; border: none; }
+.lg.vet   { background: linear-gradient(135deg, #00ffee 0%, #00eedd 100%); color: white !important; border: none; }
+.lg.theta { background: linear-gradient(135deg, #00ffff 0%, #00d9ff 100%); color: white !important; border: none; }
+.lg.grt   { background: linear-gradient(135deg, #b896ff 0%, #8b5aff 100%); color: white !important; border: none; }
+.lg.hbar  { background: linear-gradient(135deg, #f77dff 0%, #d946ef 100%); color: white !important; border: none; }
+.lg.algo  { background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); color: white !important; border: none; }
+.lg.egld  { background: linear-gradient(135deg, #06d6a0 0%, #06c583 100%); color: white !important; border: none; }
+.lg.fil   { background: linear-gradient(135deg, #00d9ff 0%, #00b8e6 100%); color: white !important; border: none; }
+.lg.icp   { background: linear-gradient(135deg, #7b9dff 0%, #5a7cff 100%); color: white !important; border: none; }
+.lg.xtz   { background: linear-gradient(135deg, #7b9dff 0%, #5a7cff 100%); color: white !important; border: none; }
