@@ -29,9 +29,10 @@
   left: 0;
   right: 0;
   bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
-  z-index: 999;
+  z-index: 9998;
   animation: fadeIn 0.2s ease;
 }
 
@@ -40,7 +41,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 9999;
   animation: slideIn 0.3s ease;
 }
 

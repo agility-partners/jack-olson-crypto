@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./FlappyCrypto.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface Obstacle {
   id: number;
@@ -45,6 +45,17 @@ export default function FlappyCrypto() {
     const saved = localStorage.getItem("flappyCryptoTopScore");
     if (saved) setTopScore(parseInt(saved));
   }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isModalOpen]);
 
   // Handle space bar input
   useEffect(() => {
