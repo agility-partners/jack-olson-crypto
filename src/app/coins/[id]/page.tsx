@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { coinDetails, sparkPaths } from "@/app/lib/mockData";
+import { coinDetails, sparkPaths, watchlistCoins } from "@/app/lib/mockData";
 import { formatPrice } from "@/app/lib/utils";
 import CoinIcon from "@/app/components/CoinIcon";
 import Sparkline from "@/app/components/Sparkline";
@@ -35,6 +35,24 @@ export default function CoinDetailPage() {
   const up30d = coin.change30d >= 0;
   const up1y = coin.change1y >= 0;
 
+  // Determine if this coin is the biggest winner or loser
+  let biggestGainer = watchlistCoins[0];
+  let biggestLoser = watchlistCoins[0];
+  for (const c of watchlistCoins) {
+    if (c.change24h > biggestGainer.change24h) biggestGainer = c;
+    if (c.change24h < biggestLoser.change24h) biggestLoser = c;
+  }
+
+  const isBiggestGainer = coin.id === biggestGainer.id;
+  const isBiggestLoser = coin.id === biggestLoser.id;
+  const headerClass = [
+    styles.header,
+    isBiggestGainer ? styles.headerBiggestGainer : "",
+    isBiggestLoser ? styles.headerBiggestLoser : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <>
       <Navigation />
@@ -45,7 +63,7 @@ export default function CoinDetailPage() {
         </Link>
 
         {/* Header Section */}
-        <div className={styles.header}>
+        <div className={headerClass}>
           <div className={styles.titleSection}>
             <CoinIcon iconClass={coin.iconClass} symbol={coin.symbol} size="lg" />
             <div className={styles.titleContent}>
@@ -58,7 +76,9 @@ export default function CoinDetailPage() {
           {/* Price & Change */}
           <div className={styles.priceSection}>
             <div className={styles.priceMain}>
-              <div className={styles.price}>{formatPrice(coin.price)}</div>
+              <div className={`${styles.price} ${isBiggestGainer ? styles.priceGainer : isBiggestLoser ? styles.priceLoser : ""}`}>
+                {formatPrice(coin.price)}
+              </div>
               <div className={styles.currency}>USD</div>
             </div>
             <div className={styles.changes}>
