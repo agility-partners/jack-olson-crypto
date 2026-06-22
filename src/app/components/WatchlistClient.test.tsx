@@ -159,6 +159,37 @@ describe('WatchlistClient', () => {
     expect(screen.queryByText('Dogecoin')).not.toBeInTheDocument();
   });
 
+  it('restores full list when search input is cleared', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    const searchInput = screen.getByLabelText('Search watchlist');
+
+    fireEvent.change(searchInput, { target: { value: 'Ethereum' } });
+    expect(document.querySelector('a[href="/coins/ethereum"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/bitcoin"]')).not.toBeInTheDocument();
+
+    fireEvent.change(searchInput, { target: { value: '' } });
+
+    expect(document.querySelector('a[href="/coins/bitcoin"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/ethereum"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/bnb"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/solana"]')).toBeInTheDocument();
+  });
+
+  it('returns to full list when All filter is selected after Gainers', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Gainers' }));
+    expect(document.querySelector('a[href="/coins/ethereum"]')).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Value' }));
+
+    expect(document.querySelector('a[href="/coins/bitcoin"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/ethereum"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/bnb"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/solana"]')).toBeInTheDocument();
+  });
+
   it('closes the modal after a successful add', async () => {
     render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
 
