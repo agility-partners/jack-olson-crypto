@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { watchlistCoins } from "@/app/lib/mockData";
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
@@ -14,10 +14,10 @@ export default function BrowsePage() {
     watchlistCoins.filter((c) => c.change24h >= 0).length
   );
 
-  const handleStatsChange = useCallback((count: number, gainers: number) => {
+  const handleStatsChange = (count: number, gainers: number) => {
     setCoinCount(count);
     setGainerCount(gainers);
-  }, []);
+  };
 
   return (
     <>
