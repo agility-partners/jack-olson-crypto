@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { coinDetails, sparkPaths } from "@/app/lib/mockData";
 import { formatPrice } from "@/app/lib/utils";
+import CoinIcon from "@/app/components/CoinIcon";
 import Sparkline from "@/app/components/Sparkline";
 import Navigation from "@/app/components/Navigation";
 import styles from "./page.module.css";
@@ -46,9 +47,7 @@ export default function CoinDetailPage() {
         {/* Header Section */}
         <div className={styles.header}>
           <div className={styles.titleSection}>
-            <div className={`${styles.coinIcon} ${styles[coin.iconClass]}`}>
-              {coin.symbol.slice(0, 3)}
-            </div>
+            <CoinIcon iconClass={coin.iconClass} symbol={coin.symbol} size="lg" />
             <div className={styles.titleContent}>
               <h1>{coin.name}</h1>
               <span className={styles.symbol}>{coin.symbol}</span>

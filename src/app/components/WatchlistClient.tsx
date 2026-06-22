@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import { filterCoins, sortCoins, type Filter } from "@/app/lib/watchlistUtils";
 import AddCoinModal from "./AddCoinModal";
@@ -19,6 +19,8 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
   const [filter, setFilter] = useState<Filter>("value");
   const [isGrid, setIsGrid] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [duplicateError, setDuplicateError] = useState<string | null>(null);
+  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const gainerCount = coins.filter((c) => c.change24h >= 0).length;
@@ -27,10 +29,13 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
 
   const handleAddCoin = (newCoin: Coin) => {
     if (coins.some((c) => c.id === newCoin.id)) {
-      alert("This coin is already in your watchlist!");
+      setDuplicateError(`${newCoin.name} is already in your watchlist.`);
+      if (dismissTimerRef.current) clearTimeout(dismissTimerRef.current);
+      dismissTimerRef.current = setTimeout(() => setDuplicateError(null), 4000);
       return;
     }
     setCoins([...coins, newCoin]);
+    setDuplicateError(null);
     setShowAddModal(false);
   };
 
@@ -127,6 +132,19 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
           </div>
         </div>
       </div>
+
+      {duplicateError && (
+        <div className={styles.duplicateError} role="alert">
+          {duplicateError}
+          <button
+            className={styles.duplicateErrorDismiss}
+            onClick={() => setDuplicateError(null)}
+            aria-label="Dismiss"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       <main>
         <div className={`${styles.coinGrid} ${!isGrid ? styles.listView : ""}`}>
