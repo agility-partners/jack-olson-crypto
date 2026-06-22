@@ -190,6 +190,32 @@ describe('WatchlistClient', () => {
     expect(document.querySelector('a[href="/coins/solana"]')).toBeInTheDocument();
   });
 
+  it('filters to losers when the Losers button is clicked', () => {
+  render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+  fireEvent.click(screen.getByRole('button', { name: 'Losers' }));
+
+  // In deterministic set, Ethereum is a loser; Bitcoin/Solana are gainers
+  expect(document.querySelector('a[href="/coins/ethereum"]')).toBeInTheDocument();
+  expect(document.querySelector('a[href="/coins/bitcoin"]')).not.toBeInTheDocument();
+  expect(document.querySelector('a[href="/coins/solana"]')).not.toBeInTheDocument();
+});
+
+  it('combines Gainers filter with search term', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Gainers' }));
+    fireEvent.change(screen.getByLabelText('Search watchlist'), {
+      target: { value: 'Sol' },
+    });
+
+    // Should narrow to Solana only
+    expect(document.querySelector('a[href="/coins/solana"]')).toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/bitcoin"]')).not.toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/ethereum"]')).not.toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/bnb"]')).not.toBeInTheDocument();
+  });
+
   it('closes the modal after a successful add', async () => {
     render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
 
