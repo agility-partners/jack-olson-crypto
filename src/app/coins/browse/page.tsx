@@ -9,8 +9,10 @@ import WatchlistClient from "@/app/components/WatchlistClient";
 import styles from "../../page.module.css";
 
 export default function BrowsePage() {
-  const [coinCount, setCoinCount] = useState(0);
-  const [gainerCount, setGainerCount] = useState(0);
+  const [coinCount, setCoinCount] = useState(watchlistCoins.length);
+  const [gainerCount, setGainerCount] = useState(
+    watchlistCoins.filter((c) => c.change24h >= 0).length
+  );
 
   const handleStatsChange = useCallback((count: number, gainers: number) => {
     setCoinCount(count);
