@@ -207,10 +207,20 @@
   font-weight: 600;
   padding: 5px 10px;
   border-radius: 6px;
+  animation: floatArrow 1.5s ease-in-out infinite;
 }
 
 .up { background: #14532d40; color: var(--green-bright); }
 .dn { background: #5c1a1a40; color: #ff7a7a; }
+
+@keyframes floatArrow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
 
 /* ── Card meta ── */
 .cardMeta {
