@@ -6,4 +6,4 @@ RUN bun install
 
 EXPOSE 3000
 
-CMD ["bun", "run", "dev:docker"]
+CMD ["bun", "run", "--no-install", "next", "dev", "--webpack"]
