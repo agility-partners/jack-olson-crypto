@@ -15,7 +15,7 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-    command: sh -c "bun install && bun run dev"
+    command: sh -c "bun install && bunx next dev --no-turbopack"
     ports:
       - "3000:3000"
     environment:
