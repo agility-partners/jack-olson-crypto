@@ -1,19 +1,28 @@
-import { watchlistCoins, getRandomWatchList } from "@/app/lib/mockData";
+import { Coin } from "@/app/lib/mockData";
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import WatchlistWrapper from "@/app/components/WatchlistWrapper";
 import styles from "./page.module.css";
 
-export default function WatchlistPage() {
-  // Pre-shuffle coins on server ONLY (no client-side execution)
-  const initialWatchlist = getRandomWatchList(12);
+export default async function WatchlistPage() {
+  const apiUrl = process.env.API_URL ?? "http://localhost:8080";
+  let initialCoins: Coin[] = [];
+
+  try {
+    const res = await fetch(`${apiUrl}/api/coins`, { cache: "no-store" });
+    if (res.ok) {
+      initialCoins = await res.json();
+    }
+  } catch {
+    // API unavailable — render with empty list
+  }
 
   return (
     <>
-      <TickerStrip coins={watchlistCoins} />
+      <TickerStrip coins={initialCoins} />
       <Navigation />
 
-      <WatchlistWrapper initialCoins={initialWatchlist} />
+      <WatchlistWrapper initialCoins={initialCoins} />
     </>
   );
 }

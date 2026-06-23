@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Coin, coinDetails, sparkPaths } from "@/app/lib/mockData";
+import { useState, useEffect } from "react";
+import { Coin } from "@/app/lib/mockData";
 import styles from "./AddCoinModal.module.css";
 
 type FormData = {
@@ -18,20 +18,29 @@ type Props = {
   currentCoins: Coin[];
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+
 export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props) {
+  const [allCoins, setAllCoins] = useState<Coin[]>([]);
+  const [fetchError, setFetchError] = useState(false);
   const [formData, setFormData] = useState<FormData>({ coinId: "" });
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  useEffect(() => {
+    fetch(`${API_URL}/api/coins`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch coins");
+        return res.json() as Promise<Coin[]>;
+      })
+      .then((data) => setAllCoins(data))
+      .catch(() => setFetchError(true));
+  }, []);
+
   // Get available coins (not already in watchlist)
-  const availableCoins = Object.entries(coinDetails)
-    .filter(([id]) => !currentCoins.some((c) => c.id === id))
-    .map(([id, details]) => ({
-      id,
-      name: details.name,
-      symbol: details.symbol,
-    }))
+  const availableCoins = allCoins
+    .filter((coin) => !currentCoins.some((c) => c.id === coin.id))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   const validateForm = (): boolean => {
@@ -39,7 +48,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
 
     if (!formData.coinId.trim()) {
       newErrors.coinId = "Please select a cryptocurrency";
-    } else if (!coinDetails[formData.coinId]) {
+    } else if (!allCoins.find((c) => c.id === formData.coinId)) {
       newErrors.coinId = "Invalid cryptocurrency selected";
     }
 
@@ -65,31 +74,31 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+      const res = await fetch(`${API_URL}/api/watchlist`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ coinId: formData.coinId }),
+      });
 
-    const selectedCoin = coinDetails[formData.coinId];
-    if (selectedCoin) {
-      const newCoin: Coin = {
-        id: selectedCoin.id,
-        name: selectedCoin.name,
-        symbol: selectedCoin.symbol,
-        iconClass: selectedCoin.iconClass,
-        rank: selectedCoin.rank,
-        price: selectedCoin.price,
-        change24h: selectedCoin.change24h,
-        marketCap: selectedCoin.marketCap,
-        volume: selectedCoin.volume,
-      };
+      // 409 Conflict means already in watchlist — treat as success
+      if (!res.ok && res.status !== 409) {
+        throw new Error("Failed to add coin to watchlist");
+      }
 
-      setSubmitSuccess(true);
-      setTimeout(() => {
-        onAddCoin(newCoin);
+      const selectedCoin = allCoins.find((c) => c.id === formData.coinId);
+      if (selectedCoin) {
+        setSubmitSuccess(true);
+        setTimeout(() => {
+          onAddCoin(selectedCoin);
+          setIsSubmitting(false);
+          setFormData({ coinId: "" });
+          setSubmitSuccess(false);
+        }, 1200);
+      } else {
         setIsSubmitting(false);
-        setFormData({ coinId: "" });
-        setSubmitSuccess(false);
-      }, 1200);
-    } else {
+      }
+    } catch {
       setIsSubmitting(false);
     }
   };
@@ -112,23 +121,27 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
             <label htmlFor="coinId" className={styles.label}>
               Select Cryptocurrency
             </label>
-            <select
-              id="coinId"
-              name="coinId"
-              value={formData.coinId}
-              onChange={handleChange}
-              className={`${styles.select} ${errors.coinId ? styles.error : ""}`}
-              disabled={isSubmitting}
-            >
-              <option value="">Choose a coin...</option>
-              {availableCoins.map((coin) => (
-                <option key={coin.id} value={coin.id}>
-                  {coin.name} ({coin.symbol})
-                </option>
-              ))}
-            </select>
+            {fetchError ? (
+              <span className={styles.errorMessage}>Could not load coins. Is the API running?</span>
+            ) : (
+              <select
+                id="coinId"
+                name="coinId"
+                value={formData.coinId}
+                onChange={handleChange}
+                className={`${styles.select} ${errors.coinId ? styles.error : ""}`}
+                disabled={isSubmitting || allCoins.length === 0}
+              >
+                <option value="">{allCoins.length === 0 ? "Loading…" : "Choose a coin..."}</option>
+                {availableCoins.map((coin) => (
+                  <option key={coin.id} value={coin.id}>
+                    {coin.name} ({coin.symbol})
+                  </option>
+                ))}
+              </select>
+            )}
             {errors.coinId && <span className={styles.errorMessage}>{errors.coinId}</span>}
-            {availableCoins.length === 0 && (
+            {!fetchError && allCoins.length > 0 && availableCoins.length === 0 && (
               <span className={styles.infoMessage}>All cryptocurrencies are already in your watchlist!</span>
             )}
           </div>
@@ -140,7 +153,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
             <button
               type="submit"
               className={`${styles.submitBtn} ${submitSuccess ? styles.success : ""} ${isSubmitting ? styles.loading : ""}`}
-              disabled={isSubmitting || availableCoins.length === 0}
+              disabled={isSubmitting || availableCoins.length === 0 || fetchError}
             >
               {isSubmitting ? (
                 <>

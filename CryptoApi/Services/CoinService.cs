@@ -39,6 +39,7 @@ public class CoinService : ICoinService
             Id = coin.Id,
             Symbol = coin.Symbol,
             Name = coin.Name,
+            IconClass = coin.IconClass,
             Price = coin.Price,
             Change24h = coin.Change24h,
             Rank = coin.Rank,

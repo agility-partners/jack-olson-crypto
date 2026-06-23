@@ -7,6 +7,8 @@ import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+
 type Props = {
   initialCoins: Coin[];
   onStatsChange?: (coinCount: number, gainerCount: number) => void;
@@ -56,6 +58,9 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
 
     const gainerCount = updatedCoins.filter((coin) => coin.change24h >= 0).length;
     onStatsChange?.(updatedCoins.length, gainerCount);
+
+    // Sync removal with API (fire and forget)
+    fetch(`${API_URL}/api/watchlist/${coinId}`, { method: "DELETE" }).catch(() => {});
   };
 
   const filtered = filterCoins(coins, search, filter);

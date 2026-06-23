@@ -3,6 +3,16 @@ using CryptoApi.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddScoped<ICoinService, CoinService>();
 builder.Services.AddScoped<IWatchlistService, WatchlistService>();
@@ -22,6 +32,8 @@ if (!app.Environment.IsProduction())
     {
         app.UseHttpsRedirection();
     }
+
+app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
 
