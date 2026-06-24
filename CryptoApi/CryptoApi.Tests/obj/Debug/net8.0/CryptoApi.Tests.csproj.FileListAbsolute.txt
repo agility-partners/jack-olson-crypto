@@ -250,3 +250,13 @@ C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\obj\Debug\net
 C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\obj\Debug\net8.0\CryptoApi.Tests.pdb
 C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\obj\Debug\net8.0\CryptoApi.Tests.genruntimeconfig.cache
 C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\obj\Debug\net8.0\ref\CryptoApi.Tests.dll
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\appsettings.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.deps.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.runtimeconfig.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.staticwebassets.endpoints.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests.deps.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests.runtimeconfig.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\obj\CryptoApi.Tests.csproj.nuget.dgspec.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\obj\Debug\net8.0\CryptoApi.Tests.sourcelink.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\bin\Debug\net8.0\CryptoApi.Tests\obj\project.assets.json
