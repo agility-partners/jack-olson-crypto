@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="CryptoApi.Tests/**/*.cs" />
+    <EmbeddedResource Remove="CryptoApi.Tests/**/*" />
+    <None Remove="CryptoApi.Tests/**/*" />
+  </ItemGroup>
+
 </Project>
