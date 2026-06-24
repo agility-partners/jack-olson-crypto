@@ -9,7 +9,9 @@ const sampleCoins = [
     price: 67842.5,
     change24h: 2.34,
     marketCap: '$1.34T',
+    marketCapRaw: 1_340_000_000_000,
     volume: '$28.4B',
+    volumeRaw: 28_400_000_000,
   },
   {
     id: 'ethereum',
@@ -18,7 +20,9 @@ const sampleCoins = [
     price: 3521.8,
     change24h: -1.12,
     marketCap: '$423B',
+    marketCapRaw: 423_000_000_000,
     volume: '$14.1B',
+    volumeRaw: 14_100_000_000,
   },
   {
     id: 'solana',
@@ -27,7 +31,9 @@ const sampleCoins = [
     price: 182.4,
     change24h: 5.67,
     marketCap: '$85.2B',
+    marketCapRaw: 85_200_000_000,
     volume: '$4.8B',
+    volumeRaw: 4_800_000_000,
   },
 ];
 

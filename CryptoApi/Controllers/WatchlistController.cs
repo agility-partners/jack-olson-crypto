@@ -18,7 +18,7 @@ public class WatchlistController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<WatchlistItemDto>>> GetWatchlist()
+    public async Task<ActionResult<IEnumerable<CoinDto>>> GetWatchlist()
     {
         var watchlist = await _watchlistService.GetWatchlistAsync();
         return Ok(watchlist);

@@ -10,5 +10,7 @@ public class CoinDto
     public decimal Change24h { get; set; }
     public int Rank { get; set; }
     public string MarketCap { get; set; } = string.Empty;
+    public decimal MarketCapRaw { get; set; }
     public string Volume { get; set; } = string.Empty;
+    public decimal VolumeRaw { get; set; }
 }
