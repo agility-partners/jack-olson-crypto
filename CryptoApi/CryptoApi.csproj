@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Compile Remove="CryptoApi.Tests/**/*.cs" />
+    <Content Remove="CryptoApi.Tests/**/*" />
     <EmbeddedResource Remove="CryptoApi.Tests/**/*" />
     <None Remove="CryptoApi.Tests/**/*" />
   </ItemGroup>
