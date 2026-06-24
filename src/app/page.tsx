@@ -11,7 +11,11 @@ export default async function WatchlistPage() {
   try {
     const res = await fetch(`${apiUrl}/api/watchlist`, { cache: "no-store" });
     if (res.ok) {
-      initialCoins = await res.json();
+      const watchlistEntries = await res.json();
+      // Map watchlist entries to full Coin objects using coinId
+      initialCoins = watchlistEntries
+        .map((entry: any) => watchlistCoins.find((c) => c.id === entry.coinId))
+        .filter((coin: Coin | undefined): coin is Coin => coin !== undefined);
     }
   } catch {
     // API unavailable — render with empty list
