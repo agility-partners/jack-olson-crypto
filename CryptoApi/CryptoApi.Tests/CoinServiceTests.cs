@@ -43,4 +43,35 @@ public class CoinServiceTests
 
         result.Should().BeNull();
     }
+
+    [Fact]
+    public async Task GetAllCoins_ContainsEthereumWithCorrectSymbol()
+    {
+        var result = await _coinService.GetAllCoinsAsync();
+
+        result.Should().Contain(c => c.Id == "ethereum" && c.Symbol == "ETH");
+    }
+
+    [Fact]
+    public async Task GetCoinById_ReturnsEthereum_WhenIdIsEthereum()
+    {
+        var result = await _coinService.GetCoinByIdAsync("ethereum");
+
+        result.Should().NotBeNull();
+        result!.Name.Should().Be("Ethereum");
+        result.Symbol.Should().Be("ETH");
+        result.Rank.Should().Be(2);
+    }
+
+    [Fact]
+    public async Task GetAllCoins_ReturnsMultipleCoinsWithExpectedCount()
+    {
+        var result = await _coinService.GetAllCoinsAsync();
+
+        result.Should().HaveCountGreaterThan(20);
+        result.Should().Contain(c => c.Symbol == "BTC");
+        result.Should().Contain(c => c.Symbol == "SOL");
+        result.Should().Contain(c => c.Symbol == "DOGE");
+    }
 }
+
