@@ -43,4 +43,14 @@ public class CoinServiceTests
 
         result.Should().BeNull();
     }
+
+    [Fact]
+    public async Task GetCoinById_ProvidesCoinRank_WhenCoinExists()
+    {
+        var result = await _coinService.GetCoinByIdAsync("tezos");
+
+        result.Should().NotBeNull();
+        result!.Symbol.Should().Be("XTZ");
+        result.Rank.Should().Be(28);
+    }
 }
