@@ -1,1 +1,11 @@
-{"Version":1,"Hash":"U7aEKaxE+TmeLAhbJl7VFZD6oNm8fa70Wkjt8h65qMI=","Source":"CryptoApi","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "ZGQYAMbpAHLzOjRwq3jlXAY17sDYP65l0+X5SCuC2IU=",
+  "Source": "CryptoApi",
+  "BasePath": "_content/CryptoApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
