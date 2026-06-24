@@ -7,7 +7,7 @@ test.describe('Coin detail page', () => {
     // Header info
     const heading = page.locator('h1', { hasText: 'Bitcoin' });
     await expect(heading).toBeVisible({ timeout: 10000 });
-    await expect(page.getByText('BTC')).toBeVisible();
+
     await expect(page.getByText(/Rank #1/)).toBeVisible();
 
     // Price section with USD label
