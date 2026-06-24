@@ -9,7 +9,7 @@ export default async function WatchlistPage() {
   let initialCoins: Coin[] = [];
 
   try {
-    const res = await fetch(`${apiUrl}/api/coins`, { cache: "no-store" });
+    const res = await fetch(`${apiUrl}/api/watchlist`, { cache: "no-store" });
     if (res.ok) {
       initialCoins = await res.json();
     }
