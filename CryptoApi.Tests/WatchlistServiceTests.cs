@@ -3,6 +3,7 @@ using Xunit;
 using CryptoApi.DTOs;
 using CryptoApi.Models;
 using CryptoApi.Services;
+using System.Reflection;
 
 namespace CryptoApi.Tests;
 
@@ -15,6 +16,18 @@ public class WatchlistServiceTests
     {
         _mockCoinService = new Mock<ICoinService>();
         _watchlistService = new WatchlistService(_mockCoinService.Object);
+        ClearMockWatchlist();
+    }
+
+    private static void ClearMockWatchlist()
+    {
+        // Clear the static MockWatchlist before each test
+        var mockWatchlistField = typeof(WatchlistService)
+            .GetField("MockWatchlist", BindingFlags.NonPublic | BindingFlags.Static);
+        if (mockWatchlistField?.GetValue(null) is System.Collections.IList mockWatchlist)
+        {
+            mockWatchlist.Clear();
+        }
     }
 
     [Fact]
