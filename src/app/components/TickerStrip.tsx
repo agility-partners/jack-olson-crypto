@@ -6,11 +6,7 @@ type Props = { coins: Coin[] };
 
 export default function TickerStrip({ coins }: Props) {
   // Sort coins by market cap value (descending)
-  const sortedCoins = [...coins].sort((a, b) => {
-    const aValue = parseFloat(a.marketCap.replace(/[$B,T]/g, "")) * (a.marketCap.includes("T") ? 1000 : 1);
-    const bValue = parseFloat(b.marketCap.replace(/[$B,T]/g, "")) * (b.marketCap.includes("T") ? 1000 : 1);
-    return bValue - aValue;
-  });
+  const sortedCoins = [...coins].sort((a, b) => b.marketCapRaw - a.marketCapRaw);
 
   // Duplicate items for seamless loop
   const items = [...sortedCoins, ...sortedCoins];

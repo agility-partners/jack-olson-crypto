@@ -8,10 +8,22 @@ public class WatchlistService : IWatchlistService
     // In-memory storage — will be replaced with database in Week 3
     private static readonly List<WatchlistItem> MockWatchlist = new();
 
-    public async Task<IEnumerable<WatchlistItemDto>> GetWatchlistAsync()
+    private readonly ICoinService _coinService;
+
+    public WatchlistService(ICoinService coinService)
     {
-        await Task.Delay(0);
-        return MockWatchlist.Select(item => MapToDto(item)).ToList();
+        _coinService = coinService;
+    }
+
+    public async Task<IEnumerable<CoinDto>> GetWatchlistAsync()
+    {
+        var allCoins = await _coinService.GetAllCoinsAsync();
+        var coinMap = allCoins.ToDictionary(c => c.Id);
+
+        return MockWatchlist
+            .Where(item => coinMap.ContainsKey(item.CoinId))
+            .Select(item => coinMap[item.CoinId])
+            .ToList();
     }
 
     public async Task<WatchlistItemDto> AddCoinAsync(string coinId)
