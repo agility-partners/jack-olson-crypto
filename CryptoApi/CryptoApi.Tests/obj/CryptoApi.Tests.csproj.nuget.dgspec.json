@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.Tests\\CryptoApi.Tests.csproj": {}
+    "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/CryptoApi.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj": {
+    "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/CryptoApi.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj",
-        "projectName": "CryptoApi",
-        "projectPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj",
-        "packagesPath": "C:\\Users\\JackOlson\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\obj\\",
+        "projectUniqueName": "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/CryptoApi.Tests.csproj",
+        "projectName": "CryptoApi.Tests",
+        "projectPath": "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/CryptoApi.Tests.csproj",
+        "packagesPath": "/home/runner/.nuget/packages/",
+        "outputPath": "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JackOlson\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/runner/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -24,6 +24,7 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -37,85 +38,12 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
-          "targetAlias": "net8.0",
-          "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
-              "target": "Package",
-              "version": "[8.0.28, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.6.2, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.422/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.Tests\\CryptoApi.Tests.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.Tests\\CryptoApi.Tests.csproj",
-        "projectName": "CryptoApi.Tests",
-        "projectPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.Tests\\CryptoApi.Tests.csproj",
-        "packagesPath": "C:\\Users\\JackOlson\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.Tests\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\JackOlson\\AppData\\Roaming\\NuGet\\NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj": {
-                "projectPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "FluentAssertions": {
@@ -157,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.422/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

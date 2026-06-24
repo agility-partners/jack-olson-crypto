@@ -1,0 +1,6 @@
+/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/Debug/net8.0/CryptoApi.Tests.csproj.AssemblyReference.cache
+/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/Debug/net8.0/CryptoApi.Tests.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/Debug/net8.0/CryptoApi.Tests.AssemblyInfoInputs.cache
+/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/Debug/net8.0/CryptoApi.Tests.AssemblyInfo.cs
+/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/Debug/net8.0/CryptoApi.Tests.csproj.CoreCompileInputs.cache
+/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.Tests/obj/Debug/net8.0/CryptoApi.Tests.sourcelink.json
