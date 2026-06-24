@@ -27,7 +27,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "bun run dev",
+    command: "bun run dev:docker",
     url: "http://localhost:3000",
     reuseExistingServer: false,
     timeout: 180000,
