@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "targets": {
     "net8.0": {
       "Microsoft.AspNetCore.OpenApi/8.0.28": {
@@ -482,19 +482,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\JackOlson\\.nuget\\packages\\": {}
+    "/home/runner/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj",
+      "projectUniqueName": "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.csproj",
       "projectName": "CryptoApi",
-      "projectPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\CryptoApi.csproj",
-      "packagesPath": "C:\\Users\\JackOlson\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\JackOlson\\GitHub\\connect\\my-app\\CryptoApi\\obj\\",
+      "projectPath": "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/CryptoApi.csproj",
+      "packagesPath": "/home/runner/.nuget/packages/",
+      "outputPath": "/home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\JackOlson\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/runner/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -504,6 +504,7 @@
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {}
         }
@@ -517,10 +518,12 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "10.0.300"
     },
     "frameworks": {
       "net8.0": {
+        "framework": "net8.0",
         "targetAlias": "net8.0",
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": {
@@ -551,7 +554,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.422/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
