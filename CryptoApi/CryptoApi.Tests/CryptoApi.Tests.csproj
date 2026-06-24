@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CryptoApi.csproj" />
+    <ProjectReference Include="..\CryptoApi\CryptoApi.csproj" />
   </ItemGroup>
 
 </Project>
