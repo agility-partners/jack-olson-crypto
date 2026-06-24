@@ -1,4 +1,4 @@
-import { Coin } from "@/app/lib/mockData";
+import { Coin, watchlistCoins } from "@/app/lib/mockData";
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import WatchlistWrapper from "@/app/components/WatchlistWrapper";
@@ -19,7 +19,7 @@ export default async function WatchlistPage() {
 
   return (
     <>
-      <TickerStrip coins={initialCoins} />
+      <TickerStrip coins={watchlistCoins} />
       <Navigation />
 
       <WatchlistWrapper initialCoins={initialCoins} />
