@@ -69,3 +69,14 @@ C:/Users/JackOlson/GitHub/connect/my-app/CryptoApi/obj/Debug/net8.0/ref/CryptoAp
 /home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/obj/Debug/net8.0/CryptoApi.pdb
 /home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/obj/Debug/net8.0/CryptoApi.genruntimeconfig.cache
 /home/runner/work/jack-olson-crypto/jack-olson-crypto/CryptoApi/obj/Debug/net8.0/ref/CryptoApi.dll
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.csproj.AssemblyReference.cache
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.AssemblyInfoInputs.cache
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.AssemblyInfo.cs
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.csproj.CoreCompileInputs.cache
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.sourcelink.json
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.dll
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\refint\CryptoApi.dll
+C:\Users\JackOlson\GitHub\connect\my-app\CryptoApi\obj\Debug\net8.0\CryptoApi.pdb
