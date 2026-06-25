@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-const apiBaseUrl = 'http://127.0.0.1:8080/api';
+const apiBaseUrl = 'http://127.0.0.1:8081/api';
 
 async function resetWatchlist(request) {
   const response = await request.get(`${apiBaseUrl}/watchlist`);
