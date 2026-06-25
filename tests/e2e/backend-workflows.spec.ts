@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
+import { AnyActionArg } from 'react';
 
 const apiBaseUrl = 'http://127.0.0.1:8081/api';
 
-async function resetWatchlist(request) {
+async function resetWatchlist(request:any) {
   const response = await request.get(`${apiBaseUrl}/watchlist`);
   expect(response.ok()).toBeTruthy();
 
@@ -14,7 +15,7 @@ async function resetWatchlist(request) {
   }
 }
 
-async function seedWatchlist(request, coinIds) {
+async function seedWatchlist(request: any, coinIds: any) {
   for (const coinId of coinIds) {
     const response = await request.post(`${apiBaseUrl}/watchlist`, {
       data: { coinId },
@@ -24,7 +25,7 @@ async function seedWatchlist(request, coinIds) {
   }
 }
 
-async function openAddCoinModal(page) {
+async function openAddCoinModal(page: any) {
   await page.getByRole('button', { name: /add coin/i }).click();
   await expect(page.getByRole('heading', { name: 'Add Cryptocurrency' })).toBeVisible();
 }
