@@ -94,7 +94,7 @@ test.describe('Backend watchlist journeys', () => {
 
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toHaveCount(1, { timeout: 10000 });
     await expect(page.getByText('Tracking 1 assets')).toBeVisible();
-    await expect(page.getByRole('alert')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Add Cryptocurrency' })).toHaveCount(0);
 
     await page.reload();
 
