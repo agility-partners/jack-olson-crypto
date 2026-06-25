@@ -5,8 +5,8 @@ import styles from "./TickerStrip.module.css";
 type Props = { coins: Coin[] };
 
 export default function TickerStrip({ coins }: Props) {
-  // Sort coins by market cap value (descending)
-  const sortedCoins = [...coins].sort((a, b) => b.marketCapRaw - a.marketCapRaw);
+  // Sort coins by price value (descending)
+  const sortedCoins = [...coins].sort((a, b) => b.price - a.price);
 
   // Duplicate items for seamless loop
   const items = [...sortedCoins, ...sortedCoins];
