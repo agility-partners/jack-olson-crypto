@@ -73,5 +73,20 @@ public class CoinServiceTests
         result.Should().Contain(c => c.Symbol == "SOL");
         result.Should().Contain(c => c.Symbol == "DOGE");
     }
-}
 
+    [Fact]
+    public async Task GetCoinById_ReturnsNull_WhenIdCaseDoesNotMatch()
+    {
+        var result = await _coinService.GetCoinByIdAsync("Bitcoin");
+
+        result.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task GetAllCoins_ReturnsCoinsWithUniqueIds()
+    {
+        var result = (await _coinService.GetAllCoinsAsync()).ToList();
+
+        result.Should().OnlyHaveUniqueItems(c => c.Id);
+    }
+}
