@@ -1,8 +1,14 @@
 .statsBar {
   display: flex;
+  align-items: center;
   gap: 0;
   padding: 0 32px;
   border-bottom: 1px solid var(--border);
+}
+
+.statsItems {
+  display: flex;
+  align-items: center;
 }
 
 .statItem {
@@ -40,4 +46,61 @@
 
 @media (max-width: 640px) {
   .statsBar { padding-left: 16px; padding-right: 16px; overflow-x: auto; }
+}
+
+/* ── Legend key ── */
+.legend {
+  margin-left: auto;
+  padding: 10px 0 10px 24px;
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legendLabel {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.legendItems {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.legendGainer {
+  background: var(--bg-card);
+  border-color: var(--border);
+}
+
+.legendLoser {
+  background: #ff000020;
+  border-color: #a022229c;
+  color: #ff7a7a;
+}
+
+.legendBiggestGainer {
+  background: #d4a01730;
+  border-color: #d49e17f2;
+  color: #d4a017;
+}
+
+.legendBiggestLoser {
+  background: #4d017037;
+  border-color: #6e028f;
+  color: #9c00c4;
 }
