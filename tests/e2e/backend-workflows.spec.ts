@@ -6,7 +6,7 @@ async function resetWatchlist(request: APIRequestContext) {
   const response = await request.get(`${apiBaseUrl}/watchlist`);
   expect(response.ok()).toBeTruthy();
 
-  const watchlist = (await response.json()) as Array<{ id: string }>;
+  const watchlist = await response.json();
 
   for (const coin of watchlist) {
     const removeResponse = await request.delete(`${apiBaseUrl}/watchlist/${coin.id}`);
