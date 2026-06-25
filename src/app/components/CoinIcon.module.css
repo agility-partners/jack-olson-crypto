@@ -53,6 +53,14 @@
 .fil   { background: #00b8e633; color: #00d9ff; border: 1px solid #00b8e655; }
 .icp   { background: #5a7cff33; color: #7b9dff; border: 1px solid #5a7cff55; }
 .xtz   { background: #5a7cff33; color: #7b9dff; border: 1px solid #5a7cff55; }
+.near  { background: #84cc1633; color: #a3e635; border: 1px solid #84cc1655; }
+.aave  { background: #db277733; color: #f472b6; border: 1px solid #db277755; }
+.xlm   { background: #0284c733; color: #38bdf8; border: 1px solid #0284c755; }
+.op    { background: #b91c1c33; color: #ef4444; border: 1px solid #b91c1c55; }
+.shib  { background: #b4530933; color: #fbbf24; border: 1px solid #b4530955; }
+.inj   { background: #1d4ed833; color: #60a5fa; border: 1px solid #1d4ed855; }
+.arb   { background: #4338ca33; color: #818cf8; border: 1px solid #4338ca55; }
+.apt   { background: #0f766e33; color: #2dd4bf; border: 1px solid #0f766e55; }
 
 /* ── Per-coin colours — detail (lg) variant ── */
 /* Solid gradient background, white text (colour: white from .lg, forced with !important) */
@@ -80,3 +88,11 @@
 .lg.fil   { background: linear-gradient(135deg, #00d9ff 0%, #00b8e6 100%); color: white !important; border: none; }
 .lg.icp   { background: linear-gradient(135deg, #7b9dff 0%, #5a7cff 100%); color: white !important; border: none; }
 .lg.xtz   { background: linear-gradient(135deg, #7b9dff 0%, #5a7cff 100%); color: white !important; border: none; }
+.lg.near  { background: linear-gradient(135deg, #a3e635 0%, #84cc16 100%); color: white !important; border: none; }
+.lg.aave  { background: linear-gradient(135deg, #f472b6 0%, #db2777 100%); color: white !important; border: none; }
+.lg.xlm   { background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: white !important; border: none; }
+.lg.op    { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: white !important; border: none; }
+.lg.shib  { background: linear-gradient(135deg, #fbbf24 0%, #b45309 100%); color: white !important; border: none; }
+.lg.inj   { background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%); color: white !important; border: none; }
+.lg.arb   { background: linear-gradient(135deg, #818cf8 0%, #4338ca 100%); color: white !important; border: none; }
+.lg.apt   { background: linear-gradient(135deg, #2dd4bf 0%, #0f766e 100%); color: white !important; border: none; }
