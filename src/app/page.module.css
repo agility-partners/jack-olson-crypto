@@ -41,7 +41,7 @@
 
   text-shadow: 0 0 8px rgba(0, 255, 128, 0.25);
   transform: skewX(-10deg);
-  animation: matrixSweep 6s linear infinite;
+  animation: matrixSweep 8s linear infinite;
 }
 
 .pageHeaderContent {

@@ -85,6 +85,7 @@
 .legendGainer {
   background: var(--bg-card);
   border-color: var(--border);
+  color: #34d399;
 }
 
 .legendLoser {
