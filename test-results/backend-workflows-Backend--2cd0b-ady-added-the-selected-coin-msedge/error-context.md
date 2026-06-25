@@ -26,8 +26,8 @@ SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
   6   |   const response = await request.get(`${apiBaseUrl}/watchlist`);
   7   |   expect(response.ok()).toBeTruthy();
   8   | 
-> 9   |   const watchlist = (await response.json()) as Array<{ id: string }>;
-      |                      ^ SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+> 9   |   const watchlist = await response.json();
+      |                     ^ SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
   10  | 
   11  |   for (const coin of watchlist) {
   12  |     const removeResponse = await request.delete(`${apiBaseUrl}/watchlist/${coin.id}`);
