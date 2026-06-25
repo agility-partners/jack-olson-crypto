@@ -1,6 +1,6 @@
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
 
-const apiBaseUrl = 'http://localhost:8081/swagger/index.html';
+const apiBaseUrl = 'http://127.0.0.1:8081/api';
 
 async function resetWatchlist(request: APIRequestContext) {
   const response = await request.get(`${apiBaseUrl}/watchlist`);
