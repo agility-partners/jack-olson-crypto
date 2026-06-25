@@ -124,4 +124,19 @@ public class WatchlistServiceTests
         Assert.Contains(result, c => c.Id == "bitcoin");
         Assert.Contains(result, c => c.Id == "ethereum");
     }
+
+    [Fact]
+    public async Task GetWatchlistAsync_SkipsCoinsMissingFromCoinServiceResponse()
+    {
+        // Arrange
+        await _watchlistService.AddCoinAsync("bitcoin");
+        _mockCoinService.Setup(cs => cs.GetAllCoinsAsync())
+            .ReturnsAsync(new List<CoinDto>());
+
+        // Act
+        var result = await _watchlistService.GetWatchlistAsync();
+
+        // Assert
+        Assert.Empty(result);
+    }
 }
