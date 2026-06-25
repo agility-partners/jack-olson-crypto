@@ -1,12 +1,12 @@
-import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const apiBaseUrl = 'http://127.0.0.1:8081/api';
 
-async function resetWatchlist(request: APIRequestContext) {
+async function resetWatchlist(request) {
   const response = await request.get(`${apiBaseUrl}/watchlist`);
   expect(response.ok()).toBeTruthy();
 
-  const watchlist = (await response.json()) as Array<{ id: string }>;
+  const watchlist = await response.json();
 
   for (const coin of watchlist) {
     const removeResponse = await request.delete(`${apiBaseUrl}/watchlist/${coin.id}`);
@@ -14,7 +14,7 @@ async function resetWatchlist(request: APIRequestContext) {
   }
 }
 
-async function seedWatchlist(request: APIRequestContext, coinIds: string[]) {
+async function seedWatchlist(request, coinIds) {
   for (const coinId of coinIds) {
     const response = await request.post(`${apiBaseUrl}/watchlist`, {
       data: { coinId },
@@ -24,7 +24,7 @@ async function seedWatchlist(request: APIRequestContext, coinIds: string[]) {
   }
 }
 
-async function openAddCoinModal(page: Page) {
+async function openAddCoinModal(page) {
   await page.getByRole('button', { name: /add coin/i }).click();
   await expect(page.getByRole('heading', { name: 'Add Cryptocurrency' })).toBeVisible();
 }

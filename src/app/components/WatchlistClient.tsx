@@ -36,28 +36,17 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
       dismissTimerRef.current = setTimeout(() => setDuplicateError(null), 4000);
       return;
     }
-    const updatedCoins = [...coins, newCoin];
-    setCoins(updatedCoins);
-    
-    // Immediately call onStatsChange with updated values
-    const gainerCount = updatedCoins.filter((c) => c.change24h >= 0).length;
-    onStatsChange?.(updatedCoins.length, gainerCount);
-    
+    setCoins((prev) => [...prev, newCoin]);
     setDuplicateError(null);
     setShowAddModal(false);
   };
 
   const handleRemoveCoin = (coinId: string) => {
-    const updatedCoins = coins.filter((coin) => coin.id !== coinId);
-
-    if (updatedCoins.length === coins.length) {
-      return;
-    }
-
-    setCoins(updatedCoins);
-
-    const gainerCount = updatedCoins.filter((coin) => coin.change24h >= 0).length;
-    onStatsChange?.(updatedCoins.length, gainerCount);
+    setCoins((prev) => {
+      const updated = prev.filter((coin) => coin.id !== coinId);
+      if (updated.length === prev.length) return prev;
+      return updated;
+    });
 
     // Sync removal with API (fire and forget)
     fetch(`${API_URL}/api/watchlist/${coinId}`, { method: "DELETE" }).catch(() => {});

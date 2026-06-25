@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import StatsBar from "./StatsBar";
 import WatchlistClient from "./WatchlistClient";
@@ -18,10 +18,10 @@ export default function WatchlistWrapper({ initialCoins }: Props) {
     () => initialCoins.filter((c) => c.change24h >= 0).length
   );
 
-  const handleStatsChange = (newCoinCount: number, newGainerCount: number) => {
+  const handleStatsChange = useCallback((newCoinCount: number, newGainerCount: number) => {
     setCoinCount(newCoinCount);
     setGainerCount(newGainerCount);
-  };
+  }, []);
 
   return (
     <>
