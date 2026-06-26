@@ -1,0 +1,223 @@
+[0m14:58:53.977990 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E819A930>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E7631B80>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E76321B0>]}
+
+
+============================== 14:58:54.001211 | ab3497dd-4f72-4f9e-bff8-314fde1b6d79 ==============================
+[0m14:58:54.001211 [info ] [MainThread]: Running with dbt=1.11.11
+[0m14:58:54.005750 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': '.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt debug --project-dir transform --profiles-dir .dbt', 'indirect_selection': 'eager', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m14:58:54.029969 [info ] [MainThread]: dbt version: 1.11.11
+[0m14:58:54.029969 [info ] [MainThread]: python version: 3.12.9
+[0m14:58:54.029969 [info ] [MainThread]: python path: C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\python.exe
+[0m14:58:54.029969 [info ] [MainThread]: os info: Windows-11-10.0.26200-SP0
+[0m14:58:55.982525 [info ] [MainThread]: Using profiles dir at .dbt
+[0m14:58:55.984532 [info ] [MainThread]: Using profiles.yml file at .dbt\profiles.yml
+[0m14:58:55.984532 [info ] [MainThread]: Using dbt_project.yml file at transform\dbt_project.yml
+[0m14:58:55.984532 [info ] [MainThread]: adapter type: sqlserver
+[0m14:58:55.984532 [info ] [MainThread]: adapter version: 1.10.0
+[0m14:58:56.060361 [info ] [MainThread]: Configuration:
+[0m14:58:56.061404 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m14:58:56.061404 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m14:58:56.061404 [info ] [MainThread]: Required dependencies:
+[0m14:58:56.061404 [debug] [MainThread]: Executing "git --help"
+[0m14:58:56.099371 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   history    EXPERIMENTAL: Rewrite history\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m14:58:56.100120 [debug] [MainThread]: STDERR: "b''"
+[0m14:58:56.100120 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m14:58:56.100120 [info ] [MainThread]: Connection:
+[0m14:58:56.100120 [info ] [MainThread]:   server: localhost
+[0m14:58:56.100120 [info ] [MainThread]:   port: 1433
+[0m14:58:56.100120 [info ] [MainThread]:   database: crypto_data
+[0m14:58:56.100120 [info ] [MainThread]:   schema: silver
+[0m14:58:56.102656 [info ] [MainThread]:   UID: sa
+[0m14:58:56.102656 [info ] [MainThread]:   authentication: sql
+[0m14:58:56.103940 [info ] [MainThread]:   retries: 3
+[0m14:58:56.103940 [info ] [MainThread]:   login_timeout: 0
+[0m14:58:56.103940 [info ] [MainThread]:   query_timeout: 0
+[0m14:58:56.103940 [info ] [MainThread]:   trace_flag: False
+[0m14:58:56.103940 [info ] [MainThread]:   encrypt: True
+[0m14:58:56.103940 [info ] [MainThread]:   trust_cert: True
+[0m14:58:56.103940 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m14:58:56.567285 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m14:58:56.567285 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': 'ab3497dd-4f72-4f9e-bff8-314fde1b6d79', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E9BC2270>]}
+[0m14:58:56.567285 [debug] [MainThread]: Acquiring new sqlserver connection 'debug'
+[0m14:58:56.567285 [debug] [MainThread]: Using sqlserver connection "debug"
+[0m14:58:56.575867 [debug] [MainThread]: On debug: select 1 as id
+[0m14:58:56.575867 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m14:58:56.575867 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:59:12.368213 [debug] [MainThread]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m14:59:13.375977 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:59:29.097424 [debug] [MainThread]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m14:59:30.101422 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:59:45.829650 [debug] [MainThread]: sqlserver adapter: Error running SQL: select 1 as id
+[0m14:59:45.830422 [debug] [MainThread]: sqlserver adapter: Rolling back transaction.
+[0m14:59:45.830422 [debug] [MainThread]: On debug: No close available on handle
+[0m14:59:45.830422 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m14:59:45.830422 [info ] [MainThread]: [31m1 check failed:[0m
+[0m14:59:45.830422 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  <class 'pyodbc.Error'> returned a result with an exception set
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m14:59:45.832430 [debug] [MainThread]: Command `dbt debug` failed at 14:59:45.832430 after 52.11 seconds
+[0m14:59:45.832430 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m14:59:45.832430 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E8500770>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E9A41070>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E5E95EF590>]}
+[0m14:59:45.832430 [debug] [MainThread]: Flushing usage events
+[0m14:59:46.272078 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:09:02.320051 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023398A9E210>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000233991BC3B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002339956A0F0>]}
+
+
+============================== 15:09:02.328126 | e032abae-1ad1-4995-a3bb-aca11ed31ac7 ==============================
+[0m15:09:02.328126 [info ] [MainThread]: Running with dbt=1.11.11
+[0m15:09:02.328126 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': '.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt debug --project-dir transform --profiles-dir .dbt --log-level debug', 'indirect_selection': 'eager', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m15:09:02.345309 [info ] [MainThread]: dbt version: 1.11.11
+[0m15:09:02.345309 [info ] [MainThread]: python version: 3.12.9
+[0m15:09:02.345309 [info ] [MainThread]: python path: C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\python.exe
+[0m15:09:02.345309 [info ] [MainThread]: os info: Windows-11-10.0.26200-SP0
+[0m15:09:02.445257 [info ] [MainThread]: Using profiles dir at .dbt
+[0m15:09:02.445257 [info ] [MainThread]: Using profiles.yml file at .dbt\profiles.yml
+[0m15:09:02.445257 [info ] [MainThread]: Using dbt_project.yml file at transform\dbt_project.yml
+[0m15:09:02.445257 [info ] [MainThread]: adapter type: sqlserver
+[0m15:09:02.445257 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:09:02.528107 [info ] [MainThread]: Configuration:
+[0m15:09:02.528107 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:09:02.528107 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:09:02.528107 [info ] [MainThread]: Required dependencies:
+[0m15:09:02.528107 [debug] [MainThread]: Executing "git --help"
+[0m15:09:02.570457 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   history    EXPERIMENTAL: Rewrite history\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:09:02.571040 [debug] [MainThread]: STDERR: "b''"
+[0m15:09:02.571695 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:09:02.571695 [info ] [MainThread]: Connection:
+[0m15:09:02.572427 [info ] [MainThread]:   server: localhost
+[0m15:09:02.573152 [info ] [MainThread]:   port: 1433
+[0m15:09:02.573152 [info ] [MainThread]:   database: crypto_data
+[0m15:09:02.573856 [info ] [MainThread]:   schema: silver
+[0m15:09:02.574207 [info ] [MainThread]:   UID: sa
+[0m15:09:02.574207 [info ] [MainThread]:   authentication: sql
+[0m15:09:02.574755 [info ] [MainThread]:   retries: 3
+[0m15:09:02.574755 [info ] [MainThread]:   login_timeout: 0
+[0m15:09:02.575378 [info ] [MainThread]:   query_timeout: 0
+[0m15:09:02.575378 [info ] [MainThread]:   trace_flag: False
+[0m15:09:02.576008 [info ] [MainThread]:   encrypt: True
+[0m15:09:02.576008 [info ] [MainThread]:   trust_cert: True
+[0m15:09:02.577094 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m15:09:02.729145 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m15:09:02.729145 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': 'e032abae-1ad1-4995-a3bb-aca11ed31ac7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002339AF81850>]}
+[0m15:09:02.729145 [debug] [MainThread]: Acquiring new sqlserver connection 'debug'
+[0m15:09:02.729145 [debug] [MainThread]: Using sqlserver connection "debug"
+[0m15:09:02.744286 [debug] [MainThread]: On debug: select 1 as id
+[0m15:09:02.745239 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:09:02.745239 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m15:09:18.545245 [debug] [MainThread]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m15:09:19.547506 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m15:09:35.295889 [debug] [MainThread]: sqlserver adapter: Error running SQL: select 1 as id
+[0m15:09:35.298911 [debug] [MainThread]: sqlserver adapter: Rolling back transaction.
+[0m15:09:35.298911 [debug] [MainThread]: On debug: No close available on handle
+[0m15:09:35.298911 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:09:35.298911 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:09:35.298911 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  <class 'pyodbc.Error'> returned a result with an exception set
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:09:35.298911 [debug] [MainThread]: Command `dbt debug` failed at 15:09:35.298911 after 33.22 seconds
+[0m15:09:35.298911 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:09:35.298911 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000023395A2E570>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002339AEE60C0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002339AA59B20>]}
+[0m15:09:35.298911 [debug] [MainThread]: Flushing usage events
+[0m15:10:00.134474 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F879D0CE0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F85665FD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F880202F0>]}
+
+
+============================== 15:10:00.134474 | ad9dbe5f-7d08-4764-8e5b-6507e6a2503a ==============================
+[0m15:10:00.134474 [info ] [MainThread]: Running with dbt=1.11.11
+[0m15:10:00.141590 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.dbt', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt debug --project-dir transform --profiles-dir .dbt --log-level debug', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m15:10:00.164539 [info ] [MainThread]: dbt version: 1.11.11
+[0m15:10:00.164539 [info ] [MainThread]: python version: 3.12.9
+[0m15:10:00.164539 [info ] [MainThread]: python path: C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\python.exe
+[0m15:10:00.164539 [info ] [MainThread]: os info: Windows-11-10.0.26200-SP0
+[0m15:10:00.256864 [info ] [MainThread]: Using profiles dir at .dbt
+[0m15:10:00.256864 [info ] [MainThread]: Using profiles.yml file at .dbt\profiles.yml
+[0m15:10:00.256864 [info ] [MainThread]: Using dbt_project.yml file at transform\dbt_project.yml
+[0m15:10:00.256864 [info ] [MainThread]: adapter type: sqlserver
+[0m15:10:00.259739 [info ] [MainThread]: adapter version: 1.10.0
+[0m15:10:00.342075 [info ] [MainThread]: Configuration:
+[0m15:10:00.343689 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m15:10:00.344185 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m15:10:00.344185 [info ] [MainThread]: Required dependencies:
+[0m15:10:00.344185 [debug] [MainThread]: Executing "git --help"
+[0m15:10:00.391920 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   history    EXPERIMENTAL: Rewrite history\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m15:10:00.392926 [debug] [MainThread]: STDERR: "b''"
+[0m15:10:00.393570 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m15:10:00.394722 [info ] [MainThread]: Connection:
+[0m15:10:00.394722 [info ] [MainThread]:   server: localhost
+[0m15:10:00.395721 [info ] [MainThread]:   port: 1433
+[0m15:10:00.395721 [info ] [MainThread]:   database: crypto_data
+[0m15:10:00.395721 [info ] [MainThread]:   schema: silver
+[0m15:10:00.395721 [info ] [MainThread]:   UID: sa
+[0m15:10:00.395721 [info ] [MainThread]:   authentication: sql
+[0m15:10:00.395721 [info ] [MainThread]:   retries: 3
+[0m15:10:00.395721 [info ] [MainThread]:   login_timeout: 0
+[0m15:10:00.395721 [info ] [MainThread]:   query_timeout: 0
+[0m15:10:00.395721 [info ] [MainThread]:   trace_flag: False
+[0m15:10:00.395721 [info ] [MainThread]:   encrypt: True
+[0m15:10:00.395721 [info ] [MainThread]:   trust_cert: True
+[0m15:10:00.395721 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m15:10:00.581590 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m15:10:00.581590 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': 'ad9dbe5f-7d08-4764-8e5b-6507e6a2503a', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F8A2E2420>]}
+[0m15:10:00.581590 [debug] [MainThread]: Acquiring new sqlserver connection 'debug'
+[0m15:10:00.581590 [debug] [MainThread]: Using sqlserver connection "debug"
+[0m15:10:00.581590 [debug] [MainThread]: On debug: select 1 as id
+[0m15:10:00.581590 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:10:00.581590 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m15:10:00.621024 [debug] [MainThread]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]Client unable to establish connection because an error was encountered during handshakes before login. Common causes include client attempting to connect to an unsupported version of SQL Server, server too busy to accept new connections or a resource limitation (memory or maximum allowed connections) on the server. (26) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: An existing connection was forcibly closed by the remote host.\r\n (10054); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Client unable to establish connection (26); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Client unable to establish connection due to prelogin failure (10054)')
+[0m15:10:01.622683 [debug] [MainThread]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m15:10:01.660783 [debug] [MainThread]: sqlserver adapter: Error running SQL: select 1 as id
+[0m15:10:01.661321 [debug] [MainThread]: sqlserver adapter: Rolling back transaction.
+[0m15:10:01.661841 [debug] [MainThread]: On debug: No close available on handle
+[0m15:10:01.662388 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m15:10:01.662934 [info ] [MainThread]: [31m1 check failed:[0m
+[0m15:10:01.663465 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  ('28000', '[28000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Login failed for user \'sa\'. (18456) (SQLDriverConnect); [28000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot open database "crypto_data" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [28000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Login failed for user \'sa\'. (18456); [28000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot open database "crypto_data" requested by the login. The login failed. (4060); [28000] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0)')
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m15:10:01.664014 [debug] [MainThread]: Command `dbt debug` failed at 15:10:01.664014 after 1.72 seconds
+[0m15:10:01.664532 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m15:10:01.665075 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F889A0A40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F89DC89E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000027F87F61B20>]}
+[0m15:10:01.665075 [debug] [MainThread]: Flushing usage events
+[0m15:10:02.051640 [debug] [MainThread]: An error was encountered while trying to flush usage events
