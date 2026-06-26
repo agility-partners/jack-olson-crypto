@@ -39,9 +39,39 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 This repository includes a local dbt scaffold in `/transform` and a local profile in `/.dbt/profiles.yml`.
 
-From the repository root, run:
+### First-time setup
 
-```bash
-export MSSQL_SA_PASSWORD="your-password"
-dbt debug --project-dir transform --profiles-dir .dbt
-```
+1. Copy `.env.example` to `.env` and set your SA password:
+   ```
+   MSSQL_SA_PASSWORD=YourStrongPassword123
+   ```
+
+2. Start (or restart) the SQL Server container. The `init-db.sh` entrypoint
+   automatically creates the `crypto_data` database, `bronze` schema,
+   `bronze.raw_coin_data` table, and `silver` schema on first start:
+   ```bash
+   docker compose up -d sqlserver
+   ```
+   If the container already exists from a previous run **without** the init
+   script, tear it down first (the named volume preserves data if you omit `-v`):
+   ```bash
+   docker compose down            # stops and removes containers (keeps volume)
+   docker compose up -d sqlserver # recreates with init entrypoint
+   ```
+   To start completely fresh (drops all stored data):
+   ```bash
+   docker compose down -v
+   docker compose up -d sqlserver
+   ```
+
+3. Once the container is healthy, verify the connection:
+   ```bash
+   # PowerShell
+   $env:MSSQL_SA_PASSWORD="YourStrongPassword123"
+   dbt debug --project-dir transform --profiles-dir .dbt
+   ```
+   ```bash
+   # bash/zsh
+   export MSSQL_SA_PASSWORD="YourStrongPassword123"
+   dbt debug --project-dir transform --profiles-dir .dbt
+   ```

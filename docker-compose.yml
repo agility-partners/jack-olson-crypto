@@ -35,6 +35,9 @@ services:
       - MSSQL_PID=Developer
     volumes:
       - sqlserver_data:/var/opt/mssql
+      - ./scripts/init-db.sql:/init-db.sql
+      - ./scripts/init-db.sh:/init-db.sh
+    entrypoint: ["/bin/bash", "/init-db.sh"]
     healthcheck:
       test:
         - CMD
