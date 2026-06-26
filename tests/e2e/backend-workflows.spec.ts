@@ -92,7 +92,7 @@ test.describe('Backend watchlist journeys', () => {
     // Navigate to the Bitcoin detail page
     await page.locator('main a[href="/coins/bitcoin"]').click();
     await page.waitForURL('/coins/bitcoin', { timeout: 10000 });
-
+    
     await expect(page.locator('h1', { hasText: 'Bitcoin' })).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('Market Cap')).toBeVisible();
     await expect(page.getByText('24h Volume')).toBeVisible();
@@ -101,7 +101,7 @@ test.describe('Backend watchlist journeys', () => {
     // Navigate back to the watchlist via the back button
     await page.getByRole('link', { name: /Back to Watchlist/i }).click();
     await page.waitForURL('/', { timeout: 10000 });
-
+    
     // Both coins should still be present after navigating back
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible({ timeout: 10000 });
     await expect(page.locator('main a[href="/coins/ethereum"]')).toBeVisible({ timeout: 10000 });
