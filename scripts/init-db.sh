@@ -6,7 +6,6 @@ set -e
 
 # Strip any Windows carriage returns that may be present if .env was created on Windows.
 MSSQL_SA_PASSWORD="${MSSQL_SA_PASSWORD//$'\r'/}"
-
 if [ -z "$MSSQL_SA_PASSWORD" ]; then
     echo "ERROR: MSSQL_SA_PASSWORD environment variable is not set." >&2
     exit 1
@@ -18,7 +17,6 @@ _term() {
     kill -TERM "$SQLSERVR_PID" 2>/dev/null
 }
 trap _term SIGTERM SIGINT
-
 /opt/mssql/bin/sqlservr &
 SQLSERVR_PID=$!
 
