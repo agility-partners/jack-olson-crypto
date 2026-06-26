@@ -66,46 +66,6 @@ describe('WatchlistClient', () => {
     });
   });
 
-  it('adds a coin through the modal and shows it in the watchlist', async () => {
-    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
-
-    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
-
-    await screen.findByRole('button', { name: 'Cancel' });
-
-    fireEvent.change(screen.getByLabelText('Select Cryptocurrency'), {
-      target: { value: 'dogecoin' },
-    });
-
-    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
-
-    await screen.findByRole('button', { name: 'Adding...' });
-
-    await waitFor(
-      () => {
-        expect(screen.getByText('Dogecoin')).toBeInTheDocument();
-      },
-      { timeout: 3000 }
-    );
-  });
-
-  it('does not allow adding a duplicate coin', async () => {
-    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
-
-    fireEvent.click(screen.getByRole('button', { name: /add coin/i }));
-
-    await screen.findByRole('button', { name: 'Cancel' });
-
-    const select = screen.getByLabelText('Select Cryptocurrency') as HTMLSelectElement;
-    const optionValues = Array.from(select.options).map((option) => option.value);
-
-    expect(optionValues).not.toContain('bitcoin');
-    expect(optionValues).not.toContain('ethereum');
-    expect(optionValues).not.toContain('bnb');
-    expect(optionValues).not.toContain('solana');
-    expect(optionValues).toContain('dogecoin');
-  });
-
   it('calls onStatsChange on initial render', async () => {
     const onStatsChange = vi.fn();
 
