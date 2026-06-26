@@ -79,6 +79,35 @@ test.describe('Backend watchlist journeys', () => {
     await expect(page.getByText('Tracking 1 assets')).toBeVisible();
   });
 
+  test('navigates from watchlist to coin detail page and back without losing state', async ({ page, request }) => {
+    await resetWatchlist(request);
+    await seedWatchlist(request, ['bitcoin', 'ethereum']);
+
+    await page.goto('/');
+
+    await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('main a[href="/coins/ethereum"]')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Tracking 2 assets')).toBeVisible();
+
+    // Navigate to the Bitcoin detail page
+    await page.locator('main a[href="/coins/bitcoin"]').click();
+    await page.waitForURL('/coins/bitcoin', { timeout: 10000 });
+
+    await expect(page.locator('h1', { hasText: 'Bitcoin' })).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Market Cap')).toBeVisible();
+    await expect(page.getByText('24h Volume')).toBeVisible();
+    await expect(page.getByText(/About Bitcoin/i)).toBeVisible();
+
+    // Navigate back to the watchlist via the back button
+    await page.getByRole('link', { name: /Back to Watchlist/i }).click();
+    await page.waitForURL('/', { timeout: 10000 });
+
+    // Both coins should still be present after navigating back
+    await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('main a[href="/coins/ethereum"]')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('Tracking 2 assets')).toBeVisible();
+  });
+
   test('accepts a stale add flow when the backend already added the selected coin', async ({ page, request }) => {
     await resetWatchlist(request);
 
