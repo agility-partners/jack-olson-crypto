@@ -54,7 +54,7 @@ services:
       dockerfile: Dockerfile.ingester
     environment:
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD:?MSSQL_SA_PASSWORD must be set in .env or environment}
-      - INGEST_INTERVAL_SECONDS=${INGEST_INTERVAL_SECONDS:-900}
+      - INGEST_INTERVAL_SECONDS=${INGEST_INTERVAL_SECONDS:-300}
     depends_on:
       sqlserver:
         condition: service_healthy
