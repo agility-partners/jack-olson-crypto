@@ -1,0 +1,7 @@
+# Ensure shell scripts and SQL files always use LF endings when checked out,
+# regardless of core.autocrlf on Windows. Required for Docker Linux containers.
+*.sh    text eol=lf
+*.sql   text eol=lf
+
+# Default: let Git handle everything else normally.
+*       text=auto
