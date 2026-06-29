@@ -15,7 +15,6 @@
 */
 
 SELECT
-    b.id                                                                AS bronze_id,
     b.ingested_at,
     j.coin_id,
     UPPER(j.symbol)                                                     AS symbol,
