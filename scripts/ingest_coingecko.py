@@ -50,12 +50,15 @@ def build_connection_string() -> str:
 
 
 def fetch_market_payload() -> str:
-    params = {
+    params: dict = {
         "vs_currency": os.getenv("COINGECKO_VS_CURRENCY", "usd"),
         "order": os.getenv("COINGECKO_ORDER", "market_cap_desc"),
         "per_page": int(os.getenv("COINGECKO_PER_PAGE", "100")),
         "page": int(os.getenv("COINGECKO_PAGE", "1")),
     }
+    coin_ids = os.getenv("COINGECKO_COIN_IDS", "").strip()
+    if coin_ids:
+        params["ids"] = coin_ids
 
     for attempt in range(1, MAX_RETRIES + 1):
         try:
