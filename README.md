@@ -75,3 +75,36 @@ This repository includes a local dbt scaffold in `/transform` and a local profil
    export MSSQL_SA_PASSWORD="YourStrongPassword123"
    dbt debug --project-dir transform --profiles-dir .dbt
    ```
+
+### End-to-end local run
+
+1. Start the stack:
+   ```bash
+   docker compose up -d
+   ```
+2. Wait for SQL Server to report `healthy` before ingesting data:
+   ```bash
+   docker compose ps sqlserver
+   ```
+3. From the host machine, verify Python can connect before running ingestion:
+   ```bash
+   python scripts/test_sql_connection.py
+   ```
+4. Run the ingestion script:
+   ```bash
+   python scripts/ingest_coingecko.py
+   ```
+5. Build the dbt models:
+   ```bash
+   dbt run --project-dir transform --profiles-dir .dbt
+   ```
+6. Query the API:
+   ```bash
+   curl http://localhost:8081/api/coins
+   ```
+
+If ingestion still fails after the container is healthy, verify these host-side prerequisites:
+
+- ODBC Driver 18 for SQL Server is installed.
+- `MSSQL_SA_PASSWORD` is set in the shell running Python.
+- `MSSQL_SERVER` points to `localhost,1433` when connecting from the host.
