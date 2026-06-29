@@ -1,1 +1,1 @@
-{"_invocation_id": "24f0d942-b362-4e5b-92ef-8406052cf0cd", "linked": {}}
+{"_invocation_id": "da08f509-e1a8-4acb-aac1-4996ad62147d", "linked": {"0": {"name": "source.crypto_pipeline.bronze.raw_coin_data", "type": "source", "succ": [2]}, "1": {"name": "model.crypto_pipeline.coin_prices", "type": "model"}, "2": {"name": "model.crypto_pipeline.stg_coin_markets", "type": "model", "succ": [1]}}}
