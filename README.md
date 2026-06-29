@@ -124,3 +124,68 @@ docker exec -it my-app-sqlserver-1 /opt/mssql-tools18/bin/sqlcmd `
   -S localhost -U sa -P "$env:MSSQL_SA_PASSWORD" -C `
   -Q "SELECT TOP 5 id, ingested_at, LEN(raw_json) AS bytes FROM bronze.raw_coin_data ORDER BY id DESC"
 ```
+
+## DBT transformations (Silver → Gold)
+
+The `transform/` directory contains the DBT project. Run models after at least
+one ingestion cycle has populated `bronze.raw_coin_data`.
+
+### Model overview
+
+| Layer  | Model / file                    | Materialization | Description |
+|--------|---------------------------------|-----------------|-------------|
+| Silver | `stg_coin_markets`              | incremental     | Parses Bronze JSON into typed rows; deduplicates on `(coin_id, last_updated)` |
+| Gold   | `coin_prices`                   | table           | Latest price per coin + `price_trend` + `market_dominance_pct`; read by the .NET API |
+| Gold   | `market_summary`                | view            | Single-row market-wide aggregation (total market cap, BTC dominance, coins up/down) |
+| Gold   | `top_movers`                    | view            | Top 10 gainers and top 10 losers from the top-100 coins by market cap |
+
+### Running the models
+
+```bash
+# PowerShell
+$env:MSSQL_SA_PASSWORD="YourStrongPassword123"
+dbt run  --project-dir transform --profiles-dir .dbt
+
+# bash/zsh
+export MSSQL_SA_PASSWORD="YourStrongPassword123"
+dbt run  --project-dir transform --profiles-dir .dbt
+```
+
+Run a specific layer only:
+
+```bash
+dbt run --project-dir transform --profiles-dir .dbt --select silver
+dbt run --project-dir transform --profiles-dir .dbt --select gold
+```
+
+### Testing data quality
+
+```bash
+dbt test --project-dir transform --profiles-dir .dbt
+```
+
+Tests enforce: `coin_id` is unique in `coin_prices`, `current_price` is never
+null, `price_trend` is one of the five expected labels, and more (see
+`transform/models/*/schema.yml`).
+
+### Querying the Gold layer
+
+After `dbt run` completes, the `.NET API` reads from `gold.coin_prices`
+automatically. You can also query directly:
+
+```powershell
+# PowerShell — top 10 coins with trend label
+docker exec -it my-app-sqlserver-1 /opt/mssql-tools18/bin/sqlcmd `
+  -S localhost -U sa -P "$env:MSSQL_SA_PASSWORD" -C `
+  -Q "SELECT TOP 10 coin_id, symbol, current_price, price_trend, market_dominance_pct FROM gold.coin_prices ORDER BY market_cap_rank"
+
+# Market summary
+docker exec -it my-app-sqlserver-1 /opt/mssql-tools18/bin/sqlcmd `
+  -S localhost -U sa -P "$env:MSSQL_SA_PASSWORD" -C `
+  -Q "SELECT * FROM gold.market_summary"
+
+# Top movers
+docker exec -it my-app-sqlserver-1 /opt/mssql-tools18/bin/sqlcmd `
+  -S localhost -U sa -P "$env:MSSQL_SA_PASSWORD" -C `
+  -Q "SELECT category, rank, symbol, price_change_percentage_24h FROM gold.top_movers ORDER BY category, rank"
+```

@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: coin_prices
+    description: >
+      Latest price snapshot per coin. One row per coin_id (deduped via
+      ROW_NUMBER on last_updated). Adds price_trend label and
+      market_dominance_pct. Materialized as a physical table for fast
+      API reads.
+    columns:
+      - name: coin_id
+        description: CoinGecko coin identifier (e.g. bitcoin).
+        tests:
+          - unique
+          - not_null
+      - name: symbol
+        description: Ticker symbol, uppercased (e.g. BTC).
+        tests:
+          - not_null
+      - name: current_price
+        description: Latest price in USD.
+        tests:
+          - not_null
+      - name: market_cap_rank
+        description: Market-cap rank; must be a positive integer.
+        tests:
+          - not_null
+      - name: price_trend
+        description: >
+          Directional label based on 24-h change:
+          strong_up (>10%), up (>2%), stable (-2% to 2%),
+          down (<-2%), strong_down (<-10%).
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['strong_up', 'up', 'stable', 'down', 'strong_down']
+      - name: market_dominance_pct
+        description: This coin's share of total tracked market cap (%).
+        tests:
+          - not_null
+
+  - name: market_summary
+    description: Single-row market-wide aggregation from coin_prices.
+    columns:
+      - name: total_coins
+        tests:
+          - not_null
+      - name: total_market_cap
+        tests:
+          - not_null
+      - name: btc_dominance_pct
+        tests:
+          - not_null
+
+  - name: top_movers
+    description: Top 10 gainers and top 10 losers from the top-100 by market cap.
+    columns:
+      - name: coin_id
+        tests:
+          - not_null
+      - name: category
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['gainer', 'loser']
+      - name: rank
+        tests:
+          - not_null
