@@ -53,4 +53,3 @@ SELECT
     AS DECIMAL(10, 4))                                                  AS market_dominance_pct
 FROM ranked
 WHERE rn = 1
-ORDER BY market_cap_rank ASC
