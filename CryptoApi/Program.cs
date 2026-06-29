@@ -14,7 +14,11 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddScoped<ICoinService, CoinService>();
+var cryptoDbConnectionString = builder.Configuration.GetConnectionString("CryptoDb");
+if (!string.IsNullOrWhiteSpace(cryptoDbConnectionString))
+    builder.Services.AddScoped<ICoinService, SqlCoinService>();
+else
+    builder.Services.AddScoped<ICoinService, CoinService>();
 builder.Services.AddScoped<IWatchlistService, WatchlistService>();
 builder.Services.AddScoped<IMarketStatsService, MarketStatsService>();
 builder.Services.AddEndpointsApiExplorer();

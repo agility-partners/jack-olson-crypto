@@ -8,6 +8,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings__CryptoDb=Server=sqlserver,1433;Database=crypto_data;User ID=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True
 
   frontend:
     build:
