@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: crypto_data
+    schema: bronze
+    tables:
+      - name: raw_coin_data
+        description: >
+          Raw CoinGecko /coins/markets JSON payloads ingested by
+          scripts/ingest_coingecko.py. One row per ingestion run,
+          raw_json contains the full JSON array.
+        columns:
+          - name: id
+            description: Auto-increment surrogate key.
+          - name: ingested_at
+            description: UTC timestamp when the row was inserted.
+          - name: raw_json
+            description: Full JSON array string from CoinGecko API.
