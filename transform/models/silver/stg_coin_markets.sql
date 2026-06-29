@@ -2,6 +2,7 @@
     config(
         materialized = 'incremental',
         unique_key = ['coin_id', 'last_updated'],
+        incremental_strategy = 'delete+insert',
         schema = 'silver'
     )
 }}
