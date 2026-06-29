@@ -13017,3 +13017,694 @@ having count(*) > 1
 [0m13:45:50.922066 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000145EA1E1820>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000145EA1E37D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000145ECC80710>]}
 [0m13:45:50.924449 [debug] [MainThread]: Flushing usage events
 [0m13:45:51.397581 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m14:09:41.163936 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CD3ECEF0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CD7124E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182C9B2DF70>]}
+
+
+============================== 14:09:41.176254 | 23f18d03-c7c1-4fa1-a4ec-887f22c280a0 ==============================
+[0m14:09:41.176254 [info ] [MainThread]: Running with dbt=1.11.11
+[0m14:09:41.180137 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'False', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': '.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'invocation_command': 'dbt run --project-dir transform --profiles-dir .dbt', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m14:09:41.810603 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CECF8740>]}
+[0m14:09:41.876639 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF1620C0>]}
+[0m14:09:41.876639 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m14:09:42.075925 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m14:09:42.075925 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF306540>]}
+[0m14:09:42.095498 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m14:09:42.257033 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m14:09:42.257033 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m14:09:42.257812 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m14:09:42.292711 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF5089E0>]}
+[0m14:09:42.375869 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m14:09:42.375869 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m14:09:42.405266 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF5AD460>]}
+[0m14:09:42.405266 [info ] [MainThread]: Found 4 models, 21 data tests, 1 source, 523 macros
+[0m14:09:42.405266 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF5963F0>]}
+[0m14:09:42.410831 [info ] [MainThread]: 
+[0m14:09:42.410831 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m14:09:42.410831 [info ] [MainThread]: 
+[0m14:09:42.410831 [debug] [MainThread]: Acquiring new sqlserver connection 'master'
+[0m14:09:42.414569 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data'
+[0m14:09:42.436481 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data'
+[0m14:09:42.445269 [debug] [ThreadPool]: dbt-sqlserver
+[0m14:09:42.450030 [debug] [ThreadPool]: dbt-sqlserver
+[0m14:09:42.450030 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data"
+[0m14:09:42.450030 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data"
+[0m14:09:42.450030 [debug] [ThreadPool]: On list_crypto_data: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data"} */
+USE [crypto_data];
+    select  name as [schema]
+    from sys.schemas with (nolock) 
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m14:09:42.450030 [debug] [ThreadPool]: On list_crypto_data: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data"} */
+USE [crypto_data];
+    select  name as [schema]
+    from sys.schemas with (nolock) 
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m14:09:42.450030 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:09:42.450030 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:09:42.450030 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:42.450030 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:42.599180 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:42.599773 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:42.602707 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m14:09:42.603873 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m14:09:42.605105 [debug] [ThreadPool]: On list_crypto_data: Close
+[0m14:09:42.606229 [debug] [ThreadPool]: On list_crypto_data: Close
+[0m14:09:42.608991 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_gold'
+[0m14:09:42.619005 [debug] [ThreadPool]: dbt-sqlserver
+[0m14:09:42.619575 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_gold"
+[0m14:09:42.619575 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_silver'
+[0m14:09:42.620220 [debug] [ThreadPool]: On list_crypto_data_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m14:09:42.622073 [debug] [ThreadPool]: dbt-sqlserver
+[0m14:09:42.622073 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:09:42.622749 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_silver"
+[0m14:09:42.622749 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:42.622749 [debug] [ThreadPool]: On list_crypto_data_silver: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m14:09:42.622749 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m14:09:42.622749 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:42.640695 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:42.641230 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:42.646113 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m14:09:42.647502 [debug] [ThreadPool]: On list_crypto_data_gold: ROLLBACK
+[0m14:09:42.648006 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m14:09:42.648006 [debug] [ThreadPool]: On list_crypto_data_gold: Close
+[0m14:09:42.649764 [debug] [ThreadPool]: On list_crypto_data_silver: ROLLBACK
+[0m14:09:42.649764 [debug] [ThreadPool]: On list_crypto_data_silver: Close
+[0m14:09:42.650386 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF80FDD0>]}
+[0m14:09:42.651406 [debug] [MainThread]: On master: COMMIT
+[0m14:09:42.657458 [debug] [Thread-1 (]: Began running node model.crypto_pipeline.stg_coin_markets
+[0m14:09:42.658290 [info ] [Thread-1 (]: 1 of 4 START sql incremental model silver.stg_coin_markets ..................... [RUN]
+[0m14:09:42.659569 [debug] [Thread-1 (]: Acquiring new sqlserver connection 'model.crypto_pipeline.stg_coin_markets'
+[0m14:09:42.659569 [debug] [Thread-1 (]: Began compiling node model.crypto_pipeline.stg_coin_markets
+[0m14:09:42.670588 [debug] [Thread-1 (]: Writing injected SQL for node "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.670588 [debug] [Thread-1 (]: Began executing node model.crypto_pipeline.stg_coin_markets
+[0m14:09:42.711252 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:42.726037 [debug] [Thread-1 (]: Applying DROP to: "crypto_data"."silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw"
+[0m14:09:42.726037 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:42.726037 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.726037 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            sch.name as schema_name,
+            obj.name as view_name
+        from sys.sql_expression_dependencies refs
+        inner join sys.objects obj
+        on refs.referencing_id = obj.object_id
+        inner join sys.schemas sch
+        on obj.schema_id = sch.schema_id
+        where refs.referenced_database_name = 'crypto_data'
+        and refs.referenced_schema_name = 'silver'
+        and refs.referenced_entity_name = 'stg_coin_markets__dbt_tmp__dbt_tmp_vw'
+        and obj.type = 'V'
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+      
+[0m14:09:42.726037 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m14:09:42.726037 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:42.726037 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:42.736460 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:42.736966 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.736966 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+      
+      
+    
+    USE [crypto_data];
+    EXEC('DROP view IF EXISTS "silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw";');
+
+[0m14:09:42.740875 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:42.752458 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.752458 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+    
+  
+    USE [crypto_data];
+    USE [crypto_data];
+    
+    
+
+    
+
+    
+    USE [crypto_data];
+    EXEC('
+        CREATE OR ALTER VIEW "silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw" AS 
+
+/*
+  Parses the raw CoinGecko JSON array stored in bronze.raw_coin_data
+  into one typed row per coin per ingestion run.
+  - DECIMAL types replace FLOAT for price/market-cap precision
+  - Filters out invalid records (null coin_id, non-positive prices, outlier % changes)
+  - Incremental: on subsequent runs only new Bronze rows are processed
+*/
+
+SELECT                     
+    b.ingested_at,
+    j.coin_id,
+    UPPER(j.symbol)                                                    AS symbol,
+    j.name,
+    CAST(j.current_price           AS DECIMAL(18, 8))                  AS current_price,
+    CAST(j.market_cap              AS DECIMAL(18, 2))                  AS market_cap,
+    j.market_cap_rank,
+    CAST(j.total_volume            AS DECIMAL(18, 2))                  AS total_volume,
+    CAST(j.high_24h                AS DECIMAL(18, 8))                  AS high_24h,
+    CAST(j.low_24h                 AS DECIMAL(18, 8))                  AS low_24h,
+    CAST(j.price_change_24h        AS DECIMAL(18, 8))                  AS price_change_24h,
+    CAST(j.price_change_percentage_24h AS DECIMAL(10, 4))              AS price_change_percentage_24h,
+    CAST(j.circulating_supply      AS DECIMAL(30, 2))                  AS circulating_supply,
+    CAST(j.total_supply            AS DECIMAL(30, 2))                  AS total_supply,
+    CAST(j.ath                     AS DECIMAL(18, 8))                  AS ath,
+    CAST(j.atl                     AS DECIMAL(18, 8))                  AS atl,
+    TRY_CAST(j.last_updated        AS DATETIME2)                       AS last_updated
+FROM "crypto_data"."bronze"."raw_coin_data" AS b
+CROSS APPLY OPENJSON(b.raw_json)
+WITH (
+    coin_id                         NVARCHAR(100)   ''$.id'',
+    symbol                          NVARCHAR(20)    ''$.symbol'',
+    name                            NVARCHAR(200)   ''$.name'',
+    current_price                   FLOAT           ''$.current_price'',
+    market_cap                      FLOAT           ''$.market_cap'',
+    market_cap_rank                 INT             ''$.market_cap_rank'',
+    total_volume                    FLOAT           ''$.total_volume'',
+    high_24h                        FLOAT           ''$.high_24h'',
+    low_24h                         FLOAT           ''$.low_24h'',
+    price_change_24h                FLOAT           ''$.price_change_24h'',
+    price_change_percentage_24h     FLOAT           ''$.price_change_percentage_24h'',
+    circulating_supply              FLOAT           ''$.circulating_supply'',
+    total_supply                    FLOAT           ''$.total_supply'',
+    ath                             FLOAT           ''$.ath'',
+    atl                             FLOAT           ''$.atl'',
+    last_updated                    NVARCHAR(50)    ''$.last_updated''
+) AS j
+WHERE j.coin_id IS NOT NULL
+  AND j.current_price > 0
+  AND j.market_cap_rank BETWEEN 1 AND 10000
+  AND ABS(j.price_change_percentage_24h) < 1000
+
+  AND b.ingested_at > (SELECT MAX(ingested_at) FROM "crypto_data"."silver"."stg_coin_markets")
+;
+    ')
+
+EXEC('
+            SELECT * INTO "crypto_data"."silver"."stg_coin_markets__dbt_tmp" FROM "crypto_data"."silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw" 
+    OPTION (LABEL = ''dbt-sqlserver'');
+
+        ')
+
+    
+    EXEC('DROP VIEW IF EXISTS "silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw"')
+
+
+
+    
+    
+
+
+  
+  
+[0m14:09:42.835064 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:42.892757 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:42.892757 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.892757 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            c.name collate database_default as column_name,
+            t.name as data_type,
+            case
+                when (t.name in ('nchar', 'nvarchar', 'sysname') and c.max_length <> -1) then c.max_length / 2
+                else c.max_length
+            end as character_maximum_length,
+            c.precision as numeric_precision,
+            c.scale as numeric_scale
+        from sys.columns c with (nolock)
+        inner join sys.types t with (nolock)
+        on c.user_type_id = t.user_type_id
+        where c.object_id = object_id('"crypto_data"."silver"."stg_coin_markets__dbt_tmp"')
+        order by c.column_id
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+    
+[0m14:09:42.896457 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:42.901062 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:42.902236 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.902236 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            c.name collate database_default as column_name,
+            t.name as data_type,
+            case
+                when (t.name in ('nchar', 'nvarchar', 'sysname') and c.max_length <> -1) then c.max_length / 2
+                else c.max_length
+            end as character_maximum_length,
+            c.precision as numeric_precision,
+            c.scale as numeric_scale
+        from sys.columns c with (nolock)
+        inner join sys.types t with (nolock)
+        on c.user_type_id = t.user_type_id
+        where c.object_id = object_id('"crypto_data"."silver"."stg_coin_markets"')
+        order by c.column_id
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+    
+[0m14:09:42.904676 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:42.914997 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:42.915666 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.915666 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            c.name collate database_default as column_name,
+            t.name as data_type,
+            case
+                when (t.name in ('nchar', 'nvarchar', 'sysname') and c.max_length <> -1) then c.max_length / 2
+                else c.max_length
+            end as character_maximum_length,
+            c.precision as numeric_precision,
+            c.scale as numeric_scale
+        from sys.columns c with (nolock)
+        inner join sys.types t with (nolock)
+        on c.user_type_id = t.user_type_id
+        where c.object_id = object_id('"crypto_data"."silver"."stg_coin_markets"')
+        order by c.column_id
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+    
+[0m14:09:42.918792 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:42.928564 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:42.928564 [debug] [Thread-1 (]: Writing runtime sql for node "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.928564 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:42.928564 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+      
+
+    
+        
+            delete from "crypto_data"."silver"."stg_coin_markets"
+            where exists (
+                select null
+                from "crypto_data"."silver"."stg_coin_markets__dbt_tmp"
+                where
+                
+                    "crypto_data"."silver"."stg_coin_markets__dbt_tmp".coin_id = "crypto_data"."silver"."stg_coin_markets".coin_id
+                    and 
+                
+                    "crypto_data"."silver"."stg_coin_markets__dbt_tmp".last_updated = "crypto_data"."silver"."stg_coin_markets".last_updated
+                    
+                
+            )
+            
+            
+    OPTION (LABEL = 'dbt-sqlserver');
+
+        
+    
+
+    insert into "crypto_data"."silver"."stg_coin_markets" ("ingested_at", "coin_id", "symbol", "name", "current_price", "market_cap", "market_cap_rank", "total_volume", "high_24h", "low_24h", "price_change_24h", "price_change_percentage_24h", "circulating_supply", "total_supply", "ath", "atl", "last_updated")
+    (
+        select "ingested_at", "coin_id", "symbol", "name", "current_price", "market_cap", "market_cap_rank", "total_volume", "high_24h", "low_24h", "price_change_24h", "price_change_percentage_24h", "circulating_supply", "total_supply", "ath", "atl", "last_updated"
+        from "crypto_data"."silver"."stg_coin_markets__dbt_tmp"
+    )
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+  
+[0m14:09:43.041437 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.066217 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: COMMIT
+[0m14:09:43.070049 [debug] [Thread-1 (]: Applying DROP to: "crypto_data"."silver"."stg_coin_markets__dbt_tmp"
+[0m14:09:43.070706 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m14:09:43.070706 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+      
+    USE [crypto_data];
+    EXEC('DROP table IF EXISTS "silver"."stg_coin_markets__dbt_tmp";');
+
+[0m14:09:43.084003 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.087024 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: Close
+[0m14:09:43.092563 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CA6B6540>]}
+[0m14:09:43.093428 [info ] [Thread-1 (]: 1 of 4 OK created sql incremental model silver.stg_coin_markets ................ [[32mOK[0m in 0.43s]
+[0m14:09:43.093428 [debug] [Thread-1 (]: Finished running node model.crypto_pipeline.stg_coin_markets
+[0m14:09:43.093428 [debug] [Thread-3 (]: Began running node model.crypto_pipeline.coin_prices
+[0m14:09:43.093428 [info ] [Thread-3 (]: 2 of 4 START sql table model gold.coin_prices .................................. [RUN]
+[0m14:09:43.100951 [debug] [Thread-3 (]: Acquiring new sqlserver connection 'model.crypto_pipeline.coin_prices'
+[0m14:09:43.100951 [debug] [Thread-3 (]: Began compiling node model.crypto_pipeline.coin_prices
+[0m14:09:43.108510 [debug] [Thread-3 (]: Writing injected SQL for node "model.crypto_pipeline.coin_prices"
+[0m14:09:43.109647 [debug] [Thread-3 (]: Began executing node model.crypto_pipeline.coin_prices
+[0m14:09:43.126134 [debug] [Thread-3 (]: dbt-sqlserver
+[0m14:09:43.126134 [debug] [Thread-3 (]: Applying DROP to: "crypto_data"."gold"."coin_prices__dbt_tmp__dbt_tmp_vw"
+[0m14:09:43.139905 [debug] [Thread-3 (]: dbt-sqlserver
+[0m14:09:43.139905 [debug] [Thread-3 (]: Using sqlserver connection "model.crypto_pipeline.coin_prices"
+[0m14:09:43.142521 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.coin_prices"} */
+
+        USE [crypto_data];
+        select
+            sch.name as schema_name,
+            obj.name as view_name
+        from sys.sql_expression_dependencies refs
+        inner join sys.objects obj
+        on refs.referencing_id = obj.object_id
+        inner join sys.schemas sch
+        on obj.schema_id = sch.schema_id
+        where refs.referenced_database_name = 'crypto_data'
+        and refs.referenced_schema_name = 'gold'
+        and refs.referenced_entity_name = 'coin_prices__dbt_tmp__dbt_tmp_vw'
+        and obj.type = 'V'
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+      
+[0m14:09:43.143183 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m14:09:43.143183 [debug] [Thread-3 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:43.143183 [debug] [Thread-3 (]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:43.150608 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.152990 [debug] [Thread-3 (]: Using sqlserver connection "model.crypto_pipeline.coin_prices"
+[0m14:09:43.153596 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.coin_prices"} */
+
+      
+      
+    
+    USE [crypto_data];
+    EXEC('DROP view IF EXISTS "gold"."coin_prices__dbt_tmp__dbt_tmp_vw";');
+
+[0m14:09:43.159269 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.167020 [debug] [Thread-3 (]: Writing runtime sql for node "model.crypto_pipeline.coin_prices"
+[0m14:09:43.167020 [debug] [Thread-3 (]: Using sqlserver connection "model.crypto_pipeline.coin_prices"
+[0m14:09:43.167020 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.coin_prices"} */
+
+  
+    USE [crypto_data];
+    USE [crypto_data];
+    
+    
+
+    
+
+    
+    USE [crypto_data];
+    EXEC('
+        CREATE OR ALTER VIEW "gold"."coin_prices__dbt_tmp__dbt_tmp_vw" AS 
+
+/*
+  Latest price snapshot per coin — one row per coin_id using the most
+  recent last_updated timestamp from the silver layer.
+  Adds price_trend classification and market dominance percentage.
+  Your .NET API reads directly from this table.
+*/
+
+WITH ranked AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY coin_id
+            ORDER BY last_updated DESC
+        )                                                               AS rn,
+        SUM(market_cap) OVER ()                                         AS total_market_cap
+    FROM "crypto_data"."silver"."stg_coin_markets"
+)
+
+SELECT
+    coin_id,
+    symbol,
+    name,
+    market_cap_rank,
+    current_price,
+    market_cap,
+    total_volume,
+    high_24h,
+    low_24h,
+    price_change_24h,
+    price_change_percentage_24h,
+    circulating_supply,
+    total_supply,
+    ath,
+    atl,
+    ingested_at,
+    last_updated,
+    CASE
+        WHEN price_change_percentage_24h > 10   THEN ''strong_up''
+        WHEN price_change_percentage_24h > 2    THEN ''up''
+        WHEN price_change_percentage_24h >= -2  THEN ''stable''
+        WHEN price_change_percentage_24h >= -10 THEN ''down''
+        ELSE                                         ''strong_down''
+    END                                                                 AS price_trend,
+    CAST(
+        market_cap * 100.0 / NULLIF(total_market_cap, 0)
+    AS DECIMAL(10, 4))                                                  AS market_dominance_pct
+FROM ranked
+WHERE rn = 1;
+    ')
+
+EXEC('
+            SELECT * INTO "crypto_data"."gold"."coin_prices__dbt_tmp" FROM "crypto_data"."gold"."coin_prices__dbt_tmp__dbt_tmp_vw" 
+    OPTION (LABEL = ''dbt-sqlserver'');
+
+        ')
+
+    
+    EXEC('DROP VIEW IF EXISTS "gold"."coin_prices__dbt_tmp__dbt_tmp_vw"')
+
+
+
+    
+    use [crypto_data];
+    if EXISTS (
+        SELECT *
+        FROM sys.indexes with (nolock)
+        WHERE name = 'gold_coin_prices__dbt_tmp_cci'
+        AND object_id=object_id('gold_coin_prices__dbt_tmp')
+    )
+    DROP index "gold"."coin_prices__dbt_tmp".gold_coin_prices__dbt_tmp_cci
+    CREATE CLUSTERED COLUMNSTORE INDEX gold_coin_prices__dbt_tmp_cci
+    ON "gold"."coin_prices__dbt_tmp"
+
+   
+
+
+  
+[0m14:09:43.305527 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.317255 [debug] [Thread-3 (]: Using sqlserver connection "model.crypto_pipeline.coin_prices"
+[0m14:09:43.319268 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.coin_prices"} */
+USE [crypto_data];
+      EXEC sp_rename 'gold.coin_prices', 'coin_prices__dbt_backup'
+[0m14:09:43.340344 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.343118 [debug] [Thread-3 (]: Using sqlserver connection "model.crypto_pipeline.coin_prices"
+[0m14:09:43.346385 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.coin_prices"} */
+USE [crypto_data];
+      EXEC sp_rename 'gold.coin_prices__dbt_tmp', 'coin_prices'
+[0m14:09:43.362209 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.369893 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: COMMIT
+[0m14:09:43.373321 [debug] [Thread-3 (]: Applying DROP to: "crypto_data"."gold"."coin_prices__dbt_backup"
+[0m14:09:43.373321 [debug] [Thread-3 (]: Using sqlserver connection "model.crypto_pipeline.coin_prices"
+[0m14:09:43.373321 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.coin_prices"} */
+
+      
+    USE [crypto_data];
+    EXEC('DROP table IF EXISTS "gold"."coin_prices__dbt_backup";');
+
+[0m14:09:43.388669 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.390878 [debug] [Thread-3 (]: On model.crypto_pipeline.coin_prices: Close
+[0m14:09:43.391459 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF8B3230>]}
+[0m14:09:43.393075 [info ] [Thread-3 (]: 2 of 4 OK created sql table model gold.coin_prices ............................. [[32mOK[0m in 0.29s]
+[0m14:09:43.394348 [debug] [Thread-3 (]: Finished running node model.crypto_pipeline.coin_prices
+[0m14:09:43.395531 [debug] [Thread-2 (]: Began running node model.crypto_pipeline.market_summary
+[0m14:09:43.395531 [debug] [Thread-1 (]: Began running node model.crypto_pipeline.top_movers
+[0m14:09:43.395531 [info ] [Thread-2 (]: 3 of 4 START sql view model gold.market_summary ................................ [RUN]
+[0m14:09:43.395531 [debug] [Thread-2 (]: Acquiring new sqlserver connection 'model.crypto_pipeline.market_summary'
+[0m14:09:43.395531 [debug] [Thread-2 (]: Began compiling node model.crypto_pipeline.market_summary
+[0m14:09:43.395531 [info ] [Thread-1 (]: 4 of 4 START sql view model gold.top_movers .................................... [RUN]
+[0m14:09:43.400858 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.crypto_pipeline.stg_coin_markets, now model.crypto_pipeline.top_movers)
+[0m14:09:43.400858 [debug] [Thread-2 (]: Writing injected SQL for node "model.crypto_pipeline.market_summary"
+[0m14:09:43.400858 [debug] [Thread-1 (]: Began compiling node model.crypto_pipeline.top_movers
+[0m14:09:43.400858 [debug] [Thread-1 (]: Writing injected SQL for node "model.crypto_pipeline.top_movers"
+[0m14:09:43.408921 [debug] [Thread-2 (]: Began executing node model.crypto_pipeline.market_summary
+[0m14:09:43.424011 [debug] [Thread-1 (]: Began executing node model.crypto_pipeline.top_movers
+[0m14:09:43.444423 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.top_movers"
+[0m14:09:43.444423 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.top_movers"} */
+
+    USE [crypto_data];
+  select object_definition(object_id(quotename('gold') + '.' + quotename('top_movers'), 'V')) as definition
+  where object_id(quotename('gold') + '.' + quotename('top_movers'), 'V') is not null
+
+  
+[0m14:09:43.444423 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m14:09:43.444423 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:43.444423 [debug] [Thread-2 (]: Using sqlserver connection "model.crypto_pipeline.market_summary"
+[0m14:09:43.444423 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.market_summary"} */
+
+    USE [crypto_data];
+  select object_definition(object_id(quotename('gold') + '.' + quotename('market_summary'), 'V')) as definition
+  where object_id(quotename('gold') + '.' + quotename('market_summary'), 'V') is not null
+
+  
+[0m14:09:43.444423 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m14:09:43.444423 [debug] [Thread-2 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m14:09:43.444423 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:43.454167 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.456471 [debug] [Thread-1 (]: Writing runtime sql for node "model.crypto_pipeline.top_movers"
+[0m14:09:43.459677 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.top_movers"
+[0m14:09:43.460969 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.top_movers"} */
+declare @dbt_sqlserver_noop int;
+[0m14:09:43.466657 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.467689 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: COMMIT
+[0m14:09:43.470034 [debug] [Thread-1 (]: Applying DROP to: "crypto_data"."gold"."top_movers__dbt_backup"
+[0m14:09:43.471050 [debug] [Thread-1 (]: dbt-sqlserver
+[0m14:09:43.471682 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.top_movers"
+[0m14:09:43.472257 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.top_movers"} */
+
+        USE [crypto_data];
+        select
+            sch.name as schema_name,
+            obj.name as view_name
+        from sys.sql_expression_dependencies refs
+        inner join sys.objects obj
+        on refs.referencing_id = obj.object_id
+        inner join sys.schemas sch
+        on obj.schema_id = sch.schema_id
+        where refs.referenced_database_name = 'crypto_data'
+        and refs.referenced_schema_name = 'gold'
+        and refs.referenced_entity_name = 'top_movers__dbt_backup'
+        and obj.type = 'V'
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+      
+[0m14:09:43.475614 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.480152 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.top_movers"
+[0m14:09:43.480745 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.top_movers"} */
+
+      
+      
+    
+    USE [crypto_data];
+    EXEC('DROP view IF EXISTS "gold"."top_movers__dbt_backup";');
+
+[0m14:09:43.481312 [debug] [Thread-2 (]: sqlserver adapter: Connected to db: crypto_data
+[0m14:09:43.483627 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.485739 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: ROLLBACK
+[0m14:09:43.485739 [debug] [Thread-1 (]: On model.crypto_pipeline.top_movers: Close
+[0m14:09:43.486401 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF865E20>]}
+[0m14:09:43.487543 [info ] [Thread-1 (]: 4 of 4 OK created sql view model gold.top_movers ............................... [[32mOK[0m in 0.09s]
+[0m14:09:43.488167 [debug] [Thread-1 (]: Finished running node model.crypto_pipeline.top_movers
+[0m14:09:43.490890 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.492666 [debug] [Thread-2 (]: Writing runtime sql for node "model.crypto_pipeline.market_summary"
+[0m14:09:43.493862 [debug] [Thread-2 (]: Using sqlserver connection "model.crypto_pipeline.market_summary"
+[0m14:09:43.493862 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.market_summary"} */
+declare @dbt_sqlserver_noop int;
+[0m14:09:43.497983 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.498596 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: COMMIT
+[0m14:09:43.502116 [debug] [Thread-2 (]: Applying DROP to: "crypto_data"."gold"."market_summary__dbt_backup"
+[0m14:09:43.502754 [debug] [Thread-2 (]: dbt-sqlserver
+[0m14:09:43.503787 [debug] [Thread-2 (]: Using sqlserver connection "model.crypto_pipeline.market_summary"
+[0m14:09:43.503787 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.market_summary"} */
+
+        USE [crypto_data];
+        select
+            sch.name as schema_name,
+            obj.name as view_name
+        from sys.sql_expression_dependencies refs
+        inner join sys.objects obj
+        on refs.referencing_id = obj.object_id
+        inner join sys.schemas sch
+        on obj.schema_id = sch.schema_id
+        where refs.referenced_database_name = 'crypto_data'
+        and refs.referenced_schema_name = 'gold'
+        and refs.referenced_entity_name = 'market_summary__dbt_backup'
+        and obj.type = 'V'
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+      
+[0m14:09:43.511618 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.516725 [debug] [Thread-2 (]: Using sqlserver connection "model.crypto_pipeline.market_summary"
+[0m14:09:43.518513 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.market_summary"} */
+
+      
+      
+    
+    USE [crypto_data];
+    EXEC('DROP view IF EXISTS "gold"."market_summary__dbt_backup";');
+
+[0m14:09:43.531158 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m14:09:43.534376 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: ROLLBACK
+[0m14:09:43.534376 [debug] [Thread-2 (]: On model.crypto_pipeline.market_summary: Close
+[0m14:09:43.534376 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '23f18d03-c7c1-4fa1-a4ec-887f22c280a0', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF900AD0>]}
+[0m14:09:43.536161 [info ] [Thread-2 (]: 3 of 4 OK created sql view model gold.market_summary ........................... [[32mOK[0m in 0.14s]
+[0m14:09:43.536161 [debug] [Thread-2 (]: Finished running node model.crypto_pipeline.market_summary
+[0m14:09:43.539395 [debug] [MainThread]: On master: COMMIT
+[0m14:09:43.539395 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m14:09:43.539395 [debug] [MainThread]: Connection 'list_crypto_data' was properly closed.
+[0m14:09:43.539395 [debug] [MainThread]: Connection 'list_crypto_data' was properly closed.
+[0m14:09:43.539395 [debug] [MainThread]: Connection 'list_crypto_data_gold' was properly closed.
+[0m14:09:43.541754 [debug] [MainThread]: Connection 'list_crypto_data_silver' was properly closed.
+[0m14:09:43.541754 [debug] [MainThread]: Connection 'model.crypto_pipeline.top_movers' was properly closed.
+[0m14:09:43.542261 [debug] [MainThread]: Connection 'model.crypto_pipeline.coin_prices' was properly closed.
+[0m14:09:43.542261 [debug] [MainThread]: Connection 'model.crypto_pipeline.market_summary' was properly closed.
+[0m14:09:43.542261 [info ] [MainThread]: 
+[0m14:09:43.544283 [info ] [MainThread]: Finished running 1 incremental model, 1 table model, 2 view models in 0 hours 0 minutes and 1.13 seconds (1.13s).
+[0m14:09:43.549304 [debug] [MainThread]: Command end result
+[0m14:09:43.565839 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m14:09:43.576272 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m14:09:43.583927 [debug] [MainThread]: Wrote artifact RunExecutionResult to transform\target\run_results.json
+[0m14:09:43.583927 [info ] [MainThread]: 
+[0m14:09:43.583927 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m14:09:43.583927 [info ] [MainThread]: 
+[0m14:09:43.583927 [info ] [MainThread]: Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4
+[0m14:09:43.590319 [debug] [MainThread]: Command `dbt run` succeeded at 14:09:43.583927 after 2.80 seconds
+[0m14:09:43.590319 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CD14D670>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CD9533B0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000182CF280D10>]}
+[0m14:09:43.591707 [debug] [MainThread]: Flushing usage events
+[0m14:09:44.127730 [debug] [MainThread]: An error was encountered while trying to flush usage events
