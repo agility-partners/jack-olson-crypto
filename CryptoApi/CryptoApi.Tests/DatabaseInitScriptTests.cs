@@ -14,6 +14,7 @@ public class DatabaseInitScriptTests
             "..",
             "..",
             "..",
+            "..",
             "scripts",
             "init-db.sql"));
 
