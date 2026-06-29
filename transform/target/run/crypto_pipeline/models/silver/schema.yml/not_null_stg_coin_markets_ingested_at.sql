@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_15204]
+    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_10584]
    as 
     
     
@@ -35,10 +35,10 @@ where ingested_at is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_15204]
+    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_10584]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_15204]
+    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_10584]
   ;')

@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_2451]
+    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_12774]
    as 
     
     
@@ -35,10 +35,10 @@ where btc_dominance_pct is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_2451]
+    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_12774]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_2451]
+    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_12774]
   ;')
