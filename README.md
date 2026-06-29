@@ -47,8 +47,9 @@ This repository includes a local dbt scaffold in `/transform` and a local profil
    ```
 
 2. Start (or restart) the SQL Server container. The `init-db.sh` entrypoint
-   automatically creates the `crypto_data` database, `bronze` schema,
-   `bronze.raw_coin_data` table, and `silver` schema on first start:
+   automatically creates the `crypto_data` database, the `bronze`, `silver`,
+   and `gold` schemas, the `bronze.raw_coin_data` table, and empty Gold-layer
+   stub objects used by the API on first start:
    ```bash
    docker compose up -d sqlserver
    ```
@@ -81,8 +82,7 @@ This repository includes a local dbt scaffold in `/transform` and a local profil
 The `ingester` Docker Compose service runs `scripts/scheduler.py` in a loop.
 It waits for the `sqlserver` container to pass its healthcheck, fetches the
 CoinGecko `/coins/markets` endpoint, and inserts a new row into
-`bronze.raw_coin_data`. The `gold.coin_prices` view automatically reflects
-the newest row, so no extra `dbt run` is needed between cycles.
+`bronze.raw_coin_data`.
 
 ### Starting the ingester
 
@@ -92,6 +92,10 @@ docker compose up -d
 
 The ingester starts automatically with `docker compose up`. It will not
 begin ingesting until `sqlserver` reports healthy (typically ~30 s).
+
+The initial SQL setup only creates empty Gold-layer placeholders so the API
+does not fail before transformations exist. After Bronze data is ingested, run
+the DBT models to populate `gold.coin_prices` with live data.
 
 ### Configuring the schedule
 
