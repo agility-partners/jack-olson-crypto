@@ -1,0 +1,33 @@
+# Lightweight Python image that runs the CoinGecko ingestion scheduler.
+# Connects to SQL Server via Microsoft ODBC Driver 18.
+FROM python:3.12-slim-bookworm
+
+# Install Microsoft ODBC Driver 18 for SQL Server
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        curl \
+        gnupg2 \
+        unixodbc \
+    && curl -sSL https://packages.microsoft.com/keys/microsoft.asc \
+       | gpg --dearmor > /usr/share/keyrings/microsoft.gpg \
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] \
+       https://packages.microsoft.com/debian/12/prod bookworm main" \
+       > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql18 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app/scripts
+
+RUN pip install --no-cache-dir pyodbc requests
+
+COPY scripts/ ./
+
+# Default target is the internal Docker network SQL Server service.
+# Override MSSQL_SERVER when running outside of Compose.
+ENV MSSQL_SERVER=sqlserver,1433 \
+    MSSQL_DATABASE=crypto_data \
+    MSSQL_USER=sa \
+    MSSQL_DRIVER="ODBC Driver 18 for SQL Server"
+
+CMD ["python", "scheduler.py"]

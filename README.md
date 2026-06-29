@@ -76,35 +76,51 @@ This repository includes a local dbt scaffold in `/transform` and a local profil
    dbt debug --project-dir transform --profiles-dir .dbt
    ```
 
-### End-to-end local run
+## Scheduled ingestion
 
-1. Start the stack:
-   ```bash
-   docker compose up -d
-   ```
-2. Wait for SQL Server to report `healthy` before ingesting data:
-   ```bash
-   docker compose ps sqlserver
-   ```
-3. From the host machine, verify Python can connect before running ingestion:
-   ```bash
-   python scripts/test_sql_connection.py
-   ```
-4. Run the ingestion script:
-   ```bash
-   python scripts/ingest_coingecko.py
-   ```
-5. Build the dbt models:
-   ```bash
-   dbt run --project-dir transform --profiles-dir .dbt
-   ```
-6. Query the API:
-   ```bash
-   curl http://localhost:8081/api/coins
-   ```
+The `ingester` Docker Compose service runs `scripts/scheduler.py` in a loop.
+It waits for the `sqlserver` container to pass its healthcheck, fetches the
+CoinGecko `/coins/markets` endpoint, and inserts a new row into
+`bronze.raw_coin_data`. The `gold.coin_prices` view automatically reflects
+the newest row, so no extra `dbt run` is needed between cycles.
 
-If ingestion still fails after the container is healthy, verify these host-side prerequisites:
+### Starting the ingester
 
-- ODBC Driver 18 for SQL Server is installed.
-- `MSSQL_SA_PASSWORD` is set in the shell running Python.
-- `MSSQL_SERVER` points to `localhost,1433` when connecting from the host.
+```bash
+docker compose up -d
+```
+
+The ingester starts automatically with `docker compose up`. It will not
+begin ingesting until `sqlserver` reports healthy (typically ~30 s).
+
+### Configuring the schedule
+
+Set `INGEST_INTERVAL_SECONDS` in your `.env` file (default: 900 = 15 minutes):
+
+```
+INGEST_INTERVAL_SECONDS=300   # run every 5 minutes
+```
+
+### Monitoring ingestion
+
+```bash
+docker compose logs -f ingester
+```
+
+### Manual one-off run (host machine)
+
+```bash
+python scripts/ingest_coingecko.py
+```
+
+### Viewing bronze data
+
+Connect to `localhost,1433` (user `sa`, password from `.env`) in Azure Data
+Studio or DBeaver, or query from the container:
+
+```powershell
+# PowerShell
+docker exec -it my-app-sqlserver-1 /opt/mssql-tools18/bin/sqlcmd `
+  -S localhost -U sa -P "$env:MSSQL_SA_PASSWORD" -C `
+  -Q "SELECT TOP 5 id, ingested_at, LEN(raw_json) AS bytes FROM bronze.raw_coin_data ORDER BY id DESC"
+```

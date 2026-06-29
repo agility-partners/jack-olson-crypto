@@ -12,10 +12,6 @@ COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets"
 MAX_RETRIES = int(os.getenv("COINGECKO_MAX_RETRIES", "3"))
 BASE_BACKOFF_SECONDS = float(os.getenv("COINGECKO_BACKOFF_SECONDS", "1"))
 REQUEST_TIMEOUT_SECONDS = float(os.getenv("COINGECKO_TIMEOUT_SECONDS", "20"))
-DB_MAX_RETRIES = int(os.getenv("SQL_MAX_RETRIES", "6"))
-DB_BACKOFF_SECONDS = float(os.getenv("SQL_BACKOFF_SECONDS", "2"))
-DB_CONNECTION_TIMEOUT_SECONDS = int(os.getenv("SQL_CONNECTION_TIMEOUT_SECONDS", "5"))
-DB_LOGIN_TIMEOUT_SECONDS = int(os.getenv("SQL_LOGIN_TIMEOUT_SECONDS", "5"))
 
 
 def build_connection_string() -> str:
@@ -36,7 +32,6 @@ def build_connection_string() -> str:
         f"{chr(80)}WD={password};"
         "Encrypt=yes;"
         "TrustServerCertificate=yes;"
-        f"Connection Timeout={DB_CONNECTION_TIMEOUT_SECONDS};"
     )
 
 
@@ -75,49 +70,17 @@ def fetch_market_payload() -> str:
 
 
 def insert_bronze_row(raw_json: str) -> None:
-    server = os.getenv("MSSQL_SERVER", "localhost,1433")
-    database = os.getenv("MSSQL_DATABASE", "crypto_data")
-
-    for attempt in range(1, DB_MAX_RETRIES + 1):
-        try:
-            conn = pyodbc.connect(
-                build_connection_string(),
-                timeout=DB_LOGIN_TIMEOUT_SECONDS,
-            )
-            try:
-                cursor = conn.cursor()
-                cursor.execute(
-                    "INSERT INTO bronze.raw_coin_data (ingested_at, raw_json) VALUES (?, ?)",
-                    datetime.now(timezone.utc),
-                    raw_json,
-                )
-                conn.commit()
-                return
-            finally:
-                conn.close()
-        except pyodbc.Error as exc:
-            if attempt == DB_MAX_RETRIES:
-                raise RuntimeError(
-                    "SQL Server was not ready for ingestion after "
-                    f"{DB_MAX_RETRIES} attempts. Wait for the sqlserver container "
-                    "to be healthy, then verify ODBC Driver 18 is installed, "
-                    "MSSQL_SA_PASSWORD is set in your shell, and "
-                    f"MSSQL_SERVER points to the host listener ({server}) for "
-                    f"database {database}. Last error: {exc}"
-                ) from exc
-
-            delay = DB_BACKOFF_SECONDS * (2 ** (attempt - 1))
-            logging.warning(
-                "SQL insert failed (attempt %s/%s) for %s/%s: %s. "
-                "SQL Server may still be starting; retrying in %.1fs",
-                attempt,
-                DB_MAX_RETRIES,
-                server,
-                database,
-                exc,
-                delay,
-            )
-            time.sleep(delay)
+    conn = pyodbc.connect(build_connection_string())
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO bronze.raw_coin_data (ingested_at, raw_json) VALUES (?, ?)",
+            datetime.now(timezone.utc),
+            raw_json,
+        )
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def main() -> None:
