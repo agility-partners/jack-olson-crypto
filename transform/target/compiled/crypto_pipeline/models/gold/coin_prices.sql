@@ -1,33 +1,51 @@
 
 
 /*
-  Latest price snapshot per coin — sourced from the most recent
-  ingestion run in the silver layer.
+  Latest price snapshot per coin — one row per coin_id using the most
+  recent last_updated timestamp from the silver layer.
+  Adds price_trend classification and market dominance percentage.
+  Your .NET API reads directly from this table.
 */
 
-WITH latest_ingestion AS (
-    SELECT MAX(bronze_id) AS latest_id
+WITH ranked AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY coin_id
+            ORDER BY last_updated DESC
+        )                                                               AS rn,
+        SUM(market_cap) OVER ()                                         AS total_market_cap
     FROM "crypto_data"."silver"."stg_coin_markets"
 )
 
 SELECT
-    s.coin_id,
-    s.symbol,
-    s.name,
-    s.market_cap_rank,
-    s.current_price,
-    s.market_cap,
-    s.total_volume,
-    s.high_24h,
-    s.low_24h,
-    s.price_change_24h,
-    s.price_change_percentage_24h,
-    s.circulating_supply,
-    s.total_supply,
-    s.ath,
-    s.atl,
-    s.ingested_at,
-    s.last_updated
-FROM "crypto_data"."silver"."stg_coin_markets" AS s
-INNER JOIN latest_ingestion AS l
-    ON s.bronze_id = l.latest_id
+    coin_id,
+    symbol,
+    name,
+    market_cap_rank,
+    current_price,
+    market_cap,
+    total_volume,
+    high_24h,
+    low_24h,
+    price_change_24h,
+    price_change_percentage_24h,
+    circulating_supply,
+    total_supply,
+    ath,
+    atl,
+    ingested_at,
+    last_updated,
+    CASE
+        WHEN price_change_percentage_24h > 10   THEN 'strong_up'
+        WHEN price_change_percentage_24h > 2    THEN 'up'
+        WHEN price_change_percentage_24h >= -2  THEN 'stable'
+        WHEN price_change_percentage_24h >= -10 THEN 'down'
+        ELSE                                         'strong_down'
+    END                                                                 AS price_trend,
+    CAST(
+        market_cap * 100.0 / NULLIF(total_market_cap, 0)
+    AS DECIMAL(10, 4))                                                  AS market_dominance_pct
+FROM ranked
+WHERE rn = 1
+ORDER BY market_cap_rank ASC

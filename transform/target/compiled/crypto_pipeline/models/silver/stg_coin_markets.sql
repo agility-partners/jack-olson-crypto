@@ -3,27 +3,30 @@
 /*
   Parses the raw CoinGecko JSON array stored in bronze.raw_coin_data
   into one typed row per coin per ingestion run.
+  - DECIMAL types replace FLOAT for price/market-cap precision
+  - Filters out invalid records (null coin_id, non-positive prices, outlier % changes)
+  - Incremental: on subsequent runs only new Bronze rows are processed
 */
 
 SELECT
-    b.id                                                    AS bronze_id,
+    b.id                                                                AS bronze_id,
     b.ingested_at,
     j.coin_id,
-    j.symbol,
+    UPPER(j.symbol)                                                     AS symbol,
     j.name,
-    j.current_price,
-    j.market_cap,
+    CAST(j.current_price           AS DECIMAL(18, 8))                  AS current_price,
+    CAST(j.market_cap              AS DECIMAL(18, 2))                  AS market_cap,
     j.market_cap_rank,
-    j.total_volume,
-    j.high_24h,
-    j.low_24h,
-    j.price_change_24h,
-    j.price_change_percentage_24h,
-    j.circulating_supply,
-    j.total_supply,
-    j.ath,
-    j.atl,
-    j.last_updated
+    CAST(j.total_volume            AS DECIMAL(18, 2))                  AS total_volume,
+    CAST(j.high_24h                AS DECIMAL(18, 8))                  AS high_24h,
+    CAST(j.low_24h                 AS DECIMAL(18, 8))                  AS low_24h,
+    CAST(j.price_change_24h        AS DECIMAL(18, 8))                  AS price_change_24h,
+    CAST(j.price_change_percentage_24h AS DECIMAL(10, 4))              AS price_change_percentage_24h,
+    CAST(j.circulating_supply      AS DECIMAL(30, 2))                  AS circulating_supply,
+    CAST(j.total_supply            AS DECIMAL(30, 2))                  AS total_supply,
+    CAST(j.ath                     AS DECIMAL(18, 8))                  AS ath,
+    CAST(j.atl                     AS DECIMAL(18, 8))                  AS atl,
+    TRY_CAST(j.last_updated        AS DATETIME2)                       AS last_updated
 FROM "crypto_data"."bronze"."raw_coin_data" AS b
 CROSS APPLY OPENJSON(b.raw_json)
 WITH (
@@ -44,3 +47,7 @@ WITH (
     atl                             FLOAT           '$.atl',
     last_updated                    NVARCHAR(50)    '$.last_updated'
 ) AS j
+WHERE j.coin_id IS NOT NULL
+  AND j.current_price > 0
+  AND j.market_cap_rank BETWEEN 1 AND 10000
+  AND ABS(j.price_change_percentage_24h) < 1000
