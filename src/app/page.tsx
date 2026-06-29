@@ -1,7 +1,8 @@
-import { Coin, watchlistCoins } from "@/app/lib/mockData";
+import type { Coin } from "@/app/lib/mockData";
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import WatchlistWrapper from "@/app/components/WatchlistWrapper";
+import { fetchCoins } from "@/app/lib/coinsApi";
 
 export default async function WatchlistPage() {
   const apiUrl = process.env.API_URL ?? "http://localhost:8080";
@@ -16,9 +17,11 @@ export default async function WatchlistPage() {
     // API unavailable — render with empty list
   }
 
+  const tickerCoins = await fetchCoins();
+
   return (
     <>
-      <TickerStrip coins={watchlistCoins} />
+      <TickerStrip coins={tickerCoins} />
       <Navigation />
 
       <WatchlistWrapper initialCoins={initialCoins} />
