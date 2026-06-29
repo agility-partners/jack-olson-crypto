@@ -18,6 +18,10 @@ IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
     EXEC('CREATE SCHEMA silver');
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'gold')
+    EXEC('CREATE SCHEMA gold');
+GO
+
 IF NOT EXISTS (
     SELECT * FROM sys.tables
     WHERE name = 'raw_coin_data'
