@@ -1,12 +1,13 @@
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import StatsBar from "@/app/components/StatsBar";
+import TopMovers from "@/app/components/TopMovers";
 import WatchlistClient from "@/app/components/WatchlistClient";
-import { fetchCoins } from "@/app/lib/coinsApi";
+import { fetchCoins, fetchTopMovers } from "@/app/lib/coinsApi";
 import styles from "../../page.module.css";
 
 export default async function BrowsePage() {
-  const coins = await fetchCoins();
+  const [coins, topMovers] = await Promise.all([fetchCoins(), fetchTopMovers()]);
   const gainerCount = coins.filter((coin) => coin.change24h >= 0).length;
 
   return (
@@ -20,6 +21,8 @@ export default async function BrowsePage() {
       </div>
 
       <StatsBar coinCount={coins.length} gainerCount={gainerCount} />
+
+      <TopMovers topMovers={topMovers} />
 
       <WatchlistClient initialCoins={coins} useAllCoins={true} />
     </>
