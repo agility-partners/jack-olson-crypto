@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_14386]
+    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_4751]
    as 
     
     
@@ -35,10 +35,10 @@ where price_trend is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_14386]
+    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_4751]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_14386]
+    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_4751]
   ;')

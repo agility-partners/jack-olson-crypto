@@ -59,8 +59,7 @@ SELECT
         market_cap * 100.0 / NULLIF(total_market_cap, 0)
     AS DECIMAL(10, 4))                                                  AS market_dominance_pct
 FROM ranked
-WHERE rn = 1
-ORDER BY market_cap_rank ASC;
+WHERE rn = 1;
     ')
 
 EXEC('

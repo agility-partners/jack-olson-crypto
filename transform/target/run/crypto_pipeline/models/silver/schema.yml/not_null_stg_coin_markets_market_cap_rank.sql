@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_4941]
+    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_8385]
    as 
     
     
@@ -35,10 +35,10 @@ where market_cap_rank is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_4941]
+    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_8385]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_4941]
+    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_8385]
   ;')

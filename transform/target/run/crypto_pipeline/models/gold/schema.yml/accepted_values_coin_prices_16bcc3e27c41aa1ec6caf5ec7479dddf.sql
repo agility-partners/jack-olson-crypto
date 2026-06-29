@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_16640]
+    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_16564]
    as 
     
     
@@ -46,10 +46,10 @@ where value_field not in (
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_16640]
+    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_16564]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_16640]
+    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_16564]
   ;')

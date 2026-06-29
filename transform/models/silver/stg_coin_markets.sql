@@ -15,10 +15,10 @@
   - Incremental: on subsequent runs only new Bronze rows are processed
 */
 
-SELECT                                                              AS bronze_id,
+SELECT                     
     b.ingested_at,
     j.coin_id,
-    UPPER(j.symbol)                                                     AS symbol,
+    UPPER(j.symbol)                                                    AS symbol,
     j.name,
     CAST(j.current_price           AS DECIMAL(18, 8))                  AS current_price,
     CAST(j.market_cap              AS DECIMAL(18, 2))                  AS market_cap,
