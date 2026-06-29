@@ -19,11 +19,13 @@ if (!string.IsNullOrWhiteSpace(cryptoDbConnectionString))
 {
     builder.Services.AddScoped<ICoinService, SqlCoinService>();
     builder.Services.AddScoped<IMarketStatsService, SqlMarketStatsService>();
+    builder.Services.AddScoped<ITopMoversService, SqlTopMoversService>();
 }
 else
 {
     builder.Services.AddScoped<ICoinService, CoinService>();
     builder.Services.AddScoped<IMarketStatsService, MarketStatsService>();
+    builder.Services.AddScoped<ITopMoversService, TopMoversService>();
 }
 builder.Services.AddScoped<IWatchlistService, WatchlistService>();
 builder.Services.AddEndpointsApiExplorer();

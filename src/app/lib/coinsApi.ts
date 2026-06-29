@@ -15,3 +15,30 @@ export async function fetchCoins(): Promise<Coin[]> {
     return [];
   }
 }
+
+export type TopMover = {
+  id: string;
+  symbol: string;
+  name: string;
+  iconClass: string;
+  price: number;
+  change24h: number;
+  marketCap: string;
+  marketCapRaw: number;
+  categoryRank: number;
+  category: "gainer" | "loser";
+};
+
+export async function fetchTopMovers(): Promise<TopMover[]> {
+  try {
+    const response = await fetch(`${API_URL}/api/topmovers`, { cache: "no-store" });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    return await response.json() as TopMover[];
+  } catch {
+    return [];
+  }
+}
