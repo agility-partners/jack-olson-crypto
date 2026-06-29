@@ -14,8 +14,7 @@
   - Incremental: on subsequent runs only new Bronze rows are processed
 */
 
-SELECT
-    b.id                                                                AS bronze_id,
+SELECT                                                              AS bronze_id,
     b.ingested_at,
     j.coin_id,
     UPPER(j.symbol)                                                     AS symbol,

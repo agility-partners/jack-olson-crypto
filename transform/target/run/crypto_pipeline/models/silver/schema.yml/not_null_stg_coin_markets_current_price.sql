@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_4930]
+    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_3276]
    as 
     
     
@@ -35,10 +35,10 @@ where current_price is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_4930]
+    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_3276]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_4930]
+    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_3276]
   ;')

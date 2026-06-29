@@ -51,3 +51,5 @@ WHERE j.coin_id IS NOT NULL
   AND j.current_price > 0
   AND j.market_cap_rank BETWEEN 1 AND 10000
   AND ABS(j.price_change_percentage_24h) < 1000
+
+  AND b.ingested_at > (SELECT MAX(ingested_at) FROM "crypto_data"."silver"."stg_coin_markets")

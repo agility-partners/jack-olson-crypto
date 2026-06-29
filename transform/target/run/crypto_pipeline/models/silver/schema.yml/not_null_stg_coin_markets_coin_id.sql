@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13219]
+    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13020]
    as 
     
     
@@ -35,10 +35,10 @@ where coin_id is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13219]
+    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13020]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13219]
+    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13020]
   ;')

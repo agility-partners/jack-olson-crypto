@@ -4376,3 +4376,2579 @@ having count(*) > 1
 [0m13:17:50.880257 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002CA4B4814F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002CA4B483770>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002CA4E626F30>]}
 [0m13:17:50.880257 [debug] [MainThread]: Flushing usage events
 [0m13:17:51.381518 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:27:23.038595 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F101D1790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F0DE68560>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F0F890980>]}
+
+
+============================== 13:27:23.045313 | 0758e4e0-c6c4-49c6-bfa8-dcdca17234f9 ==============================
+[0m13:27:23.045313 [info ] [MainThread]: Running with dbt=1.11.11
+[0m13:27:23.048134 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.dbt', 'indirect_selection': 'eager', 'invocation_command': 'dbt run --project-dir transform --profiles-dir .dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m13:27:23.319166 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F0D617320>]}
+[0m13:27:23.380344 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F11F18A10>]}
+[0m13:27:23.380344 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m13:27:23.569177 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m13:27:23.569177 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F12203230>]}
+[0m13:27:23.577437 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m13:27:23.726997 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 1 files changed.
+[0m13:27:23.728129 [debug] [MainThread]: Partial parsing: updated file: crypto_pipeline://models\gold\coin_prices.sql
+[0m13:27:24.102565 [warn ] [MainThread]: [[33mWARNING[0m][MissingArgumentsPropertyInGenericTestDeprecation]: Deprecated
+functionality
+Found top-level arguments to test `accepted_values` defined on 'coin_prices' in
+package 'crypto_pipeline' (models\gold\schema.yml). Arguments to generic tests
+should be nested under the `arguments` property.
+[0m13:27:24.102565 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F12888380>]}
+[0m13:27:24.302452 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F1283A870>]}
+[0m13:27:24.384126 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m13:27:24.387272 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m13:27:24.403142 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F123AA870>]}
+[0m13:27:24.403142 [info ] [MainThread]: Found 4 models, 21 data tests, 1 source, 523 macros
+[0m13:27:24.406722 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F12641EB0>]}
+[0m13:27:24.413768 [info ] [MainThread]: 
+[0m13:27:24.420489 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m13:27:24.421144 [info ] [MainThread]: 
+[0m13:27:24.421649 [debug] [MainThread]: Acquiring new sqlserver connection 'master'
+[0m13:27:24.428213 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data'
+[0m13:27:24.448693 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data'
+[0m13:27:24.459657 [debug] [ThreadPool]: dbt-sqlserver
+[0m13:27:24.459657 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data"
+[0m13:27:24.461989 [debug] [ThreadPool]: On list_crypto_data: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data"} */
+USE [crypto_data];
+    select  name as [schema]
+    from sys.schemas with (nolock) 
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m13:27:24.461989 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:27:24.461989 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:24.465268 [debug] [ThreadPool]: dbt-sqlserver
+[0m13:27:24.467445 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data"
+[0m13:27:24.467445 [debug] [ThreadPool]: On list_crypto_data: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data"} */
+USE [crypto_data];
+    select  name as [schema]
+    from sys.schemas with (nolock) 
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m13:27:24.467445 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:27:24.467445 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:24.531201 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:24.535468 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m13:27:24.539935 [debug] [ThreadPool]: On list_crypto_data: Close
+[0m13:27:24.540713 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:24.545143 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m13:27:24.545658 [debug] [ThreadPool]: On list_crypto_data: Close
+[0m13:27:24.545658 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_silver'
+[0m13:27:24.553828 [debug] [ThreadPool]: dbt-sqlserver
+[0m13:27:24.553828 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_silver"
+[0m13:27:24.553828 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_gold'
+[0m13:27:24.553828 [debug] [ThreadPool]: On list_crypto_data_silver: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m13:27:24.553828 [debug] [ThreadPool]: dbt-sqlserver
+[0m13:27:24.553828 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:27:24.553828 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_gold"
+[0m13:27:24.553828 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:24.562862 [debug] [ThreadPool]: On list_crypto_data_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m13:27:24.562862 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:27:24.562862 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:24.562862 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:24.562862 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:24.567453 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m13:27:24.569328 [debug] [ThreadPool]: On list_crypto_data_gold: ROLLBACK
+[0m13:27:24.570084 [debug] [ThreadPool]: On list_crypto_data_gold: Close
+[0m13:27:24.570679 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m13:27:24.571865 [debug] [ThreadPool]: On list_crypto_data_silver: ROLLBACK
+[0m13:27:24.571865 [debug] [ThreadPool]: On list_crypto_data_silver: Close
+[0m13:27:24.573115 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F0D731C70>]}
+[0m13:27:24.573115 [debug] [MainThread]: On master: COMMIT
+[0m13:27:24.578468 [debug] [Thread-1 (]: Began running node model.crypto_pipeline.stg_coin_markets
+[0m13:27:24.579133 [info ] [Thread-1 (]: 1 of 4 START sql incremental model silver.stg_coin_markets ..................... [RUN]
+[0m13:27:24.579727 [debug] [Thread-1 (]: Acquiring new sqlserver connection 'model.crypto_pipeline.stg_coin_markets'
+[0m13:27:24.579727 [debug] [Thread-1 (]: Began compiling node model.crypto_pipeline.stg_coin_markets
+[0m13:27:24.585873 [debug] [Thread-1 (]: Writing injected SQL for node "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.585873 [debug] [Thread-1 (]: Began executing node model.crypto_pipeline.stg_coin_markets
+[0m13:27:24.635591 [debug] [Thread-1 (]: dbt-sqlserver
+[0m13:27:24.644468 [debug] [Thread-1 (]: Applying DROP to: "crypto_data"."silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw"
+[0m13:27:24.650769 [debug] [Thread-1 (]: dbt-sqlserver
+[0m13:27:24.650769 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.650769 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            sch.name as schema_name,
+            obj.name as view_name
+        from sys.sql_expression_dependencies refs
+        inner join sys.objects obj
+        on refs.referencing_id = obj.object_id
+        inner join sys.schemas sch
+        on obj.schema_id = sch.schema_id
+        where refs.referenced_database_name = 'crypto_data'
+        and refs.referenced_schema_name = 'silver'
+        and refs.referenced_entity_name = 'stg_coin_markets__dbt_tmp__dbt_tmp_vw'
+        and obj.type = 'V'
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+      
+[0m13:27:24.651788 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m13:27:24.652289 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:24.652802 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:24.655539 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:24.656703 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.657215 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+      
+      
+    
+    USE [crypto_data];
+    EXEC('DROP view IF EXISTS "silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw";');
+
+[0m13:27:24.660262 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:24.673459 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.673459 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+    
+  
+    USE [crypto_data];
+    USE [crypto_data];
+    
+    
+
+    
+
+    
+    USE [crypto_data];
+    EXEC('
+        CREATE OR ALTER VIEW "silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw" AS 
+
+/*
+  Parses the raw CoinGecko JSON array stored in bronze.raw_coin_data
+  into one typed row per coin per ingestion run.
+  - DECIMAL types replace FLOAT for price/market-cap precision
+  - Filters out invalid records (null coin_id, non-positive prices, outlier % changes)
+  - Incremental: on subsequent runs only new Bronze rows are processed
+*/
+
+SELECT
+    b.id                                                                AS bronze_id,
+    b.ingested_at,
+    j.coin_id,
+    UPPER(j.symbol)                                                     AS symbol,
+    j.name,
+    CAST(j.current_price           AS DECIMAL(18, 8))                  AS current_price,
+    CAST(j.market_cap              AS DECIMAL(18, 2))                  AS market_cap,
+    j.market_cap_rank,
+    CAST(j.total_volume            AS DECIMAL(18, 2))                  AS total_volume,
+    CAST(j.high_24h                AS DECIMAL(18, 8))                  AS high_24h,
+    CAST(j.low_24h                 AS DECIMAL(18, 8))                  AS low_24h,
+    CAST(j.price_change_24h        AS DECIMAL(18, 8))                  AS price_change_24h,
+    CAST(j.price_change_percentage_24h AS DECIMAL(10, 4))              AS price_change_percentage_24h,
+    CAST(j.circulating_supply      AS DECIMAL(30, 2))                  AS circulating_supply,
+    CAST(j.total_supply            AS DECIMAL(30, 2))                  AS total_supply,
+    CAST(j.ath                     AS DECIMAL(18, 8))                  AS ath,
+    CAST(j.atl                     AS DECIMAL(18, 8))                  AS atl,
+    TRY_CAST(j.last_updated        AS DATETIME2)                       AS last_updated
+FROM "crypto_data"."bronze"."raw_coin_data" AS b
+CROSS APPLY OPENJSON(b.raw_json)
+WITH (
+    coin_id                         NVARCHAR(100)   ''$.id'',
+    symbol                          NVARCHAR(20)    ''$.symbol'',
+    name                            NVARCHAR(200)   ''$.name'',
+    current_price                   FLOAT           ''$.current_price'',
+    market_cap                      FLOAT           ''$.market_cap'',
+    market_cap_rank                 INT             ''$.market_cap_rank'',
+    total_volume                    FLOAT           ''$.total_volume'',
+    high_24h                        FLOAT           ''$.high_24h'',
+    low_24h                         FLOAT           ''$.low_24h'',
+    price_change_24h                FLOAT           ''$.price_change_24h'',
+    price_change_percentage_24h     FLOAT           ''$.price_change_percentage_24h'',
+    circulating_supply              FLOAT           ''$.circulating_supply'',
+    total_supply                    FLOAT           ''$.total_supply'',
+    ath                             FLOAT           ''$.ath'',
+    atl                             FLOAT           ''$.atl'',
+    last_updated                    NVARCHAR(50)    ''$.last_updated''
+) AS j
+WHERE j.coin_id IS NOT NULL
+  AND j.current_price > 0
+  AND j.market_cap_rank BETWEEN 1 AND 10000
+  AND ABS(j.price_change_percentage_24h) < 1000
+
+  AND b.ingested_at > (SELECT MAX(ingested_at) FROM "crypto_data"."silver"."stg_coin_markets")
+;
+    ')
+
+EXEC('
+            SELECT * INTO "crypto_data"."silver"."stg_coin_markets__dbt_tmp" FROM "crypto_data"."silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw" 
+    OPTION (LABEL = ''dbt-sqlserver'');
+
+        ')
+
+    
+    EXEC('DROP VIEW IF EXISTS "silver"."stg_coin_markets__dbt_tmp__dbt_tmp_vw"')
+
+
+
+    
+    
+
+
+  
+  
+[0m13:27:24.768846 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:24.778651 [debug] [Thread-1 (]: dbt-sqlserver
+[0m13:27:24.778651 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.778651 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            c.name collate database_default as column_name,
+            t.name as data_type,
+            case
+                when (t.name in ('nchar', 'nvarchar', 'sysname') and c.max_length <> -1) then c.max_length / 2
+                else c.max_length
+            end as character_maximum_length,
+            c.precision as numeric_precision,
+            c.scale as numeric_scale
+        from sys.columns c with (nolock)
+        inner join sys.types t with (nolock)
+        on c.user_type_id = t.user_type_id
+        where c.object_id = object_id('"crypto_data"."silver"."stg_coin_markets__dbt_tmp"')
+        order by c.column_id
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+    
+[0m13:27:24.796433 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:24.803304 [debug] [Thread-1 (]: dbt-sqlserver
+[0m13:27:24.804472 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.805077 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            c.name collate database_default as column_name,
+            t.name as data_type,
+            case
+                when (t.name in ('nchar', 'nvarchar', 'sysname') and c.max_length <> -1) then c.max_length / 2
+                else c.max_length
+            end as character_maximum_length,
+            c.precision as numeric_precision,
+            c.scale as numeric_scale
+        from sys.columns c with (nolock)
+        inner join sys.types t with (nolock)
+        on c.user_type_id = t.user_type_id
+        where c.object_id = object_id('"crypto_data"."silver"."stg_coin_markets"')
+        order by c.column_id
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+    
+[0m13:27:24.825806 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:24.840472 [debug] [Thread-1 (]: dbt-sqlserver
+[0m13:27:24.841992 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.841992 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+        USE [crypto_data];
+        select
+            c.name collate database_default as column_name,
+            t.name as data_type,
+            case
+                when (t.name in ('nchar', 'nvarchar', 'sysname') and c.max_length <> -1) then c.max_length / 2
+                else c.max_length
+            end as character_maximum_length,
+            c.precision as numeric_precision,
+            c.scale as numeric_scale
+        from sys.columns c with (nolock)
+        inner join sys.types t with (nolock)
+        on c.user_type_id = t.user_type_id
+        where c.object_id = object_id('"crypto_data"."silver"."stg_coin_markets"')
+        order by c.column_id
+        
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+    
+[0m13:27:24.845704 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:24.879817 [debug] [Thread-1 (]: dbt-sqlserver
+[0m13:27:24.879817 [debug] [Thread-1 (]: Writing runtime sql for node "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.884121 [debug] [Thread-1 (]: Using sqlserver connection "model.crypto_pipeline.stg_coin_markets"
+[0m13:27:24.884121 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "model.crypto_pipeline.stg_coin_markets"} */
+
+      -- back compat for old kwarg name
+  
+  
+  
+        
+            
+                
+                
+            
+                
+                
+            
+        
+    
+
+    
+
+    merge into "crypto_data"."silver"."stg_coin_markets" as DBT_INTERNAL_DEST
+        using "crypto_data"."silver"."stg_coin_markets__dbt_tmp" as DBT_INTERNAL_SOURCE
+        on (
+                    DBT_INTERNAL_SOURCE.coin_id = DBT_INTERNAL_DEST.coin_id
+                ) and (
+                    DBT_INTERNAL_SOURCE.last_updated = DBT_INTERNAL_DEST.last_updated
+                )
+
+    
+    when matched then update set
+        "bronze_id" = DBT_INTERNAL_SOURCE."bronze_id","ingested_at" = DBT_INTERNAL_SOURCE."ingested_at","coin_id" = DBT_INTERNAL_SOURCE."coin_id","symbol" = DBT_INTERNAL_SOURCE."symbol","name" = DBT_INTERNAL_SOURCE."name","current_price" = DBT_INTERNAL_SOURCE."current_price","market_cap" = DBT_INTERNAL_SOURCE."market_cap","market_cap_rank" = DBT_INTERNAL_SOURCE."market_cap_rank","total_volume" = DBT_INTERNAL_SOURCE."total_volume","high_24h" = DBT_INTERNAL_SOURCE."high_24h","low_24h" = DBT_INTERNAL_SOURCE."low_24h","price_change_24h" = DBT_INTERNAL_SOURCE."price_change_24h","price_change_percentage_24h" = DBT_INTERNAL_SOURCE."price_change_percentage_24h","circulating_supply" = DBT_INTERNAL_SOURCE."circulating_supply","total_supply" = DBT_INTERNAL_SOURCE."total_supply","ath" = DBT_INTERNAL_SOURCE."ath","atl" = DBT_INTERNAL_SOURCE."atl","last_updated" = DBT_INTERNAL_SOURCE."last_updated"
+    
+
+    when not matched then insert
+        ("bronze_id", "ingested_at", "coin_id", "symbol", "name", "current_price", "market_cap", "market_cap_rank", "total_volume", "high_24h", "low_24h", "price_change_24h", "price_change_percentage_24h", "circulating_supply", "total_supply", "ath", "atl", "last_updated")
+    values
+        ("bronze_id", "ingested_at", "coin_id", "symbol", "name", "current_price", "market_cap", "market_cap_rank", "total_volume", "high_24h", "low_24h", "price_change_24h", "price_change_percentage_24h", "circulating_supply", "total_supply", "ath", "atl", "last_updated")
+
+
+  
+    OPTION (LABEL = 'dbt-sqlserver');
+
+
+  
+[0m13:27:24.898009 [debug] [Thread-1 (]: sqlserver adapter: Database error: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot update identity column 'bronze_id'. (8102) (SQLExecDirectW)")
+[0m13:27:24.898673 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: ROLLBACK
+[0m13:27:24.899242 [debug] [Thread-1 (]: On model.crypto_pipeline.stg_coin_markets: Close
+[0m13:27:24.965560 [debug] [Thread-1 (]: Database Error in model stg_coin_markets (models\silver\stg_coin_markets.sql)
+  ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot update identity column 'bronze_id'. (8102) (SQLExecDirectW)")
+  compiled code at target\run\crypto_pipeline\models\silver\stg_coin_markets.sql
+[0m13:27:24.971847 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '0758e4e0-c6c4-49c6-bfa8-dcdca17234f9', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F0FCA1460>]}
+[0m13:27:24.971847 [error] [Thread-1 (]: 1 of 4 ERROR creating sql incremental model silver.stg_coin_markets ............ [[31mERROR[0m in 0.39s]
+[0m13:27:24.977311 [debug] [Thread-1 (]: Finished running node model.crypto_pipeline.stg_coin_markets
+[0m13:27:24.979840 [debug] [Thread-7 (]: Marking all children of 'model.crypto_pipeline.stg_coin_markets' to be skipped because of status 'error'.  Reason: Database Error in model stg_coin_markets (models\silver\stg_coin_markets.sql)
+  ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot update identity column 'bronze_id'. (8102) (SQLExecDirectW)")
+  compiled code at target\run\crypto_pipeline\models\silver\stg_coin_markets.sql.
+[0m13:27:24.979840 [debug] [Thread-3 (]: Began running node model.crypto_pipeline.coin_prices
+[0m13:27:24.985293 [info ] [Thread-3 (]: 2 of 4 SKIP relation gold.coin_prices .......................................... [[33mSKIP[0m]
+[0m13:27:24.988063 [debug] [Thread-3 (]: Finished running node model.crypto_pipeline.coin_prices
+[0m13:27:24.989079 [debug] [Thread-2 (]: Began running node model.crypto_pipeline.market_summary
+[0m13:27:24.990854 [debug] [Thread-1 (]: Began running node model.crypto_pipeline.top_movers
+[0m13:27:24.990854 [info ] [Thread-2 (]: 3 of 4 SKIP relation gold.market_summary ....................................... [[33mSKIP[0m]
+[0m13:27:24.992888 [debug] [Thread-2 (]: Finished running node model.crypto_pipeline.market_summary
+[0m13:27:24.991861 [info ] [Thread-1 (]: 4 of 4 SKIP relation gold.top_movers ........................................... [[33mSKIP[0m]
+[0m13:27:24.993905 [debug] [Thread-1 (]: Finished running node model.crypto_pipeline.top_movers
+[0m13:27:24.995937 [debug] [MainThread]: On master: COMMIT
+[0m13:27:24.995937 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:27:24.996953 [debug] [MainThread]: Connection 'list_crypto_data' was properly closed.
+[0m13:27:24.996953 [debug] [MainThread]: Connection 'list_crypto_data' was properly closed.
+[0m13:27:24.996953 [debug] [MainThread]: Connection 'list_crypto_data_silver' was properly closed.
+[0m13:27:24.996953 [debug] [MainThread]: Connection 'list_crypto_data_gold' was properly closed.
+[0m13:27:24.996953 [debug] [MainThread]: Connection 'model.crypto_pipeline.stg_coin_markets' was properly closed.
+[0m13:27:24.996953 [info ] [MainThread]: 
+[0m13:27:24.997981 [info ] [MainThread]: Finished running 1 incremental model, 1 table model, 2 view models in 0 hours 0 minutes and 0.58 seconds (0.58s).
+[0m13:27:24.999000 [debug] [MainThread]: Command end result
+[0m13:27:25.044531 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m13:27:25.048429 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m13:27:25.055347 [debug] [MainThread]: Wrote artifact RunExecutionResult to transform\target\run_results.json
+[0m13:27:25.055347 [info ] [MainThread]: 
+[0m13:27:25.055347 [info ] [MainThread]: [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m13:27:25.058416 [info ] [MainThread]: 
+[0m13:27:25.058416 [error] [MainThread]: [31mFailure in model stg_coin_markets (models\silver\stg_coin_markets.sql)[0m
+[0m13:27:25.058416 [error] [MainThread]:   Database Error in model stg_coin_markets (models\silver\stg_coin_markets.sql)
+  ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Cannot update identity column 'bronze_id'. (8102) (SQLExecDirectW)")
+  compiled code at target\run\crypto_pipeline\models\silver\stg_coin_markets.sql
+[0m13:27:25.058416 [info ] [MainThread]: 
+[0m13:27:25.061580 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\silver\stg_coin_markets.sql
+[0m13:27:25.061580 [info ] [MainThread]: 
+[0m13:27:25.061580 [info ] [MainThread]: Done. PASS=0 WARN=0 ERROR=1 SKIP=3 NO-OP=0 TOTAL=4
+[0m13:27:25.061580 [warn ] [MainThread]: [[33mWARNING[0m][DeprecationsSummary]: Deprecated functionality
+Summary of encountered deprecations:
+- MissingArgumentsPropertyInGenericTestDeprecation: 1 occurrence
+To see all deprecation instances instead of just the first occurrence of each,
+run command again with the `--show-all-deprecations` flag. You may also need to
+run with `--no-partial-parse` as some deprecations are only encountered during
+parsing.
+[0m13:27:25.061580 [debug] [MainThread]: Command `dbt run` failed at 13:27:25.061580 after 2.27 seconds
+[0m13:27:25.061580 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F104775F0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F128FE240>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000013F128FFD10>]}
+[0m13:27:25.061580 [debug] [MainThread]: Flushing usage events
+[0m13:27:25.503901 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m13:27:38.581617 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026346A7C500>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026343BEDDC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000263466D42C0>]}
+
+
+============================== 13:27:38.584414 | 0226c6fe-c401-4052-8c7a-98bfe55284ee ==============================
+[0m13:27:38.584414 [info ] [MainThread]: Running with dbt=1.11.11
+[0m13:27:38.584414 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.dbt', 'use_colors': 'True', 'invocation_command': 'dbt test --project-dir transform --profiles-dir .dbt', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m13:27:38.862977 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000263472B65D0>]}
+[0m13:27:38.951229 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000263472597F0>]}
+[0m13:27:38.951229 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m13:27:39.195215 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m13:27:39.195215 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026348934F50>]}
+[0m13:27:39.203727 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m13:27:39.413181 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m13:27:39.413181 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m13:27:39.413181 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m13:27:39.462897 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026348AD4740>]}
+[0m13:27:39.550949 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m13:27:39.550949 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m13:27:39.567646 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026348DDFCE0>]}
+[0m13:27:39.567646 [info ] [MainThread]: Found 4 models, 21 data tests, 1 source, 523 macros
+[0m13:27:39.583412 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026348DCBEF0>]}
+[0m13:27:39.588321 [info ] [MainThread]: 
+[0m13:27:39.589397 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m13:27:39.589397 [info ] [MainThread]: 
+[0m13:27:39.590432 [debug] [MainThread]: Acquiring new sqlserver connection 'master'
+[0m13:27:39.596915 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_gold'
+[0m13:27:39.614838 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_silver'
+[0m13:27:39.617594 [debug] [ThreadPool]: dbt-sqlserver
+[0m13:27:39.617594 [debug] [ThreadPool]: dbt-sqlserver
+[0m13:27:39.617594 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_gold"
+[0m13:27:39.617594 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_silver"
+[0m13:27:39.617594 [debug] [ThreadPool]: On list_crypto_data_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m13:27:39.617594 [debug] [ThreadPool]: On list_crypto_data_silver: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m13:27:39.617594 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:27:39.617594 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m13:27:39.617594 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:39.617594 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:39.683906 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:39.687748 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m13:27:39.688996 [debug] [ThreadPool]: On list_crypto_data_gold: ROLLBACK
+[0m13:27:39.688996 [debug] [ThreadPool]: On list_crypto_data_gold: Close
+[0m13:27:39.689652 [debug] [ThreadPool]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:39.693326 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m13:27:39.694520 [debug] [ThreadPool]: On list_crypto_data_silver: ROLLBACK
+[0m13:27:39.695174 [debug] [ThreadPool]: On list_crypto_data_silver: Close
+[0m13:27:39.696438 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '0226c6fe-c401-4052-8c7a-98bfe55284ee', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026348935490>]}
+[0m13:27:39.697058 [debug] [MainThread]: On master: COMMIT
+[0m13:27:39.701006 [debug] [Thread-1 (]: Began running node test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80
+[0m13:27:39.701006 [debug] [Thread-2 (]: Began running node test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f
+[0m13:27:39.701006 [debug] [Thread-3 (]: Began running node test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92
+[0m13:27:39.701006 [info ] [Thread-1 (]: 1 of 21 START test accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down  [RUN]
+[0m13:27:39.701006 [debug] [Thread-4 (]: Began running node test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b
+[0m13:27:39.701006 [info ] [Thread-2 (]: 2 of 21 START test accepted_values_top_movers_category__gainer__loser .......... [RUN]
+[0m13:27:39.709062 [debug] [Thread-1 (]: Acquiring new sqlserver connection 'test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80'
+[0m13:27:39.709062 [debug] [Thread-2 (]: Acquiring new sqlserver connection 'test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f'
+[0m13:27:39.709062 [info ] [Thread-3 (]: 3 of 21 START test not_null_coin_prices_coin_id ................................ [RUN]
+[0m13:27:39.709062 [debug] [Thread-1 (]: Began compiling node test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80
+[0m13:27:39.709062 [debug] [Thread-2 (]: Began compiling node test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f
+[0m13:27:39.709062 [info ] [Thread-4 (]: 4 of 21 START test not_null_coin_prices_current_price .......................... [RUN]
+[0m13:27:39.709062 [debug] [Thread-3 (]: Acquiring new sqlserver connection 'test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92'
+[0m13:27:39.734466 [debug] [Thread-2 (]: Writing injected SQL for node "test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f"
+[0m13:27:39.734466 [debug] [Thread-1 (]: Writing injected SQL for node "test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80"
+[0m13:27:39.734466 [debug] [Thread-4 (]: Acquiring new sqlserver connection 'test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b'
+[0m13:27:39.734466 [debug] [Thread-3 (]: Began compiling node test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92
+[0m13:27:39.749467 [debug] [Thread-4 (]: Began compiling node test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b
+[0m13:27:39.765243 [debug] [Thread-3 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92"
+[0m13:27:39.765243 [debug] [Thread-2 (]: Began executing node test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f
+[0m13:27:39.844616 [debug] [Thread-4 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b"
+[0m13:27:39.844616 [debug] [Thread-1 (]: Began executing node test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80
+[0m13:27:39.879691 [debug] [Thread-2 (]: Writing runtime sql for node "test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f"
+[0m13:27:39.879691 [debug] [Thread-1 (]: Writing runtime sql for node "test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80"
+[0m13:27:39.884171 [debug] [Thread-3 (]: Began executing node test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92
+[0m13:27:39.884171 [debug] [Thread-3 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92"
+[0m13:27:39.884171 [debug] [Thread-2 (]: Using sqlserver connection "test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f"
+[0m13:27:39.884171 [debug] [Thread-4 (]: Began executing node test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b
+[0m13:27:39.884171 [debug] [Thread-2 (]: On test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_887d0c0494bc55af2059421218d1164d_8176]
+   as 
+    
+    
+    
+
+with all_values as (
+
+    select
+        category as value_field,
+        count(*) as n_records
+
+    from "crypto_data"."gold"."top_movers"
+    group by category
+
+)
+
+select *
+from all_values
+where value_field not in (
+    ''gainer'',''loser''
+)
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_887d0c0494bc55af2059421218d1164d_8176]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_887d0c0494bc55af2059421218d1164d_8176]
+  ;')
+[0m13:27:39.889493 [debug] [Thread-1 (]: Using sqlserver connection "test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80"
+[0m13:27:39.890523 [debug] [Thread-4 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b"
+[0m13:27:39.890523 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m13:27:39.892553 [debug] [Thread-3 (]: Using sqlserver connection "test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92"
+[0m13:27:39.893208 [debug] [Thread-1 (]: On test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_15902]
+   as 
+    
+    
+    
+
+with all_values as (
+
+    select
+        price_trend as value_field,
+        count(*) as n_records
+
+    from "crypto_data"."gold"."coin_prices"
+    group by price_trend
+
+)
+
+select *
+from all_values
+where value_field not in (
+    ''strong_up'',''up'',''stable'',''down'',''strong_down''
+)
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_15902]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_300b4072e5b7e5777dca7d9fd76a1636_15902]
+  ;')
+[0m13:27:39.893739 [debug] [Thread-2 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:39.893739 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_752e513db3b37860329e0a528a3eb387_15646]
+   as 
+    
+    
+    
+
+
+
+select coin_id
+from "crypto_data"."gold"."coin_prices"
+where coin_id is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_752e513db3b37860329e0a528a3eb387_15646]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_752e513db3b37860329e0a528a3eb387_15646]
+  ;')
+[0m13:27:39.893739 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m13:27:39.893739 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m13:27:39.893739 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:39.896785 [debug] [Thread-3 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:39.897644 [debug] [Thread-4 (]: Using sqlserver connection "test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b"
+[0m13:27:39.898968 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_5a68c782e24b9391537dea6a89028898_2646]
+   as 
+    
+    
+    
+
+
+
+select current_price
+from "crypto_data"."gold"."coin_prices"
+where current_price is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_5a68c782e24b9391537dea6a89028898_2646]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_5a68c782e24b9391537dea6a89028898_2646]
+  ;')
+[0m13:27:39.900266 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m13:27:39.901817 [debug] [Thread-4 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:39.902896 [debug] [Thread-4 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:39.921751 [debug] [Thread-3 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:39.936111 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:39.937402 [debug] [Thread-2 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:39.944341 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m13:27:39.950690 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b: ROLLBACK
+[0m13:27:39.951943 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m13:27:39.953207 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b: Close
+[0m13:27:39.954464 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:39.956348 [debug] [Thread-2 (]: On test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f: ROLLBACK
+[0m13:27:39.955802 [info ] [Thread-4 (]: 4 of 21 PASS not_null_coin_prices_current_price ................................ [[32mPASS[0m in 0.22s]
+[0m13:27:39.957637 [debug] [Thread-1 (]: On test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80: ROLLBACK
+[0m13:27:39.957637 [debug] [Thread-2 (]: On test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f: Close
+[0m13:27:39.959673 [debug] [Thread-4 (]: Finished running node test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b
+[0m13:27:39.960536 [debug] [Thread-1 (]: On test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80: Close
+[0m13:27:39.962135 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m13:27:39.962135 [debug] [Thread-4 (]: Began running node test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699
+[0m13:27:39.961066 [error] [Thread-2 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\accepted_values_top_movers_category__gainer__loser.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:39.968093 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92: ROLLBACK
+[0m13:27:39.963957 [error] [Thread-1 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\accepted_values_coin_prices_16bcc3e27c41aa1ec6caf5ec7479dddf.sql[0m
+('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)")
+[0m13:27:39.968093 [info ] [Thread-4 (]: 5 of 21 START test not_null_coin_prices_market_cap_rank ........................ [RUN]
+[0m13:27:39.971243 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92: Close
+[0m13:27:39.971243 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_coin_prices_current_price.8f1914d07b, now test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699)
+[0m13:27:39.977956 [debug] [Thread-4 (]: Began compiling node test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699
+[0m13:27:39.982273 [debug] [Thread-4 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699"
+[0m13:27:39.971243 [info ] [Thread-3 (]: 3 of 21 PASS not_null_coin_prices_coin_id ...................................... [[32mPASS[0m in 0.26s]
+[0m13:27:39.982273 [debug] [Thread-3 (]: Finished running node test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92
+[0m13:27:39.984430 [debug] [Thread-3 (]: Began running node test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd
+[0m13:27:39.984430 [info ] [Thread-3 (]: 6 of 21 START test not_null_coin_prices_market_dominance_pct ................... [RUN]
+[0m13:27:39.984430 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_coin_prices_coin_id.26ce385c92, now test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd)
+[0m13:27:39.984430 [debug] [Thread-3 (]: Began compiling node test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd
+[0m13:27:39.990929 [debug] [Thread-3 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd"
+[0m13:27:39.990929 [debug] [Thread-4 (]: Began executing node test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699
+[0m13:27:39.990929 [debug] [Thread-4 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699"
+[0m13:27:39.996363 [debug] [Thread-3 (]: Began executing node test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd
+[0m13:27:39.996363 [debug] [Thread-3 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd"
+[0m13:27:39.996363 [debug] [Thread-4 (]: Using sqlserver connection "test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699"
+[0m13:27:39.996363 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_4b79bf5b4559c27e2a234ace8295f083_13055]
+   as 
+    
+    
+    
+
+
+
+select market_cap_rank
+from "crypto_data"."gold"."coin_prices"
+where market_cap_rank is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_4b79bf5b4559c27e2a234ace8295f083_13055]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_4b79bf5b4559c27e2a234ace8295f083_13055]
+  ;')
+[0m13:27:39.996363 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m13:27:40.002542 [debug] [Thread-3 (]: Using sqlserver connection "test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd"
+[0m13:27:40.002542 [debug] [Thread-4 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.002542 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_12718]
+   as 
+    
+    
+    
+
+
+
+select market_dominance_pct
+from "crypto_data"."gold"."coin_prices"
+where market_dominance_pct is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_12718]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_12718]
+  ;')
+[0m13:27:40.005712 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m13:27:40.005712 [debug] [Thread-3 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.006926 [debug] [Thread-3 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.014332 [debug] [Thread-2 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+
+[0m13:27:40.019977 [debug] [Thread-1 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)")
+
+[0m13:27:40.021983 [error] [Thread-2 (]: 2 of 21 ERROR accepted_values_top_movers_category__gainer__loser ............... [[31mERROR[0m in 0.31s]
+[0m13:27:40.023428 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.025678 [debug] [Thread-2 (]: Finished running node test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f
+[0m13:27:40.024179 [error] [Thread-1 (]: 1 of 21 ERROR accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down  [[31mERROR[0m in 0.32s]
+[0m13:27:40.027015 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd: ROLLBACK
+[0m13:27:40.027632 [debug] [Thread-2 (]: Began running node test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00
+[0m13:27:40.028220 [debug] [Thread-1 (]: Finished running node test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80
+[0m13:27:40.029530 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)").
+[0m13:27:40.030146 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd: Close
+[0m13:27:40.030146 [debug] [Thread-1 (]: Began running node test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99
+[0m13:27:40.030146 [info ] [Thread-2 (]: 7 of 21 START test not_null_coin_prices_price_trend ............................ [RUN]
+[0m13:27:40.039216 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80' to be skipped because of status 'error'.  Reason: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)").
+[0m13:27:40.040561 [info ] [Thread-1 (]: 8 of 21 START test not_null_coin_prices_symbol ................................. [RUN]
+[0m13:27:40.043988 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.accepted_values_top_movers_category__gainer__loser.3f7c71f86f, now test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00)
+[0m13:27:40.043988 [debug] [Thread-4 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.042652 [error] [Thread-3 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_coin_prices_market_dominance_pct.sql[0m
+('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207)")
+[0m13:27:40.046886 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down.8deb375d80, now test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99)
+[0m13:27:40.046886 [debug] [Thread-2 (]: Began compiling node test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00
+[0m13:27:40.049029 [debug] [Thread-1 (]: Began compiling node test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99
+[0m13:27:40.051639 [debug] [Thread-2 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00"
+[0m13:27:40.061022 [debug] [Thread-1 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99"
+[0m13:27:40.061022 [debug] [Thread-3 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207)")
+
+[0m13:27:40.061022 [error] [Thread-3 (]: 6 of 21 ERROR not_null_coin_prices_market_dominance_pct ........................ [[31mERROR[0m in 0.08s]
+[0m13:27:40.065754 [debug] [Thread-3 (]: Finished running node test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd
+[0m13:27:40.066352 [debug] [Thread-3 (]: Began running node test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3
+[0m13:27:40.066352 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd' to be skipped because of status 'error'.  Reason: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207)").
+[0m13:27:40.068414 [debug] [Thread-2 (]: Began executing node test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00
+[0m13:27:40.069559 [debug] [Thread-1 (]: Began executing node test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99
+[0m13:27:40.066352 [info ] [Thread-3 (]: 9 of 21 START test not_null_market_summary_btc_dominance_pct ................... [RUN]
+[0m13:27:40.069559 [debug] [Thread-2 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00"
+[0m13:27:40.069559 [debug] [Thread-1 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99"
+[0m13:27:40.069559 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_coin_prices_market_dominance_pct.d8f84a03bd, now test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3)
+[0m13:27:40.069559 [debug] [Thread-3 (]: Began compiling node test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3
+[0m13:27:40.083097 [debug] [Thread-3 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3"
+[0m13:27:40.083957 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.086262 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699: ROLLBACK
+[0m13:27:40.088531 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699: Close
+[0m13:27:40.088531 [debug] [Thread-3 (]: Began executing node test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3
+[0m13:27:40.090540 [debug] [Thread-3 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3"
+[0m13:27:40.088531 [info ] [Thread-4 (]: 5 of 21 PASS not_null_coin_prices_market_cap_rank .............................. [[32mPASS[0m in 0.12s]
+[0m13:27:40.092050 [debug] [Thread-2 (]: Using sqlserver connection "test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00"
+[0m13:27:40.092050 [debug] [Thread-1 (]: Using sqlserver connection "test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99"
+[0m13:27:40.092050 [debug] [Thread-4 (]: Finished running node test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699
+[0m13:27:40.092050 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_17881]
+   as 
+    
+    
+    
+
+
+
+select price_trend
+from "crypto_data"."gold"."coin_prices"
+where price_trend is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_17881]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_c9d647119c5ebac5beb83775b5cf1545_17881]
+  ;')
+[0m13:27:40.092050 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_91d4e5b5d3be8604cf73837fcc7e7f60_2081]
+   as 
+    
+    
+    
+
+
+
+select symbol
+from "crypto_data"."gold"."coin_prices"
+where symbol is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_91d4e5b5d3be8604cf73837fcc7e7f60_2081]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_91d4e5b5d3be8604cf73837fcc7e7f60_2081]
+  ;')
+[0m13:27:40.092050 [debug] [Thread-4 (]: Began running node test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843
+[0m13:27:40.092050 [debug] [Thread-3 (]: Using sqlserver connection "test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3"
+[0m13:27:40.092050 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m13:27:40.092050 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m13:27:40.097752 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_2451]
+   as 
+    
+    
+    
+
+
+
+select btc_dominance_pct
+from "crypto_data"."gold"."market_summary"
+where btc_dominance_pct is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_2451]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_02f5abe4eb139c4ca7951c5b3030390a_2451]
+  ;')
+[0m13:27:40.098463 [debug] [Thread-2 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.092050 [info ] [Thread-4 (]: 10 of 21 START test not_null_market_summary_total_coins ........................ [RUN]
+[0m13:27:40.098463 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.098463 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m13:27:40.100643 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_coin_prices_market_cap_rank.00f2c07699, now test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843)
+[0m13:27:40.100643 [debug] [Thread-2 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.100643 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.100643 [debug] [Thread-3 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.100643 [debug] [Thread-4 (]: Began compiling node test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843
+[0m13:27:40.108552 [debug] [Thread-4 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843"
+[0m13:27:40.109846 [debug] [Thread-4 (]: Began executing node test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843
+[0m13:27:40.121095 [debug] [Thread-4 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843"
+[0m13:27:40.122833 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.124520 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00: ROLLBACK
+[0m13:27:40.125076 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00: Close
+[0m13:27:40.125649 [error] [Thread-2 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_coin_prices_price_trend.sql[0m
+('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)")
+[0m13:27:40.128046 [debug] [Thread-4 (]: Using sqlserver connection "test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843"
+[0m13:27:40.128625 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_06a6e3e5f31eff753f3c4b46128aacab_17122]
+   as 
+    
+    
+    
+
+
+
+select total_coins
+from "crypto_data"."gold"."market_summary"
+where total_coins is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_06a6e3e5f31eff753f3c4b46128aacab_17122]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_06a6e3e5f31eff753f3c4b46128aacab_17122]
+  ;')
+[0m13:27:40.129207 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m13:27:40.129826 [debug] [Thread-4 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.131533 [debug] [Thread-2 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)")
+
+[0m13:27:40.132766 [debug] [Thread-4 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.133982 [error] [Thread-2 (]: 7 of 21 ERROR not_null_coin_prices_price_trend ................................. [[31mERROR[0m in 0.09s]
+[0m13:27:40.136747 [debug] [Thread-2 (]: Finished running node test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00
+[0m13:27:40.137412 [debug] [Thread-2 (]: Began running node test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f
+[0m13:27:40.138444 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00' to be skipped because of status 'error'.  Reason: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)").
+[0m13:27:40.138444 [info ] [Thread-2 (]: 11 of 21 START test not_null_market_summary_total_market_cap ................... [RUN]
+[0m13:27:40.140768 [debug] [Thread-3 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.141332 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_coin_prices_price_trend.46c8f4eb00, now test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f)
+[0m13:27:40.143068 [debug] [Thread-2 (]: Began compiling node test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f
+[0m13:27:40.147513 [debug] [Thread-2 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f"
+[0m13:27:40.148280 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.149591 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843: ROLLBACK
+[0m13:27:40.150576 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843: Close
+[0m13:27:40.152814 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.156044 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99: ROLLBACK
+[0m13:27:40.156044 [debug] [Thread-2 (]: Began executing node test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f
+[0m13:27:40.156044 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99: Close
+[0m13:27:40.152232 [error] [Thread-4 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_market_summary_total_coins.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+[0m13:27:40.161068 [debug] [Thread-2 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f"
+[0m13:27:40.161068 [info ] [Thread-1 (]: 8 of 21 PASS not_null_coin_prices_symbol ....................................... [[32mPASS[0m in 0.12s]
+[0m13:27:40.164845 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.166738 [debug] [Thread-1 (]: Finished running node test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99
+[0m13:27:40.167861 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3: ROLLBACK
+[0m13:27:40.169672 [debug] [Thread-1 (]: Began running node test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262
+[0m13:27:40.171997 [debug] [Thread-4 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+
+[0m13:27:40.173170 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3: Close
+[0m13:27:40.174386 [info ] [Thread-1 (]: 12 of 21 START test not_null_stg_coin_markets_coin_id .......................... [RUN]
+[0m13:27:40.175464 [debug] [Thread-2 (]: Using sqlserver connection "test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f"
+[0m13:27:40.175464 [error] [Thread-4 (]: 10 of 21 ERROR not_null_market_summary_total_coins ............................. [[31mERROR[0m in 0.08s]
+[0m13:27:40.175464 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_coin_prices_symbol.fa2b767f99, now test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262)
+[0m13:27:40.175464 [error] [Thread-3 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_market_summary_btc_dominance_pct.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+[0m13:27:40.175464 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_7423d29244e0a7b83c20c44a8bf763f1_13439]
+   as 
+    
+    
+    
+
+
+
+select total_market_cap
+from "crypto_data"."gold"."market_summary"
+where total_market_cap is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_7423d29244e0a7b83c20c44a8bf763f1_13439]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_7423d29244e0a7b83c20c44a8bf763f1_13439]
+  ;')
+[0m13:27:40.175464 [debug] [Thread-4 (]: Finished running node test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843
+[0m13:27:40.180919 [debug] [Thread-1 (]: Began compiling node test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262
+[0m13:27:40.180919 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m13:27:40.183978 [debug] [Thread-4 (]: Began running node test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59
+[0m13:27:40.186219 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)").
+[0m13:27:40.192998 [debug] [Thread-1 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262"
+[0m13:27:40.192998 [debug] [Thread-2 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.192998 [debug] [Thread-3 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+
+[0m13:27:40.192998 [info ] [Thread-4 (]: 13 of 21 START test not_null_stg_coin_markets_current_price .................... [RUN]
+[0m13:27:40.201230 [debug] [Thread-2 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.201230 [error] [Thread-3 (]: 9 of 21 ERROR not_null_market_summary_btc_dominance_pct ........................ [[31mERROR[0m in 0.13s]
+[0m13:27:40.203962 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_market_summary_total_coins.9be08c3843, now test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59)
+[0m13:27:40.205979 [debug] [Thread-3 (]: Finished running node test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3
+[0m13:27:40.206601 [debug] [Thread-1 (]: Began executing node test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262
+[0m13:27:40.206601 [debug] [Thread-4 (]: Began compiling node test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59
+[0m13:27:40.206601 [debug] [Thread-3 (]: Began running node test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec
+[0m13:27:40.209575 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)").
+[0m13:27:40.212151 [debug] [Thread-1 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262"
+[0m13:27:40.217948 [debug] [Thread-4 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59"
+[0m13:27:40.217948 [info ] [Thread-3 (]: 14 of 21 START test not_null_stg_coin_markets_ingested_at ...................... [RUN]
+[0m13:27:40.217948 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_market_summary_btc_dominance_pct.797578dfa3, now test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec)
+[0m13:27:40.217948 [debug] [Thread-3 (]: Began compiling node test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec
+[0m13:27:40.228554 [debug] [Thread-3 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec"
+[0m13:27:40.228554 [debug] [Thread-1 (]: Using sqlserver connection "test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262"
+[0m13:27:40.228554 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13020]
+   as 
+    
+    
+    
+
+
+
+select coin_id
+from "crypto_data"."silver"."stg_coin_markets"
+where coin_id is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13020]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_8504d4fc815d34f8b6b9d56cb0fa08b2_13020]
+  ;')
+[0m13:27:40.232829 [debug] [Thread-4 (]: Began executing node test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59
+[0m13:27:40.233944 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m13:27:40.235356 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.240128 [debug] [Thread-4 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59"
+[0m13:27:40.240740 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.241323 [debug] [Thread-3 (]: Began executing node test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec
+[0m13:27:40.242518 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f: ROLLBACK
+[0m13:27:40.243612 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.246766 [debug] [Thread-3 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec"
+[0m13:27:40.248297 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f: Close
+[0m13:27:40.251146 [debug] [Thread-4 (]: Using sqlserver connection "test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59"
+[0m13:27:40.250028 [error] [Thread-2 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_market_summary_total_market_cap.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+[0m13:27:40.251146 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_3276]
+   as 
+    
+    
+    
+
+
+
+select current_price
+from "crypto_data"."silver"."stg_coin_markets"
+where current_price is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_3276]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_94360deba0ea6eaf509b64cfd8dddd9d_3276]
+  ;')
+[0m13:27:40.251146 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m13:27:40.255606 [debug] [Thread-4 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.255606 [debug] [Thread-3 (]: Using sqlserver connection "test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec"
+[0m13:27:40.257134 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_15204]
+   as 
+    
+    
+    
+
+
+
+select ingested_at
+from "crypto_data"."silver"."stg_coin_markets"
+where ingested_at is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_15204]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_64fa4ef10349b7107810f3ca8a8fa369_15204]
+  ;')
+[0m13:27:40.257134 [debug] [Thread-4 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.257134 [debug] [Thread-2 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+
+[0m13:27:40.257134 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m13:27:40.261029 [error] [Thread-2 (]: 11 of 21 ERROR not_null_market_summary_total_market_cap ........................ [[31mERROR[0m in 0.12s]
+[0m13:27:40.262024 [debug] [Thread-3 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.263121 [debug] [Thread-2 (]: Finished running node test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f
+[0m13:27:40.263121 [debug] [Thread-3 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.264651 [debug] [Thread-2 (]: Began running node test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60
+[0m13:27:40.264651 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)").
+[0m13:27:40.267902 [info ] [Thread-2 (]: 15 of 21 START test not_null_stg_coin_markets_last_updated ..................... [RUN]
+[0m13:27:40.270045 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_market_summary_total_market_cap.2d4ccaf19f, now test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60)
+[0m13:27:40.270045 [debug] [Thread-2 (]: Began compiling node test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60
+[0m13:27:40.270045 [debug] [Thread-2 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60"
+[0m13:27:40.270045 [debug] [Thread-2 (]: Began executing node test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60
+[0m13:27:40.281103 [debug] [Thread-2 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60"
+[0m13:27:40.284682 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.284682 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262: ROLLBACK
+[0m13:27:40.284682 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262: Close
+[0m13:27:40.284682 [debug] [Thread-2 (]: Using sqlserver connection "test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60"
+[0m13:27:40.284682 [info ] [Thread-1 (]: 12 of 21 PASS not_null_stg_coin_markets_coin_id ................................ [[32mPASS[0m in 0.11s]
+[0m13:27:40.284682 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_b2e30529ea0867fd12d940680056d0c9_13771]
+   as 
+    
+    
+    
+
+
+
+select last_updated
+from "crypto_data"."silver"."stg_coin_markets"
+where last_updated is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_b2e30529ea0867fd12d940680056d0c9_13771]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_b2e30529ea0867fd12d940680056d0c9_13771]
+  ;')
+[0m13:27:40.293343 [debug] [Thread-1 (]: Finished running node test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262
+[0m13:27:40.293343 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m13:27:40.293343 [debug] [Thread-1 (]: Began running node test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b
+[0m13:27:40.293343 [debug] [Thread-2 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.297410 [info ] [Thread-1 (]: 16 of 21 START test not_null_stg_coin_markets_market_cap_rank .................. [RUN]
+[0m13:27:40.297410 [debug] [Thread-2 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.299266 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_stg_coin_markets_coin_id.6706146262, now test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b)
+[0m13:27:40.299266 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.301118 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.301118 [debug] [Thread-1 (]: Began compiling node test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b
+[0m13:27:40.304314 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec: ROLLBACK
+[0m13:27:40.306214 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59: ROLLBACK
+[0m13:27:40.315162 [debug] [Thread-1 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b"
+[0m13:27:40.315162 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec: Close
+[0m13:27:40.317337 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59: Close
+[0m13:27:40.317852 [info ] [Thread-3 (]: 14 of 21 PASS not_null_stg_coin_markets_ingested_at ............................ [[32mPASS[0m in 0.10s]
+[0m13:27:40.321665 [debug] [Thread-3 (]: Finished running node test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec
+[0m13:27:40.321665 [debug] [Thread-3 (]: Began running node test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c
+[0m13:27:40.317852 [info ] [Thread-4 (]: 13 of 21 PASS not_null_stg_coin_markets_current_price .......................... [[32mPASS[0m in 0.11s]
+[0m13:27:40.324192 [debug] [Thread-1 (]: Began executing node test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b
+[0m13:27:40.324192 [debug] [Thread-4 (]: Finished running node test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59
+[0m13:27:40.321665 [info ] [Thread-3 (]: 17 of 21 START test not_null_stg_coin_markets_symbol ........................... [RUN]
+[0m13:27:40.328227 [debug] [Thread-1 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b"
+[0m13:27:40.328227 [debug] [Thread-4 (]: Began running node test.crypto_pipeline.not_null_top_movers_category.7084eef178
+[0m13:27:40.328227 [debug] [Thread-3 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_stg_coin_markets_ingested_at.02ee68c5ec, now test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c)
+[0m13:27:40.335643 [debug] [Thread-3 (]: Began compiling node test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c
+[0m13:27:40.345707 [debug] [Thread-3 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c"
+[0m13:27:40.333966 [info ] [Thread-4 (]: 18 of 21 START test not_null_top_movers_category ............................... [RUN]
+[0m13:27:40.346862 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.347425 [debug] [Thread-1 (]: Using sqlserver connection "test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b"
+[0m13:27:40.348012 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_stg_coin_markets_current_price.53929f2e59, now test.crypto_pipeline.not_null_top_movers_category.7084eef178)
+[0m13:27:40.349149 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_18043]
+   as 
+    
+    
+    
+
+
+
+select market_cap_rank
+from "crypto_data"."silver"."stg_coin_markets"
+where market_cap_rank is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_18043]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_e1ff072e85d6d4165e4eace1c122c0a9_18043]
+  ;')
+[0m13:27:40.351082 [debug] [Thread-4 (]: Began compiling node test.crypto_pipeline.not_null_top_movers_category.7084eef178
+[0m13:27:40.353601 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60: ROLLBACK
+[0m13:27:40.353601 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m13:27:40.353601 [debug] [Thread-3 (]: Began executing node test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c
+[0m13:27:40.361026 [debug] [Thread-4 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_top_movers_category.7084eef178"
+[0m13:27:40.363052 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60: Close
+[0m13:27:40.363052 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.368143 [debug] [Thread-3 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c"
+[0m13:27:40.368143 [info ] [Thread-2 (]: 15 of 21 PASS not_null_stg_coin_markets_last_updated ........................... [[32mPASS[0m in 0.10s]
+[0m13:27:40.372021 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.373544 [debug] [Thread-4 (]: Began executing node test.crypto_pipeline.not_null_top_movers_category.7084eef178
+[0m13:27:40.373544 [debug] [Thread-2 (]: Finished running node test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60
+[0m13:27:40.378874 [debug] [Thread-4 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_top_movers_category.7084eef178"
+[0m13:27:40.378874 [debug] [Thread-2 (]: Began running node test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7
+[0m13:27:40.378874 [debug] [Thread-3 (]: Using sqlserver connection "test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c"
+[0m13:27:40.378874 [info ] [Thread-2 (]: 19 of 21 START test not_null_top_movers_coin_id ................................ [RUN]
+[0m13:27:40.384321 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_09c97c4ab6462065371a7446bbc6be30_14289]
+   as 
+    
+    
+    
+
+
+
+select symbol
+from "crypto_data"."silver"."stg_coin_markets"
+where symbol is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_09c97c4ab6462065371a7446bbc6be30_14289]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_09c97c4ab6462065371a7446bbc6be30_14289]
+  ;')
+[0m13:27:40.384321 [debug] [Thread-2 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_stg_coin_markets_last_updated.6cce9b7c60, now test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7)
+[0m13:27:40.384321 [debug] [Thread-3 (]: Opening a new connection, currently in state closed
+[0m13:27:40.384321 [debug] [Thread-2 (]: Began compiling node test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7
+[0m13:27:40.384321 [debug] [Thread-4 (]: Using sqlserver connection "test.crypto_pipeline.not_null_top_movers_category.7084eef178"
+[0m13:27:40.384321 [debug] [Thread-3 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.394249 [debug] [Thread-2 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7"
+[0m13:27:40.394249 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_top_movers_category.7084eef178: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_top_movers_category.7084eef178"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_246dcdbac762b80be58baf6b6f82f52f_5024]
+   as 
+    
+    
+    
+
+
+
+select category
+from "crypto_data"."gold"."top_movers"
+where category is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_246dcdbac762b80be58baf6b6f82f52f_5024]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_246dcdbac762b80be58baf6b6f82f52f_5024]
+  ;')
+[0m13:27:40.399033 [debug] [Thread-3 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.399845 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m13:27:40.399845 [debug] [Thread-4 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.401616 [debug] [Thread-4 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.401616 [debug] [Thread-2 (]: Began executing node test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7
+[0m13:27:40.407683 [debug] [Thread-2 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7"
+[0m13:27:40.408984 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.411894 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b: ROLLBACK
+[0m13:27:40.412504 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b: Close
+[0m13:27:40.413111 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.415468 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_top_movers_category.7084eef178: ROLLBACK
+[0m13:27:40.416061 [debug] [Thread-2 (]: Using sqlserver connection "test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7"
+[0m13:27:40.417247 [debug] [Thread-4 (]: On test.crypto_pipeline.not_null_top_movers_category.7084eef178: Close
+[0m13:27:40.418566 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_07067c4587d517ed9172c38ee7d248af_11727]
+   as 
+    
+    
+    
+
+
+
+select coin_id
+from "crypto_data"."gold"."top_movers"
+where coin_id is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_07067c4587d517ed9172c38ee7d248af_11727]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_07067c4587d517ed9172c38ee7d248af_11727]
+  ;')
+[0m13:27:40.414312 [info ] [Thread-1 (]: 16 of 21 PASS not_null_stg_coin_markets_market_cap_rank ........................ [[32mPASS[0m in 0.11s]
+[0m13:27:40.420818 [debug] [Thread-2 (]: Opening a new connection, currently in state closed
+[0m13:27:40.420270 [error] [Thread-4 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_top_movers_category.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.421951 [debug] [Thread-1 (]: Finished running node test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b
+[0m13:27:40.421951 [debug] [Thread-2 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.424424 [debug] [Thread-1 (]: Began running node test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c
+[0m13:27:40.424424 [debug] [Thread-3 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.426453 [debug] [Thread-4 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+
+[0m13:27:40.426453 [debug] [Thread-2 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.426453 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c: ROLLBACK
+[0m13:27:40.426453 [info ] [Thread-1 (]: 20 of 21 START test not_null_top_movers_rank ................................... [RUN]
+[0m13:27:40.430223 [error] [Thread-4 (]: 18 of 21 ERROR not_null_top_movers_category .................................... [[31mERROR[0m in 0.08s]
+[0m13:27:40.431850 [debug] [Thread-3 (]: On test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c: Close
+[0m13:27:40.432362 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_stg_coin_markets_market_cap_rank.33d9fb824b, now test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c)
+[0m13:27:40.433397 [debug] [Thread-4 (]: Finished running node test.crypto_pipeline.not_null_top_movers_category.7084eef178
+[0m13:27:40.435418 [debug] [Thread-1 (]: Began compiling node test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c
+[0m13:27:40.435418 [info ] [Thread-3 (]: 17 of 21 PASS not_null_stg_coin_markets_symbol ................................. [[32mPASS[0m in 0.11s]
+[0m13:27:40.435418 [debug] [Thread-4 (]: Began running node test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412
+[0m13:27:40.439111 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_top_movers_category.7084eef178' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)").
+[0m13:27:40.443222 [debug] [Thread-1 (]: Writing injected SQL for node "test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c"
+[0m13:27:40.443824 [debug] [Thread-2 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.444986 [debug] [Thread-3 (]: Finished running node test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c
+[0m13:27:40.446766 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7: ROLLBACK
+[0m13:27:40.445629 [info ] [Thread-4 (]: 21 of 21 START test unique_coin_prices_coin_id ................................. [RUN]
+[0m13:27:40.447932 [debug] [Thread-2 (]: On test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7: Close
+[0m13:27:40.448482 [debug] [Thread-4 (]: Re-using an available connection from the pool (formerly test.crypto_pipeline.not_null_top_movers_category.7084eef178, now test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412)
+[0m13:27:40.449036 [debug] [Thread-4 (]: Began compiling node test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412
+[0m13:27:40.451074 [debug] [Thread-4 (]: Writing injected SQL for node "test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412"
+[0m13:27:40.451074 [debug] [Thread-1 (]: Began executing node test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c
+[0m13:27:40.461246 [error] [Thread-2 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_top_movers_coin_id.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.462307 [debug] [Thread-1 (]: Writing runtime sql for node "test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c"
+[0m13:27:40.462307 [debug] [Thread-2 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+
+[0m13:27:40.468766 [debug] [Thread-4 (]: Began executing node test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412
+[0m13:27:40.468766 [debug] [Thread-4 (]: Writing runtime sql for node "test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412"
+[0m13:27:40.467708 [error] [Thread-2 (]: 19 of 21 ERROR not_null_top_movers_coin_id ..................................... [[31mERROR[0m in 0.08s]
+[0m13:27:40.468766 [debug] [Thread-2 (]: Finished running node test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7
+[0m13:27:40.468766 [debug] [Thread-1 (]: Using sqlserver connection "test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c"
+[0m13:27:40.477014 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)").
+[0m13:27:40.468766 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_7de11f08750232d7a22259188aaa9b94_5499]
+   as 
+    
+    
+    
+
+
+
+select rank
+from "crypto_data"."gold"."top_movers"
+where rank is null
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_7de11f08750232d7a22259188aaa9b94_5499]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_7de11f08750232d7a22259188aaa9b94_5499]
+  ;')
+[0m13:27:40.478812 [debug] [Thread-4 (]: Using sqlserver connection "test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412"
+[0m13:27:40.478812 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m13:27:40.480910 [debug] [Thread-4 (]: On test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "node_id": "test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412"} */
+
+    
+    -- Create target schema if it does not
+  USE [crypto_data];
+  IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'silver')
+  BEGIN
+    EXEC('CREATE SCHEMA [silver]')
+  END
+
+  
+
+  
+  EXEC('create view 
+    [silver].[testview_071d8bac72e3adcd9fbb5a5a39648ea6_9098]
+   as 
+    
+    
+    
+
+select
+    coin_id as unique_field,
+    count(*) as n_records
+
+from "crypto_data"."gold"."coin_prices"
+where coin_id is not null
+group by coin_id
+having count(*) > 1
+
+
+
+  ;')
+  select
+    
+    count(*) as failures,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_warn,
+    case when count(*) != 0
+      then 'true' else 'false' end as should_error
+  from (
+    select * from 
+    [silver].[testview_071d8bac72e3adcd9fbb5a5a39648ea6_9098]
+  
+  ) dbt_internal_test;
+
+  EXEC('drop view 
+    [silver].[testview_071d8bac72e3adcd9fbb5a5a39648ea6_9098]
+  ;')
+[0m13:27:40.480910 [debug] [Thread-1 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.480910 [debug] [Thread-4 (]: Opening a new connection, currently in state closed
+[0m13:27:40.480910 [debug] [Thread-1 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.480910 [debug] [Thread-4 (]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m13:27:40.484086 [debug] [Thread-4 (]: sqlserver adapter: Connected to db: crypto_data
+[0m13:27:40.495046 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.495815 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c: ROLLBACK
+[0m13:27:40.496612 [debug] [Thread-1 (]: On test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c: Close
+[0m13:27:40.497272 [error] [Thread-1 (]: [31mUnhandled error while executing target\run\crypto_pipeline\models\gold\schema.yml\not_null_top_movers_rank.sql[0m
+('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.499821 [debug] [Thread-1 (]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 363, in safe_run
+    result = self.compile_and_execute(manifest, ctx)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 310, in compile_and_execute
+    result = self.run(ctx.node, manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\base.py", line 410, in run
+    return self.execute(compiled_node, manifest)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 290, in execute
+    test_result = self.execute_data_test(test, manifest)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\test.py", line 165, in execute_data_test
+    macro_func()
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 188, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\clients\jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\clients\jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt_common\record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 508, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\sqlserver\sqlserver_connections.py", line 666, in execute
+    if not cursor.nextset():
+           ^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+
+[0m13:27:40.502462 [error] [Thread-1 (]: 20 of 21 ERROR not_null_top_movers_rank ........................................ [[31mERROR[0m in 0.07s]
+[0m13:27:40.505644 [debug] [Thread-1 (]: Finished running node test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c
+[0m13:27:40.506929 [debug] [Thread-7 (]: Marking all children of 'test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c' to be skipped because of status 'error'.  Reason: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)").
+[0m13:27:40.522674 [debug] [Thread-4 (]: SQL status: OK in 0.000 seconds
+[0m13:27:40.523980 [debug] [Thread-4 (]: On test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412: ROLLBACK
+[0m13:27:40.524588 [debug] [Thread-4 (]: On test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412: Close
+[0m13:27:40.525254 [info ] [Thread-4 (]: 21 of 21 PASS unique_coin_prices_coin_id ....................................... [[32mPASS[0m in 0.08s]
+[0m13:27:40.526572 [debug] [Thread-4 (]: Finished running node test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412
+[0m13:27:40.530279 [debug] [MainThread]: On master: COMMIT
+[0m13:27:40.530932 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m13:27:40.530932 [debug] [MainThread]: Connection 'list_crypto_data_gold' was properly closed.
+[0m13:27:40.531644 [debug] [MainThread]: Connection 'list_crypto_data_silver' was properly closed.
+[0m13:27:40.531644 [debug] [MainThread]: Connection 'test.crypto_pipeline.not_null_top_movers_rank.1da6e5601c' was properly closed.
+[0m13:27:40.531644 [debug] [MainThread]: Connection 'test.crypto_pipeline.not_null_top_movers_coin_id.a094effbe7' was properly closed.
+[0m13:27:40.532417 [debug] [MainThread]: Connection 'test.crypto_pipeline.not_null_stg_coin_markets_symbol.38411b2b3c' was properly closed.
+[0m13:27:40.532417 [debug] [MainThread]: Connection 'test.crypto_pipeline.unique_coin_prices_coin_id.02c4c3f412' was properly closed.
+[0m13:27:40.533002 [info ] [MainThread]: 
+[0m13:27:40.533635 [info ] [MainThread]: Finished running 21 data tests in 0 hours 0 minutes and 0.94 seconds (0.94s).
+[0m13:27:40.537095 [debug] [MainThread]: Command end result
+[0m13:27:40.582378 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m13:27:40.584373 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m13:27:40.584373 [debug] [MainThread]: Wrote artifact RunExecutionResult to transform\target\run_results.json
+[0m13:27:40.584373 [info ] [MainThread]: 
+[0m13:27:40.584373 [info ] [MainThread]: [31mCompleted with 10 errors, 0 partial successes, and 0 warnings:[0m
+[0m13:27:40.584373 [info ] [MainThread]: 
+[0m13:27:40.595662 [error] [MainThread]: [31mFailure in test accepted_values_top_movers_category__gainer__loser (models\gold\schema.yml)[0m
+[0m13:27:40.596253 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.597085 [info ] [MainThread]: 
+[0m13:27:40.597085 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\accepted_values_top_movers_category__gainer__loser.sql
+[0m13:27:40.597085 [info ] [MainThread]: 
+[0m13:27:40.597085 [error] [MainThread]: [31mFailure in test accepted_values_coin_prices_price_trend__strong_up__up__stable__down__strong_down (models\gold\schema.yml)[0m
+[0m13:27:40.597085 [error] [MainThread]:   ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)")
+[0m13:27:40.600601 [info ] [MainThread]: 
+[0m13:27:40.601153 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\accepted_values_coin_prices_16bcc3e27c41aa1ec6caf5ec7479dddf.sql
+[0m13:27:40.601153 [info ] [MainThread]: 
+[0m13:27:40.603206 [error] [MainThread]: [31mFailure in test not_null_coin_prices_market_dominance_pct (models\gold\schema.yml)[0m
+[0m13:27:40.603206 [error] [MainThread]:   ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'market_dominance_pct'. (207)")
+[0m13:27:40.603206 [info ] [MainThread]: 
+[0m13:27:40.606536 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_coin_prices_market_dominance_pct.sql
+[0m13:27:40.606536 [info ] [MainThread]: 
+[0m13:27:40.606536 [error] [MainThread]: [31mFailure in test not_null_coin_prices_price_trend (models\gold\schema.yml)[0m
+[0m13:27:40.606536 [error] [MainThread]:   ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207) (SQLMoreResults); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'price_trend'. (207)")
+[0m13:27:40.606536 [info ] [MainThread]: 
+[0m13:27:40.606536 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_coin_prices_price_trend.sql
+[0m13:27:40.606536 [info ] [MainThread]: 
+[0m13:27:40.611549 [error] [MainThread]: [31mFailure in test not_null_market_summary_total_coins (models\gold\schema.yml)[0m
+[0m13:27:40.612346 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+[0m13:27:40.612346 [info ] [MainThread]: 
+[0m13:27:40.612346 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_market_summary_total_coins.sql
+[0m13:27:40.612346 [info ] [MainThread]: 
+[0m13:27:40.615390 [error] [MainThread]: [31mFailure in test not_null_market_summary_btc_dominance_pct (models\gold\schema.yml)[0m
+[0m13:27:40.615390 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+[0m13:27:40.615390 [info ] [MainThread]: 
+[0m13:27:40.617786 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_market_summary_btc_dominance_pct.sql
+[0m13:27:40.617786 [info ] [MainThread]: 
+[0m13:27:40.617786 [error] [MainThread]: [31mFailure in test not_null_market_summary_total_market_cap (models\gold\schema.yml)[0m
+[0m13:27:40.620406 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.market_summary'. (208) (SQLMoreResults)")
+[0m13:27:40.620406 [info ] [MainThread]: 
+[0m13:27:40.620406 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_market_summary_total_market_cap.sql
+[0m13:27:40.620406 [info ] [MainThread]: 
+[0m13:27:40.620406 [error] [MainThread]: [31mFailure in test not_null_top_movers_category (models\gold\schema.yml)[0m
+[0m13:27:40.620406 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.620406 [info ] [MainThread]: 
+[0m13:27:40.620406 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_top_movers_category.sql
+[0m13:27:40.620406 [info ] [MainThread]: 
+[0m13:27:40.620406 [error] [MainThread]: [31mFailure in test not_null_top_movers_coin_id (models\gold\schema.yml)[0m
+[0m13:27:40.627371 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.628057 [info ] [MainThread]: 
+[0m13:27:40.628057 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_top_movers_coin_id.sql
+[0m13:27:40.628057 [info ] [MainThread]: 
+[0m13:27:40.628057 [error] [MainThread]: [31mFailure in test not_null_top_movers_rank (models\gold\schema.yml)[0m
+[0m13:27:40.628057 [error] [MainThread]:   ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'crypto_data.gold.top_movers'. (208) (SQLMoreResults)")
+[0m13:27:40.628057 [info ] [MainThread]: 
+[0m13:27:40.628057 [info ] [MainThread]:   compiled code at target\compiled\crypto_pipeline\models\gold\schema.yml\not_null_top_movers_rank.sql
+[0m13:27:40.628057 [info ] [MainThread]: 
+[0m13:27:40.628057 [info ] [MainThread]: Done. PASS=11 WARN=0 ERROR=10 SKIP=0 NO-OP=0 TOTAL=21
+[0m13:27:40.634388 [debug] [MainThread]: Command `dbt test` failed at 13:27:40.634388 after 2.23 seconds
+[0m13:27:40.634388 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000263469FAF60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026346E8E840>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000026340847BF0>]}
+[0m13:27:40.634388 [debug] [MainThread]: Flushing usage events
+[0m13:27:41.101485 [debug] [MainThread]: An error was encountered while trying to flush usage events

@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_7de11f08750232d7a22259188aaa9b94_8653]
+    [silver].[testview_7de11f08750232d7a22259188aaa9b94_5499]
    as 
     
     
@@ -35,10 +35,10 @@ where rank is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_7de11f08750232d7a22259188aaa9b94_8653]
+    [silver].[testview_7de11f08750232d7a22259188aaa9b94_5499]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_7de11f08750232d7a22259188aaa9b94_8653]
+    [silver].[testview_7de11f08750232d7a22259188aaa9b94_5499]
   ;')

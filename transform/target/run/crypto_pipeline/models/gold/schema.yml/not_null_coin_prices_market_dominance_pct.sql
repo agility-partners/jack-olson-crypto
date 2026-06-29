@@ -11,7 +11,7 @@
 
   
   EXEC('create view 
-    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_9217]
+    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_12718]
    as 
     
     
@@ -35,10 +35,10 @@ where market_dominance_pct is null
       then 'true' else 'false' end as should_error
   from (
     select * from 
-    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_9217]
+    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_12718]
   
   ) dbt_internal_test;
 
   EXEC('drop view 
-    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_9217]
+    [silver].[testview_bcebda56dd17bafa61efff67748c72b5_12718]
   ;')
