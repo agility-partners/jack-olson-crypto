@@ -81,7 +81,7 @@ public class SqlCoinService : ICoinService
     private static decimal GetDecimal(SqlDataReader reader, string column)
     {
         var ordinal = reader.GetOrdinal(column);
-        return reader.IsDBNull(ordinal) ? 0m : (decimal)reader.GetDouble(ordinal);
+        return reader.IsDBNull(ordinal) ? 0m : reader.GetDecimal(ordinal);
     }
 
     private static int GetInt(SqlDataReader reader, string column)

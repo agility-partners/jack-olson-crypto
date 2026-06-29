@@ -60,13 +60,14 @@ public class SqlTopMoversService : ITopMoversService
     private static decimal GetDecimal(SqlDataReader reader, string column)
     {
         var ordinal = reader.GetOrdinal(column);
-        return reader.IsDBNull(ordinal) ? 0m : (decimal)reader.GetDouble(ordinal);
+        return reader.IsDBNull(ordinal) ? 0m : reader.GetDecimal(ordinal);
     }
 
     private static int GetInt(SqlDataReader reader, string column)
     {
         var ordinal = reader.GetOrdinal(column);
-        return reader.IsDBNull(ordinal) ? 0 : reader.GetInt32(ordinal);
+        // ROW_NUMBER() produces BIGINT; Convert.ToInt32 handles both INT and BIGINT.
+        return reader.IsDBNull(ordinal) ? 0 : Convert.ToInt32(reader.GetValue(ordinal));
     }
 
     private static string FormatLargeNumber(decimal value) => value switch
