@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_coin_markets
+    description: >
+      Parsed and typed CoinGecko market data. One row per coin per ingestion
+      run. Filters out records with null coin_id, non-positive prices, or
+      absurd 24-h change values. Incrementally appends new Bronze rows only.
+    columns:
+      - name: coin_id
+        description: CoinGecko coin identifier (e.g. bitcoin).
+        tests:
+          - not_null
+      - name: symbol
+        description: Ticker symbol, uppercased (e.g. BTC).
+        tests:
+          - not_null
+      - name: current_price
+        description: Price in USD at time of ingestion.
+        tests:
+          - not_null
+      - name: market_cap_rank
+        description: Market-cap rank (1 = largest).
+        tests:
+          - not_null
+      - name: last_updated
+        description: Timestamp from CoinGecko when the price was last updated.
+        tests:
+          - not_null
+      - name: ingested_at
+        description: UTC timestamp when the Bronze row was inserted.
+        tests:
+          - not_null
