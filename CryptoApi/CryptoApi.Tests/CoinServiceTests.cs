@@ -68,7 +68,7 @@ public class CoinServiceTests
     {
         var result = await _coinService.GetAllCoinsAsync();
 
-        result.Should().HaveCountGreaterThan(20);
+        result.Should().HaveCount(32);
         result.Should().Contain(c => c.Symbol == "BTC");
         result.Should().Contain(c => c.Symbol == "SOL");
         result.Should().Contain(c => c.Symbol == "DOGE");
@@ -88,5 +88,19 @@ public class CoinServiceTests
         var result = (await _coinService.GetAllCoinsAsync()).ToList();
 
         result.Should().OnlyHaveUniqueItems(c => c.Id);
+    }
+
+    [Fact]
+    public async Task GetCoinById_ReturnsOriginalMockValues_ForRipple()
+    {
+        var result = await _coinService.GetCoinByIdAsync("ripple");
+
+        result.Should().NotBeNull();
+        result!.Name.Should().Be("XRP");
+        result.Symbol.Should().Be("XRP");
+        result.IconClass.Should().Be("xrp");
+        result.Price.Should().Be(0.578m);
+        result.MarketCap.Should().Be("$31.2B");
+        result.Volume.Should().Be("$1.1B");
     }
 }
