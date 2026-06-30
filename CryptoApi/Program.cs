@@ -20,7 +20,10 @@ if (!string.IsNullOrWhiteSpace(cryptoDbConnectionString))
 else
     builder.Services.AddScoped<ICoinService, CoinService>();
 builder.Services.AddScoped<IWatchlistService, WatchlistService>();
-builder.Services.AddScoped<IMarketStatsService, MarketStatsService>();
+if (!string.IsNullOrWhiteSpace(cryptoDbConnectionString))
+    builder.Services.AddScoped<IMarketStatsService, SqlMarketStatsService>();
+else
+    builder.Services.AddScoped<IMarketStatsService, MarketStatsService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
