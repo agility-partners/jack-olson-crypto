@@ -20,64 +20,18 @@ public class SqlMarketStatsService : IMarketStatsService
         await conn.OpenAsync();
 
         const string sql = """
-            WITH market_summary AS (
-                SELECT TOP 1
-                    total_market_cap,
-                    total_24h_volume,
-                    avg_24h_change_pct,
-                    btc_dominance_pct
-                FROM gold.market_summary
-            ),
-            coin_summary AS (
-                SELECT
-                    COUNT(*) AS total_coins,
-                    CAST(COALESCE(SUM(market_cap), 0) AS DECIMAL(30, 2)) AS total_market_cap,
-                    CAST(COALESCE(SUM(total_volume), 0) AS DECIMAL(30, 2)) AS total_24h_volume,
-                    CAST(COALESCE(AVG(price_change_percentage_24h), 0) AS DECIMAL(10, 4)) AS avg_24h_change_pct,
-                    CAST(
-                        COALESCE(
-                            MAX(CASE WHEN coin_id = 'bitcoin' THEN market_cap ELSE 0 END) * 100.0
-                            / NULLIF(SUM(market_cap), 0),
-                            0
-                        )
-                    AS DECIMAL(10, 4)) AS btc_dominance_pct
-                FROM gold.coin_prices
-            )
-            SELECT TOP 1
-                CASE
-                    WHEN coin_summary.total_coins > 0
-                        AND COALESCE(market_summary.total_market_cap, 0) = 0
-                        AND COALESCE(market_summary.total_24h_volume, 0) = 0
-                        AND COALESCE(market_summary.btc_dominance_pct, 0) = 0
-                    THEN coin_summary.total_market_cap
-                    ELSE COALESCE(market_summary.total_market_cap, coin_summary.total_market_cap)
-                END AS total_market_cap,
-                CASE
-                    WHEN coin_summary.total_coins > 0
-                        AND COALESCE(market_summary.total_market_cap, 0) = 0
-                        AND COALESCE(market_summary.total_24h_volume, 0) = 0
-                        AND COALESCE(market_summary.btc_dominance_pct, 0) = 0
-                    THEN coin_summary.total_24h_volume
-                    ELSE COALESCE(market_summary.total_24h_volume, coin_summary.total_24h_volume)
-                END AS total_24h_volume,
-                CASE
-                    WHEN coin_summary.total_coins > 0
-                        AND COALESCE(market_summary.total_market_cap, 0) = 0
-                        AND COALESCE(market_summary.total_24h_volume, 0) = 0
-                        AND COALESCE(market_summary.btc_dominance_pct, 0) = 0
-                    THEN coin_summary.avg_24h_change_pct
-                    ELSE COALESCE(market_summary.avg_24h_change_pct, coin_summary.avg_24h_change_pct)
-                END AS avg_24h_change_pct,
-                CASE
-                    WHEN coin_summary.total_coins > 0
-                        AND COALESCE(market_summary.total_market_cap, 0) = 0
-                        AND COALESCE(market_summary.total_24h_volume, 0) = 0
-                        AND COALESCE(market_summary.btc_dominance_pct, 0) = 0
-                    THEN coin_summary.btc_dominance_pct
-                    ELSE COALESCE(market_summary.btc_dominance_pct, coin_summary.btc_dominance_pct)
-                END AS btc_dominance_pct
-            FROM coin_summary
-            LEFT JOIN market_summary ON 1 = 1
+            SELECT
+                CAST(COALESCE(SUM(market_cap), 0) AS DECIMAL(30, 2))                  AS total_market_cap,
+                CAST(COALESCE(SUM(total_volume), 0) AS DECIMAL(30, 2))                AS total_24h_volume,
+                CAST(COALESCE(AVG(price_change_percentage_24h), 0) AS DECIMAL(10, 4)) AS avg_24h_change_pct,
+                CAST(
+                    COALESCE(
+                        MAX(CASE WHEN coin_id = 'bitcoin' THEN market_cap ELSE 0 END) * 100.0
+                        / NULLIF(SUM(market_cap), 0),
+                        0
+                    )
+                AS DECIMAL(10, 4)) AS btc_dominance_pct
+            FROM gold.coin_prices
             """;
 
         await using var cmd = new SqlCommand(sql, conn);
