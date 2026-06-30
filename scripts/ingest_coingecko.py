@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 import time
@@ -12,20 +11,6 @@ COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets"
 MAX_RETRIES = int(os.getenv("COINGECKO_MAX_RETRIES", "3"))
 BASE_BACKOFF_SECONDS = float(os.getenv("COINGECKO_BACKOFF_SECONDS", "1"))
 REQUEST_TIMEOUT_SECONDS = float(os.getenv("COINGECKO_TIMEOUT_SECONDS", "20"))
-
-
-def _price_trend(pct: float | None) -> str:
-    if pct is None:
-        return "stable"
-    if pct > 10:
-        return "strong_up"
-    if pct > 2:
-        return "up"
-    if pct >= -2:
-        return "stable"
-    if pct >= -10:
-        return "down"
-    return "strong_down"
 
 
 def build_connection_string() -> str:
@@ -100,153 +85,6 @@ def insert_bronze_row(raw_json: str) -> None:
         conn.close()
 
 
-def upsert_gold_coins(raw_json: str, ingested_at: datetime) -> int:
-    """Parse a CoinGecko markets payload and upsert rows into gold.coin_prices.
-
-    This keeps the gold layer current after every ingestion cycle without
-    requiring a separate dbt run.  dbt may still run to recompute the table
-    with additional transformations; it will simply overwrite these rows.
-    """
-    coins = json.loads(raw_json)
-    if not coins:
-        return 0
-
-    total_market_cap = sum(c.get("market_cap") or 0.0 for c in coins)
-
-    rows = []
-    for coin in coins:
-        coin_id = coin.get("id")
-        current_price = coin.get("current_price")
-        rank = coin.get("market_cap_rank")
-
-        if not coin_id or not current_price or not rank:
-            continue
-        if current_price <= 0:
-            continue
-        if not (1 <= rank <= 10000):
-            continue
-        pct = coin.get("price_change_percentage_24h")
-        if pct is not None and abs(pct) >= 1000:
-            continue
-
-        market_cap = coin.get("market_cap")
-        dominance = (
-            round(market_cap * 100.0 / total_market_cap, 4)
-            if market_cap and total_market_cap
-            else None
-        )
-
-        last_updated_raw = coin.get("last_updated")
-        last_updated: datetime | None = None
-        if last_updated_raw:
-            try:
-                last_updated = datetime.fromisoformat(
-                    last_updated_raw.replace("Z", "+00:00")
-                )
-            except ValueError:
-                pass
-
-        rows.append((
-            coin_id,
-            (coin.get("symbol") or "").upper(),
-            coin.get("name"),
-            rank,
-            current_price,
-            market_cap,
-            coin.get("total_volume"),
-            coin.get("high_24h"),
-            coin.get("low_24h"),
-            coin.get("price_change_24h"),
-            pct,
-            coin.get("circulating_supply"),
-            coin.get("total_supply"),
-            coin.get("ath"),
-            coin.get("atl"),
-            ingested_at,
-            last_updated,
-            _price_trend(pct),
-            dominance,
-        ))
-
-    if not rows:
-        return 0
-
-    merge_sql = """
-        MERGE gold.coin_prices AS target
-        USING (SELECT ? AS coin_id) AS source ON target.coin_id = source.coin_id
-        WHEN MATCHED THEN UPDATE SET
-            symbol = ?, name = ?, market_cap_rank = ?,
-            current_price = ?, market_cap = ?, total_volume = ?,
-            high_24h = ?, low_24h = ?,
-            price_change_24h = ?, price_change_percentage_24h = ?,
-            circulating_supply = ?, total_supply = ?,
-            ath = ?, atl = ?,
-            ingested_at = ?, last_updated = ?,
-            price_trend = ?, market_dominance_pct = ?
-        WHEN NOT MATCHED THEN INSERT (
-            coin_id, symbol, name, market_cap_rank,
-            current_price, market_cap, total_volume,
-            high_24h, low_24h,
-            price_change_24h, price_change_percentage_24h,
-            circulating_supply, total_supply,
-            ath, atl,
-            ingested_at, last_updated,
-            price_trend, market_dominance_pct
-        ) VALUES (
-            ?, ?, ?, ?,
-            ?, ?, ?,
-            ?, ?,
-            ?, ?,
-            ?, ?,
-            ?, ?,
-            ?, ?,
-            ?, ?
-        );
-    """
-
-    conn = pyodbc.connect(build_connection_string())
-    try:
-        cursor = conn.cursor()
-        for row in rows:
-            (
-                coin_id, symbol, name, rank,
-                current_price, market_cap, total_volume,
-                high_24h, low_24h,
-                price_change_24h, pct,
-                circulating_supply, total_supply,
-                ath, atl,
-                ingested_at_val, last_updated_val,
-                price_trend, dominance,
-            ) = row
-            cursor.execute(
-                merge_sql,
-                # USING source
-                coin_id,
-                # UPDATE SET
-                symbol, name, rank,
-                current_price, market_cap, total_volume,
-                high_24h, low_24h,
-                price_change_24h, pct,
-                circulating_supply, total_supply,
-                ath, atl,
-                ingested_at_val, last_updated_val,
-                price_trend, dominance,
-                # INSERT VALUES
-                coin_id, symbol, name, rank,
-                current_price, market_cap, total_volume,
-                high_24h, low_24h,
-                price_change_24h, pct,
-                circulating_supply, total_supply,
-                ath, atl,
-                ingested_at_val, last_updated_val,
-                price_trend, dominance,
-            )
-        conn.commit()
-        return len(rows)
-    finally:
-        conn.close()
-
-
 def main() -> None:
     logging.basicConfig(
         level=os.getenv("LOG_LEVEL", "INFO").upper(),
@@ -254,12 +92,8 @@ def main() -> None:
     )
 
     payload = fetch_market_payload()
-    json.loads(payload)
-    now = datetime.now(timezone.utc)
     insert_bronze_row(payload)
     logging.info("Ingested CoinGecko payload into bronze.raw_coin_data")
-    count = upsert_gold_coins(payload, now)
-    logging.info("Upserted %d coins into gold.coin_prices", count)
 
 
 if __name__ == "__main__":
