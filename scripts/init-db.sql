@@ -66,18 +66,24 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('gold.market_summary', 'V') IS NULL
-    EXEC('
-        CREATE VIEW gold.market_summary AS
-        SELECT
-            CAST(0 AS BIGINT)          AS total_coins,
-            CAST(0 AS DECIMAL(30, 2))  AS total_market_cap,
-            CAST(0 AS DECIMAL(30, 2))  AS total_24h_volume,
-            CAST(0 AS DECIMAL(10, 4))  AS avg_24h_change_pct,
-            CAST(0 AS BIGINT)          AS coins_up,
-            CAST(0 AS BIGINT)          AS coins_down,
-            CAST(0 AS DECIMAL(10, 4))  AS btc_dominance_pct
-    ');
+EXEC('
+    CREATE OR ALTER VIEW gold.market_summary AS
+    SELECT
+        COUNT(*)                                                              AS total_coins,
+        CAST(COALESCE(SUM(market_cap), 0) AS DECIMAL(30, 2))                  AS total_market_cap,
+        CAST(COALESCE(SUM(total_volume), 0) AS DECIMAL(30, 2))                AS total_24h_volume,
+        CAST(COALESCE(AVG(price_change_percentage_24h), 0) AS DECIMAL(10, 4)) AS avg_24h_change_pct,
+        SUM(CASE WHEN price_change_percentage_24h > 0 THEN 1 ELSE 0 END)      AS coins_up,
+        SUM(CASE WHEN price_change_percentage_24h < 0 THEN 1 ELSE 0 END)      AS coins_down,
+        CAST(
+            COALESCE(
+                MAX(CASE WHEN coin_id = ''''bitcoin'''' THEN market_cap ELSE 0 END) * 100.0
+                / NULLIF(SUM(market_cap), 0),
+                0
+            )
+        AS DECIMAL(10, 4))                                                    AS btc_dominance_pct
+    FROM gold.coin_prices
+');
 GO
 
 IF OBJECT_ID('gold.top_movers', 'V') IS NULL
