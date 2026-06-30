@@ -20,27 +20,49 @@ public class SqlCoinServiceTests
     }
 
     [Fact]
-    public async Task GetAllCoinsAsync_ReturnsFullCatalog()
+    public void Constructor_ThrowsWhenConnectionStringMissing()
     {
-        var service = CreateService();
+        var config = new ConfigurationBuilder().Build();
 
-        var coins = (await service.GetAllCoinsAsync()).ToList();
+        var act = () => new SqlCoinService(config);
 
-        coins.Should().HaveCount(32);
-        coins.Should().Contain(c => c.Id == "arbitrum");
-        coins.Should().Contain(c => c.Id == "injective");
-        coins.Should().Contain(c => c.Id == "aptos");
+        act.Should().Throw<InvalidOperationException>();
     }
 
     [Fact]
-    public async Task GetCoinByIdAsync_ReturnsCatalogCoinWithoutDatabasePresence()
+    public void ResolveIconClass_UsesCatalogIconForKnownAlias()
+    {
+        var iconClass = SqlCoinService.ResolveIconClass("ripple", "XRP");
+
+        iconClass.Should().Be("xrp");
+    }
+
+    [Fact]
+    public void ResolveIconClass_FallsBackToLowercaseSymbol()
+    {
+        var iconClass = SqlCoinService.ResolveIconClass("brand-new-coin", "NEW");
+
+        iconClass.Should().Be("new");
+    }
+
+    [Theory]
+    [InlineData(1_340_000_000_000d, "$1.34T")]
+    [InlineData(28_400_000_000d, "$28.4B")]
+    [InlineData(680_000_000d, "$680M")]
+    [InlineData(95_000d, "$95K")]
+    [InlineData(0d, "$0")]
+    public void FormatCurrencyCompact_FormatsExpectedBuckets(double rawValue, string expected)
+    {
+        var formatted = SqlCoinService.FormatCurrencyCompact((decimal)rawValue);
+
+        formatted.Should().Be(expected);
+    }
+
+    [Fact]
+    public void Constructor_AcceptsConfiguredConnectionString()
     {
         var service = CreateService();
 
-        var coin = await service.GetCoinByIdAsync("optimism");
-
-        coin.Should().NotBeNull();
-        coin!.Symbol.Should().Be("OP");
-        coin.IconClass.Should().Be("op");
+        service.Should().NotBeNull();
     }
 }

@@ -1,41 +1,18 @@
-"use client";
+import type { Coin } from "@/app/lib/mockData";
+import BrowsePageClient from "./BrowsePageClient";
 
-import { useState } from "react";
-import { watchlistCoins } from "@/app/lib/mockData";
-import TickerStrip from "@/app/components/TickerStrip";
-import Navigation from "@/app/components/Navigation";
-import StatsBar from "@/app/components/StatsBar";
-import WatchlistClient from "@/app/components/WatchlistClient";
-import styles from "../../page.module.css";
+export default async function BrowsePage() {
+  const apiUrl = process.env.API_URL ?? "http://localhost:8080";
+  let initialCoins: Coin[] = [];
 
-export default function BrowsePage() {
-  const [coinCount, setCoinCount] = useState(watchlistCoins.length);
-  const [gainerCount, setGainerCount] = useState(
-    watchlistCoins.filter((c) => c.change24h >= 0).length
-  );
+  try {
+    const response = await fetch(`${apiUrl}/api/coins`, { cache: "no-store" });
+    if (response.ok) {
+      initialCoins = await response.json() as Coin[];
+    }
+  } catch {
+    // API unavailable — render with empty list
+  }
 
-  const handleStatsChange = (count: number, gainers: number) => {
-    setCoinCount(count);
-    setGainerCount(gainers);
-  };
-
-  return (
-    <>
-      <TickerStrip coins={watchlistCoins} />
-      <Navigation />
-
-      <div className={styles.pageHeader}>
-        <h1>All Coins</h1>
-        <p>Tracking {coinCount} assets · Last updated just now</p>
-      </div>
-
-      <StatsBar coinCount={coinCount} gainerCount={gainerCount} />
-
-      <WatchlistClient
-        initialCoins={watchlistCoins}
-        onStatsChange={handleStatsChange}
-        useAllCoins={true}
-      />
-    </>
-  );
+  return <BrowsePageClient initialCoins={initialCoins} />;
 }

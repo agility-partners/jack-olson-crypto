@@ -7,7 +7,7 @@
 
 /*
   Single-row market-wide summary derived from gold.coin_prices.
-  Refreshes automatically whenever coins_current updates.
+  Refreshes automatically whenever coin_prices updates.
 */
 
 SELECT

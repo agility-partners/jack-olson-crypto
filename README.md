@@ -80,9 +80,10 @@ This repository includes a local dbt scaffold in `/transform` and a local profil
 ## Scheduled ingestion
 
 The `ingester` Docker Compose service runs `scripts/scheduler.py` in a loop.
-It waits for the `sqlserver` container to pass its healthcheck, fetches the
-CoinGecko `/coins/markets` endpoint, and inserts a new row into
-`bronze.raw_coin_data`.
+Each cycle waits for the `sqlserver` container to pass its healthcheck, fetches
+the CoinGecko `/coins/markets` endpoint into `bronze.raw_coin_data`, and then
+runs DBT so Silver and Gold stay in sync. Bronze is the only layer written by
+Python; DBT is the only Bronze → Silver → Gold path.
 
 ### Starting the ingester
 
@@ -94,8 +95,9 @@ The ingester starts automatically with `docker compose up`. It will not
 begin ingesting until `sqlserver` reports healthy (typically ~30 s).
 
 The initial SQL setup only creates empty Gold-layer placeholders so the API
-does not fail before transformations exist. After Bronze data is ingested, run
-the DBT models to populate `gold.coin_prices` with live data.
+does not fail before transformations exist. The scheduler now runs DBT after
+each ingestion cycle, and manual one-off ingests should be followed by a DBT
+run before expecting live Gold/API data.
 
 ### Configuring the schedule
 
@@ -115,6 +117,7 @@ docker compose logs -f ingester
 
 ```bash
 python scripts/ingest_coingecko.py
+dbt run --project-dir transform --profiles-dir .dbt
 ```
 
 ### Viewing bronze data
@@ -139,7 +142,7 @@ one ingestion cycle has populated `bronze.raw_coin_data`.
 | Layer  | Model / file                    | Materialization | Description |
 |--------|---------------------------------|-----------------|-------------|
 | Silver | `stg_coin_markets`              | incremental     | Parses Bronze JSON into typed rows; deduplicates on `(coin_id, last_updated)` |
-| Gold   | `coin_prices`                   | table           | Latest price per coin + `price_trend` + `market_dominance_pct`; read by the .NET API |
+| Gold   | `coin_prices`                   | table           | Latest price snapshot per coin + `price_trend` + `market_dominance_pct`; retained as the canonical current-coins table read by the .NET API |
 | Gold   | `market_summary`                | view            | Single-row market-wide aggregation (total market cap, BTC dominance, coins up/down) |
 | Gold   | `top_movers`                    | view            | Top 10 gainers and top 10 losers from the top-100 coins by market cap |
 
@@ -175,7 +178,8 @@ null, `price_trend` is one of the five expected labels, and more (see
 ### Querying the Gold layer
 
 After `dbt run` completes, the `.NET API` reads from `gold.coin_prices`
-automatically. You can also query directly:
+automatically. `gold.coin_prices` remains the project’s Gold current-snapshot
+table name for the Week 3 pipeline. You can also query directly:
 
 ```powershell
 # PowerShell — top 10 coins with trend label

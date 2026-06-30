@@ -21,17 +21,11 @@ public class SqlMarketStatsService : IMarketStatsService
 
         const string sql = """
             SELECT
-                CAST(COALESCE(SUM(market_cap), 0) AS DECIMAL(30, 2))                  AS total_market_cap,
-                CAST(COALESCE(SUM(total_volume), 0) AS DECIMAL(30, 2))                AS total_24h_volume,
-                CAST(COALESCE(AVG(price_change_percentage_24h), 0) AS DECIMAL(10, 4)) AS avg_24h_change_pct,
-                CAST(
-                    COALESCE(
-                        MAX(CASE WHEN coin_id = 'bitcoin' THEN market_cap ELSE 0 END) * 100.0
-                        / NULLIF(SUM(market_cap), 0),
-                        0
-                    )
-                AS DECIMAL(10, 4)) AS btc_dominance_pct
-            FROM gold.coin_prices
+                total_market_cap,
+                total_24h_volume,
+                avg_24h_change_pct,
+                btc_dominance_pct
+            FROM gold.market_summary
             """;
 
         await using var cmd = new SqlCommand(sql, conn);

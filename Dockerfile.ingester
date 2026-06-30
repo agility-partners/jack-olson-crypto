@@ -19,9 +19,11 @@ RUN apt-get update \
 
 WORKDIR /app/scripts
 
-RUN pip install --no-cache-dir pyodbc requests
+RUN pip install --no-cache-dir pyodbc requests dbt-sqlserver==1.10.0
 
 COPY scripts/ ./
+COPY transform/ /app/transform/
+COPY .dbt/ /app/.dbt/
 
 # Default target is the internal Docker network SQL Server service.
 # Override MSSQL_SERVER when running outside of Compose.
