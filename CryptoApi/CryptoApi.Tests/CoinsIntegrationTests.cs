@@ -80,4 +80,43 @@ public class CoinsIntegrationTests : IAsyncLifetime
         coin.Price.Should().BeGreaterThan(0);
         coin.Rank.Should().BeGreaterThan(0);
     }
+
+    [Fact]
+    public async Task GetAllCoins_Returns32CanonicalCoins()
+    {
+        var response = await _client.GetAsync("/api/coins");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var coins = await response.Content.ReadFromJsonAsync<List<CoinDto>>();
+        coins.Should().NotBeNull();
+        coins.Should().HaveCount(32, "the API must expose the full 32-coin canonical catalog");
+    }
+
+    [Fact]
+    public async Task GetAllCoins_AllCoinsHaveIconClassAndUniqueIds()
+    {
+        var response = await _client.GetAsync("/api/coins");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var coins = await response.Content.ReadFromJsonAsync<List<CoinDto>>();
+        coins.Should().NotBeNull();
+        coins!.Should().OnlyContain(c => !string.IsNullOrEmpty(c.IconClass),
+            "every coin must carry an iconClass for the frontend sparkline and icon rendering");
+        coins.Should().OnlyHaveUniqueItems(c => c.Id,
+            "all coin IDs must be unique across the catalog");
+    }
+
+    [Fact]
+    public async Task GetAllCoins_WatchlistEndpointReturnsJsonArray()
+    {
+        var response = await _client.GetAsync("/api/watchlist");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Content.Headers.ContentType?.MediaType.Should().Be("application/json");
+
+        var watchlist = await response.Content.ReadFromJsonAsync<List<CoinDto>>();
+        watchlist.Should().NotBeNull();
+    }
 }
