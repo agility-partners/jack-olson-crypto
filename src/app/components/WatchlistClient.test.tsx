@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import WatchlistClient from './WatchlistClient';
 import { watchlistCoins } from '@/app/lib/mockData';
 
@@ -15,6 +15,27 @@ const deterministicInitialCoins = [
   watchlistCoins.find((coin) => coin.id === 'bnb')!,
   watchlistCoins.find((coin) => coin.id === 'solana')!,
 ];
+
+beforeEach(() => {
+  vi.restoreAllMocks();
+  vi.stubGlobal('fetch', vi.fn((input: string | URL, init?: RequestInit) => {
+    const url = String(input);
+
+    if (url.endsWith('/api/coins')) {
+      return Promise.resolve(new Response(JSON.stringify(watchlistCoins), { status: 200 }));
+    }
+
+    if (url.endsWith('/api/watchlist') && init?.method === 'POST') {
+      return Promise.resolve(new Response(JSON.stringify({}), { status: 201 }));
+    }
+
+    if (url.includes('/api/watchlist/') && init?.method === 'DELETE') {
+      return Promise.resolve(new Response(null, { status: 204 }));
+    }
+
+    return Promise.resolve(new Response(JSON.stringify([]), { status: 200 }));
+  }));
+});
 
 describe('WatchlistClient', () => {
   it('filters displayed coins by search term', () => {

@@ -7,17 +7,19 @@ namespace CryptoApi.Tests;
 
 public class SqlCoinServiceTests
 {
-    private static SqlCoinService CreateService()
-    {
-        var config = new ConfigurationBuilder()
+    private static IConfiguration CreateServiceConfiguration() =>
+        new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["ConnectionStrings:CryptoDb"] = "Server=localhost;Database=crypto_data;User Id=sa;******;"
             })
             .Build();
 
-        return new SqlCoinService(config);
-    }
+    private static SqlCoinService CreateService() =>
+        new(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
+                new Dictionary<string, SqlCoinService.CoinMarketSnapshot>()));
 
     [Fact]
     public async Task GetAllCoinsAsync_ReturnsFullCatalog()
@@ -42,5 +44,45 @@ public class SqlCoinServiceTests
         coin.Should().NotBeNull();
         coin!.Symbol.Should().Be("OP");
         coin.IconClass.Should().Be("op");
+    }
+
+    [Fact]
+    public async Task GetAllCoinsAsync_MergesDatabaseSnapshotWhilePreservingCatalog()
+    {
+        var service = new SqlCoinService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
+                new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
+                {
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m)
+                }));
+
+        var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");
+
+        coin.Name.Should().Be("Bitcoin");
+        coin.IconClass.Should().Be("btc");
+        coin.Rank.Should().Be(7);
+        coin.Price.Should().Be(70000.12m);
+        coin.Change24h.Should().Be(8.75m);
+        coin.MarketCapRaw.Should().Be(1_500_000_000_000m);
+        coin.MarketCap.Should().Be("$1.5T");
+        coin.VolumeRaw.Should().Be(31_250_000_000m);
+        coin.Volume.Should().Be("$31.25B");
+    }
+
+    [Fact]
+    public async Task GetCoinByIdAsync_FallsBackToCatalog_WhenSnapshotMissing()
+    {
+        var service = new SqlCoinService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
+                new Dictionary<string, SqlCoinService.CoinMarketSnapshot>()));
+
+        var coin = await service.GetCoinByIdAsync("ripple");
+
+        coin.Should().NotBeNull();
+        coin!.Price.Should().Be(0.578m);
+        coin.MarketCap.Should().Be("$31.2B");
+        coin.Volume.Should().Be("$1.1B");
     }
 }
