@@ -2,9 +2,8 @@
 Scheduled ingestion runner.
 
 Calls ingest_coingecko.main() in a loop, sleeping INGEST_INTERVAL_SECONDS
-between runs (default 900 s = 15 minutes).  The gold.coin_prices view in SQL
-Server automatically reflects the newest bronze row, so no dbt run is needed
-between ingestion cycles.
+between runs (default 900 s = 15 minutes). After each successful Bronze
+ingestion, runs DBT transformations and tests to build Silver and Gold models.
 
 Environment variables:
   INGEST_INTERVAL_SECONDS  — seconds to wait between runs (default: 900)
@@ -18,11 +17,41 @@ Environment variables:
 
 import logging
 import os
+import subprocess
 import time
+from pathlib import Path
 
 from ingest_coingecko import main as ingest_once
 
 INGEST_INTERVAL_SECONDS = int(os.getenv("INGEST_INTERVAL_SECONDS", str(15 * 60)))
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DBT_PROJECT_DIR = REPO_ROOT / "transform"
+DBT_PROFILES_DIR = REPO_ROOT / ".dbt"
+
+
+def run_dbt() -> None:
+    subprocess.run(
+        [
+            "dbt",
+            "run",
+            "--project-dir",
+            str(DBT_PROJECT_DIR),
+            "--profiles-dir",
+            str(DBT_PROFILES_DIR),
+        ],
+        check=True,
+    )
+    subprocess.run(
+        [
+            "dbt",
+            "test",
+            "--project-dir",
+            str(DBT_PROJECT_DIR),
+            "--profiles-dir",
+            str(DBT_PROFILES_DIR),
+        ],
+        check=True,
+    )
 
 
 def main() -> None:
@@ -37,6 +66,7 @@ def main() -> None:
     while True:
         try:
             ingest_once()
+            run_dbt()
         except Exception as exc:
             logging.error("Ingestion run failed: %s", exc)
 
