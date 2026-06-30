@@ -27,7 +27,7 @@ COPY .dbt/ /app/.dbt/
 
 # Default target is the internal Docker network SQL Server service.
 # Override MSSQL_SERVER when running outside of Compose.
-ENV MSSQL_SERVER=sqlserver,1433 \
+ENV MSSQL_SERVER=sqlserver \
     MSSQL_DATABASE=crypto_data \
     MSSQL_USER=sa \
     MSSQL_DRIVER="ODBC Driver 18 for SQL Server"
