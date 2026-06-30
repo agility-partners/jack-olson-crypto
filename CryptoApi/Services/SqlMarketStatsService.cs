@@ -47,6 +47,30 @@ public class SqlMarketStatsService : IMarketStatsService
         var marketCapChangePct = reader.IsDBNull(2) ? 0m : reader.GetDecimal(2);
         var btcDominancePct = reader.IsDBNull(3) ? 0m : reader.GetDecimal(3);
 
+        if (totalMarketCap <= 0m && volume24h <= 0m)
+        {
+            return CreateFallbackDtoFromCatalog();
+        }
+
+        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct);
+    }
+
+    private static MarketStatsDto CreateFallbackDtoFromCatalog()
+    {
+        var coins = CoinCatalog.GetAll();
+        if (coins.Count == 0)
+        {
+            return CreateDto(0m, 0m, 0m, 0m);
+        }
+
+        var totalMarketCap = coins.Sum(c => c.MarketCapRaw);
+        var volume24h = coins.Sum(c => c.VolumeRaw);
+        var marketCapChangePct = coins.Average(c => c.Change24h);
+        var bitcoinMarketCap = coins.FirstOrDefault(c => c.Id == "bitcoin")?.MarketCapRaw ?? 0m;
+        var btcDominancePct = totalMarketCap > 0m
+            ? bitcoinMarketCap * 100m / totalMarketCap
+            : 0m;
+
         return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct);
     }
 
