@@ -15,7 +15,11 @@ public class SqlCoinServiceTests
             })
             .Build();
 
-    private static SqlCoinService CreateService() => new(CreateServiceConfiguration());
+    private static SqlCoinService CreateService() =>
+        new(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
+                new Dictionary<string, SqlCoinService.CoinMarketSnapshot>()));
 
     [Fact]
     public async Task GetAllCoinsAsync_ReturnsFullCatalog()
