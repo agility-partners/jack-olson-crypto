@@ -14,6 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>CryptoApi.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="CryptoApi.Tests/**/*.cs" />
     <Content Remove="CryptoApi.Tests/**/*" />
     <EmbeddedResource Remove="CryptoApi.Tests/**/*" />
