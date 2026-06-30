@@ -13017,3 +13017,574 @@ having count(*) > 1
 [0m13:45:50.922066 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000145EA1E1820>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000145EA1E37D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000145ECC80710>]}
 [0m13:45:50.924449 [debug] [MainThread]: Flushing usage events
 [0m13:45:51.397581 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:40:37.598946 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002113196A270>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021133DE1E20>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021133DE1DC0>]}
+
+
+============================== 16:40:37.620312 | 464c325d-9317-4cb5-88cd-4d58ef5e4434 ==============================
+[0m16:40:37.620312 [info ] [MainThread]: Running with dbt=1.11.11
+[0m16:40:37.623652 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.dbt', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt test --select top_movers --project-dir transform --profiles-dir .dbt', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m16:40:44.275046 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '464c325d-9317-4cb5-88cd-4d58ef5e4434', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021135B99790>]}
+[0m16:40:44.350434 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '464c325d-9317-4cb5-88cd-4d58ef5e4434', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021133D313A0>]}
+[0m16:40:44.350434 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m16:40:44.924348 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m16:40:44.924348 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': '464c325d-9317-4cb5-88cd-4d58ef5e4434', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021133E3B1A0>]}
+[0m16:40:44.989521 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m16:40:48.441667 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m16:40:48.441667 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m16:40:48.441667 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m16:40:48.522606 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '464c325d-9317-4cb5-88cd-4d58ef5e4434', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021135D5A270>]}
+[0m16:40:48.625258 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m16:40:48.654097 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m16:40:48.691578 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '464c325d-9317-4cb5-88cd-4d58ef5e4434', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021136208260>]}
+[0m16:40:48.691578 [info ] [MainThread]: Found 4 models, 21 data tests, 1 source, 523 macros
+[0m16:40:48.691578 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '464c325d-9317-4cb5-88cd-4d58ef5e4434', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021135EE8E60>]}
+[0m16:40:48.694101 [info ] [MainThread]: 
+[0m16:40:48.696053 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:40:48.696053 [info ] [MainThread]: 
+[0m16:40:48.697067 [debug] [MainThread]: Acquiring new sqlserver connection 'master'
+[0m16:40:48.702733 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_gold'
+[0m16:40:48.711781 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_silver'
+[0m16:40:48.721631 [debug] [ThreadPool]: dbt-sqlserver
+[0m16:40:48.721631 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_silver"
+[0m16:40:48.723639 [debug] [ThreadPool]: On list_crypto_data_silver: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:40:48.723639 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:40:48.723639 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:40:48.735611 [debug] [ThreadPool]: dbt-sqlserver
+[0m16:40:48.735611 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_gold"
+[0m16:40:48.735611 [debug] [ThreadPool]: On list_crypto_data_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:40:48.735611 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:40:48.735611 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:04.596722 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:41:04.596722 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:41:05.599868 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:05.599868 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:21.377527 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:41:21.377527 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:41:22.381374 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:22.382058 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:38.144244 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+1 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:41:38.146303 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+1 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:41:39.149999 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:39.152012 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:41:54.950014 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:41:54.951008 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:41:54.952351 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:41:54.953294 [debug] [ThreadPool]: On list_crypto_data_silver: No close available on handle
+[0m16:41:54.953294 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:41:54.955829 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: macro list_relations_without_caching
+[0m16:41:54.955829 [debug] [ThreadPool]: On list_crypto_data_gold: No close available on handle
+[0m16:41:54.957470 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:41:54.958028 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: macro list_relations_without_caching
+[0m16:41:54.958028 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:41:54.962086 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:41:54.962086 [debug] [MainThread]: Connection 'list_crypto_data_gold' was properly closed.
+[0m16:41:54.964105 [debug] [MainThread]: Connection 'list_crypto_data_silver' was properly closed.
+[0m16:41:54.964105 [info ] [MainThread]: 
+[0m16:41:54.964105 [info ] [MainThread]: Finished running  in 0 hours 1 minutes and 6.27 seconds (66.27s).
+[0m16:41:54.969198 [error] [MainThread]: Encountered an error:
+
+[0m16:41:55.091738 [error] [MainThread]: Traceback (most recent call last):
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 276, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 321, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 391, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 368, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\requires.py", line 408, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\cli\main.py", line 850, in test
+    results = task.run()
+              ^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\runnable.py", line 626, in run
+    result = self.execute_with_hooks(selected_uids)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\runnable.py", line 559, in execute_with_hooks
+    before_run_status = self.before_run(adapter, selected_uids)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\run.py", line 1115, in before_run
+    self.populate_adapter_cache(adapter, required_schemas)
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\task\runnable.py", line 525, in populate_adapter_cache
+    adapter.set_relations_cache(cachable_nodes)
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 688, in set_relations_cache
+    self._relations_cache_for_schemas(relation_configs, required_schemas)
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\site-packages\dbt\adapters\base\impl.py", line 661, in _relations_cache_for_schemas
+    for future in as_completed(futures):
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 243, in as_completed
+    waiter.event.wait(wait_timeout)
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 655, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\JackOlson\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 355, in wait
+    waiter.acquire()
+KeyboardInterrupt
+
+[0m16:41:55.091738 [debug] [MainThread]: Command `dbt test` failed at 16:41:55.091738 after 77.80 seconds
+[0m16:41:55.091738 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021135640DA0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021135EE9070>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021135D5AC30>]}
+[0m16:41:55.091738 [debug] [MainThread]: Flushing usage events
+[0m16:41:55.844734 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:42:18.700119 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCA8CC4A0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CC7A0E390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCA848DA0>]}
+
+
+============================== 16:42:18.708485 | 391c9fc3-7e5d-41a1-b2d9-e91070faf984 ==============================
+[0m16:42:18.708485 [info ] [MainThread]: Running with dbt=1.11.11
+[0m16:42:18.708485 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.dbt', 'use_colors': 'True', 'invocation_command': 'dbt compile --select top_movers --project-dir transform --profiles-dir .dbt', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m16:42:18.964162 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '391c9fc3-7e5d-41a1-b2d9-e91070faf984', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCC128470>]}
+[0m16:42:19.063377 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '391c9fc3-7e5d-41a1-b2d9-e91070faf984', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CC9C80770>]}
+[0m16:42:19.063377 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m16:42:19.371687 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m16:42:19.371687 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': '391c9fc3-7e5d-41a1-b2d9-e91070faf984', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCC6D4680>]}
+[0m16:42:19.381342 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m16:42:19.492043 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m16:42:19.492043 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m16:42:19.492043 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m16:42:19.531212 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '391c9fc3-7e5d-41a1-b2d9-e91070faf984', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCC052690>]}
+[0m16:42:19.689820 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m16:42:19.693413 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m16:42:19.747982 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '391c9fc3-7e5d-41a1-b2d9-e91070faf984', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCC8ECBC0>]}
+[0m16:42:19.750589 [info ] [MainThread]: Found 4 models, 21 data tests, 1 source, 523 macros
+[0m16:42:19.752197 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '391c9fc3-7e5d-41a1-b2d9-e91070faf984', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCCB59730>]}
+[0m16:42:19.765202 [info ] [MainThread]: 
+[0m16:42:19.768069 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:42:19.770668 [info ] [MainThread]: 
+[0m16:42:19.773957 [debug] [MainThread]: Acquiring new sqlserver connection 'master'
+[0m16:42:19.793932 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_silver'
+[0m16:42:19.810652 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_gold'
+[0m16:42:19.866222 [debug] [ThreadPool]: dbt-sqlserver
+[0m16:42:19.876396 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_silver"
+[0m16:42:19.876396 [debug] [ThreadPool]: dbt-sqlserver
+[0m16:42:19.876396 [debug] [ThreadPool]: On list_crypto_data_silver: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:42:19.876396 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_gold"
+[0m16:42:19.881212 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:42:19.881212 [debug] [ThreadPool]: On list_crypto_data_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:42:19.881212 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:42:19.881212 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:42:19.881212 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:42:35.698603 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:42:35.700590 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:42:36.700952 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:42:36.702507 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:42:52.459919 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:42:52.459919 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:42:53.463066 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:42:53.464704 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:43:09.207131 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+1 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:43:09.207131 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+1 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:43:10.209763 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:43:10.210798 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:43:25.976016 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:43:25.977749 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:43:25.979508 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:43:25.980708 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:43:25.981567 [debug] [ThreadPool]: On list_crypto_data_gold: No close available on handle
+[0m16:43:25.982737 [debug] [ThreadPool]: On list_crypto_data_silver: No close available on handle
+[0m16:43:25.983305 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: macro list_relations_without_caching
+[0m16:43:25.985684 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: macro list_relations_without_caching
+[0m16:43:25.986250 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:43:25.987393 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:43:25.990005 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:43:25.990645 [debug] [MainThread]: Connection 'list_crypto_data_silver' was properly closed.
+[0m16:43:25.991404 [debug] [MainThread]: Connection 'list_crypto_data_gold' was properly closed.
+[0m16:43:25.992674 [error] [MainThread]: Encountered an error:
+Database Error
+  ('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:43:25.996135 [debug] [MainThread]: Command `dbt compile` failed at 16:43:25.995083 after 67.51 seconds
+[0m16:43:25.998749 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCA155070>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCC0D4C50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018CCCB59DC0>]}
+[0m16:43:26.002652 [debug] [MainThread]: Flushing usage events
+[0m16:43:26.513553 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m16:44:00.684904 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD05762D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD33BB470>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD33BB1A0>]}
+
+
+============================== 16:44:00.684904 | bc01f90d-a6c9-45e7-8515-42521121ea31 ==============================
+[0m16:44:00.684904 [info ] [MainThread]: Running with dbt=1.11.11
+[0m16:44:00.684904 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.dbt', 'use_colors': 'True', 'invocation_command': 'dbt test --select top_movers --project-dir transform --profiles-dir .dbt', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'log_path': 'transform\\logs'}
+[0m16:44:01.014170 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'bc01f90d-a6c9-45e7-8515-42521121ea31', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD4C787A0>]}
+[0m16:44:01.128940 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'bc01f90d-a6c9-45e7-8515-42521121ea31', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD5276E10>]}
+[0m16:44:01.130142 [info ] [MainThread]: Registered adapter: sqlserver=1.10.0
+[0m16:44:01.413947 [warn ] [MainThread]: [[33mWARNING[0m]: When True, uses SQL Server-native string type mappings: STRING -> VARCHAR(MAX), NCHAR -> NCHAR(1), NVARCHAR -> NVARCHAR(4000). When False (default), preserves legacy mappings: STRING and NVARCHAR -> VARCHAR(8000), NCHAR -> CHAR(1). The new behaviour is intended to become the default in a future release.
+You may opt into the new behavior sooner by setting `flags.dbt_sqlserver_use_native_string_types` to `True` in `dbt_project.yml`.
+Visit https://docs.getdbt.com/reference/global-configs/behavior-changes for more information.
+[0m16:44:01.413947 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'BehaviorChangeEvent', 'label': 'bc01f90d-a6c9-45e7-8515-42521121ea31', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD5267710>]}
+[0m16:44:01.425976 [debug] [MainThread]: checksum: 30a8cc8fdcbf66701b0944d4ccce3fa46dd04b61e5df68b9f16d57b2e0e3f0be, vars: {}, profile: , target: , version: 1.11.11
+[0m16:44:01.598722 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m16:44:01.598722 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m16:44:01.598722 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m16:44:01.652635 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'bc01f90d-a6c9-45e7-8515-42521121ea31', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD52764E0>]}
+[0m16:44:01.763217 [debug] [MainThread]: Wrote artifact WritableManifest to transform\target\manifest.json
+[0m16:44:01.763217 [debug] [MainThread]: Wrote artifact SemanticManifest to transform\target\semantic_manifest.json
+[0m16:44:01.797276 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'bc01f90d-a6c9-45e7-8515-42521121ea31', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD5720500>]}
+[0m16:44:01.797276 [info ] [MainThread]: Found 4 models, 21 data tests, 1 source, 523 macros
+[0m16:44:01.797276 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'bc01f90d-a6c9-45e7-8515-42521121ea31', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD57111C0>]}
+[0m16:44:01.807225 [info ] [MainThread]: 
+[0m16:44:01.807225 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m16:44:01.807225 [info ] [MainThread]: 
+[0m16:44:01.807225 [debug] [MainThread]: Acquiring new sqlserver connection 'master'
+[0m16:44:01.815371 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_silver'
+[0m16:44:01.844418 [debug] [ThreadPool]: Acquiring new sqlserver connection 'list_crypto_data_gold'
+[0m16:44:01.889481 [debug] [ThreadPool]: dbt-sqlserver
+[0m16:44:01.890518 [debug] [ThreadPool]: dbt-sqlserver
+[0m16:44:01.890518 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_gold"
+[0m16:44:01.892254 [debug] [ThreadPool]: Using sqlserver connection "list_crypto_data_silver"
+[0m16:44:01.893505 [debug] [ThreadPool]: On list_crypto_data_gold: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:44:01.894747 [debug] [ThreadPool]: On list_crypto_data_silver: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:44:01.896314 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:44:01.897367 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m16:44:01.897875 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:01.899112 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:17.705030 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:44:17.705030 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+3 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:44:18.708490 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:18.710157 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:34.557284 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:44:34.557284 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+2 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:44:35.561598 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:35.562134 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:51.309286 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+1 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:44:51.312543 [debug] [ThreadPool]: sqlserver adapter: Got a retryable error when attempting to open a sqlserver connection.
+1 attempts remaining. Retrying in 1 seconds.
+Error:
+('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:44:52.311738 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:44:52.314613 [debug] [ThreadPool]: sqlserver adapter: Using connection string: DRIVER={ODBC Driver 18 for SQL Server};SERVER=localhost,1433;Database=crypto_data;Pooling=true;SQL_ATTR_TRACE=SQL_OPT_TRACE_OFF;UID={sa};PWD=***;encrypt=Yes;TrustServerCertificate=Yes;APP=dbt-sqlserver/1.10.0;ConnectRetryCount=3;ConnectRetryInterval=10
+[0m16:45:08.109510 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_gold"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('gold');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'gold' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'gold' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:45:08.110989 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: /* {"app": "dbt", "dbt_version": "1.11.11", "profile_name": "crypto_pipeline", "target_name": "dev", "connection_name": "list_crypto_data_silver"} */
+USE [crypto_data];
+    declare @schema_id int = schema_id('silver');
+    select
+      DB_NAME() as [database],
+      t.name as [name],
+      'silver' as [schema],
+      'table' as table_type
+    from sys.tables as t with (nolock)
+    where t.schema_id = @schema_id
+    union all
+    select
+      DB_NAME() as [database],
+      v.name as [name],
+      'silver' as [schema],
+      'view' as table_type
+    from sys.views as v with (nolock)
+    where v.schema_id = @schema_id
+    
+    OPTION (LABEL = 'dbt-sqlserver');
+
+  
+[0m16:45:08.111446 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:45:08.112466 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:45:08.112466 [debug] [ThreadPool]: On list_crypto_data_gold: No close available on handle
+[0m16:45:08.112466 [debug] [ThreadPool]: On list_crypto_data_silver: No close available on handle
+[0m16:45:08.115073 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: macro list_relations_without_caching
+[0m16:45:08.115073 [debug] [ThreadPool]: sqlserver adapter: Error running SQL: macro list_relations_without_caching
+[0m16:45:08.115073 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:45:08.117118 [debug] [ThreadPool]: sqlserver adapter: Rolling back transaction.
+[0m16:45:08.117118 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m16:45:08.117118 [debug] [MainThread]: Connection 'list_crypto_data_silver' was properly closed.
+[0m16:45:08.117118 [debug] [MainThread]: Connection 'list_crypto_data_gold' was properly closed.
+[0m16:45:08.122002 [info ] [MainThread]: 
+[0m16:45:08.122002 [info ] [MainThread]: Finished running  in 0 hours 1 minutes and 6.31 seconds (66.31s).
+[0m16:45:08.122002 [error] [MainThread]: Encountered an error:
+Database Error
+  ('08001', '[08001] [Microsoft][ODBC Driver 18 for SQL Server]TCP Provider: No connection could be made because the target machine actively refused it.\r\n (10061) (SQLDriverConnect); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Login timeout expired (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]Invalid connection string attribute (0); [08001] [Microsoft][ODBC Driver 18 for SQL Server]A network-related or instance-specific error has occurred while establishing a connection to localhost,1433. Server is not found or not accessible. Check if instance name is correct and if SQL Server is configured to allow remote connections. For more information see SQL Server Books Online. (10061)')
+[0m16:45:08.125616 [debug] [MainThread]: Command `dbt test` failed at 16:45:08.125616 after 67.64 seconds
+[0m16:45:08.126205 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD27F1400>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD5277FE0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000021FD57E53D0>]}
+[0m16:45:08.126205 [debug] [MainThread]: Flushing usage events
+[0m16:45:08.705013 [debug] [MainThread]: An error was encountered while trying to flush usage events
