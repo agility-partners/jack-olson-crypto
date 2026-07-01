@@ -1,5 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { pointsToSvgPath } from "./utils";
+import { formatPrice, pointsToSvgPath } from "./utils";
+
+describe("formatPrice", () => {
+  it("keeps four decimals for standard sub-dollar prices", () => {
+    expect(formatPrice(0.1234)).toBe("$0.1234");
+  });
+
+  it("shows extra decimals for very small prices", () => {
+    expect(formatPrice(0.0000132)).toBe("$0.0000132");
+  });
+});
 
 describe("pointsToSvgPath", () => {
   it("returns null when fewer than 2 points are provided", () => {
