@@ -19,15 +19,19 @@ RUN apt-get update \
 
 WORKDIR /app/scripts
 
-RUN pip install --no-cache-dir pyodbc requests
+RUN pip install --no-cache-dir pyodbc requests dbt-sqlserver
 
 COPY scripts/ ./
+COPY transform/ /app/transform/
+COPY .dbt/ /app/.dbt/
 
 # Default target is the internal Docker network SQL Server service.
 # Override MSSQL_SERVER when running outside of Compose.
+# DBT_MSSQL_SERVER is the hostname dbt uses; defaults to localhost for local dev.
 ENV MSSQL_SERVER=sqlserver,1433 \
     MSSQL_DATABASE=crypto_data \
     MSSQL_USER=sa \
-    MSSQL_DRIVER="ODBC Driver 18 for SQL Server"
+    MSSQL_DRIVER="ODBC Driver 18 for SQL Server" \
+    DBT_MSSQL_SERVER=sqlserver
 
 CMD ["python", "scheduler.py"]

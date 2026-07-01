@@ -4,7 +4,7 @@ crypto_pipeline:
     dev:
       type: sqlserver
       driver: "ODBC Driver 18 for SQL Server"
-      server: "localhost"
+      server: "{{ env_var('DBT_MSSQL_SERVER', 'localhost') }}"
       port: 1433
       database: "crypto_data"
       schema: "silver"
