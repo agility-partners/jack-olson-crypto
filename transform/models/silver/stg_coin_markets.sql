@@ -23,6 +23,7 @@ SELECT
         WHEN 'binancecoin' THEN 'bnb'
         WHEN 'avalanche-2' THEN 'avalanche'
         WHEN 'matic-network' THEN 'polygon'
+        WHEN 'pol' THEN 'polygon'
         WHEN 'theta-token' THEN 'theta'
         WHEN 'hedera-hashgraph' THEN 'hedera'
         WHEN 'elrond-erd-2' THEN 'elrond'
