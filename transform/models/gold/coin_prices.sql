@@ -7,7 +7,8 @@
 
 /*
   Latest price snapshot per coin — one row per coin_id using the most
-  recent last_updated timestamp from the silver layer.
+  recent last_updated timestamp from the silver layer, breaking ties with
+  the latest ingestion timestamp so repeated mock-data cycles still refresh.
   Adds price_trend classification and market dominance percentage.
   Your .NET API reads directly from this table.
 */
@@ -17,7 +18,7 @@ WITH ranked AS (
         *,
         ROW_NUMBER() OVER (
             PARTITION BY coin_id
-            ORDER BY last_updated DESC
+            ORDER BY last_updated DESC, ingested_at DESC
         )                                                               AS rn,
         SUM(market_cap) OVER ()                                         AS total_market_cap
     FROM {{ ref('stg_coin_markets') }}
@@ -53,4 +54,3 @@ SELECT
     AS DECIMAL(10, 4))                                                  AS market_dominance_pct
 FROM ranked
 WHERE rn = 1
-
