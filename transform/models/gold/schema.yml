@@ -21,6 +21,8 @@ models:
         description: Latest price in USD.
         tests:
           - not_null
+      - name: sparkline_7d
+        description: JSON array of 7-day sparkline price points from CoinGecko.
       - name: market_cap_rank
         description: Market-cap rank; must be a positive integer.
         tests:

@@ -40,6 +40,7 @@ SELECT
     total_supply,
     ath,
     atl,
+    sparkline_7d,
     ingested_at,
     last_updated,
     CASE

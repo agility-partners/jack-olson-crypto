@@ -10,6 +10,7 @@ export type Coin = {
   marketCapRaw: number;
   volume: string;
   volumeRaw: number;
+  sparkline?: number[];
 };
 
 export type CoinDetail = Coin & {
