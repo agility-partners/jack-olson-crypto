@@ -41,6 +41,7 @@ def fetch_market_payload() -> str:
         "per_page": int(os.getenv("COINGECKO_PER_PAGE", "100")),
         "page": int(os.getenv("COINGECKO_PAGE", "1")),
         "sparkline": "true",
+        "price_change_percentage": "7d,30d,1y",
     }
     headers: dict = {}
     api_key = os.getenv("COINGECKO_API_KEY", "").strip()

@@ -56,10 +56,18 @@ internal static class CoinCatalog
             IconClass = coin.IconClass,
             Price = coin.Price,
             Change24h = coin.Change24h,
+            Change7d = coin.Change7d,
+            Change30d = coin.Change30d,
+            Change1y = coin.Change1y,
             Rank = coin.Rank,
             MarketCap = coin.MarketCap,
             MarketCapRaw = coin.MarketCapRaw,
             Volume = coin.Volume,
             VolumeRaw = coin.VolumeRaw,
+            Ath = coin.Ath,
+            Atl = coin.Atl,
+            CirculatingSupplyRaw = coin.CirculatingSupplyRaw,
+            TotalSupplyRaw = coin.TotalSupplyRaw,
+            MaxSupplyRaw = coin.MaxSupplyRaw,
         };
 }

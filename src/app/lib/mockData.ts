@@ -6,10 +6,18 @@ export type Coin = {
   rank: number;
   price: number;
   change24h: number;
+  change7d?: number;
+  change30d?: number;
+  change1y?: number;
   marketCap: string;
   marketCapRaw: number;
   volume: string;
   volumeRaw: number;
+  ath?: number;
+  atl?: number;
+  circulatingSupplyRaw?: number;
+  totalSupplyRaw?: number;
+  maxSupplyRaw?: number | null;
   sparkline?: number[];
 };
 

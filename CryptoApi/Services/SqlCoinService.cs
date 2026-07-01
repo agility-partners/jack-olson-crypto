@@ -79,6 +79,14 @@ public class SqlCoinService : ICoinService
                 market_cap,
                 total_volume,
                 price_change_percentage_24h,
+                price_change_percentage_7d,
+                price_change_percentage_30d,
+                price_change_percentage_1y,
+                ath,
+                atl,
+                circulating_supply,
+                total_supply,
+                max_supply,
                 sparkline_7d
             FROM gold.coin_prices
             """;
@@ -103,7 +111,15 @@ public class SqlCoinService : ICoinService
                 MarketCapRaw: reader.IsDBNull(3) ? null : reader.GetDecimal(3),
                 VolumeRaw: reader.IsDBNull(4) ? null : reader.GetDecimal(4),
                 Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5),
-                Sparkline: reader.IsDBNull(6) ? null : ParseSparklinePoints(reader.GetString(6)));
+                Change7d: reader.IsDBNull(6) ? null : reader.GetDecimal(6),
+                Change30d: reader.IsDBNull(7) ? null : reader.GetDecimal(7),
+                Change1y: reader.IsDBNull(8) ? null : reader.GetDecimal(8),
+                Ath: reader.IsDBNull(9) ? null : reader.GetDecimal(9),
+                Atl: reader.IsDBNull(10) ? null : reader.GetDecimal(10),
+                CirculatingSupplyRaw: reader.IsDBNull(11) ? null : reader.GetDecimal(11),
+                TotalSupplyRaw: reader.IsDBNull(12) ? null : reader.GetDecimal(12),
+                MaxSupplyRaw: reader.IsDBNull(13) ? null : reader.GetDecimal(13),
+                Sparkline: reader.IsDBNull(14) ? null : ParseSparklinePoints(reader.GetString(14)));
         }
 
         return snapshots;
@@ -122,11 +138,19 @@ public class SqlCoinService : ICoinService
             IconClass = coin.IconClass,
             Price = snapshot.CurrentPrice ?? coin.Price,
             Change24h = snapshot.Change24h ?? coin.Change24h,
+            Change7d = snapshot.Change7d ?? coin.Change7d,
+            Change30d = snapshot.Change30d ?? coin.Change30d,
+            Change1y = snapshot.Change1y ?? coin.Change1y,
             Rank = snapshot.Rank ?? coin.Rank,
             MarketCapRaw = marketCapRaw,
             MarketCap = FormatCurrencyCompact(marketCapRaw),
             VolumeRaw = volumeRaw,
             Volume = FormatCurrencyCompact(volumeRaw),
+            Ath = snapshot.Ath ?? coin.Ath,
+            Atl = snapshot.Atl ?? coin.Atl,
+            CirculatingSupplyRaw = snapshot.CirculatingSupplyRaw ?? coin.CirculatingSupplyRaw,
+            TotalSupplyRaw = snapshot.TotalSupplyRaw ?? coin.TotalSupplyRaw,
+            MaxSupplyRaw = snapshot.MaxSupplyRaw ?? coin.MaxSupplyRaw,
             Sparkline = snapshot.Sparkline ?? coin.Sparkline,
         };
     }
@@ -172,5 +196,13 @@ public class SqlCoinService : ICoinService
         decimal? MarketCapRaw,
         decimal? VolumeRaw,
         decimal? Change24h,
+        decimal? Change7d,
+        decimal? Change30d,
+        decimal? Change1y,
+        decimal? Ath,
+        decimal? Atl,
+        decimal? CirculatingSupplyRaw,
+        decimal? TotalSupplyRaw,
+        decimal? MaxSupplyRaw,
         decimal[]? Sparkline);
 }
