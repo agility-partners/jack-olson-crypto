@@ -29,6 +29,7 @@ SELECT
         WHEN 'usd-coin' THEN 'usdc'
         WHEN 'the-open-network' THEN 'toncoin'
         WHEN 'render-token' THEN 'render'
+        WHEN 'sei-network' THEN 'sei'
         ELSE j.coin_id
     END                                                               AS coin_id,
     UPPER(j.symbol)                                                    AS symbol,
