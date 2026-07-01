@@ -57,8 +57,21 @@ describe("CoinGecko ingestion wiring", () => {
       "kaspa",
       "render-token",
       "sei-network",
-      "dogwifhat",
+      "pepe",
     ]));
+  });
+
+  it("uses Pepe instead of dogwifhat in the ingester config", () => {
+    const dockerComposePath = path.join(process.cwd(), "docker-compose.yml");
+    const dockerCompose = readFileSync(dockerComposePath, "utf8");
+    const match = dockerCompose.match(/COINGECKO_COIN_IDS=([^\n]+)/);
+
+    expect(match?.[1]).toBeDefined();
+
+    const coinIds = match![1].split(",");
+
+    expect(coinIds).toContain("pepe");
+    expect(coinIds).not.toContain("dogwifhat");
   });
 
   it("maps new CoinGecko aliases back to canonical app coin ids", () => {

@@ -45,7 +45,7 @@ internal static class CoinCatalog
         new() { Id = "kaspa",             Name = "Kaspa",             Symbol = "KAS",   IconClass = "kas",   Rank = 37, Price =     0.17m, Change24h =  3.92m, MarketCap = "$4.2B",   MarketCapRaw =     4_200_000_000m, Volume = "$98M",   VolumeRaw =      98_000_000m },
         new() { Id = "render",            Name = "Render",            Symbol = "RENDER",IconClass = "render",Rank = 38, Price =     8.12m, Change24h =  5.48m, MarketCap = "$3.1B",   MarketCapRaw =     3_100_000_000m, Volume = "$156M",  VolumeRaw =     156_000_000m },
         new() { Id = "sei",               Name = "Sei",               Symbol = "SEI",   IconClass = "sei",   Rank = 39, Price =     0.35m, Change24h =  1.53m, MarketCap = "$2.0B",   MarketCapRaw =     2_000_000_000m, Volume = "$85M",   VolumeRaw =      85_000_000m },
-        new() { Id = "dogwifhat",         Name = "dogwifhat",         Symbol = "WIF",   IconClass = "wif",   Rank = 40, Price =     1.80m, Change24h =  3.24m, MarketCap = "$1.8B",   MarketCapRaw =     1_800_000_000m, Volume = "$190M",  VolumeRaw =     190_000_000m },
+        new() { Id = "pepe",              Name = "Pepe",              Symbol = "PEPE",  IconClass = "pepe",  Rank = 40, Price =      0.0000132m, Change24h =  4.18m, MarketCap = "$5.6B",   MarketCapRaw =     5_600_000_000m, Volume = "$780M",  VolumeRaw =     780_000_000m },
     ];
 
     private static readonly IReadOnlyDictionary<string, CoinDto> CoinsById = Coins.ToDictionary(coin => coin.Id);

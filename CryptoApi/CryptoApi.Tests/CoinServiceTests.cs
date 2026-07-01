@@ -77,6 +77,15 @@ public class CoinServiceTests
     }
 
     [Fact]
+    public async Task GetAllCoins_ReplacesDogwifhatWithPepe()
+    {
+        var result = await _coinService.GetAllCoinsAsync();
+
+        result.Should().Contain(c => c.Id == "pepe" && c.Symbol == "PEPE" && c.IconClass == "pepe");
+        result.Should().NotContain(c => c.Id == "dogwifhat");
+    }
+
+    [Fact]
     public async Task GetCoinById_ReturnsNull_WhenIdCaseDoesNotMatch()
     {
         var result = await _coinService.GetCoinByIdAsync("Bitcoin");
