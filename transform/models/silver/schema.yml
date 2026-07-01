@@ -31,3 +31,5 @@ models:
         description: UTC timestamp when the Bronze row was inserted.
         tests:
           - not_null
+      - name: sparkline_7d
+        description: JSON array of 7-day sparkline price points from CoinGecko.

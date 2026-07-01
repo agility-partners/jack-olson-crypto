@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json;
 using CryptoApi.DTOs;
 using Microsoft.Data.SqlClient;
 
@@ -77,7 +78,8 @@ public class SqlCoinService : ICoinService
                 current_price,
                 market_cap,
                 total_volume,
-                price_change_percentage_24h
+                price_change_percentage_24h,
+                sparkline_7d
             FROM gold.coin_prices
             """;
 
@@ -100,7 +102,8 @@ public class SqlCoinService : ICoinService
                 CurrentPrice: reader.IsDBNull(2) ? null : reader.GetDecimal(2),
                 MarketCapRaw: reader.IsDBNull(3) ? null : reader.GetDecimal(3),
                 VolumeRaw: reader.IsDBNull(4) ? null : reader.GetDecimal(4),
-                Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5));
+                Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5),
+                Sparkline: reader.IsDBNull(6) ? null : ParseSparklinePoints(reader.GetString(6)));
         }
 
         return snapshots;
@@ -124,7 +127,25 @@ public class SqlCoinService : ICoinService
             MarketCap = FormatCurrencyCompact(marketCapRaw),
             VolumeRaw = volumeRaw,
             Volume = FormatCurrencyCompact(volumeRaw),
+            Sparkline = snapshot.Sparkline ?? coin.Sparkline,
         };
+    }
+
+    private static decimal[]? ParseSparklinePoints(string? rawSparkline)
+    {
+        if (string.IsNullOrWhiteSpace(rawSparkline))
+        {
+            return null;
+        }
+
+        try
+        {
+            return JsonSerializer.Deserialize<decimal[]>(rawSparkline);
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     internal static string FormatCurrencyCompact(decimal value)
@@ -150,5 +171,6 @@ public class SqlCoinService : ICoinService
         decimal? CurrentPrice,
         decimal? MarketCapRaw,
         decimal? VolumeRaw,
-        decimal? Change24h);
+        decimal? Change24h,
+        decimal[]? Sparkline);
 }

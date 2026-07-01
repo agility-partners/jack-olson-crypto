@@ -54,7 +54,7 @@ public class SqlCoinServiceTests
             _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
                 new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
                 {
-                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m)
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, null)
                 }));
 
         var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");
@@ -68,6 +68,22 @@ public class SqlCoinServiceTests
         coin.MarketCap.Should().Be("$1.5T");
         coin.VolumeRaw.Should().Be(31_250_000_000m);
         coin.Volume.Should().Be("$31.25B");
+    }
+
+    [Fact]
+    public async Task GetAllCoinsAsync_MergesSparkline_WhenSnapshotIncludesIt()
+    {
+        var service = new SqlCoinService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
+                new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
+                {
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, [70000.12m, 70010m, 69995m])
+                }));
+
+        var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");
+
+        coin.Sparkline.Should().Equal([70000.12m, 70010m, 69995m]);
     }
 
     [Fact]
