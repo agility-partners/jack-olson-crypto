@@ -8,7 +8,7 @@ models:
       absurd 24-h change values. Incrementally appends new Bronze rows only.
     columns:
       - name: coin_id
-        description: CoinGecko coin identifier (e.g. bitcoin).
+        description: Canonical application coin identifier after normalizing CoinGecko aliases (e.g. bitcoin, bnb, polygon).
         tests:
           - not_null
       - name: symbol
