@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { coinDetails, sparkPaths } from "@/app/lib/mockData";
-import { formatPrice, pointsToSvgPath } from "@/app/lib/utils";
+import { formatPrice, formatSupply, pointsToSvgPath } from "@/app/lib/utils";
 import { getCoinById } from "@/app/lib/serverCoinData";
 import CoinIcon from "@/app/components/CoinIcon";
 import Sparkline from "@/app/components/Sparkline";
@@ -28,18 +28,37 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
 
   const liveCoin = await getCoinById(coinId);
 
-  // Overlay live market data from the API onto the static coin detail record,
-  // keeping description, website, founded, ATH/ATL, supplies, and change7d/30d/1y from mockData.
+  // Overlay live market data from the API onto the static coin detail record.
+  // Static fields (description, website, founded) always come from mockData.
   const coin = {
     ...staticDetail,
     price: liveCoin?.price ?? staticDetail.price,
     change24h: liveCoin?.change24h ?? staticDetail.change24h,
+    change7d: liveCoin?.change7d ?? staticDetail.change7d,
+    change30d: liveCoin?.change30d ?? staticDetail.change30d,
+    change1y: liveCoin?.change1y ?? staticDetail.change1y,
     rank: liveCoin?.rank ?? staticDetail.rank,
     marketCap: liveCoin?.marketCap ?? staticDetail.marketCap,
     marketCapRaw: liveCoin?.marketCapRaw ?? staticDetail.marketCapRaw,
     volume: liveCoin?.volume ?? staticDetail.volume,
     volumeRaw: liveCoin?.volumeRaw ?? staticDetail.volumeRaw,
     sparkline: liveCoin?.sparkline ?? staticDetail.sparkline,
+    allTimeHigh: liveCoin?.ath ?? staticDetail.allTimeHigh,
+    allTimeLow: liveCoin?.atl ?? staticDetail.allTimeLow,
+    circulatingSupply:
+      liveCoin?.circulatingSupplyRaw != null
+        ? formatSupply(liveCoin.circulatingSupplyRaw, staticDetail.symbol)
+        : staticDetail.circulatingSupply,
+    totalSupply:
+      liveCoin?.totalSupplyRaw != null
+        ? formatSupply(liveCoin.totalSupplyRaw, staticDetail.symbol)
+        : staticDetail.totalSupply,
+    maxSupply:
+      liveCoin != null
+        ? (liveCoin.maxSupplyRaw != null
+            ? formatSupply(liveCoin.maxSupplyRaw, staticDetail.symbol)
+            : null)
+        : staticDetail.maxSupply,
   };
 
   const up24h = coin.change24h >= 0;

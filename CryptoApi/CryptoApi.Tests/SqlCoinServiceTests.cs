@@ -54,7 +54,7 @@ public class SqlCoinServiceTests
             _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
                 new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
                 {
-                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, null)
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, 5.12m, 8.45m, 142.30m, 69045.00m, 65.51m, 19_742_212m, 21_000_000m, 21_000_000m, null)
                 }));
 
         var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");
@@ -64,10 +64,18 @@ public class SqlCoinServiceTests
         coin.Rank.Should().Be(7);
         coin.Price.Should().Be(70000.12m);
         coin.Change24h.Should().Be(8.75m);
+        coin.Change7d.Should().Be(5.12m);
+        coin.Change30d.Should().Be(8.45m);
+        coin.Change1y.Should().Be(142.30m);
         coin.MarketCapRaw.Should().Be(1_500_000_000_000m);
         coin.MarketCap.Should().Be("$1.5T");
         coin.VolumeRaw.Should().Be(31_250_000_000m);
         coin.Volume.Should().Be("$31.25B");
+        coin.Ath.Should().Be(69045.00m);
+        coin.Atl.Should().Be(65.51m);
+        coin.CirculatingSupplyRaw.Should().Be(19_742_212m);
+        coin.TotalSupplyRaw.Should().Be(21_000_000m);
+        coin.MaxSupplyRaw.Should().Be(21_000_000m);
     }
 
     [Fact]
@@ -78,7 +86,7 @@ public class SqlCoinServiceTests
             _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
                 new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
                 {
-                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, [70000.12m, 70010m, 69995m])
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, null, null, null, null, null, null, null, null, [70000.12m, 70010m, 69995m])
                 }));
 
         var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");

@@ -4,6 +4,21 @@ export function formatPrice(n: number): string {
   return "$" + n.toFixed(4);
 }
 
+export function formatSupply(raw: number, symbol: string): string {
+  const abs = Math.abs(raw);
+  let formatted: string;
+  if (abs >= 1_000_000_000) {
+    formatted = (abs / 1_000_000_000).toLocaleString("en-US", { maximumFractionDigits: 2 }) + "B";
+  } else if (abs >= 1_000_000) {
+    formatted = (abs / 1_000_000).toLocaleString("en-US", { maximumFractionDigits: 2 }) + "M";
+  } else if (abs >= 1_000) {
+    formatted = (abs / 1_000).toLocaleString("en-US", { maximumFractionDigits: 2 }) + "K";
+  } else {
+    formatted = abs.toLocaleString("en-US", { maximumFractionDigits: 2 });
+  }
+  return `${formatted} ${symbol}`;
+}
+
 type SparkPathData = {
   d: string;
   up: boolean;

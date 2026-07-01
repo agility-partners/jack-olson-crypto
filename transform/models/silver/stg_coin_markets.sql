@@ -40,8 +40,12 @@ SELECT
     CAST(j.price_change_percentage_24h AS DECIMAL(10, 4))              AS price_change_percentage_24h,
     CAST(j.circulating_supply      AS DECIMAL(30, 2))                  AS circulating_supply,
     CAST(j.total_supply            AS DECIMAL(30, 2))                  AS total_supply,
+    CAST(j.max_supply              AS DECIMAL(30, 2))                  AS max_supply,
     CAST(j.ath                     AS DECIMAL(18, 8))                  AS ath,
     CAST(j.atl                     AS DECIMAL(18, 8))                  AS atl,
+    CAST(j.price_change_percentage_7d_in_currency  AS DECIMAL(10, 4)) AS price_change_percentage_7d,
+    CAST(j.price_change_percentage_30d_in_currency AS DECIMAL(10, 4)) AS price_change_percentage_30d,
+    CAST(j.price_change_percentage_1y_in_currency  AS DECIMAL(10, 4)) AS price_change_percentage_1y,
     j.sparkline_7d,
     TRY_CAST(j.last_updated        AS DATETIME2)                       AS last_updated
 FROM {{ source('bronze', 'raw_coin_data') }} AS b
@@ -60,8 +64,12 @@ WITH (
     price_change_percentage_24h     FLOAT           '$.price_change_percentage_24h',
     circulating_supply              FLOAT           '$.circulating_supply',
     total_supply                    FLOAT           '$.total_supply',
+    max_supply                      FLOAT           '$.max_supply',
     ath                             FLOAT           '$.ath',
     atl                             FLOAT           '$.atl',
+    price_change_percentage_7d_in_currency  FLOAT   '$.price_change_percentage_7d_in_currency',
+    price_change_percentage_30d_in_currency FLOAT   '$.price_change_percentage_30d_in_currency',
+    price_change_percentage_1y_in_currency  FLOAT   '$.price_change_percentage_1y_in_currency',
     sparkline_7d                    NVARCHAR(MAX)   '$.sparkline_in_7d.price' AS JSON,
     last_updated                    NVARCHAR(50)    '$.last_updated'
 ) AS j
