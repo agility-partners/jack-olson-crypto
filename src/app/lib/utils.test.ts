@@ -15,7 +15,7 @@ describe("formatPrice", () => {
   });
 
   it("keeps very small sub-dollar prices in truncation mode", () => {
-    expect(formatPrice(0.0900099)).toBe("$0.090009");
+    expect(formatPrice(0.00900099)).toBe("$0.0090009");
   });
 
   it("preserves zeros between the first two non-zero digits", () => {
