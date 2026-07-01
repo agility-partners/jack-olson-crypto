@@ -22,10 +22,6 @@ SELECT
     CASE j.coin_id
         WHEN 'binancecoin' THEN 'bnb'
         WHEN 'avalanche-2' THEN 'avalanche'
-<<<<<<< HEAD
-        WHEN 'pol' THEN 'polygon'
-=======
->>>>>>> c8bae1191e0b7e4b161ca2d5bba045ff2cbb86b2
         WHEN 'theta-token' THEN 'theta'
         WHEN 'hedera-hashgraph' THEN 'hedera'
         WHEN 'elrond-erd-2' THEN 'elrond'
