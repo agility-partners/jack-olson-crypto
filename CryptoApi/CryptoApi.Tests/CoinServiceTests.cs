@@ -68,10 +68,12 @@ public class CoinServiceTests
     {
         var result = await _coinService.GetAllCoinsAsync();
 
-        result.Should().HaveCount(32);
+        result.Should().HaveCount(40);
         result.Should().Contain(c => c.Symbol == "BTC");
         result.Should().Contain(c => c.Symbol == "SOL");
         result.Should().Contain(c => c.Symbol == "DOGE");
+        result.Should().Contain(c => c.Symbol == "USDT");
+        result.Should().Contain(c => c.Symbol == "TON");
     }
 
     [Fact]
