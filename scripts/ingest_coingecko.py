@@ -40,7 +40,13 @@ def fetch_market_payload() -> str:
         "order": os.getenv("COINGECKO_ORDER", "market_cap_desc"),
         "per_page": int(os.getenv("COINGECKO_PER_PAGE", "100")),
         "page": int(os.getenv("COINGECKO_PAGE", "1")),
+        "sparkline": "true",
     }
+    headers: dict = {}
+    api_key = os.getenv("COINGECKO_API_KEY", "").strip()
+    if api_key:
+        headers["x-cg-demo-api-key"] = api_key
+
     coin_ids = os.getenv("COINGECKO_COIN_IDS", "").strip()
     if coin_ids:
         params["ids"] = coin_ids
@@ -48,7 +54,10 @@ def fetch_market_payload() -> str:
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             response = requests.get(
-                COINGECKO_URL, params=params, timeout=REQUEST_TIMEOUT_SECONDS
+                COINGECKO_URL,
+                params=params,
+                headers=headers or None,
+                timeout=REQUEST_TIMEOUT_SECONDS,
             )
             response.raise_for_status()
             return response.text

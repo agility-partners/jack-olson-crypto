@@ -42,6 +42,7 @@ SELECT
     CAST(j.total_supply            AS DECIMAL(30, 2))                  AS total_supply,
     CAST(j.ath                     AS DECIMAL(18, 8))                  AS ath,
     CAST(j.atl                     AS DECIMAL(18, 8))                  AS atl,
+    j.sparkline_7d,
     TRY_CAST(j.last_updated        AS DATETIME2)                       AS last_updated
 FROM {{ source('bronze', 'raw_coin_data') }} AS b
 CROSS APPLY OPENJSON(b.raw_json)
@@ -61,6 +62,7 @@ WITH (
     total_supply                    FLOAT           '$.total_supply',
     ath                             FLOAT           '$.ath',
     atl                             FLOAT           '$.atl',
+    sparkline_7d                    NVARCHAR(MAX)   '$.sparkline_in_7d.price' AS JSON,
     last_updated                    NVARCHAR(50)    '$.last_updated'
 ) AS j
 WHERE j.coin_id IS NOT NULL

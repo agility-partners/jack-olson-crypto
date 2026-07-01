@@ -13,4 +13,5 @@ public class CoinDto
     public decimal MarketCapRaw { get; set; }
     public string Volume { get; set; } = string.Empty;
     public decimal VolumeRaw { get; set; }
+    public decimal[]? Sparkline { get; set; }
 }

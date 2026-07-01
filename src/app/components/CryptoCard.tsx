@@ -1,7 +1,7 @@
 import type { MouseEvent } from "react";
 import Link from "next/link";
 import { Coin, sparkPaths } from "@/app/lib/mockData";
-import { formatPrice } from "@/app/lib/utils";
+import { formatPrice, pointsToSvgPath } from "@/app/lib/utils";
 import CoinIcon from "./CoinIcon";
 import Sparkline from "./Sparkline";
 import styles from "./CryptoCard.module.css";
@@ -15,7 +15,7 @@ type Props = {
 
 export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRemove }: Props) {
   const up = coin.change24h >= 0;
-  const spark = sparkPaths[coin.iconClass];
+  const spark = pointsToSvgPath(coin.sparkline ?? []) ?? sparkPaths[coin.iconClass];
 
   const cardClass = [
     styles.coinCard,
