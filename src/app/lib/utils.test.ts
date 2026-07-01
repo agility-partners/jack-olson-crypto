@@ -2,16 +2,20 @@ import { describe, expect, it } from "vitest";
 import { formatPrice, pointsToSvgPath } from "./utils";
 
 describe("formatPrice", () => {
-  it("truncates standard sub-dollar prices after the first two non-zero digits", () => {
-    expect(formatPrice(0.1234)).toBe("$0.12");
+  it("uses 4 decimal places for sub-dollar prices above 0.09", () => {
+    expect(formatPrice(0.1234)).toBe("$0.1234");
+  });
+
+  it("rounds sub-dollar prices above 0.09 to 4 decimal places", () => {
+    expect(formatPrice(0.19936)).toBe("$0.1994");
   });
 
   it("keeps leading zeros for very small prices while truncating after the second non-zero digit", () => {
     expect(formatPrice(0.00000233)).toBe("$0.0000023");
   });
 
-  it("truncates sub-dollar prices instead of rounding them up", () => {
-    expect(formatPrice(0.998944)).toBe("$0.99");
+  it("keeps very small sub-dollar prices in truncation mode", () => {
+    expect(formatPrice(0.0900099)).toBe("$0.090009");
   });
 
   it("preserves zeros between the first two non-zero digits", () => {
