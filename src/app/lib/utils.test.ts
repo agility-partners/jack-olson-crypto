@@ -7,7 +7,11 @@ describe("formatPrice", () => {
   });
 
   it("keeps leading zeros for very small prices while truncating after the second non-zero digit", () => {
-    expect(formatPrice(0.0000132)).toBe("$0.000013");
+    expect(formatPrice(0.00000233)).toBe("$0.0000023");
+  });
+
+  it("truncates sub-dollar prices instead of rounding them up", () => {
+    expect(formatPrice(0.998944)).toBe("$0.99");
   });
 
   it("preserves zeros between the first two non-zero digits", () => {
