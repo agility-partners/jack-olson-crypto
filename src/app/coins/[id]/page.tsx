@@ -94,7 +94,7 @@ export default function CoinDetailPage() {
         <div className={styles.chartSection}>
           <h3>Price Chart</h3>
           <div className={styles.chartContainer}>
-            {spark && <Sparkline spark={spark} id={coin.iconClass} />}
+            {spark && <Sparkline spark={spark} id={coin.iconClass} up={up24h} />}
           </div>
         </div>
 
