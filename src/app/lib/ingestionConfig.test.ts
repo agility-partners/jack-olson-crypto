@@ -26,4 +26,17 @@ describe("Sui live ingestion wiring", () => {
     expect(transformSql).not.toContain("WHEN 'pol' THEN 'polygon'");
     expect(transformSql).not.toContain("WHEN 'matic-network' THEN 'polygon'");
   });
+
+  it("uses Bitcoin Cash instead of Shiba Inu in the ingester config", () => {
+    const dockerComposePath = path.join(process.cwd(), "docker-compose.yml");
+    const dockerCompose = readFileSync(dockerComposePath, "utf8");
+    const match = dockerCompose.match(/COINGECKO_COIN_IDS=([^\n]+)/);
+
+    expect(match?.[1]).toBeDefined();
+
+    const coinIds = match![1].split(",");
+
+    expect(coinIds).toContain("bitcoin-cash");
+    expect(coinIds).not.toContain("shiba-inu");
+  });
 });
