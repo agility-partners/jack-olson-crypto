@@ -10,7 +10,7 @@
 /*
   Parses the raw CoinGecko JSON array stored in bronze.raw_coin_data
   into one typed row per coin per ingestion run.
-  Maps CoinGecko-specific IDs back to the app's canonical 32-coin IDs so
+  Maps CoinGecko-specific IDs back to the app's canonical 40-coin IDs so
   downstream API joins continue to match CoinCatalog entries.
   - DECIMAL types replace FLOAT for price/market-cap precision
   - Filters out invalid records (null coin_id, non-positive prices, outlier % changes)
@@ -26,6 +26,9 @@ SELECT
         WHEN 'hedera-hashgraph' THEN 'hedera'
         WHEN 'elrond-erd-2' THEN 'elrond'
         WHEN 'injective-protocol' THEN 'injective'
+        WHEN 'usd-coin' THEN 'usdc'
+        WHEN 'the-open-network' THEN 'toncoin'
+        WHEN 'render-token' THEN 'render'
         ELSE j.coin_id
     END                                                               AS coin_id,
     UPPER(j.symbol)                                                    AS symbol,
