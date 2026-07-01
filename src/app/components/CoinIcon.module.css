@@ -41,7 +41,7 @@
 .ltc   { background: #4d9eff33; color: #4dccff; border: 1px solid #4d9eff55; }
 .uni   { background: #d9337755; color: #ff6b9d; border: 1px solid #d9337755; }
 .link  { background: #6b9aff33; color: #6b9aff; border: 1px solid #6b9aff55; }
-.matic { background: #a855ff33; color: #d494ff; border: 1px solid #a855ff55; }
+.sui   { background: #0ea5e933; color: #67e8f9; border: 1px solid #0ea5e955; }
 .xmr   { background: #ff6b9b33; color: #ff6b9b; border: 1px solid #ff6b9b55; }
 .atom  { background: #00dddd33; color: #00ffff; border: 1px solid #00dddd55; }
 .vet   { background: #00eedd33; color: #00ffee; border: 1px solid #00eedd55; }
@@ -76,7 +76,7 @@
 .lg.ltc   { background: linear-gradient(135deg, #4dccff 0%, #4d9eff 100%); color: white !important; border: none; }
 .lg.uni   { background: linear-gradient(135deg, #ff1493 0%, #ff0080 100%); color: white !important; border: none; }
 .lg.link  { background: linear-gradient(135deg, #6b9aff 0%, #4d7fff 100%); color: white !important; border: none; }
-.lg.matic { background: linear-gradient(135deg, #d494ff 0%, #a855ff 100%); color: white !important; border: none; }
+.lg.sui   { background: linear-gradient(135deg, #67e8f9 0%, #0ea5e9 100%); color: white !important; border: none; }
 .lg.xmr   { background: linear-gradient(135deg, #ff6b9b 0%, #ff4477 100%); color: white !important; border: none; }
 .lg.atom  { background: linear-gradient(135deg, #00ffff 0%, #00dddd 100%); color: white !important; border: none; }
 .lg.vet   { background: linear-gradient(135deg, #00ffee 0%, #00eedd 100%); color: white !important; border: none; }
