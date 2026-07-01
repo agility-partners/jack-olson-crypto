@@ -127,7 +127,7 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
         <div className={styles.chartSection}>
           <h3>Price Chart</h3>
           <div className={styles.chartContainer}>
-            {spark && <Sparkline spark={spark} id={coin.iconClass} up={up24h} />}
+            {spark && <Sparkline spark={spark} id={coin.iconClass} up={up24h} tall />}
           </div>
         </div>
 
@@ -188,4 +188,3 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
     </>
   );
 }
-
