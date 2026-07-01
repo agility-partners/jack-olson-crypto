@@ -59,7 +59,7 @@ services:
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD:?MSSQL_SA_PASSWORD must be set in .env or environment}
       - INGEST_INTERVAL_SECONDS=${INGEST_INTERVAL_SECONDS:-300}
       - COINGECKO_PER_PAGE=32
-      - COINGECKO_COIN_IDS=bitcoin,ethereum,bnb,solana,ripple,cardano,avalanche,polkadot,dogecoin,litecoin,uniswap,chainlink,polygon,monero,cosmos,vechain,theta,the-graph,hedera,algorand,elrond,filecoin,internet-computer,tezos,near,aave,stellar,optimism,shiba-inu,injective,arbitrum,aptos
+      - COINGECKO_COIN_IDS=bitcoin,ethereum,binancecoin,solana,ripple,cardano,avalanche-2,polkadot,dogecoin,litecoin,uniswap,chainlink,matic-network,monero,cosmos,vechain,theta-token,the-graph,hedera-hashgraph,algorand,elrond-erd-2,filecoin,internet-computer,tezos,near,aave,stellar,optimism,shiba-inu,injective-protocol,arbitrum,aptos
     depends_on:
       sqlserver:
         condition: service_healthy

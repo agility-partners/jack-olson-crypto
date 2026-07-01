@@ -10,6 +10,8 @@
 /*
   Parses the raw CoinGecko JSON array stored in bronze.raw_coin_data
   into one typed row per coin per ingestion run.
+  Maps CoinGecko-specific IDs back to the app's canonical 32-coin IDs so
+  downstream API joins continue to match CoinCatalog entries.
   - DECIMAL types replace FLOAT for price/market-cap precision
   - Filters out invalid records (null coin_id, non-positive prices, outlier % changes)
   - Incremental: on subsequent runs only new Bronze rows are processed
@@ -17,7 +19,16 @@
 
 SELECT                     
     b.ingested_at,
-    j.coin_id,
+    CASE j.coin_id
+        WHEN 'binancecoin' THEN 'bnb'
+        WHEN 'avalanche-2' THEN 'avalanche'
+        WHEN 'matic-network' THEN 'polygon'
+        WHEN 'theta-token' THEN 'theta'
+        WHEN 'hedera-hashgraph' THEN 'hedera'
+        WHEN 'elrond-erd-2' THEN 'elrond'
+        WHEN 'injective-protocol' THEN 'injective'
+        ELSE j.coin_id
+    END                                                               AS coin_id,
     UPPER(j.symbol)                                                    AS symbol,
     j.name,
     CAST(j.current_price           AS DECIMAL(18, 8))                  AS current_price,
