@@ -4,10 +4,11 @@ import styles from "./Sparkline.module.css";
 type Props = {
   spark: SparkPath;
   id: string;
+  up: boolean;
 };
 
-export default function Sparkline({ spark, id }: Props) {
-  const strokeColor = spark.up ? "#4ade80" : "#f87171";
+export default function Sparkline({ spark, id, up }: Props) {
+  const strokeColor = up ? "#4ade80" : "#f87171";
 
   return (
     <div className={styles.sparkline}>

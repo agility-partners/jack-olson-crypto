@@ -59,7 +59,7 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRe
           <span className={styles.coinRank}>#{coin.rank}</span>
         </div>
 
-        <Sparkline spark={spark} id={coin.iconClass} />
+        <Sparkline spark={spark} id={coin.iconClass} up={up} />
 
         <div className={styles.cardBottom}>
           <div>
