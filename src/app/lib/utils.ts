@@ -3,6 +3,7 @@ export function formatPrice(n: number): string {
 
   if (abs >= 1000) return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   if (abs >= 1)    return "$" + n.toFixed(2);
+  if (abs > 0.09)  return `${n < 0 ? "-$" : "$"}${abs.toFixed(4)}`;
   if (abs === 0)   return "$0.00";
 
   const sign = n < 0 ? "-$" : "$";
