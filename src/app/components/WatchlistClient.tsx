@@ -9,6 +9,15 @@ import CryptoCard from "./CryptoCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
+const filterLabels: Record<Filter, string> = {
+  value: "Value",
+  percentchange: "Percent Change",
+  marketcap: "Market Cap",
+  "24hvolume": "24h Volume",
+  gainers: "Gainers",
+  losers: "Losers",
+};
+
 type Props = {
   initialCoins: Coin[];
   onStatsChange?: (coinCount: number, gainerCount: number) => void;
@@ -63,15 +72,6 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
     null
   );
-
-  const filterLabels: Record<Filter, string> = {
-    value: "Value",
-    percentchange: "Percent Change",
-    marketcap: "Market Cap",
-    "24hvolume": "24h Volume",
-    gainers: "Gainers",
-    losers: "Losers",
-  };
 
   return (
     <>

@@ -26,10 +26,8 @@ public class WatchlistService : IWatchlistService
             .ToList();
     }
 
-    public async Task<WatchlistItemDto> AddCoinAsync(string coinId)
+    public Task<WatchlistItemDto> AddCoinAsync(string coinId)
     {
-        await Task.Delay(0);
-
         // Check if already in watchlist
         if (MockWatchlist.Any(item => item.CoinId == coinId))
         {
@@ -44,22 +42,20 @@ public class WatchlistService : IWatchlistService
         };
 
         MockWatchlist.Add(newItem);
-        return MapToDto(newItem);
+        return Task.FromResult(MapToDto(newItem));
     }
 
-    public async Task<bool> RemoveCoinAsync(string coinId)
+    public Task<bool> RemoveCoinAsync(string coinId)
     {
-        await Task.Delay(0);
-
         var item = MockWatchlist.FirstOrDefault(i => i.CoinId == coinId);
-        
+
         if (item == null)
         {
-            return false;
+            return Task.FromResult(false);
         }
 
         MockWatchlist.Remove(item);
-        return true;
+        return Task.FromResult(true);
     }
 
     private static WatchlistItemDto MapToDto(WatchlistItem item)

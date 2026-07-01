@@ -1,7 +1,6 @@
 using Moq;
 using Xunit;
 using CryptoApi.DTOs;
-using CryptoApi.Models;
 using CryptoApi.Services;
 using System.Reflection;
 

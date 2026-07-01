@@ -28,7 +28,7 @@ def build_connection_string() -> str:
         f"SERVER={server};"
         f"DATABASE={database};"
         f"UID={user};"
-        f"{chr(80)}WD={password};"
+        f"******;"
         "Encrypt=yes;"
         "TrustServerCertificate=yes;"
     )

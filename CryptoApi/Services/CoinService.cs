@@ -4,15 +4,13 @@ namespace CryptoApi.Services;
 
 public class CoinService : ICoinService
 {
-    public async Task<IEnumerable<CoinDto>> GetAllCoinsAsync()
+    public Task<IEnumerable<CoinDto>> GetAllCoinsAsync()
     {
-        await Task.Delay(0);
-        return CoinCatalog.GetAll();
+        return Task.FromResult<IEnumerable<CoinDto>>(CoinCatalog.GetAll());
     }
 
-    public async Task<CoinDto?> GetCoinByIdAsync(string id)
+    public Task<CoinDto?> GetCoinByIdAsync(string id)
     {
-        await Task.Delay(0);
-        return CoinCatalog.GetById(id);
+        return Task.FromResult(CoinCatalog.GetById(id));
     }
 }

@@ -1,6 +1,6 @@
-using System.Globalization;
 using System.Text.Json;
 using CryptoApi.DTOs;
+using CryptoApi.Helpers;
 using Microsoft.Data.SqlClient;
 
 namespace CryptoApi.Services;
@@ -143,9 +143,9 @@ public class SqlCoinService : ICoinService
             Change1y = snapshot.Change1y ?? coin.Change1y,
             Rank = snapshot.Rank ?? coin.Rank,
             MarketCapRaw = marketCapRaw,
-            MarketCap = FormatCurrencyCompact(marketCapRaw),
+            MarketCap = CurrencyFormatter.FormatCompact(marketCapRaw),
             VolumeRaw = volumeRaw,
-            Volume = FormatCurrencyCompact(volumeRaw),
+            Volume = CurrencyFormatter.FormatCompact(volumeRaw),
             Ath = snapshot.Ath ?? coin.Ath,
             Atl = snapshot.Atl ?? coin.Atl,
             CirculatingSupplyRaw = snapshot.CirculatingSupplyRaw ?? coin.CirculatingSupplyRaw,
@@ -170,23 +170,6 @@ public class SqlCoinService : ICoinService
         {
             return null;
         }
-    }
-
-    internal static string FormatCurrencyCompact(decimal value)
-    {
-        var sign = value < 0 ? "-" : string.Empty;
-        var abs = Math.Abs(value);
-
-        if (abs >= 1_000_000_000_000m)
-            return $"{sign}${(abs / 1_000_000_000_000m).ToString("0.##", CultureInfo.InvariantCulture)}T";
-        if (abs >= 1_000_000_000m)
-            return $"{sign}${(abs / 1_000_000_000m).ToString("0.##", CultureInfo.InvariantCulture)}B";
-        if (abs >= 1_000_000m)
-            return $"{sign}${(abs / 1_000_000m).ToString("0.##", CultureInfo.InvariantCulture)}M";
-        if (abs >= 1_000m)
-            return $"{sign}${(abs / 1_000m).ToString("0.##", CultureInfo.InvariantCulture)}K";
-
-        return $"{sign}${abs.ToString("0.##", CultureInfo.InvariantCulture)}";
     }
 
     public sealed record CoinMarketSnapshot(

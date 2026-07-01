@@ -1,5 +1,6 @@
 using System.Globalization;
 using CryptoApi.DTOs;
+using CryptoApi.Helpers;
 using Microsoft.Data.SqlClient;
 
 namespace CryptoApi.Services;
@@ -84,28 +85,13 @@ public class SqlMarketStatsService : IMarketStatsService
 
         return new MarketStatsDto
         {
-            TotalMarketCap = FormatCurrencyCompact(totalMarketCap),
+            TotalMarketCap = CurrencyFormatter.FormatCompact(totalMarketCap),
             MarketCapChange = $"{(isUp ? "↑" : "↓")} {Math.Abs(marketCapChangePct).ToString("0.#", CultureInfo.InvariantCulture)}%",
             MarketCapChangeDir = isUp ? "up" : "down",
-            Volume24h = FormatCurrencyCompact(volume24h),
+            Volume24h = CurrencyFormatter.FormatCompact(volume24h),
             BtcDominance = $"{btcDominancePct.ToString("0.#", CultureInfo.InvariantCulture)}%",
         };
     }
 
-    private static string FormatCurrencyCompact(decimal value)
-    {
-        var sign = value < 0 ? "-" : string.Empty;
-        var abs = Math.Abs(value);
-
-        if (abs >= 1_000_000_000_000m)
-            return $"{sign}${(abs / 1_000_000_000_000m).ToString("0.##", CultureInfo.InvariantCulture)}T";
-        if (abs >= 1_000_000_000m)
-            return $"{sign}${(abs / 1_000_000_000m).ToString("0.##", CultureInfo.InvariantCulture)}B";
-        if (abs >= 1_000_000m)
-            return $"{sign}${(abs / 1_000_000m).ToString("0.##", CultureInfo.InvariantCulture)}M";
-        if (abs >= 1_000m)
-            return $"{sign}${(abs / 1_000m).ToString("0.##", CultureInfo.InvariantCulture)}K";
-
-        return $"{sign}${abs.ToString("0.##", CultureInfo.InvariantCulture)}";
-    }
 }
+
