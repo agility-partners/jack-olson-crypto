@@ -56,8 +56,8 @@ describe("CoinGecko ingestion wiring", () => {
       "the-open-network",
       "kaspa",
       "render-token",
-      "cronos",
-      "pepe",
+      "sei-network",
+      "dogwifhat",
     ]));
   });
 

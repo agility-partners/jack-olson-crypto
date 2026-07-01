@@ -44,8 +44,8 @@ internal static class CoinCatalog
         new() { Id = "toncoin",           Name = "Toncoin",           Symbol = "TON",   IconClass = "ton",   Rank = 21, Price =     6.48m, Change24h = -0.82m, MarketCap = "$15.3B",  MarketCapRaw =    15_300_000_000m, Volume = "$185M",  VolumeRaw =     185_000_000m },
         new() { Id = "kaspa",             Name = "Kaspa",             Symbol = "KAS",   IconClass = "kas",   Rank = 37, Price =     0.17m, Change24h =  3.92m, MarketCap = "$4.2B",   MarketCapRaw =     4_200_000_000m, Volume = "$98M",   VolumeRaw =      98_000_000m },
         new() { Id = "render",            Name = "Render",            Symbol = "RENDER",IconClass = "render",Rank = 38, Price =     8.12m, Change24h =  5.48m, MarketCap = "$3.1B",   MarketCapRaw =     3_100_000_000m, Volume = "$156M",  VolumeRaw =     156_000_000m },
-        new() { Id = "cronos",            Name = "Cronos",            Symbol = "CRO",   IconClass = "cro",   Rank = 39, Price =     0.11m, Change24h = -1.26m, MarketCap = "$2.9B",   MarketCapRaw =     2_900_000_000m, Volume = "$74M",   VolumeRaw =      74_000_000m },
-        new() { Id = "pepe",              Name = "Pepe",              Symbol = "PEPE",  IconClass = "pepe",  Rank = 40, Price =     0.0000112m, Change24h =  6.84m, MarketCap = "$4.7B",   MarketCapRaw =     4_700_000_000m, Volume = "$910M",  VolumeRaw =     910_000_000m },
+        new() { Id = "sei",               Name = "Sei",               Symbol = "SEI",   IconClass = "sei",   Rank = 39, Price =     0.35m, Change24h =  1.53m, MarketCap = "$2.0B",   MarketCapRaw =     2_000_000_000m, Volume = "$85M",   VolumeRaw =      85_000_000m },
+        new() { Id = "dogwifhat",         Name = "dogwifhat",         Symbol = "WIF",   IconClass = "wif",   Rank = 40, Price =     1.80m, Change24h =  3.24m, MarketCap = "$1.8B",   MarketCapRaw =     1_800_000_000m, Volume = "$190M",  VolumeRaw =     190_000_000m },
     ];
 
     private static readonly IReadOnlyDictionary<string, CoinDto> CoinsById = Coins.ToDictionary(coin => coin.Id);
