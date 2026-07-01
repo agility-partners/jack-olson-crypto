@@ -1,7 +1,7 @@
-SELECT category, COUNT(*) AS cnt, MIN(rank), MAX(rank)
-FROM gold.top_movers
-GROUP BY category;
--- Should return rows for 'gainer' and 'loser', each with max rank ≤ 10
-
-SELECT * FROM gold.top_movers ORDER BY category, rank;
--- Should show gainers ordered by 24h change DESC, losers ASC
+SELECT
+  COUNT(*) AS total_rows,
+  SUM(CASE WHEN price_change_percentage_24h < 0 THEN 1 ELSE 0 END) AS losers,
+  SUM(CASE WHEN price_change_percentage_24h > 0 THEN 1 ELSE 0 END) AS gainers,
+  SUM(CASE WHEN price_change_percentage_24h = 0 THEN 1 ELSE 0 END) AS flat,
+  SUM(CASE WHEN price_change_percentage_24h IS NULL THEN 1 ELSE 0 END) AS nulls
+FROM gold.coin_prices;
