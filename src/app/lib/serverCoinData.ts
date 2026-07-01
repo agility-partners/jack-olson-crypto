@@ -26,3 +26,16 @@ export async function getAllCoins(): Promise<Coin[]> {
 export async function getWatchlistCoins(): Promise<Coin[]> {
   return fetchCoins("/api/watchlist", []);
 }
+
+export async function getCoinById(id: string): Promise<Coin | null> {
+  try {
+    const res = await fetch(`${API_URL}/api/coins/${id}`, { cache: "no-store" });
+    if (!res.ok) {
+      return watchlistCoins.find((c) => c.id === id) ?? null;
+    }
+
+    return await res.json() as Coin;
+  } catch {
+    return watchlistCoins.find((c) => c.id === id) ?? null;
+  }
+}

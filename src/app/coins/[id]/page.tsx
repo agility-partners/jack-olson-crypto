@@ -1,21 +1,17 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Link from "next/link";
 import { coinDetails, sparkPaths } from "@/app/lib/mockData";
-import { formatPrice } from "@/app/lib/utils";
+import { formatPrice, pointsToSvgPath } from "@/app/lib/utils";
+import { getCoinById } from "@/app/lib/serverCoinData";
 import CoinIcon from "@/app/components/CoinIcon";
 import Sparkline from "@/app/components/Sparkline";
 import Navigation from "@/app/components/Navigation";
 import styles from "./page.module.css";
 
-export default function CoinDetailPage() {
-  const params = useParams();
-  const coinId = params.id as string;
-  const coin = coinDetails[coinId];
-  const spark = sparkPaths[coin?.iconClass];
+export default async function CoinDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id: coinId } = await params;
+  const staticDetail = coinDetails[coinId];
 
-  if (!coin) {
+  if (!staticDetail) {
     return (
       <>
         <Navigation />
@@ -30,10 +26,28 @@ export default function CoinDetailPage() {
     );
   }
 
+  const liveCoin = await getCoinById(coinId);
+
+  // Overlay live market data from the API onto the static coin detail record,
+  // keeping description, website, founded, ATH/ATL, supplies, and change7d/30d/1y from mockData.
+  const coin = {
+    ...staticDetail,
+    price: liveCoin?.price ?? staticDetail.price,
+    change24h: liveCoin?.change24h ?? staticDetail.change24h,
+    rank: liveCoin?.rank ?? staticDetail.rank,
+    marketCap: liveCoin?.marketCap ?? staticDetail.marketCap,
+    marketCapRaw: liveCoin?.marketCapRaw ?? staticDetail.marketCapRaw,
+    volume: liveCoin?.volume ?? staticDetail.volume,
+    volumeRaw: liveCoin?.volumeRaw ?? staticDetail.volumeRaw,
+    sparkline: liveCoin?.sparkline ?? staticDetail.sparkline,
+  };
+
   const up24h = coin.change24h >= 0;
   const up7d = coin.change7d >= 0;
   const up30d = coin.change30d >= 0;
   const up1y = coin.change1y >= 0;
+
+  const spark = pointsToSvgPath(coin.sparkline ?? []) ?? sparkPaths[coin.iconClass];
 
   return (
     <>
@@ -155,3 +169,4 @@ export default function CoinDetailPage() {
     </>
   );
 }
+
