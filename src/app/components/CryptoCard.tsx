@@ -52,7 +52,7 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRe
           <div className={styles.coinIdentity}>
             <CoinIcon iconClass={coin.iconClass} symbol={coin.symbol} />
             <div className={styles.coinNameWrap}>
-              <span className={styles.coinName}>{coin.name}</span>
+              <span className={`${styles.coinName}${coin.name.length > 15 ? ` ${styles.coinNameLong}` : ""}`}>{coin.name}</span>
               <span className={styles.coinSymbol}>{coin.symbol}</span>
             </div>
           </div>
