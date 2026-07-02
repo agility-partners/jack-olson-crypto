@@ -79,12 +79,17 @@ public class SqlMarketStatsServiceTests
         movers.Losers.Should().HaveCountLessThanOrEqualTo(10);
     }
 
+    public static IEnumerable<object[]> ParseRankCases()
+    {
+        yield return [1, 1];
+        yield return [1L, 1];
+        yield return [(short)1, 1];
+        yield return [(byte)1, 1];
+        yield return [1.0m, 1];
+    }
+
     [Theory]
-    [InlineData(1, 1)]
-    [InlineData(1L, 1)]
-    [InlineData((short)1, 1)]
-    [InlineData((byte)1, 1)]
-    [InlineData(1.0m, 1)]
+    [MemberData(nameof(ParseRankCases))]
     public void ParseRank_ConvertsNumericTypesToInt(object value, int expected)
     {
         var method = typeof(SqlMarketStatsService).GetMethod(
