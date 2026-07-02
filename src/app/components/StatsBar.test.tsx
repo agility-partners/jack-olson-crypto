@@ -8,6 +8,7 @@ describe('StatsBar', () => {
 
     expect(screen.getByText('Gainers')).toBeInTheDocument();
     expect(screen.getByText('— / —')).toBeInTheDocument();
+    expect(screen.getByText('Avg change (24h)')).toBeInTheDocument();
   });
 
   it('shows computed gainers text when counts are provided', () => {

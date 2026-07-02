@@ -25,5 +25,7 @@ public class SqlMarketStatsServiceTests
         stats.Volume24h.Should().NotBe("$0");
         stats.BtcDominance.Should().NotBe("0%");
         stats.BtcDominance.Should().EndWith("%");
+        stats.AvgChange24h.Should().NotBeEmpty();
+        stats.AvgChange24hDir.Should().BeOneOf("up", "down");
     }
 }

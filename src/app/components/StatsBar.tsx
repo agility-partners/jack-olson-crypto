@@ -9,6 +9,8 @@ type MarketStats = {
   marketCapChangeDir: string;
   volume24h: string;
   btcDominance: string;
+  avgChange24h: string;
+  avgChange24hDir: string;
 };
 
 type Stat = {
@@ -50,9 +52,14 @@ export default function StatsBar({ coinCount, gainerCount }: Props) {
       change: marketStats?.marketCapChange,
       changeDir: marketStats?.marketCapChangeDir === "up" ? "up" : "dn",
     },
-    { label: "24h volume",    value: marketStats?.volume24h ?? "—" },
-    { label: "BTC dominance", value: marketStats?.btcDominance ?? "—" },
-    { label: "Gainers",       value: gainersValue, changeDir: "up" },
+    { label: "24h volume",         value: marketStats?.volume24h ?? "—" },
+    { label: "BTC dominance",      value: marketStats?.btcDominance ?? "—" },
+    {
+      label: "Avg change (24h)",
+      value: marketStats?.avgChange24h ?? "—",
+      changeDir: marketStats?.avgChange24hDir === "up" ? "up" : "dn",
+    },
+    { label: "Gainers",            value: gainersValue, changeDir: "up" },
   ];
 
   const legend = [

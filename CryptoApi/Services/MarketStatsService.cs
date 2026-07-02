@@ -14,6 +14,8 @@ public class MarketStatsService : IMarketStatsService
             MarketCapChangeDir = "up",
             Volume24h = "$94.2B",
             BtcDominance = "52.3%",
+            AvgChange24h = "↑ 1.4%",
+            AvgChange24hDir = "up",
         };
 
         return Task.FromResult(stats);
