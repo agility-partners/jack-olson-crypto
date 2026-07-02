@@ -32,6 +32,8 @@ SELECT
         WHEN 'sei-network' THEN 'sei'
         WHEN 'crypto-com-chain' THEN 'cronos'
         WHEN 'worldcoin-wld' THEN 'worldcoin'
+        WHEN 'jupiter-exchange-solana' THEN 'jupiter'
+        WHEN 'blockstack' THEN 'stacks'
         ELSE j.coin_id
     END                                                               AS coin_id,
     UPPER(j.symbol)                                                    AS symbol,
