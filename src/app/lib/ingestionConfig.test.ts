@@ -80,11 +80,11 @@ describe("CoinGecko ingestion wiring", () => {
 
     expect(coinIds).toEqual(expect.arrayContaining([
       "quant-network",
-      "bitcoin-sv",
+      "mina-protocol",
       "eigenlayer",
       "conflux-token",
       "akash-network",
-      "ordi",
+      "ronin",
       "golem",
       "reserve-rights-token",
       "zilliqa",
