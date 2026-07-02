@@ -154,6 +154,10 @@
   line-height: 1.2;
 }
 
+.coinNameLong {
+  font-size: 12px;
+}
+
 .coinSymbol {
   font-size: 12px;
   font-weight: 500;
