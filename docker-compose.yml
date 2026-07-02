@@ -59,7 +59,7 @@ services:
       - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD:?MSSQL_SA_PASSWORD must be set in .env or environment}
       - INGEST_INTERVAL_SECONDS=${INGEST_INTERVAL_SECONDS:-300}
       - COINGECKO_PER_PAGE=50
-      - COINGECKO_COIN_IDS=bitcoin,ethereum,binancecoin,solana,ripple,cardano,avalanche-2,polkadot,dogecoin,litecoin,uniswap,chainlink,sui,monero,cosmos,vechain,theta-token,the-graph,hedera-hashgraph,algorand,elrond-erd-2,filecoin,internet-computer,tezos,near,aave,stellar,optimism,bitcoin-cash,injective-protocol,arbitrum,aptos,tether,usd-coin,tron,the-open-network,kaspa,render-token,sei-network,pepe,shiba-inu,ethereum-classic,maker,lido-dao,bonk,mantle,crypto-com-chain,worldcoin-wld
+      - COINGECKO_COIN_IDS=bitcoin,ethereum,binancecoin,solana,ripple,cardano,avalanche-2,polkadot,dogecoin,litecoin,uniswap,chainlink,sui,monero,cosmos,vechain,theta-token,the-graph,hedera-hashgraph,algorand,elrond-erd-2,filecoin,internet-computer,tezos,near,aave,stellar,optimism,bitcoin-cash,injective-protocol,arbitrum,aptos,tether,usd-coin,tron,the-open-network,kaspa,render-token,sei-network,pepe,shiba-inu,ethereum-classic,sky-governance-token,lido-dao,bonk,mantle,crypto-com-chain,worldcoin-wld
     depends_on:
       sqlserver:
         condition: service_healthy

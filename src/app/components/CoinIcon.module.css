@@ -71,7 +71,7 @@
 .pepe  { background: #3f621233; color: #a3e635; border: 1px solid #3f621255; }
 .shib  { background: #e8320833; color: #ff6b4a; border: 1px solid #e8320855; }
 .etc   { background: #3ab83a33; color: #4cd94c; border: 1px solid #3ab83a55; }
-.mkr   { background: #1aab9b33; color: #1ac9b6; border: 1px solid #1aab9b55; }
+.sky   { background: #1aab9b33; color: #1ac9b6; border: 1px solid #1aab9b55; }
 .ldo   { background: #00a3ff33; color: #33bbff; border: 1px solid #00a3ff55; }
 .bonk  { background: #f5a62333; color: #ffbe4d; border: 1px solid #f5a62355; }
 .mnt   { background: #6c5ce733; color: #a594ff; border: 1px solid #6c5ce755; }
@@ -122,7 +122,7 @@
 .lg.pepe  { background: linear-gradient(135deg, #a3e635 0%, #3f6212 100%); color: white !important; border: none; }
 .lg.shib  { background: linear-gradient(135deg, #ff6b4a 0%, #e83208 100%); color: white !important; border: none; }
 .lg.etc   { background: linear-gradient(135deg, #4cd94c 0%, #3ab83a 100%); color: white !important; border: none; }
-.lg.mkr   { background: linear-gradient(135deg, #1ac9b6 0%, #1aab9b 100%); color: white !important; border: none; }
+.lg.sky   { background: linear-gradient(135deg, #1ac9b6 0%, #1aab9b 100%); color: white !important; border: none; }
 .lg.ldo   { background: linear-gradient(135deg, #33bbff 0%, #00a3ff 100%); color: white !important; border: none; }
 .lg.bonk  { background: linear-gradient(135deg, #ffbe4d 0%, #f5a623 100%); color: white !important; border: none; }
 .lg.mnt   { background: linear-gradient(135deg, #a594ff 0%, #6c5ce7 100%); color: white !important; border: none; }
