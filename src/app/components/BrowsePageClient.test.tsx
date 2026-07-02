@@ -40,7 +40,7 @@ describe('BrowsePageClient', () => {
     expect(screen.getByText('Solana')).toBeInTheDocument();
   });
 
-  it('reflects the full 40-coin catalog when passed the complete API response', () => {
+  it('reflects the full 84-coin catalog when passed the complete API response', () => {
     render(<BrowsePageClient initialCoins={watchlistCoins} />);
 
     expect(

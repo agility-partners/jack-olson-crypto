@@ -14,6 +14,8 @@ describe("CoinGecko ingestion wiring", () => {
     expect(coinIds).toContain("sui");
     expect(coinIds).not.toContain("pol");
     expect(coinIds).not.toContain("matic-network");
+    expect(coinIds).not.toContain("maker");
+    expect(coinIds).not.toContain("fantom");
   });
 
   it("removes the legacy Polygon alias normalization from the silver model", () => {
@@ -40,7 +42,7 @@ describe("CoinGecko ingestion wiring", () => {
     expect(coinIds).toContain("shiba-inu");
   });
 
-  it("includes the eight newly tracked CoinGecko ids in the ingester config", () => {
+  it("includes the twelve added CoinGecko ids in the ingester config", () => {
     const dockerComposePath = path.join(process.cwd(), "docker-compose.yml");
     const dockerCompose = readFileSync(dockerComposePath, "utf8");
     const match = dockerCompose.match(/COINGECKO_COIN_IDS=([^\n]+)/);
@@ -50,14 +52,18 @@ describe("CoinGecko ingestion wiring", () => {
     const coinIds = match![1].split(",");
 
     expect(coinIds).toEqual(expect.arrayContaining([
-      "tether",
-      "usd-coin",
-      "tron",
-      "the-open-network",
-      "kaspa",
-      "render-token",
-      "sei-network",
-      "pepe",
+      "ethena",
+      "arweave",
+      "helium",
+      "superverse",
+      "neo",
+      "eos",
+      "iota",
+      "kava",
+      "gmx",
+      "pendle",
+      "notcoin",
+      "jasmycoin",
     ]));
   });
 

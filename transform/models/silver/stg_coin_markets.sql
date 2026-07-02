@@ -10,7 +10,7 @@
 /*
   Parses the raw CoinGecko JSON array stored in bronze.raw_coin_data
   into one typed row per coin per ingestion run.
-  Maps CoinGecko-specific IDs back to the app's canonical 40-coin IDs so
+  Maps CoinGecko-specific IDs back to the app's canonical coin IDs so
   downstream API joins continue to match CoinCatalog entries.
   - DECIMAL types replace FLOAT for price/market-cap precision
   - Filters out invalid records (null coin_id, non-positive prices, outlier % changes)

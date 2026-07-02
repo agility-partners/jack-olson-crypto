@@ -78,6 +78,18 @@ internal static class CoinCatalog
         new() { Id = "enjincoin",         Name = "Enjin Coin",        Symbol = "ENJ",   IconClass = "enj",   Rank = 70, Price =     0.195m, Change24h =  1.62m, MarketCap = "$0.18B",  MarketCapRaw =       180_000_000m, Volume = "$28M",   VolumeRaw =      28_000_000m },
         new() { Id = "ethereum-name-service", Name = "Ethereum Name Service", Symbol = "ENS", IconClass = "ens", Rank = 71, Price =   14.20m, Change24h =  3.14m, MarketCap = "$0.44B",  MarketCapRaw =       440_000_000m, Volume = "$36M",   VolumeRaw =      36_000_000m },
         new() { Id = "compound-governance-token", Name = "Compound",  Symbol = "COMP",  IconClass = "comp",  Rank = 72, Price =    42.50m, Change24h = -0.74m, MarketCap = "$0.36B",  MarketCapRaw =       360_000_000m, Volume = "$32M",   VolumeRaw =      32_000_000m },
+        new() { Id = "ethena", Name = "Ethena", Symbol = "ENA", IconClass = "ena", Rank = 73, Price = 0.82m, Change24h = 4.62m, MarketCap = "$2.62B", MarketCapRaw = 2_620_000_000m, Volume = "$215M", VolumeRaw = 215_000_000m },
+        new() { Id = "arweave", Name = "Arweave", Symbol = "AR", IconClass = "ar", Rank = 74, Price = 28.40m, Change24h = 3.18m, MarketCap = "$1.86B", MarketCapRaw = 1_860_000_000m, Volume = "$92M", VolumeRaw = 92_000_000m },
+        new() { Id = "helium", Name = "Helium", Symbol = "HNT", IconClass = "hnt", Rank = 75, Price = 5.95m, Change24h = 1.27m, MarketCap = "$1.08B", MarketCapRaw = 1_080_000_000m, Volume = "$18M", VolumeRaw = 18_000_000m },
+        new() { Id = "superverse", Name = "SuperVerse", Symbol = "SUPER", IconClass = "super", Rank = 76, Price = 0.94m, Change24h = 6.53m, MarketCap = "$0.57B", MarketCapRaw = 570_000_000m, Volume = "$44M", VolumeRaw = 44_000_000m },
+        new() { Id = "neo", Name = "NEO", Symbol = "NEO", IconClass = "neo", Rank = 77, Price = 14.10m, Change24h = -1.42m, MarketCap = "$0.99B", MarketCapRaw = 990_000_000m, Volume = "$41M", VolumeRaw = 41_000_000m },
+        new() { Id = "eos", Name = "EOS", Symbol = "EOS", IconClass = "eos", Rank = 78, Price = 0.71m, Change24h = 2.08m, MarketCap = "$1.12B", MarketCapRaw = 1_120_000_000m, Volume = "$96M", VolumeRaw = 96_000_000m },
+        new() { Id = "iota", Name = "IOTA", Symbol = "IOTA", IconClass = "iota", Rank = 79, Price = 0.24m, Change24h = 1.66m, MarketCap = "$0.89B", MarketCapRaw = 890_000_000m, Volume = "$33M", VolumeRaw = 33_000_000m },
+        new() { Id = "kava", Name = "Kava", Symbol = "KAVA", IconClass = "kava", Rank = 80, Price = 0.67m, Change24h = -0.95m, MarketCap = "$0.72B", MarketCapRaw = 720_000_000m, Volume = "$24M", VolumeRaw = 24_000_000m },
+        new() { Id = "gmx", Name = "GMX", Symbol = "GMX", IconClass = "gmx", Rank = 81, Price = 31.25m, Change24h = 5.21m, MarketCap = "$0.33B", MarketCapRaw = 330_000_000m, Volume = "$27M", VolumeRaw = 27_000_000m },
+        new() { Id = "pendle", Name = "Pendle", Symbol = "PENDLE", IconClass = "pendle", Rank = 82, Price = 5.62m, Change24h = 4.74m, MarketCap = "$0.91B", MarketCapRaw = 910_000_000m, Volume = "$88M", VolumeRaw = 88_000_000m },
+        new() { Id = "notcoin", Name = "Notcoin", Symbol = "NOT", IconClass = "not", Rank = 83, Price = 0.0124m, Change24h = 2.93m, MarketCap = "$1.27B", MarketCapRaw = 1_270_000_000m, Volume = "$165M", VolumeRaw = 165_000_000m },
+        new() { Id = "jasmycoin", Name = "JasmyCoin", Symbol = "JASMY", IconClass = "jasmy", Rank = 84, Price = 0.029m, Change24h = 3.57m, MarketCap = "$1.43B", MarketCapRaw = 1_430_000_000m, Volume = "$112M", VolumeRaw = 112_000_000m },
     ];
 
     private static readonly IReadOnlyDictionary<string, CoinDto> CoinsById = Coins.ToDictionary(coin => coin.Id);
