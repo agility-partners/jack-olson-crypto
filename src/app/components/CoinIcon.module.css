@@ -89,9 +89,9 @@
 .dydx  { background: #4338ca33; color: #a5b4fc; border: 1px solid #4338ca55; }
 .w     { background: #94a3b833; color: #e2e8f0; border: 1px solid #94a3b855; }
 .blur  { background: #d9770633; color: #fcd34d; border: 1px solid #d9770655; }
-.matic { background: #8247e533; color: #a97af8; border: 1px solid #8247e555; }
+.rune  { background: #00ccab33; color: #00e4bc; border: 1px solid #00ccab55; }
 .crv   { background: #d9328233; color: #ff5fa2; border: 1px solid #d9328255; }
-.ftm   { background: #1969ff33; color: #5a91ff; border: 1px solid #1969ff55; }
+.fet   { background: #1c6ef333; color: #5a9aff; border: 1px solid #1c6ef355; }
 .mana  { background: #ff2d5533; color: #ff6680; border: 1px solid #ff2d5555; }
 .sand  { background: #04adef33; color: #33c8ff; border: 1px solid #04adef55; }
 .flow  { background: #00ef8b33; color: #00ffaa; border: 1px solid #00ef8b55; }
@@ -164,9 +164,9 @@
 .lg.dydx  { background: linear-gradient(135deg, #a5b4fc 0%, #4338ca 100%); color: white !important; border: none; }
 .lg.w     { background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%); color: white !important; border: none; }
 .lg.blur  { background: linear-gradient(135deg, #fcd34d 0%, #d97706 100%); color: white !important; border: none; }
-.lg.matic { background: linear-gradient(135deg, #a97af8 0%, #8247e5 100%); color: white !important; border: none; }
+.lg.rune  { background: linear-gradient(135deg, #00e4bc 0%, #00ccab 100%); color: white !important; border: none; }
 .lg.crv   { background: linear-gradient(135deg, #ff5fa2 0%, #d93282 100%); color: white !important; border: none; }
-.lg.ftm   { background: linear-gradient(135deg, #5a91ff 0%, #1969ff 100%); color: white !important; border: none; }
+.lg.fet   { background: linear-gradient(135deg, #5a9aff 0%, #1c6ef3 100%); color: white !important; border: none; }
 .lg.mana  { background: linear-gradient(135deg, #ff6680 0%, #ff2d55 100%); color: white !important; border: none; }
 .lg.sand  { background: linear-gradient(135deg, #33c8ff 0%, #04adef 100%); color: white !important; border: none; }
 .lg.flow  { background: linear-gradient(135deg, #00ffaa 0%, #00ef8b 100%); color: white !important; border: none; }
