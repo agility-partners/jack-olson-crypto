@@ -8,6 +8,70 @@ public class SqlMarketStatsService : IMarketStatsService
 {
     private readonly string _connectionString;
     private readonly Func<CancellationToken, Task<IReadOnlyList<TopMoverRow>>> _loadTopMoversAsync;
+    private const string TopMoversSql = """
+        WITH filtered AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                market_cap,
+                price_change_percentage_24h
+            FROM gold.coin_prices
+            WHERE market_cap_rank <= 100
+                AND price_change_percentage_24h IS NOT NULL
+        ),
+        gainers AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                market_cap,
+                price_change_percentage_24h,
+                ROW_NUMBER() OVER (ORDER BY price_change_percentage_24h DESC) AS rank,
+                'gainer' AS category
+            FROM filtered
+            WHERE price_change_percentage_24h > 0
+        ),
+        losers AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                market_cap,
+                price_change_percentage_24h,
+                ROW_NUMBER() OVER (ORDER BY price_change_percentage_24h ASC) AS rank,
+                'loser' AS category
+            FROM filtered
+            WHERE price_change_percentage_24h < 0
+        )
+        SELECT
+            coin_id,
+            symbol,
+            name,
+            current_price,
+            market_cap,
+            price_change_percentage_24h,
+            rank,
+            category
+        FROM gainers
+        WHERE rank <= 10
+        UNION ALL
+        SELECT
+            coin_id,
+            symbol,
+            name,
+            current_price,
+            market_cap,
+            price_change_percentage_24h,
+            rank,
+            category
+        FROM losers
+        WHERE rank <= 10
+        ORDER BY category, rank
+        """;
 
     public SqlMarketStatsService(IConfiguration configuration)
         : this(configuration, null)
@@ -108,21 +172,7 @@ public class SqlMarketStatsService : IMarketStatsService
         await using var conn = new SqlConnection(_connectionString);
         await conn.OpenAsync(cancellationToken);
 
-        const string sql = """
-            SELECT
-                coin_id,
-                symbol,
-                name,
-                current_price,
-                market_cap,
-                price_change_percentage_24h,
-                rank,
-                category
-            FROM gold.top_movers
-            ORDER BY category, rank
-            """;
-
-        await using var cmd = new SqlCommand(sql, conn);
+        await using var cmd = new SqlCommand(TopMoversSql, conn);
         await using var reader = await cmd.ExecuteReaderAsync(cancellationToken);
 
         var rows = new List<TopMoverRow>();
