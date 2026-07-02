@@ -115,11 +115,11 @@
 .not   { background: #ca8a0433; color: #fde047; border: 1px solid #ca8a0455; }
 .jasmy { background: #be123c33; color: #fb7185; border: 1px solid #be123c55; }
 .qnt   { background: #33415533; color: #94a3b8; border: 1px solid #33415555; }
-.bsv   { background: #d9770633; color: #fbbf24; border: 1px solid #d9770655; }
+.mina  { background: #7c3aed33; color: #c4b5fd; border: 1px solid #7c3aed55; }
 .eigen { background: #4338ca33; color: #a5b4fc; border: 1px solid #4338ca55; }
 .cfx   { background: #0891b233; color: #22d3ee; border: 1px solid #0891b255; }
 .akt   { background: #7c3aed33; color: #c084fc; border: 1px solid #7c3aed55; }
-.ordi  { background: #1d4ed833; color: #60a5fa; border: 1px solid #1d4ed855; }
+.ron   { background: #2563eb33; color: #93c5fd; border: 1px solid #2563eb55; }
 .glm   { background: #6366f133; color: #a5b4fc; border: 1px solid #6366f155; }
 .rsr   { background: #db277733; color: #f472b6; border: 1px solid #db277755; }
 .zil   { background: #0ea5e933; color: #67e8f9; border: 1px solid #0ea5e955; }
@@ -218,11 +218,11 @@
 .lg.not   { background: linear-gradient(135deg, #fde047 0%, #ca8a04 100%); color: white !important; border: none; }
 .lg.jasmy { background: linear-gradient(135deg, #fb7185 0%, #be123c 100%); color: white !important; border: none; }
 .lg.qnt   { background: linear-gradient(135deg, #94a3b8 0%, #334155 100%); color: white !important; border: none; }
-.lg.bsv   { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); color: white !important; border: none; }
+.lg.mina  { background: linear-gradient(135deg, #c4b5fd 0%, #7c3aed 100%); color: white !important; border: none; }
 .lg.eigen { background: linear-gradient(135deg, #a5b4fc 0%, #4338ca 100%); color: white !important; border: none; }
 .lg.cfx   { background: linear-gradient(135deg, #22d3ee 0%, #0891b2 100%); color: white !important; border: none; }
 .lg.akt   { background: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%); color: white !important; border: none; }
-.lg.ordi  { background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%); color: white !important; border: none; }
+.lg.ron   { background: linear-gradient(135deg, #93c5fd 0%, #2563eb 100%); color: white !important; border: none; }
 .lg.glm   { background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%); color: white !important; border: none; }
 .lg.rsr   { background: linear-gradient(135deg, #f472b6 0%, #db2777 100%); color: white !important; border: none; }
 .lg.zil   { background: linear-gradient(135deg, #67e8f9 0%, #0ea5e9 100%); color: white !important; border: none; }
