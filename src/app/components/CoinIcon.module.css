@@ -105,9 +105,9 @@
 .ena   { background: #6d28d933; color: #a78bfa; border: 1px solid #6d28d955; }
 .ar    { background: #92400e33; color: #f59e0b; border: 1px solid #92400e55; }
 .hnt   { background: #0f766e33; color: #2dd4bf; border: 1px solid #0f766e55; }
-.super { background: #7e22ce33; color: #d8b4fe; border: 1px solid #7e22ce55; }
+.celo  { background: #35D07F33; color: #35D07F; border: 1px solid #35D07F55; }
 .neo   { background: #15803d33; color: #4ade80; border: 1px solid #15803d55; }
-.eos   { background: #47556933; color: #cbd5e1; border: 1px solid #47556955; }
+.osmo  { background: #7c3aed33; color: #c084fc; border: 1px solid #7c3aed55; }
 .iota  { background: #0f766e33; color: #5eead4; border: 1px solid #0f766e55; }
 .kava  { background: #b91c1c33; color: #f87171; border: 1px solid #b91c1c55; }
 .gmx   { background: #0891b233; color: #67e8f9; border: 1px solid #0891b255; }
@@ -192,9 +192,9 @@
 .lg.ena   { background: linear-gradient(135deg, #a78bfa 0%, #6d28d9 100%); color: white !important; border: none; }
 .lg.ar    { background: linear-gradient(135deg, #f59e0b 0%, #92400e 100%); color: white !important; border: none; }
 .lg.hnt   { background: linear-gradient(135deg, #2dd4bf 0%, #0f766e 100%); color: white !important; border: none; }
-.lg.super { background: linear-gradient(135deg, #d8b4fe 0%, #7e22ce 100%); color: white !important; border: none; }
+.lg.celo  { background: linear-gradient(135deg, #35D07F 0%, #1a9960 100%); color: white !important; border: none; }
 .lg.neo   { background: linear-gradient(135deg, #4ade80 0%, #15803d 100%); color: white !important; border: none; }
-.lg.eos   { background: linear-gradient(135deg, #cbd5e1 0%, #475569 100%); color: white !important; border: none; }
+.lg.osmo  { background: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%); color: white !important; border: none; }
 .lg.iota  { background: linear-gradient(135deg, #5eead4 0%, #0f766e 100%); color: white !important; border: none; }
 .lg.kava  { background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%); color: white !important; border: none; }
 .lg.gmx   { background: linear-gradient(135deg, #67e8f9 0%, #0891b2 100%); color: white !important; border: none; }
