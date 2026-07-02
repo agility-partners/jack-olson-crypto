@@ -21,4 +21,11 @@ public class MarketStatsController : ControllerBase
         var stats = await _marketStatsService.GetMarketStatsAsync();
         return Ok(stats);
     }
+
+    [HttpGet("top-movers")]
+    public async Task<ActionResult<TopMoversDto>> GetTopMovers()
+    {
+        var movers = await _marketStatsService.GetTopMoversAsync();
+        return Ok(movers);
+    }
 }
