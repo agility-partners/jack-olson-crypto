@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatPrice, pointsToSvgPath } from "./utils";
+import { formatPrice, getPastWeekDateLabels, pointsToSvgPath } from "./utils";
 
 describe("formatPrice", () => {
   it("uses 4 decimal places for sub-dollar prices above 0.09", () => {
@@ -43,5 +43,22 @@ describe("pointsToSvgPath", () => {
 
     expect(spark).not.toBeNull();
     expect(spark!.up).toBe(false);
+  });
+});
+
+describe("getPastWeekDateLabels", () => {
+  it("returns 8 labels from 7 days ago through today", () => {
+    const labels = getPastWeekDateLabels(new Date("2026-07-02T12:00:00Z"));
+
+    expect(labels).toEqual([
+      "Jun 25",
+      "Jun 26",
+      "Jun 27",
+      "Jun 28",
+      "Jun 29",
+      "Jun 30",
+      "Jul 1",
+      "Jul 2",
+    ]);
   });
 });

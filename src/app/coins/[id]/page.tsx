@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { coinDetails, sparkPaths } from "@/app/lib/mockData";
-import { formatPrice, formatSupply, pointsToSvgPath } from "@/app/lib/utils";
+import { formatPrice, formatSupply, getPastWeekDateLabels, pointsToSvgPath } from "@/app/lib/utils";
 import { getCoinById } from "@/app/lib/serverCoinData";
 import CoinIcon from "@/app/components/CoinIcon";
 import Sparkline from "@/app/components/Sparkline";
@@ -17,7 +17,7 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
         <Navigation />
         <div className={styles.errorContainer}>
           <h1>Coin not found</h1>
-          <p>The cryptocurrency you're looking for doesn't exist.</p>
+          <p>The cryptocurrency you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/" className={styles.backLink}>
             ← Back to Watchlist
           </Link>
@@ -67,6 +67,7 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
   const up1y = coin.change1y >= 0;
 
   const spark = pointsToSvgPath(coin.sparkline ?? []) ?? sparkPaths[coin.iconClass];
+  const chartDateLabels = getPastWeekDateLabels();
 
   return (
     <>
@@ -128,6 +129,11 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
           <h3>Price Chart</h3>
           <div className={styles.chartContainer}>
             {spark && <Sparkline spark={spark} id={coin.iconClass} up={up24h} tall />}
+          </div>
+          <div className={styles.chartAxis} aria-label="Past 7 days date labels">
+            {chartDateLabels.map((label, index) => (
+              <span key={`${label}-${index}`}>{label}</span>
+            ))}
           </div>
         </div>
 
