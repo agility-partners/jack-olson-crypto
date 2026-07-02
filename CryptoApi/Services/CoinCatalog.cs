@@ -90,6 +90,22 @@ internal static class CoinCatalog
         new() { Id = "pendle", Name = "Pendle", Symbol = "PENDLE", IconClass = "pendle", Rank = 82, Price = 5.62m, Change24h = 4.74m, MarketCap = "$0.91B", MarketCapRaw = 910_000_000m, Volume = "$88M", VolumeRaw = 88_000_000m },
         new() { Id = "notcoin", Name = "Notcoin", Symbol = "NOT", IconClass = "not", Rank = 83, Price = 0.0124m, Change24h = 2.93m, MarketCap = "$1.27B", MarketCapRaw = 1_270_000_000m, Volume = "$165M", VolumeRaw = 165_000_000m },
         new() { Id = "jasmycoin", Name = "JasmyCoin", Symbol = "JASMY", IconClass = "jasmy", Rank = 84, Price = 0.029m, Change24h = 3.57m, MarketCap = "$1.43B", MarketCapRaw = 1_430_000_000m, Volume = "$112M", VolumeRaw = 112_000_000m },
+        new() { Id = "quant-network", Name = "Quant", Symbol = "QNT", IconClass = "qnt", Rank = 85, Price = 103.45m, Change24h = 1.76m, MarketCap = "$0.75B", MarketCapRaw = 750_000_000m, Volume = "$22M", VolumeRaw = 22_000_000m },
+        new() { Id = "bitcoin-sv", Name = "Bitcoin SV", Symbol = "BSV", IconClass = "bsv", Rank = 86, Price = 52.40m, Change24h = -0.84m, MarketCap = "$1.03B", MarketCapRaw = 1_030_000_000m, Volume = "$48M", VolumeRaw = 48_000_000m },
+        new() { Id = "eigenlayer", Name = "EigenLayer", Symbol = "EIGEN", IconClass = "eigen", Rank = 87, Price = 3.42m, Change24h = 6.21m, MarketCap = "$0.92B", MarketCapRaw = 920_000_000m, Volume = "$74M", VolumeRaw = 74_000_000m },
+        new() { Id = "conflux-token", Name = "Conflux", Symbol = "CFX", IconClass = "cfx", Rank = 88, Price = 0.23m, Change24h = 2.47m, MarketCap = "$0.98B", MarketCapRaw = 980_000_000m, Volume = "$46M", VolumeRaw = 46_000_000m },
+        new() { Id = "akash-network", Name = "Akash Network", Symbol = "AKT", IconClass = "akt", Rank = 89, Price = 3.18m, Change24h = 1.94m, MarketCap = "$0.79B", MarketCapRaw = 790_000_000m, Volume = "$19M", VolumeRaw = 19_000_000m },
+        new() { Id = "ordi", Name = "ORDI", Symbol = "ORDI", IconClass = "ordi", Rank = 90, Price = 38.70m, Change24h = 5.36m, MarketCap = "$0.81B", MarketCapRaw = 810_000_000m, Volume = "$95M", VolumeRaw = 95_000_000m },
+        new() { Id = "golem", Name = "Golem", Symbol = "GLM", IconClass = "glm", Rank = 91, Price = 0.41m, Change24h = -0.42m, MarketCap = "$0.41B", MarketCapRaw = 410_000_000m, Volume = "$17M", VolumeRaw = 17_000_000m },
+        new() { Id = "reserve-rights-token", Name = "Reserve Rights", Symbol = "RSR", IconClass = "rsr", Rank = 92, Price = 0.0078m, Change24h = 3.88m, MarketCap = "$0.43B", MarketCapRaw = 430_000_000m, Volume = "$31M", VolumeRaw = 31_000_000m },
+        new() { Id = "zilliqa", Name = "Zilliqa", Symbol = "ZIL", IconClass = "zil", Rank = 93, Price = 0.019m, Change24h = 0.94m, MarketCap = "$0.35B", MarketCapRaw = 350_000_000m, Volume = "$26M", VolumeRaw = 26_000_000m },
+        new() { Id = "qtum", Name = "Qtum", Symbol = "QTUM", IconClass = "qtum", Rank = 94, Price = 2.86m, Change24h = -1.12m, MarketCap = "$0.30B", MarketCapRaw = 300_000_000m, Volume = "$12M", VolumeRaw = 12_000_000m },
+        new() { Id = "1inch", Name = "1inch", Symbol = "1INCH", IconClass = "inch", Rank = 95, Price = 0.47m, Change24h = 2.63m, MarketCap = "$0.57B", MarketCapRaw = 570_000_000m, Volume = "$44M", VolumeRaw = 44_000_000m },
+        new() { Id = "ankr", Name = "Ankr", Symbol = "ANKR", IconClass = "ankr", Rank = 96, Price = 0.036m, Change24h = 1.28m, MarketCap = "$0.36B", MarketCapRaw = 360_000_000m, Volume = "$18M", VolumeRaw = 18_000_000m },
+        new() { Id = "yearn-finance", Name = "yearn.finance", Symbol = "YFI", IconClass = "yfi", Rank = 97, Price = 6420.00m, Change24h = -0.67m, MarketCap = "$0.22B", MarketCapRaw = 220_000_000m, Volume = "$21M", VolumeRaw = 21_000_000m },
+        new() { Id = "loopring", Name = "Loopring", Symbol = "LRC", IconClass = "lrc", Rank = 98, Price = 0.21m, Change24h = 0.86m, MarketCap = "$0.29B", MarketCapRaw = 290_000_000m, Volume = "$14M", VolumeRaw = 14_000_000m },
+        new() { Id = "oasis-network", Name = "Oasis", Symbol = "ROSE", IconClass = "rose", Rank = 99, Price = 0.092m, Change24h = 1.57m, MarketCap = "$0.61B", MarketCapRaw = 610_000_000m, Volume = "$27M", VolumeRaw = 27_000_000m },
+        new() { Id = "nexo", Name = "Nexo", Symbol = "NEXO", IconClass = "nexo", Rank = 100, Price = 1.24m, Change24h = 0.73m, MarketCap = "$0.69B", MarketCapRaw = 690_000_000m, Volume = "$9M", VolumeRaw = 9_000_000m },
     ];
 
     private static readonly IReadOnlyDictionary<string, CoinDto> CoinsById = Coins.ToDictionary(coin => coin.Id);

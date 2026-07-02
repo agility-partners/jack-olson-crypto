@@ -28,13 +28,14 @@ public class SqlCoinServiceTests
 
         var coins = (await service.GetAllCoinsAsync()).ToList();
 
-        coins.Should().HaveCount(84);
+        coins.Should().HaveCount(100);
         coins.Should().Contain(c => c.Id == "arbitrum");
         coins.Should().Contain(c => c.Id == "injective");
         coins.Should().Contain(c => c.Id == "aptos");
         coins.Should().Contain(c => c.Id == "tether");
         coins.Should().Contain(c => c.Id == "toncoin");
         coins.Should().Contain(c => c.Id == "ethena");
+        coins.Should().Contain(c => c.Id == "quant-network");
     }
 
     [Fact]

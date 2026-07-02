@@ -16,6 +16,8 @@ describe("CoinGecko ingestion wiring", () => {
     expect(coinIds).not.toContain("matic-network");
     expect(coinIds).not.toContain("maker");
     expect(coinIds).not.toContain("fantom");
+    expect(coinIds).not.toContain("superverse");
+    expect(coinIds).not.toContain("eos");
   });
 
   it("removes the legacy Polygon alias normalization from the silver model", () => {
@@ -64,6 +66,35 @@ describe("CoinGecko ingestion wiring", () => {
       "pendle",
       "notcoin",
       "jasmycoin",
+    ]));
+  });
+
+  it("includes the sixteen latest CoinGecko ids in the ingester config", () => {
+    const dockerComposePath = path.join(process.cwd(), "docker-compose.yml");
+    const dockerCompose = readFileSync(dockerComposePath, "utf8");
+    const match = dockerCompose.match(/COINGECKO_COIN_IDS=([^\n]+)/);
+
+    expect(match?.[1]).toBeDefined();
+
+    const coinIds = match![1].split(",");
+
+    expect(coinIds).toEqual(expect.arrayContaining([
+      "quant-network",
+      "bitcoin-sv",
+      "eigenlayer",
+      "conflux-token",
+      "akash-network",
+      "ordi",
+      "golem",
+      "reserve-rights-token",
+      "zilliqa",
+      "qtum",
+      "1inch",
+      "ankr",
+      "yearn-finance",
+      "loopring",
+      "oasis-network",
+      "nexo",
     ]));
   });
 
