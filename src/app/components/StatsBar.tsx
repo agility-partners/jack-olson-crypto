@@ -54,11 +54,6 @@ export default function StatsBar({ coinCount, gainerCount }: Props) {
     },
     { label: "24h volume",         value: marketStats?.volume24h ?? "—" },
     { label: "BTC dominance",      value: marketStats?.btcDominance ?? "—" },
-    {
-      label: "Avg change (24h)",
-      value: marketStats?.avgChange24h ?? "—",
-      changeDir: marketStats?.avgChange24hDir === "up" ? "up" : "dn",
-    },
     { label: "Gainers",            value: gainersValue, changeDir: "up" },
   ];
 
