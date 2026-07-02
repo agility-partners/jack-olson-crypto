@@ -30,6 +30,8 @@ SELECT
         WHEN 'the-open-network' THEN 'toncoin'
         WHEN 'render-token' THEN 'render'
         WHEN 'sei-network' THEN 'sei'
+        WHEN 'crypto-com-chain' THEN 'cronos'
+        WHEN 'worldcoin-wld' THEN 'worldcoin'
         ELSE j.coin_id
     END                                                               AS coin_id,
     UPPER(j.symbol)                                                    AS symbol,

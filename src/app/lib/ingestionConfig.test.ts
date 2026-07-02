@@ -37,7 +37,7 @@ describe("CoinGecko ingestion wiring", () => {
     const coinIds = match![1].split(",");
 
     expect(coinIds).toContain("bitcoin-cash");
-    expect(coinIds).not.toContain("shiba-inu");
+    expect(coinIds).toContain("shiba-inu");
   });
 
   it("includes the eight newly tracked CoinGecko ids in the ingester config", () => {

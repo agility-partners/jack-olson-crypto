@@ -90,7 +90,7 @@ public class CoinsIntegrationTests : IAsyncLifetime
 
         var coins = await response.Content.ReadFromJsonAsync<List<CoinDto>>();
         coins.Should().NotBeNull();
-        coins.Should().HaveCount(40, "the API must expose the full 40-coin canonical catalog");
+        coins.Should().HaveCount(48, "the API must expose the full 48-coin canonical catalog");
     }
 
     [Fact]
