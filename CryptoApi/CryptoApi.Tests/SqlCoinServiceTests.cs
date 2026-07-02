@@ -28,7 +28,7 @@ public class SqlCoinServiceTests
 
         var coins = (await service.GetAllCoinsAsync()).ToList();
 
-        coins.Should().HaveCount(60);
+        coins.Should().HaveCount(72);
         coins.Should().Contain(c => c.Id == "arbitrum");
         coins.Should().Contain(c => c.Id == "injective");
         coins.Should().Contain(c => c.Id == "aptos");
