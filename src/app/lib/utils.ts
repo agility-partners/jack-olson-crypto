@@ -80,3 +80,16 @@ export function pointsToSvgPath(prices: number[]): SparkPathData | null {
     up: values[lastIndex] >= values[0],
   };
 }
+
+export function getPastWeekDateLabels(referenceDate: Date = new Date()): string[] {
+  const baseDate = new Date(referenceDate);
+  baseDate.setHours(12, 0, 0, 0);
+  const formatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
+
+  return Array.from({ length: 8 }, (_, index) => {
+    const date = new Date(baseDate);
+    const daysBeforeToday = 7 - index;
+    date.setDate(baseDate.getDate() - daysBeforeToday);
+    return formatter.format(date);
+  });
+}

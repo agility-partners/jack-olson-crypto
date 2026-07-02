@@ -189,6 +189,28 @@
   height: 200px;
 }
 
+.chartAxis {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+.chartAxis span {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.chartAxis span:first-child {
+  text-align: left;
+}
+
+.chartAxis span:last-child {
+  text-align: right;
+}
+
 /* Description */
 .description {
   background: rgba(0, 0, 0, 0.2);
@@ -302,6 +324,10 @@
 
   .chartContainer {
     height: 150px;
+  }
+
+  .chartAxis {
+    font-size: 0.65rem;
   }
 }
 
