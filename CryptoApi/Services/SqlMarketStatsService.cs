@@ -82,13 +82,17 @@ public class SqlMarketStatsService : IMarketStatsService
     {
         var isUp = marketCapChangePct >= 0;
 
+        var changeFormatted = $"{(isUp ? "↑" : "↓")} {Math.Abs(marketCapChangePct).ToString("0.#", CultureInfo.InvariantCulture)}%";
+
         return new MarketStatsDto
         {
             TotalMarketCap = FormatCurrencyCompact(totalMarketCap),
-            MarketCapChange = $"{(isUp ? "↑" : "↓")} {Math.Abs(marketCapChangePct).ToString("0.#", CultureInfo.InvariantCulture)}%",
+            MarketCapChange = changeFormatted,
             MarketCapChangeDir = isUp ? "up" : "down",
             Volume24h = FormatCurrencyCompact(volume24h),
             BtcDominance = $"{btcDominancePct.ToString("0.#", CultureInfo.InvariantCulture)}%",
+            AvgChange24h = changeFormatted,
+            AvgChange24hDir = isUp ? "up" : "down",
         };
     }
 
