@@ -78,4 +78,22 @@ public class SqlMarketStatsServiceTests
         movers.Losers.Should().OnlyContain(coin => coin.Change24h < 0);
         movers.Losers.Should().HaveCountLessThanOrEqualTo(10);
     }
+
+    [Theory]
+    [InlineData(1, 1)]
+    [InlineData(1L, 1)]
+    [InlineData((short)1, 1)]
+    [InlineData((byte)1, 1)]
+    [InlineData(1.0m, 1)]
+    public void ParseRank_ConvertsNumericTypesToInt(object value, int expected)
+    {
+        var method = typeof(SqlMarketStatsService).GetMethod(
+            "ParseRank",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
+        method.Should().NotBeNull();
+        var result = method!.Invoke(null, [value]);
+
+        result.Should().Be(expected);
+    }
 }

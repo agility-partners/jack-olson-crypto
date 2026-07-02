@@ -136,7 +136,7 @@ public class SqlMarketStatsService : IMarketStatsService
                 CurrentPrice: reader.IsDBNull(3) ? null : reader.GetDecimal(3),
                 MarketCapRaw: reader.IsDBNull(4) ? null : reader.GetDecimal(4),
                 Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5),
-                Rank: reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                Rank: ParseRank(reader.GetValue(6)),
                 Category: reader.IsDBNull(7) ? string.Empty : reader.GetString(7)));
         }
 
@@ -248,6 +248,24 @@ public class SqlMarketStatsService : IMarketStatsService
             return $"{sign}${(abs / 1_000m).ToString("0.##", CultureInfo.InvariantCulture)}K";
 
         return $"{sign}${abs.ToString("0.##", CultureInfo.InvariantCulture)}";
+    }
+
+    private static int ParseRank(object? value)
+    {
+        if (value is null or DBNull)
+        {
+            return 0;
+        }
+
+        return value switch
+        {
+            int rank => rank,
+            long rank => checked((int)rank),
+            short rank => rank,
+            byte rank => rank,
+            decimal rank => decimal.ToInt32(rank),
+            _ => Convert.ToInt32(value, CultureInfo.InvariantCulture),
+        };
     }
 
     public sealed record TopMoverRow(
