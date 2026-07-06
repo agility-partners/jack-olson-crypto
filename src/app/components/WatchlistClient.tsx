@@ -71,6 +71,7 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     "24hvolume": "24h Volume",
     gainers: "Gainers",
     losers: "Losers",
+    marketrank: "Market Rank",
   };
 
   return (
@@ -91,7 +92,7 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
           />
         </div>
 
-        {(["value", "percentchange", "marketcap", "24hvolume", "gainers", "losers"] as Filter[]).map((f) => (
+        {(["value", "percentchange", "marketcap", "24hvolume", "gainers", "losers", "marketrank"] as Filter[]).map((f) => (
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}
