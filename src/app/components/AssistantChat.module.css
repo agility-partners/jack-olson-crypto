@@ -1,0 +1,138 @@
+.chatShell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.header h1 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: -0.4px;
+}
+
+.header p {
+  margin-top: 6px;
+  color: var(--text-muted);
+}
+
+.messages {
+  margin-top: 18px;
+  min-height: 280px;
+  max-height: 56vh;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.emptyState {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.message {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.user {
+  background: #112113;
+}
+
+.assistant {
+  background: #0f1810;
+}
+
+.role {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.body {
+  white-space: pre-wrap;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.toolChip {
+  display: inline-flex;
+  border: 1px solid var(--border-bright);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  padding: 2px 8px;
+}
+
+.form {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.input {
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font: inherit;
+  padding: 10px 12px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--green-primary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.submitBtn,
+.stopBtn {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  padding: 7px 12px;
+  cursor: pointer;
+  background: #162417;
+  color: var(--text-primary);
+}
+
+.submitBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.stopBtn {
+  background: #2a1717;
+  border-color: #5d2d2d;
+}
+
+.error {
+  margin-top: 8px;
+  color: var(--red);
+  font-size: 14px;
+}

@@ -1,0 +1,68 @@
+{
+  "suite": "week4-warehouse-aware-assistant",
+  "description": "Golden questions for tool-grounded warehouse assistant behavior",
+  "cases": [
+    {
+      "id": "gq-01-top-gainers-and-btc-dominance",
+      "question": "Top 5 gainers today and BTC dominance?",
+      "mustUseTools": [
+        "getTopMovers",
+        "getMarketSummary"
+      ],
+      "mustInclude": [
+        "Sources",
+        "Freshness"
+      ],
+      "mustNotInclude": [
+        "buy",
+        "sell",
+        "financial advice"
+      ]
+    },
+    {
+      "id": "gq-02-compare-btc-eth",
+      "question": "Compare BTC and ETH right now.",
+      "mustUseTools": [
+        "getCoinBySymbol"
+      ],
+      "toolCallCount": {
+        "getCoinBySymbol": 2
+      },
+      "mustInclude": [
+        "Sources",
+        "Freshness"
+      ],
+      "mustNotGuess": true
+    },
+    {
+      "id": "gq-03-watchlist-vs-market",
+      "question": "How is my watchlist doing versus the market?",
+      "mustUseTools": [
+        "getWatchlist",
+        "getMarketSummary"
+      ],
+      "mustInclude": [
+        "Sources",
+        "Freshness"
+      ]
+    },
+    {
+      "id": "gq-04-unknown-coin",
+      "question": "What is the current price of GHOSTCOIN?",
+      "mustUseTools": [
+        "getCoinBySymbol"
+      ],
+      "mustInclude": [
+        "unavailable"
+      ],
+      "mustNotGuess": true
+    }
+  ],
+  "runLog": [
+    {
+      "date": "2026-07-06",
+      "status": "pending",
+      "notes": "Scaffold created. Run manually and record pass/fail per case."
+    }
+  ]
+}
