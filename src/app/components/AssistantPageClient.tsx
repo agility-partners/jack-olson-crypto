@@ -129,7 +129,8 @@ export default function AssistantPageClient() {
       {/* Error banner */}
       {error && (
         <div className={styles.errorBanner} role="alert">
-          ⚠ {error.message}
+          <strong>⚠ Error:</strong>{" "}
+          {error.message || "An unexpected error occurred. Check the browser console and Docker logs for details."}
         </div>
       )}
 
