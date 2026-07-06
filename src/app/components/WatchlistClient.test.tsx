@@ -16,6 +16,12 @@ const deterministicInitialCoins = [
   watchlistCoins.find((coin) => coin.id === 'solana')!,
 ];
 
+const marketRankSortCoins = [
+  watchlistCoins.find((coin) => coin.id === 'solana')!,
+  watchlistCoins.find((coin) => coin.id === 'tether')!,
+  watchlistCoins.find((coin) => coin.id === 'dogecoin')!,
+];
+
 beforeEach(() => {
   vi.restoreAllMocks();
   vi.stubGlobal('fetch', vi.fn((input: string | URL, init?: RequestInit) => {
@@ -208,6 +214,17 @@ describe('WatchlistClient', () => {
   expect(document.querySelector('a[href="/coins/bitcoin"]')).not.toBeInTheDocument();
   expect(document.querySelector('a[href="/coins/solana"]')).not.toBeInTheDocument();
 });
+
+  it('sorts by market rank when the Market Rank button is clicked', () => {
+    render(<WatchlistClient initialCoins={marketRankSortCoins} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Market Rank' }));
+
+    const orderedLinks = Array.from(document.querySelectorAll('a[href^="/coins/"]'))
+      .map((link) => link.getAttribute('href'));
+
+    expect(orderedLinks).toEqual(['/coins/tether', '/coins/solana', '/coins/dogecoin']);
+  });
 
   it('combines Gainers filter with search term', () => {
     render(<WatchlistClient initialCoins={deterministicInitialCoins} />);

@@ -6,6 +6,7 @@ const sampleCoins = [
     id: 'bitcoin',
     name: 'Bitcoin',
     symbol: 'BTC',
+    rank: 1,
     price: 67842.5,
     change24h: 2.34,
     marketCap: '$1.34T',
@@ -17,6 +18,7 @@ const sampleCoins = [
     id: 'ethereum',
     name: 'Ethereum',
     symbol: 'ETH',
+    rank: 2,
     price: 3521.8,
     change24h: -1.12,
     marketCap: '$423B',
@@ -28,6 +30,7 @@ const sampleCoins = [
     id: 'solana',
     name: 'Solana',
     symbol: 'SOL',
+    rank: 5,
     price: 182.4,
     change24h: 5.67,
     marketCap: '$85.2B',
@@ -104,6 +107,11 @@ describe('watchlistUtils', () => {
 
     it('sorts by volume descending', () => {
       const result = sortCoins(sampleCoins, '24hvolume');
+      expect(result.map((coin) => coin.id)).toEqual(['bitcoin', 'ethereum', 'solana']);
+    });
+
+    it('sorts by market rank ascending', () => {
+      const result = sortCoins(sampleCoins, 'marketrank');
       expect(result.map((coin) => coin.id)).toEqual(['bitcoin', 'ethereum', 'solana']);
     });
   });

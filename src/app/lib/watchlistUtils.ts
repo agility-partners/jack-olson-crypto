@@ -20,12 +20,14 @@ export type Filter =
   | "marketcap"
   | "24hvolume"
   | "gainers"
-  | "losers";
+  | "losers"
+  | "marketrank";
 
 export type CoinLike = {
   id: string;
   name: string;
   symbol: string;
+  rank: number;
   price: number;
   change24h: number;
   marketCap: string;
@@ -48,6 +50,7 @@ export function filterCoins<T extends CoinLike>(
       filter === "percentchange" ||
       filter === "marketcap" ||
       filter === "24hvolume" ||
+      filter === "marketrank" ||
       (filter === "gainers" && c.change24h >= 0) ||
       (filter === "losers" && c.change24h < 0);
 
@@ -65,6 +68,8 @@ export function sortCoins<T extends CoinLike>(coins: T[], filter: Filter): T[] {
       return sorted.sort((a, b) => b.marketCapRaw - a.marketCapRaw);
     case "24hvolume":
       return sorted.sort((a, b) => b.volumeRaw - a.volumeRaw);
+    case "marketrank":
+      return sorted.sort((a, b) => a.rank - b.rank);
     case "value":
     default:
       return sorted.sort((a, b) => b.price - a.price);
