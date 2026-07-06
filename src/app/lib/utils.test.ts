@@ -34,6 +34,9 @@ describe("pointsToSvgPath", () => {
 
     expect(spark).not.toBeNull();
     expect(spark!.up).toBe(true);
+    expect(spark!.min).toBe(100);
+    expect(spark!.max).toBe(110);
+    expect(spark!.yAxisTicks).toEqual([110, 107.5, 105, 102.5, 100]);
     expect(spark!.d.startsWith("M0.00,40.00")).toBe(true);
     expect(spark!.d.includes("L220.00,0.00")).toBe(true);
   });
@@ -43,6 +46,7 @@ describe("pointsToSvgPath", () => {
 
     expect(spark).not.toBeNull();
     expect(spark!.up).toBe(false);
+    expect(spark!.yAxisTicks).toEqual([110, 107.5, 105, 102.5, 100]);
   });
 });
 

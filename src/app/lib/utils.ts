@@ -47,6 +47,9 @@ export function formatSupply(raw: number, symbol: string): string {
 type SparkPathData = {
   d: string;
   up: boolean;
+  min: number;
+  max: number;
+  yAxisTicks: number[];
 };
 
 export function pointsToSvgPath(prices: number[]): SparkPathData | null {
@@ -64,7 +67,12 @@ export function pointsToSvgPath(prices: number[]): SparkPathData | null {
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = max - min || 1;
+  const tickCount = 5;
   const lastIndex = values.length - 1;
+  const yAxisTicks = Array.from({ length: tickCount }, (_, index) => {
+    const ratio = index / (tickCount - 1);
+    return max - ratio * (max - min);
+  });
 
   const d = values
     .map((value, index) => {
@@ -78,6 +86,9 @@ export function pointsToSvgPath(prices: number[]): SparkPathData | null {
   return {
     d,
     up: values[lastIndex] >= values[0],
+    min,
+    max,
+    yAxisTicks,
   };
 }
 

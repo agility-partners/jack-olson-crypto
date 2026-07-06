@@ -66,7 +66,9 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
   const up30d = coin.change30d >= 0;
   const up1y = coin.change1y >= 0;
 
-  const spark = pointsToSvgPath(coin.sparkline ?? []) ?? sparkPaths[coin.iconClass];
+  const sparkWithRange = pointsToSvgPath(coin.sparkline ?? []);
+  const spark = sparkWithRange ?? sparkPaths[coin.iconClass];
+  const yAxisTicks = sparkWithRange?.yAxisTicks ?? [];
   const chartDateLabels = getPastWeekDateLabels();
 
   return (
@@ -128,7 +130,14 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
         <div className={styles.chartSection}>
           <h3>Price Chart</h3>
           <div className={styles.chartContainer}>
-            {spark && <Sparkline spark={spark} id={coin.iconClass} up={up24h} tall />}
+            <div className={styles.chartPlot}>
+              <div className={styles.chartYAxis} aria-label="Past 7 days price range labels">
+                {yAxisTicks.map((tick) => (
+                  <span key={tick.toFixed(10)}>{formatPrice(tick)}</span>
+                ))}
+              </div>
+              {spark && <Sparkline spark={spark} id={coin.iconClass} up={up24h} tall />}
+            </div>
           </div>
           <div className={styles.chartAxis} aria-label="Past 7 days date labels">
             {chartDateLabels.map((label, index) => (
