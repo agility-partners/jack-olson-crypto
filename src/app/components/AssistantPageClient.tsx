@@ -1,15 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import styles from "./AssistantPageClient.module.css";
-
-type Role = "user" | "assistant";
-
-interface Message {
-  id: string;
-  role: Role;
-  content: string;
-}
 
 const SUGGESTIONS = [
   "What are the top 5 gainers today?",
@@ -18,8 +12,10 @@ const SUGGESTIONS = [
   "What's in my watchlist?",
 ];
 
+const transport = new DefaultChatTransport({ api: "/api/chat" });
+
 export default function AssistantPageClient() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { messages, sendMessage, status } = useChat({ transport });
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -27,34 +23,27 @@ export default function AssistantPageClient() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const isbusy = status === "submitted" || status === "streaming";
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
-    if (!text) return;
-
-    const userMsg: Message = {
-      id: crypto.randomUUID(),
-      role: "user",
-      content: text,
-    };
-
-    // Placeholder assistant reply until the API route is wired up
-    const assistantMsg: Message = {
-      id: crypto.randomUUID(),
-      role: "assistant",
-      content:
-        "The assistant API is not yet connected. Come back soon — the tool-calling backend is on its way! 🚀",
-    };
-
-    setMessages((prev) => [...prev, userMsg, assistantMsg]);
+    if (!text || isbusy) return;
+    sendMessage({ text });
     setInput("");
   };
 
   const handleSuggestion = (text: string) => {
-    setInput(text);
+    if (isbusy) return;
+    sendMessage({ text });
   };
 
   const isEmpty = messages.length === 0;
+
+  const statusLabel = isbusy ? "Thinking…" : "Live";
+  const statusDotStyle = isbusy
+    ? { background: "var(--green-muted)", opacity: 0.7 }
+    : { background: "var(--green-primary)" };
 
   return (
     <div className={styles.wrapper}>
@@ -70,8 +59,8 @@ export default function AssistantPageClient() {
           </div>
         </div>
         <div className={styles.statusBadge}>
-          <span className={styles.statusDot} />
-          Coming soon
+          <span className={styles.statusDot} style={statusDotStyle} />
+          {statusLabel}
         </div>
       </div>
 
@@ -94,6 +83,7 @@ export default function AssistantPageClient() {
                   className={styles.suggestionBtn}
                   onClick={() => handleSuggestion(s)}
                   type="button"
+                  disabled={isbusy}
                 >
                   {s}
                 </button>
@@ -106,7 +96,9 @@ export default function AssistantPageClient() {
               <div
                 key={msg.id}
                 className={
-                  msg.role === "user" ? styles.userBubble : styles.assistantBubble
+                  msg.role === "user"
+                    ? styles.userBubble
+                    : styles.assistantBubble
                 }
               >
                 {msg.role === "assistant" && (
@@ -114,9 +106,21 @@ export default function AssistantPageClient() {
                     ✦
                   </span>
                 )}
-                <p>{msg.content}</p>
+                <p>
+                  {msg.parts
+                    .filter((part) => part.type === "text")
+                    .map((part, i) => (
+                      <span key={i}>{part.text}</span>
+                    ))}
+                </p>
               </div>
             ))}
+            {isbusy && (
+              <div className={styles.assistantBubble}>
+                <span className={styles.assistantLabel} aria-hidden="true">✦</span>
+                <p className={styles.thinking}>Thinking…</p>
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
         )}
@@ -130,13 +134,14 @@ export default function AssistantPageClient() {
           placeholder="Ask about prices, market trends, your watchlist…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          disabled={isbusy}
           autoComplete="off"
           spellCheck={false}
         />
         <button
           className={styles.sendBtn}
           type="submit"
-          disabled={!input.trim()}
+          disabled={!input.trim() || isbusy}
           aria-label="Send message"
         >
           <svg
