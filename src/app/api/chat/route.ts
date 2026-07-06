@@ -101,7 +101,6 @@ export async function POST(request: Request) {
     model: openai(MODEL_ID),
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
-    maxSteps: 5,
     tools: {
       getMarketSummary: tool({
         description: "Get latest market-wide warehouse summary values.",
