@@ -1,15 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useChat } from "@ai-sdk/react";
 import styles from "./AssistantPageClient.module.css";
-
-type Role = "user" | "assistant";
-
-interface Message {
-  id: string;
-  role: Role;
-  content: string;
-}
 
 const SUGGESTIONS = [
   "What are the top 5 gainers today?",
@@ -18,8 +11,15 @@ const SUGGESTIONS = [
   "What's in my watchlist?",
 ];
 
+function getTextContent(parts: { type: string; text?: string }[]): string {
+  return parts
+    .filter((p) => p.type === "text" && p.text)
+    .map((p) => p.text!)
+    .join("");
+}
+
 export default function AssistantPageClient() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { messages, sendMessage, status, error } = useChat();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -27,26 +27,13 @@ export default function AssistantPageClient() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const isStreaming = status === "streaming" || status === "submitted";
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
-    if (!text) return;
-
-    const userMsg: Message = {
-      id: crypto.randomUUID(),
-      role: "user",
-      content: text,
-    };
-
-    // Placeholder assistant reply until the API route is wired up
-    const assistantMsg: Message = {
-      id: crypto.randomUUID(),
-      role: "assistant",
-      content:
-        "The assistant API is not yet connected. Come back soon — the tool-calling backend is on its way! 🚀",
-    };
-
-    setMessages((prev) => [...prev, userMsg, assistantMsg]);
+    if (!text || isStreaming) return;
+    sendMessage({ text });
     setInput("");
   };
 
@@ -71,7 +58,7 @@ export default function AssistantPageClient() {
         </div>
         <div className={styles.statusBadge}>
           <span className={styles.statusDot} />
-          Coming soon
+          {isStreaming ? "Thinking…" : "Live"}
         </div>
       </div>
 
@@ -102,21 +89,45 @@ export default function AssistantPageClient() {
           </div>
         ) : (
           <div className={styles.messageList}>
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={
-                  msg.role === "user" ? styles.userBubble : styles.assistantBubble
-                }
-              >
-                {msg.role === "assistant" && (
-                  <span className={styles.assistantLabel} aria-hidden="true">
-                    ✦
-                  </span>
-                )}
-                <p>{msg.content}</p>
+            {messages.map((msg) => {
+              const text = getTextContent(
+                msg.parts as { type: string; text?: string }[]
+              );
+              if (!text && msg.role !== "user") return null;
+              return (
+                <div
+                  key={msg.id}
+                  className={
+                    msg.role === "user"
+                      ? styles.userBubble
+                      : styles.assistantBubble
+                  }
+                >
+                  {msg.role === "assistant" && (
+                    <span className={styles.assistantLabel} aria-hidden="true">
+                      ✦
+                    </span>
+                  )}
+                  <p>{text}</p>
+                </div>
+              );
+            })}
+            {isStreaming && (
+              <div className={styles.assistantBubble}>
+                <span className={styles.assistantLabel} aria-hidden="true">✦</span>
+                <p className={styles.thinkingDots}>
+                  <span>·</span><span>·</span><span>·</span>
+                </p>
               </div>
-            ))}
+            )}
+            {error && (
+              <div className={styles.assistantBubble}>
+                <span className={styles.assistantLabel} aria-hidden="true">✦</span>
+                <p className={styles.errorText}>
+                  Something went wrong. Please try again.
+                </p>
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
         )}
@@ -132,11 +143,12 @@ export default function AssistantPageClient() {
           onChange={(e) => setInput(e.target.value)}
           autoComplete="off"
           spellCheck={false}
+          disabled={isStreaming}
         />
         <button
           className={styles.sendBtn}
           type="submit"
-          disabled={!input.trim()}
+          disabled={!input.trim() || isStreaming}
           aria-label="Send message"
         >
           <svg
