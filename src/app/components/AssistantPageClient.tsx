@@ -15,7 +15,7 @@ const SUGGESTIONS = [
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
 export default function AssistantPageClient() {
-  const { messages, sendMessage, status } = useChat({ transport });
+  const { messages, sendMessage, status, error } = useChat({ transport });
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -125,6 +125,13 @@ export default function AssistantPageClient() {
           </div>
         )}
       </div>
+
+      {/* Error banner */}
+      {error && (
+        <div className={styles.errorBanner} role="alert">
+          ⚠ {error.message}
+        </div>
+      )}
 
       {/* Input bar */}
       <form className={styles.inputBar} onSubmit={handleSubmit}>

@@ -26,6 +26,7 @@ services:
       - NEXT_PUBLIC_API_URL=http://localhost:8081
       - API_URL=http://cryptoapi:8080
       - WATCHPACK_POLLING=true
+      - OPENAI_API_KEY
     depends_on:
       - cryptoapi
 
