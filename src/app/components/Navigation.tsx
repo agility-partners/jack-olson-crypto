@@ -28,6 +28,14 @@ export default function Navigation() {
             All Coins
           </Link>
         </li>
+        <li>
+          <Link
+            href="/assistant"
+            className={pathname === "/assistant" ? styles.active : undefined}
+          >
+            Assistant
+          </Link>
+        </li>
       </ul>
     </nav>
   );
