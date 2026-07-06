@@ -229,6 +229,12 @@
 .sendBtn:hover:not(:disabled) { background: var(--green-bright); }
 .sendBtn:disabled { opacity: 0.35; cursor: default; }
 
+/* ── Thinking indicator ──────────────────────────────────────────────────── */
+.thinking {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* ── Disclaimer ──────────────────────────────────────────────────────────── */
 .disclaimer {
   font-size: 11px;
