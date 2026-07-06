@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     const { messages }: { messages: UIMessage[] } = await req.json();
 
     const result = streamText({
-      model: openai("gpt-4.1-mini"),
+      model: google("gemini-2.0-flash"),
       system:
         "You are a warehouse-aware crypto assistant. Use tools for factual data, never invent market values, and explicitly say when data is unavailable.",
       messages: await convertToModelMessages(messages),
