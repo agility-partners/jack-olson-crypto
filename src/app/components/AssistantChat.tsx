@@ -19,8 +19,24 @@ function toolLabels(message: UIMessage): string[] {
     .map((part) => part.type.replace("tool-", ""));
 }
 
+function parseErrorMessage(error: Error | undefined): string {
+  if (!error) return "";
+  try {
+    const parsed = JSON.parse(error.message) as { error?: string; message?: string };
+    if (parsed.error === "ai_not_configured") {
+      return "AI assistant is not configured — set OPENAI_API_KEY in your .env.local and restart the dev server.";
+    }
+    if (parsed.error === "invalid_request") {
+      return parsed.message ?? "Invalid request. Please try again.";
+    }
+    return parsed.message ?? error.message;
+  } catch {
+    return error.message || "Assistant request failed. Please try again.";
+  }
+}
+
 export default function AssistantChat() {
-  const { messages, sendMessage, status, error, stop } = useChat();
+  const { messages, sendMessage, status, error, stop, clearError } = useChat();
   const [input, setInput] = useState("");
 
   const isBusy = status === "submitted" || status === "streaming";
@@ -32,6 +48,7 @@ export default function AssistantChat() {
     const prompt = input.trim();
     if (!prompt || isBusy) return;
 
+    if (error) clearError();
     setInput("");
     await sendMessage({ text: prompt });
   };
@@ -107,9 +124,12 @@ export default function AssistantChat() {
       </form>
 
       {error && (
-        <p className={styles.error} role="alert">
-          Assistant request failed. Please try again.
-        </p>
+        <div className={styles.errorBanner} role="alert">
+          <p className={styles.error}>{parseErrorMessage(error)}</p>
+          <button type="button" className={styles.dismissBtn} onClick={() => clearError()}>
+            Dismiss
+          </button>
+        </div>
       )}
     </section>
   );

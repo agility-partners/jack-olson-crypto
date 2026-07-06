@@ -136,3 +136,26 @@
   color: var(--red);
   font-size: 14px;
 }
+
+.errorBanner {
+  margin-top: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #5d2d2d;
+  border-radius: 8px;
+  background: #1a0d0d;
+}
+
+.dismissBtn {
+  flex-shrink: 0;
+  border: 1px solid #5d2d2d;
+  border-radius: 6px;
+  background: #2a1717;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
