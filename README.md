@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+### Assistant model setup
+
+The `/assistant` chat route now uses GitHub Models instead of Gemini. To enable it locally, set either `GITHUB_MODELS_TOKEN` or `GITHUB_TOKEN` to a GitHub personal access token with the `models` scope.
+
+You can optionally override the default model:
+
+```bash
+GITHUB_MODELS_MODEL=openai/gpt-4.1
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

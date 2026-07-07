@@ -1,4 +1,4 @@
-import { google } from "@ai-sdk/google";
+import { createOpenAI } from "@ai-sdk/openai";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
@@ -10,15 +10,37 @@ import {
 import { z } from "zod";
 
 const API_URL = process.env.API_URL ?? "http://localhost:8080";
+const GITHUB_MODELS_BASE_URL = "https://models.github.ai/inference";
+const GITHUB_MODELS_DEFAULT_MODEL = "openai/gpt-4.1";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
   try {
     const { messages }: { messages: UIMessage[] } = await req.json();
+    const githubModelsApiKey =
+      process.env.GITHUB_MODELS_TOKEN ?? process.env.GITHUB_TOKEN;
+
+    if (!githubModelsApiKey) {
+      throw new Error(
+        "Missing GitHub Models token. Set GITHUB_MODELS_TOKEN or GITHUB_TOKEN with a PAT that has the models scope.",
+      );
+    }
+
+    const githubModels = createOpenAI({
+      name: "github-models",
+      baseURL: GITHUB_MODELS_BASE_URL,
+      apiKey: githubModelsApiKey,
+      headers: {
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+    });
 
     const result = streamText({
-      model: google("gemini-2.0-flash"),
+      model: githubModels.chat(
+        process.env.GITHUB_MODELS_MODEL ?? GITHUB_MODELS_DEFAULT_MODEL,
+      ),
       system:
         "You are a warehouse-aware crypto assistant. Use tools for factual data, never invent market values, and explicitly say when data is unavailable.",
       messages: await convertToModelMessages(messages),
