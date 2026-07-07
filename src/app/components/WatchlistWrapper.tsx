@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
+import type { MarketStats } from "@/app/lib/marketStats";
 import StatsBar from "./StatsBar";
 import WatchlistClient from "./WatchlistClient";
 import FlappyCrypto from "./FlappyCrypto";
@@ -10,9 +11,11 @@ import pageStyles from "@/app/page.module.css";
 
 type Props = {
   initialCoins: Coin[];
+  allCoins: Coin[];
+  initialMarketStats: MarketStats;
 };
 
-export default function WatchlistWrapper({ initialCoins }: Props) {
+export default function WatchlistWrapper({ initialCoins, allCoins, initialMarketStats }: Props) {
   const [coinCount, setCoinCount] = useState(initialCoins.length);
   const [gainerCount, setGainerCount] = useState(
     () => initialCoins.filter((c) => c.change24h >= 0).length
@@ -35,8 +38,16 @@ export default function WatchlistWrapper({ initialCoins }: Props) {
         <FlappyCrypto />
       </div>
 
-      <StatsBar coinCount={coinCount} gainerCount={gainerCount} />
-      <WatchlistClient initialCoins={initialCoins} onStatsChange={handleStatsChange} />
+      <StatsBar
+        coinCount={coinCount}
+        gainerCount={gainerCount}
+        marketStats={initialMarketStats}
+      />
+      <WatchlistClient
+        initialCoins={initialCoins}
+        allCoins={allCoins}
+        onStatsChange={handleStatsChange}
+      />
     </>
   );
 }

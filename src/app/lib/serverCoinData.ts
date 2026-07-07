@@ -1,14 +1,18 @@
 import { type Coin, watchlistCoins } from "@/app/lib/mockData";
+import { createFallbackMarketStats, type MarketStats } from "@/app/lib/marketStats";
 
 const API_URL = process.env.API_URL ?? "http://localhost:8080";
+const CATALOG_REVALIDATE_SECONDS = 60;
+const REQUEST_INIT_REVALIDATE = { next: { revalidate: CATALOG_REVALIDATE_SECONDS } } satisfies RequestInit;
+const REQUEST_INIT_NO_STORE = { cache: "no-store" } satisfies RequestInit;
 
 function cloneCoins(coins: Coin[]): Coin[] {
   return coins.map((coin) => ({ ...coin }));
 }
 
-async function fetchCoins(path: string, fallback: Coin[]): Promise<Coin[]> {
+async function fetchCoins(path: string, fallback: Coin[], init: RequestInit): Promise<Coin[]> {
   try {
-    const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}${path}`, init);
     if (!res.ok) {
       return cloneCoins(fallback);
     }
@@ -20,16 +24,16 @@ async function fetchCoins(path: string, fallback: Coin[]): Promise<Coin[]> {
 }
 
 export async function getAllCoins(): Promise<Coin[]> {
-  return fetchCoins("/api/coins", watchlistCoins);
+  return fetchCoins("/api/coins", watchlistCoins, REQUEST_INIT_REVALIDATE);
 }
 
 export async function getWatchlistCoins(): Promise<Coin[]> {
-  return fetchCoins("/api/watchlist", []);
+  return fetchCoins("/api/watchlist", [], REQUEST_INIT_NO_STORE);
 }
 
 export async function getCoinById(id: string): Promise<Coin | null> {
   try {
-    const res = await fetch(`${API_URL}/api/coins/${id}`, { cache: "no-store" });
+    const res = await fetch(`${API_URL}/api/coins/${id}`, REQUEST_INIT_REVALIDATE);
     if (!res.ok) {
       return watchlistCoins.find((c) => c.id === id) ?? null;
     }
@@ -37,5 +41,18 @@ export async function getCoinById(id: string): Promise<Coin | null> {
     return await res.json() as Coin;
   } catch {
     return watchlistCoins.find((c) => c.id === id) ?? null;
+  }
+}
+
+export async function getMarketStats(): Promise<MarketStats> {
+  try {
+    const res = await fetch(`${API_URL}/api/marketstats`, REQUEST_INIT_REVALIDATE);
+    if (!res.ok) {
+      return createFallbackMarketStats(watchlistCoins);
+    }
+
+    return await res.json() as MarketStats;
+  } catch {
+    return createFallbackMarketStats(watchlistCoins);
   }
 }

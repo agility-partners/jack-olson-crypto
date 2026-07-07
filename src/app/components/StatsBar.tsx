@@ -1,17 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import type { MarketStats } from "@/app/lib/marketStats";
 import styles from "./StatsBar.module.css";
-
-type MarketStats = {
-  totalMarketCap: string;
-  marketCapChange: string;
-  marketCapChangeDir: string;
-  volume24h: string;
-  btcDominance: string;
-  avgChange24h: string;
-  avgChange24hDir: string;
-};
 
 type Stat = {
   label: string;
@@ -23,23 +13,10 @@ type Stat = {
 type Props = {
   coinCount?: number;
   gainerCount?: number;
+  marketStats?: MarketStats | null;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
-
-export default function StatsBar({ coinCount, gainerCount }: Props) {
-  const [marketStats, setMarketStats] = useState<MarketStats | null>(null);
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/marketstats`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch market stats");
-        return res.json() as Promise<MarketStats>;
-      })
-      .then((data) => setMarketStats(data))
-      .catch(() => {});
-  }, []);
-
+export default function StatsBar({ coinCount, gainerCount, marketStats }: Props) {
   const gainersValue =
     coinCount !== undefined && gainerCount !== undefined
       ? `${gainerCount} / ${coinCount}`
