@@ -25,13 +25,16 @@ const CANVAS_WIDTH = 800;
 export default function FlappyCrypto() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const rafRef = useRef<number>(0);
+  const initialTopScore =
+    typeof window === "undefined"
+      ? 0
+      : Number.parseInt(localStorage.getItem("flappyCryptoTopScore") ?? "0", 10) || 0;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [score, setScore] = useState(0);
-  const [topScore, setTopScore] = useState(0);
+  const [topScore, setTopScore] = useState(initialTopScore);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   const gameState = useRef({
     bitcoinY: 125,
@@ -44,26 +47,12 @@ export default function FlappyCrypto() {
 
   // Refs for values needed inside the rAF loop without stale closures
   const isPlayingRef = useRef(false);
-  const topScoreRef = useRef(0);
+  const topScoreRef = useRef(initialTopScore);
   const isGameOverRef = useRef(false);
 
   useEffect(() => { isPlayingRef.current = isPlaying; }, [isPlaying]);
   useEffect(() => { topScoreRef.current = topScore; }, [topScore]);
   useEffect(() => { isGameOverRef.current = isGameOver; }, [isGameOver]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Load top score from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("flappyCryptoTopScore");
-    if (saved) {
-      const val = parseInt(saved, 10);
-      setTopScore(val);
-      topScoreRef.current = val;
-    }
-  }, []);
 
   // Lock page scroll while modal is open
   useEffect(() => {
@@ -315,7 +304,7 @@ export default function FlappyCrypto() {
         ₿ Play Mini Game
       </button>
 
-      {isModalOpen && isMounted ? createPortal(modalContent, document.body) : null}
+      {isModalOpen ? createPortal(modalContent, document.body) : null}
     </>
   );
 }

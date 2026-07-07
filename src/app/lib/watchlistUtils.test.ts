@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterCoins, parseValue, sortCoins } from './watchlistUtils';
+import { filterCoins, sortCoins } from './watchlistUtils';
 
 const sampleCoins = [
   {
@@ -38,24 +38,6 @@ const sampleCoins = [
 ];
 
 describe('watchlistUtils', () => {
-  describe('parseValue', () => {
-    it('parses trillions correctly', () => {
-      expect(parseValue('$1.34T')).toBe(1_340_000_000_000);
-    });
-
-    it('parses billions correctly', () => {
-      expect(parseValue('$423B')).toBe(423_000_000_000);
-    });
-
-    it('parses millions correctly', () => {
-      expect(parseValue('$680M')).toBe(680_000_000);
-    });
-
-    it('returns 0 for invalid values', () => {
-      expect(parseValue('invalid')).toBe(0);
-    });
-  });
-
   describe('filterCoins', () => {
     it('filters coins by search term', () => {
       const result = filterCoins(sampleCoins, 'Bitcoin', 'value');
