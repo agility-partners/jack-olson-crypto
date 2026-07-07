@@ -1,12 +1,13 @@
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import WatchlistWrapper from "@/app/components/WatchlistWrapper";
-import { getAllCoins, getWatchlistCoins } from "@/app/lib/serverCoinData";
+import { getAllCoins, getMarketStats, getWatchlistCoins } from "@/app/lib/serverCoinData";
 
 export default async function WatchlistPage() {
-  const [allCoins, initialCoins] = await Promise.all([
+  const [allCoins, initialCoins, marketStats] = await Promise.all([
     getAllCoins(),
     getWatchlistCoins(),
+    getMarketStats(),
   ]);
 
   return (
@@ -14,7 +15,11 @@ export default async function WatchlistPage() {
       <TickerStrip coins={allCoins} />
       <Navigation />
 
-      <WatchlistWrapper initialCoins={initialCoins} />
+      <WatchlistWrapper
+        initialCoins={initialCoins}
+        allCoins={allCoins}
+        initialMarketStats={marketStats}
+      />
     </>
   );
 }

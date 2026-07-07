@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import { filterCoins, sortCoins, type Filter } from "@/app/lib/watchlistUtils";
 import AddCoinModal from "./AddCoinModal";
@@ -11,11 +11,17 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
 type Props = {
   initialCoins: Coin[];
+  allCoins?: Coin[];
   onStatsChange?: (coinCount: number, gainerCount: number) => void;
   useAllCoins?: boolean;
 };
 
-export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoins = false }: Props) {
+export default function WatchlistClient({
+  initialCoins,
+  allCoins,
+  onStatsChange,
+  useAllCoins = false,
+}: Props) {
   const [coins, setCoins] = useState<Coin[]>(initialCoins);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("value");
@@ -52,16 +58,28 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
     fetch(`${API_URL}/api/watchlist/${coinId}`, { method: "DELETE" }).catch(() => {});
   };
 
-  const filtered = filterCoins(coins, search, filter);
-  const visibleCoins = sortCoins(filtered, filter);
-
-  const biggestGainer = filtered.reduce<Coin | null>(
-    (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
-    null
+  const filtered = useMemo(
+    () => filterCoins(coins, search, filter),
+    [coins, filter, search],
   );
-  const biggestLoser = filtered.reduce<Coin | null>(
-    (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
-    null
+  const visibleCoins = useMemo(
+    () => sortCoins(filtered, filter),
+    [filtered, filter],
+  );
+
+  const biggestGainer = useMemo(
+    () => filtered.reduce<Coin | null>(
+      (best, c) => (c.change24h > 0 && (!best || c.change24h > best.change24h) ? c : best),
+      null,
+    ),
+    [filtered],
+  );
+  const biggestLoser = useMemo(
+    () => filtered.reduce<Coin | null>(
+      (worst, c) => (c.change24h < 0 && (!worst || c.change24h < worst.change24h) ? c : worst),
+      null,
+    ),
+    [filtered],
   );
 
   const filterLabels: Record<Filter, string> = {
@@ -180,7 +198,14 @@ export default function WatchlistClient({ initialCoins, onStatsChange, useAllCoi
         </div>
       </main>
 
-      {showAddModal && <AddCoinModal onClose={() => setShowAddModal(false)} onAddCoin={handleAddCoin} currentCoins={coins} />}
+      {showAddModal && (
+        <AddCoinModal
+          onClose={() => setShowAddModal(false)}
+          onAddCoin={handleAddCoin}
+          currentCoins={coins}
+          allCoins={allCoins}
+        />
+      )}
     </>
   );
 }

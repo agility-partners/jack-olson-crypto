@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { watchlistCoins } from '@/app/lib/mockData';
-import { getAllCoins, getCoinById, getWatchlistCoins } from '@/app/lib/serverCoinData';
+import { getAllCoins, getCoinById, getMarketStats, getWatchlistCoins } from '@/app/lib/serverCoinData';
 
 const apiCoins = watchlistCoins.slice(0, 5).map((c) => ({ ...c }));
 const apiWatchlist = watchlistCoins.slice(0, 2).map((c) => ({ ...c }));
@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 describe('getAllCoins', () => {
-  it('fetches /api/coins with cache:no-store and returns the API coin list', async () => {
+  it('fetches /api/coins with revalidation and returns the API coin list', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       new Response(JSON.stringify(apiCoins), { status: 200 }),
     );
@@ -24,7 +24,7 @@ describe('getAllCoins', () => {
     expect(fetch).toHaveBeenCalledOnce();
     const [url, init] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
     expect(url).toMatch(/\/api\/coins$/);
-    expect(init).toEqual({ cache: 'no-store' });
+    expect(init).toEqual({ next: { revalidate: 60 } });
     expect(coins).toHaveLength(apiCoins.length);
     expect(coins[0].id).toBe(apiCoins[0].id);
   });
@@ -102,7 +102,7 @@ describe('getWatchlistCoins', () => {
 describe('getCoinById', () => {
   const bitcoinCoin = watchlistCoins.find((c) => c.id === 'bitcoin')!;
 
-  it('fetches /api/coins/:id with cache:no-store and returns the coin', async () => {
+  it('fetches /api/coins/:id with revalidation and returns the coin', async () => {
     vi.mocked(fetch).mockResolvedValueOnce(
       new Response(JSON.stringify(bitcoinCoin), { status: 200 }),
     );
@@ -112,7 +112,7 @@ describe('getCoinById', () => {
     expect(fetch).toHaveBeenCalledOnce();
     const [url, init] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
     expect(url).toMatch(/\/api\/coins\/bitcoin$/);
-    expect(init).toEqual({ cache: 'no-store' });
+    expect(init).toEqual({ next: { revalidate: 60 } });
     expect(coin).not.toBeNull();
     expect(coin!.id).toBe('bitcoin');
     expect(coin!.name).toBe('Bitcoin');
@@ -168,5 +168,40 @@ describe('getCoinById', () => {
     expect(coin!.name).toBeTruthy();
     expect(coin!.symbol).toBeTruthy();
     expect(coin!.iconClass).toBeTruthy();
+  });
+});
+
+describe('getMarketStats', () => {
+  it('fetches /api/marketstats with revalidation and returns the API payload', async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(
+      new Response(JSON.stringify({
+        totalMarketCap: '$1.2T',
+        marketCapChange: '↑ 2.4%',
+        marketCapChangeDir: 'up',
+        volume24h: '$88.1B',
+        btcDominance: '51.2%',
+        avgChange24h: '↑ 2.4%',
+        avgChange24hDir: 'up',
+      }), { status: 200 }),
+    );
+
+    const stats = await getMarketStats();
+
+    expect(fetch).toHaveBeenCalledOnce();
+    const [url, init] = vi.mocked(fetch).mock.calls[0] as [string, RequestInit];
+    expect(url).toMatch(/\/api\/marketstats$/);
+    expect(init).toEqual({ next: { revalidate: 60 } });
+    expect(stats.totalMarketCap).toBe('$1.2T');
+    expect(stats.marketCapChangeDir).toBe('up');
+  });
+
+  it('falls back to derived mock stats when the API request fails', async () => {
+    vi.mocked(fetch).mockRejectedValueOnce(new Error('ECONNREFUSED'));
+
+    const stats = await getMarketStats();
+
+    expect(stats.totalMarketCap).not.toBe('$0');
+    expect(stats.volume24h).not.toBe('$0');
+    expect(stats.btcDominance).toMatch(/%$/);
   });
 });

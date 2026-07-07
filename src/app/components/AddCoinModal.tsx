@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import styles from "./AddCoinModal.module.css";
 
@@ -16,39 +16,62 @@ type Props = {
   onClose: () => void;
   onAddCoin: (coin: Coin) => void;
   currentCoins: Coin[];
+  allCoins?: Coin[];
 };
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
-export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props) {
-  const [allCoins, setAllCoins] = useState<Coin[]>([]);
+export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoins }: Props) {
+  const [fetchedCoins, setFetchedCoins] = useState<Coin[]>([]);
   const [fetchError, setFetchError] = useState(false);
   const [formData, setFormData] = useState<FormData>({ coinId: "" });
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  const coinCatalog = allCoins ?? fetchedCoins;
+
   useEffect(() => {
+    if (allCoins) {
+      return;
+    }
+
+    let isCancelled = false;
+
     fetch(`${API_URL}/api/coins`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch coins");
         return res.json() as Promise<Coin[]>;
       })
-      .then((data) => setAllCoins(data))
-      .catch(() => setFetchError(true));
-  }, []);
+      .then((data) => {
+        if (!isCancelled) {
+          setFetchedCoins(data);
+        }
+      })
+      .catch(() => {
+        if (!isCancelled) {
+          setFetchError(true);
+        }
+      });
 
-  // Get available coins (not already in watchlist)
-  const availableCoins = allCoins
-    .filter((coin) => !currentCoins.some((c) => c.id === coin.id))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    return () => {
+      isCancelled = true;
+    };
+  }, [allCoins]);
+
+  const availableCoins = useMemo(
+    () => coinCatalog
+      .filter((coin) => !currentCoins.some((c) => c.id === coin.id))
+      .sort((a, b) => a.name.localeCompare(b.name)),
+    [coinCatalog, currentCoins],
+  );
 
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {};
 
     if (!formData.coinId.trim()) {
       newErrors.coinId = "Please select a cryptocurrency";
-    } else if (!allCoins.find((c) => c.id === formData.coinId)) {
+    } else if (!coinCatalog.find((c) => c.id === formData.coinId)) {
       newErrors.coinId = "Invalid cryptocurrency selected";
     }
 
@@ -86,7 +109,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
         throw new Error("Failed to add coin to watchlist");
       }
 
-      const selectedCoin = allCoins.find((c) => c.id === formData.coinId);
+      const selectedCoin = coinCatalog.find((c) => c.id === formData.coinId);
       if (selectedCoin) {
         setSubmitSuccess(true);
         setTimeout(() => {
@@ -130,9 +153,9 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
                 value={formData.coinId}
                 onChange={handleChange}
                 className={`${styles.select} ${errors.coinId ? styles.error : ""}`}
-                disabled={isSubmitting || allCoins.length === 0}
+                disabled={isSubmitting || coinCatalog.length === 0}
               >
-                <option value="">{allCoins.length === 0 ? "Loading…" : "Choose a coin..."}</option>
+                <option value="">{coinCatalog.length === 0 ? "Loading…" : "Choose a coin..."}</option>
                 {availableCoins.map((coin) => (
                   <option key={coin.id} value={coin.id}>
                     {coin.name} ({coin.symbol})
@@ -141,7 +164,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins }: Props
               </select>
             )}
             {errors.coinId && <span className={styles.errorMessage}>{errors.coinId}</span>}
-            {!fetchError && allCoins.length > 0 && availableCoins.length === 0 && (
+            {!fetchError && coinCatalog.length > 0 && availableCoins.length === 0 && (
               <span className={styles.infoMessage}>All cryptocurrencies are already in your watchlist!</span>
             )}
           </div>
