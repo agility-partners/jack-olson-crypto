@@ -12,10 +12,10 @@ export default async function AssistantPage() {
   const coins = await getAllCoins();
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", height: "100dvh", overflow: "hidden" }}>
       <TickerStrip coins={coins} />
       <Navigation />
       <AssistantPageClient />
-    </>
+    </div>
   );
 }
