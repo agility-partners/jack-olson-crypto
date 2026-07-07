@@ -26,7 +26,9 @@ services:
       - NEXT_PUBLIC_API_URL=http://localhost:8081
       - API_URL=http://cryptoapi:8080
       - WATCHPACK_POLLING=true
-      - GOOGLE_GENERATIVE_AI_API_KEY
+      - GITHUB_MODELS_TOKEN
+      - GITHUB_TOKEN
+      - GITHUB_MODELS_MODEL=${GITHUB_MODELS_MODEL:-openai/gpt-4.1}
     depends_on:
       - cryptoapi
 
