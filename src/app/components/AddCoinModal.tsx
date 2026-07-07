@@ -22,17 +22,17 @@ type Props = {
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 
 export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoins }: Props) {
-  const [coinCatalog, setCoinCatalog] = useState<Coin[]>(allCoins ?? []);
+  const [fetchedCoins, setFetchedCoins] = useState<Coin[]>([]);
   const [fetchError, setFetchError] = useState(false);
   const [formData, setFormData] = useState<FormData>({ coinId: "" });
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  const coinCatalog = allCoins ?? fetchedCoins;
+
   useEffect(() => {
     if (allCoins) {
-      setCoinCatalog(allCoins);
-      setFetchError(false);
       return;
     }
 
@@ -45,7 +45,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
       })
       .then((data) => {
         if (!isCancelled) {
-          setCoinCatalog(data);
+          setFetchedCoins(data);
         }
       })
       .catch(() => {
