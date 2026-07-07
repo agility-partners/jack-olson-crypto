@@ -35,21 +35,6 @@ export type CoinDetail = Coin & {
   founded: number;
 };
 
-export function getRandomWatchList(count = 12): Coin[] {
-  const shuffled = [...watchlistCoins];
-
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-
-    [shuffled[i], shuffled[j]] = [
-      shuffled[j],
-      shuffled[i],
-    ];
-  }
-
-  return shuffled.slice(0, count);
-}
-
 export type SparkPath = {
   d: string;
   up: boolean;

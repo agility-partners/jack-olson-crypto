@@ -1,19 +1,3 @@
-export function parseValue(str: string): number {
-  const match = str.match(/(\d+\.?\d*)\s*([MBT])/i);
-  if (!match) return 0;
-
-  const value = parseFloat(match[1]);
-  const suffix = match[2].toUpperCase();
-
-  const multipliers: Record<string, number> = {
-    M: 1_000_000,
-    B: 1_000_000_000,
-    T: 1_000_000_000_000,
-  };
-
-  return value * (multipliers[suffix] || 1);
-}
-
 export type Filter =
   | "value"
   | "percentchange"
