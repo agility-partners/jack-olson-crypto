@@ -4,6 +4,77 @@
   padding: 2rem 1.5rem;
 }
 
+.biggestGainerTheme .header {
+  background: linear-gradient(135deg, #d4a01730 0%, #d4a01720 100%);
+  border-color: #d49e17f2;
+}
+
+.biggestGainerTheme .price,
+.biggestGainerTheme .statValue,
+.biggestGainerTheme .changeItem.up .changeValue {
+  color: #d4a017;
+}
+
+.biggestGainerTheme .statCard {
+  background: linear-gradient(135deg, #d4a01730 0%, #d4a01720 100%);
+  border-color: #d49e17f2;
+}
+
+.biggestGainerTheme .statCard:hover {
+  background: linear-gradient(135deg, #d4a01768 0%, #d4a01740 100%);
+  border-color: #d4a017;
+}
+
+.biggestGainerTheme .chartSection h3,
+.biggestGainerTheme .description h3,
+.biggestGainerTheme .rank {
+  color: #d4a017;
+}
+
+.biggestGainerTheme .chartSection svg stop {
+  stop-color: #d4a017 !important;
+}
+
+.biggestGainerTheme .chartSection svg path:last-of-type {
+  stroke: #d4a017 !important;
+}
+
+.biggestLoserTheme .header {
+  background: linear-gradient(135deg, #4d017037 0%, #4a015b24 100%);
+  border-color: #6e028f;
+}
+
+.biggestLoserTheme .price,
+.biggestLoserTheme .statValue,
+.biggestLoserTheme .changeItem.up .changeValue,
+.biggestLoserTheme .changeItem.down .changeValue {
+  color: #9c00c4;
+}
+
+.biggestLoserTheme .statCard {
+  background: linear-gradient(135deg, #4d017037 0%, #4a015b24 100%);
+  border-color: #6e028f;
+}
+
+.biggestLoserTheme .statCard:hover {
+  background: linear-gradient(135deg, #4a015b7d 0%, #4a015b4f 100%);
+  border-color: #660195;
+}
+
+.biggestLoserTheme .chartSection h3,
+.biggestLoserTheme .description h3,
+.biggestLoserTheme .rank {
+  color: #9c00c4;
+}
+
+.biggestLoserTheme .chartSection svg stop {
+  stop-color: #9c00c4 !important;
+}
+
+.biggestLoserTheme .chartSection svg path:last-of-type {
+  stroke: #9c00c4 !important;
+}
+
 .backButton {
   display: inline-block;
   color: #60a5fa;

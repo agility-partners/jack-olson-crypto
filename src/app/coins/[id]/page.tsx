@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { coinDetails, sparkPaths } from "@/app/lib/mockData";
 import { formatPrice, formatSupply, getPastWeekDateLabels, pointsToSvgPath } from "@/app/lib/utils";
-import { getCoinById } from "@/app/lib/serverCoinData";
+import { getCoinById, getWatchlistCoins } from "@/app/lib/serverCoinData";
 import CoinIcon from "@/app/components/CoinIcon";
 import Sparkline from "@/app/components/Sparkline";
 import Navigation from "@/app/components/Navigation";
@@ -27,6 +27,23 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
   }
 
   const liveCoin = await getCoinById(coinId);
+  const watchlist = await getWatchlistCoins();
+  const biggestGainer = watchlist.reduce<typeof watchlist[number] | null>(
+    (best, candidate) => (
+      candidate.change24h > 0 && (!best || candidate.change24h > best.change24h)
+        ? candidate
+        : best
+    ),
+    null,
+  );
+  const biggestLoser = watchlist.reduce<typeof watchlist[number] | null>(
+    (worst, candidate) => (
+      candidate.change24h < 0 && (!worst || candidate.change24h < worst.change24h)
+        ? candidate
+        : worst
+    ),
+    null,
+  );
 
   // Overlay live market data from the API onto the static coin detail record.
   // Static fields (description, website, founded) always come from mockData.
@@ -70,11 +87,16 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
   const spark = sparkWithRange ?? sparkPaths[coin.iconClass];
   const yAxisTicks = sparkWithRange?.yAxisTicks ?? [];
   const chartDateLabels = getPastWeekDateLabels();
+  const themeClassName = coinId === biggestGainer?.id
+    ? styles.biggestGainerTheme
+    : coinId === biggestLoser?.id
+      ? styles.biggestLoserTheme
+      : "";
 
   return (
     <>
       <Navigation />
-      <div className={styles.container}>
+      <div className={`${styles.container} ${themeClassName}`.trim()}>
         {/* Back Button */}
         <Link href="/" className={styles.backButton}>
           ← Back to Watchlist
