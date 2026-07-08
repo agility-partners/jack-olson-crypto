@@ -22,9 +22,17 @@ const ALL_SUGGESTIONS = [
   "Show me the top 5 coins by trading volume",
 ];
 
-function pickRandomSuggestions(n: number): string[] {
-  const shuffled = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, n);
+const DEFAULT_SUGGESTIONS = ALL_SUGGESTIONS.slice(0, 5);
+
+function pickRandomSuggestions(count: number): string[] {
+  const shuffled = [...ALL_SUGGESTIONS];
+
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const swapIndex = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[i]];
+  }
+
+  return shuffled.slice(0, Math.min(count, shuffled.length));
 }
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
@@ -64,8 +72,12 @@ export default function AssistantPageClient() {
       messageMetadataSchema: assistantMessageMetadataSchema,
     });
   const [input, setInput] = useState("");
-  const [suggestions] = useState(() => pickRandomSuggestions(5));
+  const [suggestions, setSuggestions] = useState(DEFAULT_SUGGESTIONS);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setSuggestions(pickRandomSuggestions(DEFAULT_SUGGESTIONS.length));
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
