@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
@@ -11,6 +11,13 @@ import { z } from "zod";
 
 const API_URL = process.env.API_URL ?? "http://localhost:8080";
 
+const github = createOpenAI({
+  baseURL: "https://models.inference.ai.azure.com/v1",
+  apiKey: process.env.GITHUB_TOKEN,
+});
+
+const MODEL = process.env.GITHUB_MODELS_MODEL ?? "gpt-4.1-mini";
+
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
@@ -18,7 +25,7 @@ export async function POST(req: Request) {
     const { messages }: { messages: UIMessage[] } = await req.json();
 
     const result = streamText({
-      model: openai("gpt-4.1-mini"),
+      model: github(MODEL),
       system:
         "You are a warehouse-aware crypto assistant. Use tools for factual data, never invent market values, and explicitly say when data is unavailable.",
       messages: await convertToModelMessages(messages),
