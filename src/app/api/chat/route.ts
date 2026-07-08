@@ -12,7 +12,7 @@ import { z } from "zod";
 const API_URL = process.env.API_URL ?? "http://localhost:8080";
 
 const github = createOpenAI({
-  baseURL: "https://models.inference.ai.azure.com/",
+  baseURL: "https://models.github.ai/inference",
   apiKey: process.env.GITHUB_TOKEN,
 });
 
@@ -25,47 +25,10 @@ export async function POST(req: Request) {
     const { messages }: { messages: UIMessage[] } = await req.json();
 
     const result = streamText({
-      model: github(MODEL),
+      model: github.chat(MODEL),
       system:
         "You are a warehouse-aware crypto assistant. Use tools for factual data, never invent market values, and explicitly say when data is unavailable.",
       messages: await convertToModelMessages(messages),
-      stopWhen: isStepCount(5),
-      tools: {
-        getMarketSummary: {
-          description:
-            "Get the latest market summary from the warehouse-backed API.",
-          inputSchema: z.object({}),
-          execute: async () => {
-            try {
-              const response = await fetch(`${API_URL}/api/marketstats`, {
-                cache: "no-store",
-              });
-
-              if (!response.ok) {
-                return {
-                  ok: false,
-                  error: "market_summary_unavailable",
-                  status: response.status,
-                } as const;
-              }
-
-              const data = await response.json();
-
-              return {
-                ok: true,
-                source: "api/marketstats",
-                fetchedAt: new Date().toISOString(),
-                data,
-              } as const;
-            } catch {
-              return {
-                ok: false,
-                error: "market_summary_unavailable",
-              } as const;
-            }
-          },
-        },
-      },
     });
 
     return createUIMessageStreamResponse({
