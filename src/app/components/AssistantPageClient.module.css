@@ -186,6 +186,10 @@
   margin: 0;
 }
 
+.assistantBubble p {
+  white-space: pre-wrap;
+}
+
 /* ── Error banner ────────────────────────────────────────────────────────── */
 .errorBanner {
   margin: 0 16px 8px;
