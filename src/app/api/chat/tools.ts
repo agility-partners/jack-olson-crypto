@@ -21,7 +21,8 @@ Formatting rules — follow these strictly:
 - For watchlist: list each coin on its own line as "Name $Price (+/-X.XX%)". Do not include extra fields.
 - For a single coin price lookup: one line per coin showing name, price, and 24h change as "Name $Price (+/-X.XX%)". Add 7d and 30d change only if the user specifically asks.
 - For market summary: show total market cap, 24h volume, BTC dominance, and average 24h change only.
-- Use commas for thousands separators in large numbers (e.g. $1,234,567).
+- Coin price formatting: if price >= $1,000 use commas and 2 decimal places (e.g. $65,000.55); if $1–$999.99 use 2 decimal places (e.g. $9.99); if $0.01–$0.9999 use 4 decimal places (e.g. $0.9966); if < $0.01 show the first two significant non-zero digits after leading zeros (e.g. $0.000087).
+- Large currency values (market cap, volume): use compact suffix notation — T for trillions, B for billions, M for millions (e.g. $2.3T, $48.5B, $1.2M). Strip trailing zeros after the decimal point.
 - Keep responses short and factual. No preamble, no filler phrases.`;
 
 export const tools = {
