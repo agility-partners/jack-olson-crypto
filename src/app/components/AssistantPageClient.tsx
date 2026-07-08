@@ -7,33 +7,8 @@ import {
   assistantMessageMetadataSchema,
   type AssistantChatMessage,
 } from "../api/chat/citations";
+import { DEFAULT_ASSISTANT_SUGGESTIONS } from "../lib/assistantSuggestions";
 import styles from "./AssistantPageClient.module.css";
-
-const ALL_SUGGESTIONS = [
-  "What are the top gainers and losers today?",
-  "Show me the current market summary",
-  "What's the price of Bitcoin and Ethereum?",
-  "What's in my watchlist?",
-  "Which coin has the highest market cap right now?",
-  "What are the biggest losers in the last 24 hours?",
-  "Give me an overview of the crypto market today",
-  "How is Solana performing compared to Ethereum?",
-  "What coins are trending up right now?",
-  "Show me the top 5 coins by trading volume",
-];
-
-const DEFAULT_SUGGESTIONS = ALL_SUGGESTIONS.slice(0, 5);
-
-function pickRandomSuggestions(count: number): string[] {
-  const shuffled = [...ALL_SUGGESTIONS];
-
-  for (let i = shuffled.length - 1; i > 0; i -= 1) {
-    const swapIndex = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[i]];
-  }
-
-  return shuffled.slice(0, Math.min(count, shuffled.length));
-}
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
@@ -65,19 +40,20 @@ function getMessageDisplayText(
   return normalizedText.replace(/(?:\r?\n)?Sources:[^\n]*\s*$/u, "").trimEnd();
 }
 
-export default function AssistantPageClient() {
+type AssistantPageClientProps = {
+  initialSuggestions?: string[];
+};
+
+export default function AssistantPageClient({
+  initialSuggestions = DEFAULT_ASSISTANT_SUGGESTIONS,
+}: AssistantPageClientProps) {
   const { messages, sendMessage, status, error } =
     useChat<AssistantChatMessage>({
       transport,
       messageMetadataSchema: assistantMessageMetadataSchema,
     });
   const [input, setInput] = useState("");
-  const [suggestions, setSuggestions] = useState(DEFAULT_SUGGESTIONS);
   const bottomRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setSuggestions(pickRandomSuggestions(DEFAULT_SUGGESTIONS.length));
-  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -137,7 +113,7 @@ export default function AssistantPageClient() {
             </p>
 
             <div className={styles.suggestions}>
-              {suggestions.map((s) => (
+              {initialSuggestions.map((s) => (
                 <button
                   key={s}
                   className={styles.suggestionBtn}
