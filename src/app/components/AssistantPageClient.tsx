@@ -18,6 +18,34 @@ const SUGGESTIONS = [
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
+function getMessageDisplayText(
+  parts: AssistantChatMessage["parts"],
+  sourcesLine?: string
+) {
+  const text = parts
+    .filter(
+      (part): part is Extract<AssistantChatMessage["parts"][number], { type: "text" }> =>
+        part.type === "text"
+    )
+    .map((part) => part.text)
+    .join("");
+
+  if (!text) {
+    return "";
+  }
+
+  const normalizedText = text.trimEnd();
+
+  if (sourcesLine) {
+    const escapedSourcesLine = sourcesLine.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return normalizedText
+      .replace(new RegExp(`(?:\\r?\\n)?${escapedSourcesLine}\\s*$`), "")
+      .trimEnd();
+  }
+
+  return normalizedText.replace(/(?:\r?\n)?Sources:[^\n]*\s*$/u, "").trimEnd();
+}
+
 export default function AssistantPageClient() {
   const { messages, sendMessage, status, error } =
     useChat<AssistantChatMessage>({
@@ -100,34 +128,35 @@ export default function AssistantPageClient() {
           </div>
         ) : (
           <div className={styles.messageList}>
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={
-                  msg.role === "user"
-                    ? styles.userBubble
-                    : styles.assistantBubble
-                }
-              >
-                {msg.role === "assistant" && (
-                  <span className={styles.assistantLabel} aria-hidden="true">
-                    ✦
-                  </span>
-                )}
-                <div>
-                  <p>
-                    {msg.parts
-                      .filter((part) => part.type === "text")
-                      .map((part, i) => (
-                        <span key={i}>{part.text}</span>
-                      ))}
-                  </p>
-                  {msg.role === "assistant" && msg.metadata?.sourcesLine && (
-                    <p className={styles.sourcesLine}>{msg.metadata.sourcesLine}</p>
+            {messages.map((msg) => {
+              const messageText =
+                msg.role === "assistant"
+                  ? getMessageDisplayText(msg.parts, msg.metadata?.sourcesLine)
+                  : getMessageDisplayText(msg.parts);
+
+              return (
+                <div
+                  key={msg.id}
+                  className={
+                    msg.role === "user"
+                      ? styles.userBubble
+                      : styles.assistantBubble
+                  }
+                >
+                  {msg.role === "assistant" && (
+                    <span className={styles.assistantLabel} aria-hidden="true">
+                      ✦
+                    </span>
                   )}
+                  <div>
+                    <p>{messageText}</p>
+                    {msg.role === "assistant" && msg.metadata?.sourcesLine && (
+                      <p className={styles.sourcesLine}>{msg.metadata.sourcesLine}</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {isbusy && (
               <div className={styles.assistantBubble}>
                 <span className={styles.assistantLabel} aria-hidden="true">✦</span>

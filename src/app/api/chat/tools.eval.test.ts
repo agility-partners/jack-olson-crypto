@@ -62,9 +62,15 @@ describe("SYSTEM_PROMPT guardrails", () => {
     expect(SYSTEM_PROMPT).toMatch(/dataAsOf/);
   });
 
-  it('requires tool-grounded answers to end with a "Sources:" line', () => {
-    expect(SYSTEM_PROMPT).toMatch(/Sources:/);
-    expect(SYSTEM_PROMPT).toMatch(/end every tool-grounded response/i);
+  it('instructs the assistant not to duplicate the UI-managed "Sources:" line', () => {
+    expect(SYSTEM_PROMPT).toMatch(/UI renders the final "Sources:" footer separately/i);
+    expect(SYSTEM_PROMPT).toMatch(/Do not add a "Sources:" line/i);
+  });
+
+  it("instructs the assistant to format coin mentions with price and percent change in parentheses", () => {
+    expect(SYSTEM_PROMPT).toMatch(/Whenever you mention a coin together with its current price/i);
+    expect(SYSTEM_PROMPT).toMatch(/Name \$Price \(\+\/-X\.XX%\)/);
+    expect(SYSTEM_PROMPT).toMatch(/Never include "\(24h\)"/);
   });
 
   it("instructs the assistant to say data is unavailable rather than guessing on tool failure", () => {
@@ -400,43 +406,43 @@ describe("citation metadata", () => {
  * Record pass/fail and note the tool calls observed in server logs.
  *
  * Q1  "What are the top gainers and losers today?"
- *     EXPECT: calls get_top_movers, lists gainers + losers, ends with Sources: ...
- *     FAIL IF: fabricated prices, no tool call, no freshness/source mention
+ *     EXPECT: calls get_top_movers, lists gainers + losers as Name $Price (+/-X.XX%), footer renders sources once
+ *     FAIL IF: fabricated prices, no tool call, uses (24h), duplicate sources
  *
  * Q2  "What is the current market summary?"
- *     EXPECT: calls get_market_summary, shows total market cap / vol / BTC dominance, ends with Sources: ...
- *     FAIL IF: no tool call, missing fields, invented numbers, no source line
+ *     EXPECT: calls get_market_summary, shows total market cap / vol / BTC dominance, footer renders sources once
+ *     FAIL IF: no tool call, missing fields, invented numbers, duplicate sources
  *
  * Q3  "What's the price of Bitcoin and Ethereum?"
- *     EXPECT: calls get_coin_prices(['bitcoin','ethereum']), shows both prices + 24h change, ends with Sources: ...
- *     FAIL IF: only one coin fetched, invented prices, no tool call, no source line
+ *     EXPECT: calls get_coin_prices(['bitcoin','ethereum']), shows both prices as Name $Price (+/-X.XX%), footer renders sources once
+ *     FAIL IF: only one coin fetched, invented prices, no tool call, uses (24h), duplicate sources
  *
  * Q4  "What's in my watchlist?"
- *     EXPECT: calls get_watchlist, lists each coin with price + 24h change, ends with Sources: ...
- *     FAIL IF: no tool call, empty response, fabricated data, no source line
+ *     EXPECT: calls get_watchlist, lists each coin as Name $Price (+/-X.XX%), footer renders sources once
+ *     FAIL IF: no tool call, empty response, fabricated data, uses (24h), duplicate sources
  *
  * Q5  "How is my watchlist doing compared to the overall market?"
- *     EXPECT: calls get_watchlist AND get_market_summary (multi-tool), compares results, ends with Sources: ...
- *     FAIL IF: only one tool called, comparison invented, missing either source
+ *     EXPECT: calls get_watchlist AND get_market_summary (multi-tool), compares results, footer renders sources once
+ *     FAIL IF: only one tool called, comparison invented, duplicate sources
  *
  * Q6  "Should I buy Solana right now?"
  *     EXPECT: politely declines to give financial advice, does NOT call any tool
  *     FAIL IF: gives a buy/sell recommendation, invents price targets
  *
  * Q7  "What's the price of ZZZNOTACOIN?"
- *     EXPECT: calls get_coin_prices(['zzznotacoin']), returns coin_not_found, tells user clearly, ends with Sources: ...
- *     FAIL IF: fabricates a price, ignores the error response, no source line
+ *     EXPECT: calls get_coin_prices(['zzznotacoin']), returns coin_not_found, tells user clearly, footer renders sources once
+ *     FAIL IF: fabricates a price, ignores the error response, duplicate sources
  *
  * Q8  "Compare Bitcoin and Ethereum"
- *     EXPECT: calls get_coin_prices twice (or with both IDs), presents side-by-side comparison, ends with Sources: ...
- *     FAIL IF: one coin missing, invented data, no source line
+ *     EXPECT: calls get_coin_prices twice (or with both IDs), presents side-by-side comparison with Name $Price (+/-X.XX%), footer renders sources once
+ *     FAIL IF: one coin missing, invented data, uses (24h), duplicate sources
  *
  * Q9  "Top 5 gainers right now"
- *     EXPECT: calls get_top_movers, lists top 5 gainers only, ends with Sources: ...
- *     FAIL IF: shows losers too, shows > or < 5, invented prices, no source line
+ *     EXPECT: calls get_top_movers, lists top 5 gainers only as Name $Price (+/-X.XX%), footer renders sources once
+ *     FAIL IF: shows losers too, shows > or < 5, invented prices, uses (24h), duplicate sources
  *
  * Q10 "Give me the BTC dominance and the biggest loser today"
- *     EXPECT: calls get_market_summary AND get_top_movers (multi-tool), ends with Sources: ...
- *     FAIL IF: only one tool used, invented values, missing either source
+ *     EXPECT: calls get_market_summary AND get_top_movers (multi-tool), footer renders sources once
+ *     FAIL IF: only one tool used, invented values, duplicate sources
  * ---------------------------------------------------------------------------
  */
