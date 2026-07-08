@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import AssistantPageClient from "./AssistantPageClient";
 
@@ -46,5 +47,26 @@ describe("AssistantPageClient", () => {
       screen.getByText("Sources: get_watchlist as of 2024-01-15T10:30:00Z")
     ).toBeInTheDocument();
     expect(screen.getAllByText(/Sources:/)).toHaveLength(1);
+  });
+
+  it("avoids random suggestion selection during server render", async () => {
+    const { useChat } = await import("@ai-sdk/react");
+    const randomSpy = vi.spyOn(Math, "random");
+
+    vi.mocked(useChat).mockReturnValue({
+      messages: [],
+      sendMessage: vi.fn(),
+      status: "ready",
+      error: undefined,
+    });
+
+    const html = renderToString(<AssistantPageClient />);
+
+    expect(randomSpy).not.toHaveBeenCalled();
+    expect(html).toContain("What are the top gainers and losers today?");
+    expect(html).toContain("Show me the current market summary");
+    expect(html).toContain("Bitcoin and Ethereum?");
+
+    randomSpy.mockRestore();
   });
 });

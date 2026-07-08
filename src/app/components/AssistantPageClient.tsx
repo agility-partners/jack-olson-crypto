@@ -7,25 +7,8 @@ import {
   assistantMessageMetadataSchema,
   type AssistantChatMessage,
 } from "../api/chat/citations";
+import { DEFAULT_ASSISTANT_SUGGESTIONS } from "../lib/assistantSuggestions";
 import styles from "./AssistantPageClient.module.css";
-
-const ALL_SUGGESTIONS = [
-  "What are the top gainers and losers today?",
-  "Show me the current market summary",
-  "What's the price of Bitcoin and Ethereum?",
-  "What's in my watchlist?",
-  "Which coin has the highest market cap right now?",
-  "What are the biggest losers in the last 24 hours?",
-  "Give me an overview of the crypto market today",
-  "How is Solana performing compared to Ethereum?",
-  "What coins are trending up right now?",
-  "Show me the top 5 coins by trading volume",
-];
-
-function pickRandomSuggestions(n: number): string[] {
-  const shuffled = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, n);
-}
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
@@ -57,14 +40,19 @@ function getMessageDisplayText(
   return normalizedText.replace(/(?:\r?\n)?Sources:[^\n]*\s*$/u, "").trimEnd();
 }
 
-export default function AssistantPageClient() {
+type AssistantPageClientProps = {
+  initialSuggestions?: string[];
+};
+
+export default function AssistantPageClient({
+  initialSuggestions = DEFAULT_ASSISTANT_SUGGESTIONS,
+}: AssistantPageClientProps) {
   const { messages, sendMessage, status, error } =
     useChat<AssistantChatMessage>({
       transport,
       messageMetadataSchema: assistantMessageMetadataSchema,
     });
   const [input, setInput] = useState("");
-  const [suggestions] = useState(() => pickRandomSuggestions(5));
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -125,7 +113,7 @@ export default function AssistantPageClient() {
             </p>
 
             <div className={styles.suggestions}>
-              {suggestions.map((s) => (
+              {initialSuggestions.map((s) => (
                 <button
                   key={s}
                   className={styles.suggestionBtn}
