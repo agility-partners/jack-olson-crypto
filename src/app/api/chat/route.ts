@@ -16,7 +16,7 @@ const github = createOpenAI({
   apiKey: process.env.GITHUB_TOKEN,
 });
 
-const MODEL = process.env.GITHUB_MODELS_MODEL ?? "gpt-4o-mini";
+const MODEL = process.env.GITHUB_MODELS_MODEL ?? "openai/gpt-4o-mini";
 
 export const maxDuration = 30;
 
