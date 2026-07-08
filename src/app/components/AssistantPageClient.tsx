@@ -6,9 +6,9 @@ import { DefaultChatTransport } from "ai";
 import styles from "./AssistantPageClient.module.css";
 
 const SUGGESTIONS = [
-  "What are the top 5 gainers today?",
-  "Compare BTC and ETH performance",
+  "What are the top gainers and losers today?",
   "Show me the current market summary",
+  "What's the price of Bitcoin and Ethereum?",
   "What's in my watchlist?",
 ];
 
