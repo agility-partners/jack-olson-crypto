@@ -3,6 +3,10 @@
 import { useRef, useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import {
+  assistantMessageMetadataSchema,
+  type AssistantChatMessage,
+} from "../api/chat/citations";
 import styles from "./AssistantPageClient.module.css";
 
 const SUGGESTIONS = [
@@ -15,7 +19,11 @@ const SUGGESTIONS = [
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
 export default function AssistantPageClient() {
-  const { messages, sendMessage, status, error } = useChat({ transport });
+  const { messages, sendMessage, status, error } =
+    useChat<AssistantChatMessage>({
+      transport,
+      messageMetadataSchema: assistantMessageMetadataSchema,
+    });
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -106,13 +114,18 @@ export default function AssistantPageClient() {
                     ✦
                   </span>
                 )}
-                <p>
-                  {msg.parts
-                    .filter((part) => part.type === "text")
-                    .map((part, i) => (
-                      <span key={i}>{part.text}</span>
-                    ))}
-                </p>
+                <div>
+                  <p>
+                    {msg.parts
+                      .filter((part) => part.type === "text")
+                      .map((part, i) => (
+                        <span key={i}>{part.text}</span>
+                      ))}
+                  </p>
+                  {msg.role === "assistant" && msg.metadata?.sourcesLine && (
+                    <p className={styles.sourcesLine}>{msg.metadata.sourcesLine}</p>
+                  )}
+                </div>
               </div>
             ))}
             {isbusy && (

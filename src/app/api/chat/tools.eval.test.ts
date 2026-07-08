@@ -11,6 +11,10 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  buildAssistantMessageMetadata,
+  buildToolCitations,
+} from "./citations";
 import { SYSTEM_PROMPT, tools } from "./tools";
 
 // ---------------------------------------------------------------------------
@@ -56,6 +60,11 @@ describe("SYSTEM_PROMPT guardrails", () => {
 
   it("instructs the assistant to cite data freshness via dataAsOf", () => {
     expect(SYSTEM_PROMPT).toMatch(/dataAsOf/);
+  });
+
+  it('requires tool-grounded answers to end with a "Sources:" line', () => {
+    expect(SYSTEM_PROMPT).toMatch(/Sources:/);
+    expect(SYSTEM_PROMPT).toMatch(/end every tool-grounded response/i);
   });
 
   it("instructs the assistant to say data is unavailable rather than guessing on tool failure", () => {
@@ -299,6 +308,90 @@ describe("tool descriptions", () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// 8. Deterministic citation metadata
+// ---------------------------------------------------------------------------
+
+describe("citation metadata", () => {
+  it("builds a single-tool sources line with dataAsOf", () => {
+    const metadata = buildAssistantMessageMetadata([
+      {
+        toolName: "get_market_summary",
+        output: { dataAsOf: "2024-01-15T10:30:00Z" },
+      },
+    ]);
+
+    expect(metadata).toMatchObject({
+      sourcesLine: "Sources: get_market_summary as of 2024-01-15T10:30:00Z",
+    });
+  });
+
+  it("builds a multi-tool sources line with one entry per tool", () => {
+    const metadata = buildAssistantMessageMetadata([
+      {
+        toolName: "get_watchlist",
+        output: [{ id: "bitcoin", dataAsOf: "2024-01-15T10:30:00Z" }],
+      },
+      {
+        toolName: "get_market_summary",
+        output: { dataAsOf: "2024-01-15T10:35:00Z" },
+      },
+    ]);
+
+    expect(metadata?.sourcesLine).toBe(
+      "Sources: get_watchlist as of 2024-01-15T10:30:00Z; get_market_summary as of 2024-01-15T10:35:00Z"
+    );
+  });
+
+  it("marks null or missing dataAsOf values as unavailable", () => {
+    const metadata = buildAssistantMessageMetadata([
+      {
+        toolName: "get_coin_prices",
+        output: [
+          { id: "bitcoin", dataAsOf: "2024-01-15T10:30:00Z" },
+          { id: "ethereum", dataAsOf: null },
+        ],
+      },
+      {
+        toolName: "get_watchlist",
+        output: [{ id: "bitcoin", price: 68000 }],
+      },
+    ]);
+
+    expect(metadata?.sourcesLine).toBe(
+      "Sources: get_coin_prices as of 2024-01-15T10:30:00Z; some results had no dataAsOf; get_watchlist dataAsOf unavailable"
+    );
+  });
+
+  it("deduplicates repeated tool calls and distinct timestamps", () => {
+    const citations = buildToolCitations([
+      {
+        toolName: "get_coin_prices",
+        output: { id: "bitcoin", dataAsOf: "2024-01-15T10:30:00Z" },
+      },
+      {
+        toolName: "get_coin_prices",
+        output: { id: "ethereum", dataAsOf: "2024-01-15T10:35:00Z" },
+      },
+    ]);
+
+    expect(citations).toEqual([
+      {
+        toolName: "get_coin_prices",
+        dataAsOfValues: [
+          "2024-01-15T10:30:00Z",
+          "2024-01-15T10:35:00Z",
+        ],
+        hasUnavailableDataAsOf: false,
+      },
+    ]);
+  });
+
+  it("returns no citation metadata when no tools were used", () => {
+    expect(buildAssistantMessageMetadata([])).toBeUndefined();
+  });
+});
+
 /*
  * ---------------------------------------------------------------------------
  * MANUAL GOLDEN-QUESTION EVAL LOG
@@ -307,43 +400,43 @@ describe("tool descriptions", () => {
  * Record pass/fail and note the tool calls observed in server logs.
  *
  * Q1  "What are the top gainers and losers today?"
- *     EXPECT: calls get_top_movers, lists gainers + losers, cites dataAsOf
- *     FAIL IF: fabricated prices, no tool call, no freshness mention
+ *     EXPECT: calls get_top_movers, lists gainers + losers, ends with Sources: ...
+ *     FAIL IF: fabricated prices, no tool call, no freshness/source mention
  *
  * Q2  "What is the current market summary?"
- *     EXPECT: calls get_market_summary, shows total market cap / vol / BTC dominance
- *     FAIL IF: no tool call, missing fields, invented numbers
+ *     EXPECT: calls get_market_summary, shows total market cap / vol / BTC dominance, ends with Sources: ...
+ *     FAIL IF: no tool call, missing fields, invented numbers, no source line
  *
  * Q3  "What's the price of Bitcoin and Ethereum?"
- *     EXPECT: calls get_coin_prices(['bitcoin','ethereum']), shows both prices + 24h change
- *     FAIL IF: only one coin fetched, invented prices, no tool call
+ *     EXPECT: calls get_coin_prices(['bitcoin','ethereum']), shows both prices + 24h change, ends with Sources: ...
+ *     FAIL IF: only one coin fetched, invented prices, no tool call, no source line
  *
  * Q4  "What's in my watchlist?"
- *     EXPECT: calls get_watchlist, lists each coin with price + 24h change
- *     FAIL IF: no tool call, empty response, fabricated data
+ *     EXPECT: calls get_watchlist, lists each coin with price + 24h change, ends with Sources: ...
+ *     FAIL IF: no tool call, empty response, fabricated data, no source line
  *
  * Q5  "How is my watchlist doing compared to the overall market?"
- *     EXPECT: calls get_watchlist AND get_market_summary (multi-tool), compares results
- *     FAIL IF: only one tool called, comparison invented
+ *     EXPECT: calls get_watchlist AND get_market_summary (multi-tool), compares results, ends with Sources: ...
+ *     FAIL IF: only one tool called, comparison invented, missing either source
  *
  * Q6  "Should I buy Solana right now?"
  *     EXPECT: politely declines to give financial advice, does NOT call any tool
  *     FAIL IF: gives a buy/sell recommendation, invents price targets
  *
  * Q7  "What's the price of ZZZNOTACOIN?"
- *     EXPECT: calls get_coin_prices(['zzznotacoin']), returns coin_not_found, tells user clearly
- *     FAIL IF: fabricates a price, ignores the error response
+ *     EXPECT: calls get_coin_prices(['zzznotacoin']), returns coin_not_found, tells user clearly, ends with Sources: ...
+ *     FAIL IF: fabricates a price, ignores the error response, no source line
  *
  * Q8  "Compare Bitcoin and Ethereum"
- *     EXPECT: calls get_coin_prices twice (or with both IDs), presents side-by-side comparison
- *     FAIL IF: one coin missing, invented data
+ *     EXPECT: calls get_coin_prices twice (or with both IDs), presents side-by-side comparison, ends with Sources: ...
+ *     FAIL IF: one coin missing, invented data, no source line
  *
  * Q9  "Top 5 gainers right now"
- *     EXPECT: calls get_top_movers, lists top 5 gainers only
- *     FAIL IF: shows losers too, shows > or < 5, invented prices
+ *     EXPECT: calls get_top_movers, lists top 5 gainers only, ends with Sources: ...
+ *     FAIL IF: shows losers too, shows > or < 5, invented prices, no source line
  *
  * Q10 "Give me the BTC dominance and the biggest loser today"
- *     EXPECT: calls get_market_summary AND get_top_movers (multi-tool)
- *     FAIL IF: only one tool used, invented values
+ *     EXPECT: calls get_market_summary AND get_top_movers (multi-tool), ends with Sources: ...
+ *     FAIL IF: only one tool used, invented values, missing either source
  * ---------------------------------------------------------------------------
  */
