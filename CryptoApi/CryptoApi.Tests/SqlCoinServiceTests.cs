@@ -58,7 +58,7 @@ public class SqlCoinServiceTests
             _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
                 new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
                 {
-                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, 5.12m, 8.45m, 142.30m, 69045.00m, 65.51m, 19_742_212m, 21_000_000m, 21_000_000m, null)
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, 5.12m, 8.45m, 142.30m, 69045.00m, 65.51m, 19_742_212m, 21_000_000m, 21_000_000m, null, null)
                 }));
 
         var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");
@@ -90,7 +90,7 @@ public class SqlCoinServiceTests
             _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
                 new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
                 {
-                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, null, null, null, null, null, null, null, null, [70000.12m, 70010m, 69995m])
+                    ["bitcoin"] = new("bitcoin", 7, 70000.12m, 1_500_000_000_000m, 31_250_000_000m, 8.75m, null, null, null, null, null, null, null, null, [70000.12m, 70010m, 69995m], null)
                 }));
 
         var coin = (await service.GetAllCoinsAsync()).Single(c => c.Id == "bitcoin");
@@ -112,5 +112,34 @@ public class SqlCoinServiceTests
         coin!.Price.Should().Be(0.578m);
         coin.MarketCap.Should().Be("$31.2B");
         coin.Volume.Should().Be("$1.1B");
+    }
+
+    [Fact]
+    public async Task GetCoinByIdAsync_SetsDataAsOf_WhenSnapshotIncludesLastUpdated()
+    {
+        var lastUpdated = new DateTime(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);
+        var service = new SqlCoinService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyDictionary<string, SqlCoinService.CoinMarketSnapshot>>(
+                new Dictionary<string, SqlCoinService.CoinMarketSnapshot>
+                {
+                    ["bitcoin"] = new("bitcoin", 1, 70000m, 1_400_000_000_000m, 30_000_000_000m, 2m, null, null, null, null, null, null, null, null, null, lastUpdated)
+                }));
+
+        var coin = await service.GetCoinByIdAsync("bitcoin");
+
+        coin.Should().NotBeNull();
+        coin!.DataAsOf.Should().Be("2024-01-15T10:30:00Z");
+    }
+
+    [Fact]
+    public async Task GetCoinByIdAsync_LeavesDataAsOfNull_WhenFallback()
+    {
+        var service = CreateService();
+
+        var coin = await service.GetCoinByIdAsync("bitcoin");
+
+        coin.Should().NotBeNull();
+        coin!.DataAsOf.Should().BeNull();
     }
 }

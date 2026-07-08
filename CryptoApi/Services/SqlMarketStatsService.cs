@@ -16,7 +16,8 @@ public class SqlMarketStatsService : IMarketStatsService
                 name,
                 current_price,
                 market_cap,
-                price_change_percentage_24h
+                price_change_percentage_24h,
+                last_updated
             FROM gold.coin_prices
             WHERE market_cap_rank <= 100
                 AND price_change_percentage_24h IS NOT NULL
@@ -29,6 +30,7 @@ public class SqlMarketStatsService : IMarketStatsService
                 current_price,
                 market_cap,
                 price_change_percentage_24h,
+                last_updated,
                 ROW_NUMBER() OVER (ORDER BY price_change_percentage_24h DESC) AS rank,
                 'gainer' AS category
             FROM filtered
@@ -42,6 +44,7 @@ public class SqlMarketStatsService : IMarketStatsService
                 current_price,
                 market_cap,
                 price_change_percentage_24h,
+                last_updated,
                 ROW_NUMBER() OVER (ORDER BY price_change_percentage_24h ASC) AS rank,
                 'loser' AS category
             FROM filtered
@@ -55,7 +58,8 @@ public class SqlMarketStatsService : IMarketStatsService
             market_cap,
             price_change_percentage_24h,
             rank,
-            category
+            category,
+            last_updated
         FROM gainers
         WHERE rank <= 10
         UNION ALL
@@ -67,7 +71,8 @@ public class SqlMarketStatsService : IMarketStatsService
             market_cap,
             price_change_percentage_24h,
             rank,
-            category
+            category,
+            last_updated
         FROM losers
         WHERE rank <= 10
         ORDER BY category, rank
@@ -94,11 +99,13 @@ public class SqlMarketStatsService : IMarketStatsService
 
         const string sql = """
             SELECT
-                total_market_cap,
-                total_24h_volume,
-                avg_24h_change_pct,
-                btc_dominance_pct
-            FROM gold.market_summary
+                ms.total_market_cap,
+                ms.total_24h_volume,
+                ms.avg_24h_change_pct,
+                ms.btc_dominance_pct,
+                cp.data_as_of
+            FROM gold.market_summary ms
+            CROSS JOIN (SELECT MAX(last_updated) AS data_as_of FROM gold.coin_prices) cp
             """;
 
         await using var cmd = new SqlCommand(sql, conn);
@@ -106,20 +113,22 @@ public class SqlMarketStatsService : IMarketStatsService
 
         if (!await reader.ReadAsync())
         {
-            return CreateDto(0m, 0m, 0m, 0m);
+            return CreateDto(0m, 0m, 0m, 0m, null);
         }
 
         var totalMarketCap = reader.IsDBNull(0) ? 0m : reader.GetDecimal(0);
         var volume24h = reader.IsDBNull(1) ? 0m : reader.GetDecimal(1);
         var marketCapChangePct = reader.IsDBNull(2) ? 0m : reader.GetDecimal(2);
         var btcDominancePct = reader.IsDBNull(3) ? 0m : reader.GetDecimal(3);
+        var dataAsOf = reader.IsDBNull(4) ? null
+            : reader.GetDateTime(4).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
 
         if (totalMarketCap <= 0m && volume24h <= 0m)
         {
             return CreateFallbackDtoFromCatalog();
         }
 
-        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct);
+        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct, dataAsOf);
     }
 
     public async Task<TopMoversDto> GetTopMoversAsync()
@@ -144,6 +153,16 @@ public class SqlMarketStatsService : IMarketStatsService
             return CreateFallbackTopMoversFromCatalog();
         }
 
+        var latestTimestamp = rows
+            .Where(r => r.LastUpdated.HasValue)
+            .Select(r => r.LastUpdated!.Value)
+            .DefaultIfEmpty()
+            .Max();
+
+        var dataAsOf = latestTimestamp == default
+            ? null
+            : latestTimestamp.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+
         return new TopMoversDto
         {
             Gainers = rows
@@ -158,6 +177,7 @@ public class SqlMarketStatsService : IMarketStatsService
                 .Take(10)
                 .Select(MapTopMover)
                 .ToList(),
+            DataAsOf = dataAsOf,
         };
     }
 
@@ -181,7 +201,8 @@ public class SqlMarketStatsService : IMarketStatsService
                 MarketCapRaw: reader.IsDBNull(4) ? null : reader.GetDecimal(4),
                 Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5),
                 Rank: ParseRank(reader.GetValue(6)),
-                Category: reader.IsDBNull(7) ? string.Empty : reader.GetString(7)));
+                Category: reader.IsDBNull(7) ? string.Empty : reader.GetString(7),
+                LastUpdated: reader.IsDBNull(8) ? null : reader.GetDateTime(8)));
         }
 
         return rows;
@@ -241,7 +262,7 @@ public class SqlMarketStatsService : IMarketStatsService
         var coins = CoinCatalog.GetAll();
         if (coins.Count == 0)
         {
-            return CreateDto(0m, 0m, 0m, 0m);
+            return CreateDto(0m, 0m, 0m, 0m, null);
         }
 
         var totalMarketCap = coins.Sum(c => c.MarketCapRaw);
@@ -252,14 +273,15 @@ public class SqlMarketStatsService : IMarketStatsService
             ? bitcoinMarketCap * 100m / totalMarketCap
             : 0m;
 
-        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct);
+        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct, null);
     }
 
     private static MarketStatsDto CreateDto(
         decimal totalMarketCap,
         decimal volume24h,
         decimal marketCapChangePct,
-        decimal btcDominancePct)
+        decimal btcDominancePct,
+        string? dataAsOf)
     {
         var isUp = marketCapChangePct >= 0;
 
@@ -274,6 +296,7 @@ public class SqlMarketStatsService : IMarketStatsService
             BtcDominance = $"{btcDominancePct.ToString("0.#", CultureInfo.InvariantCulture)}%",
             AvgChange24h = changeFormatted,
             AvgChange24hDir = isUp ? "up" : "down",
+            DataAsOf = dataAsOf,
         };
     }
 
@@ -320,5 +343,6 @@ public class SqlMarketStatsService : IMarketStatsService
         decimal? MarketCapRaw,
         decimal? Change24h,
         int Rank,
-        string Category);
+        string Category,
+        DateTime? LastUpdated);
 }

@@ -44,9 +44,9 @@ public class SqlMarketStatsServiceTests
         var service = new SqlMarketStatsService(
             CreateServiceConfiguration(),
             _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([
-                new("pepe", "PEPE", "Pepe", 0.00001m, 4_500_000_000m, 15.5m, 1, "gainer"),
-                new("bitcoin", "BTC", "Bitcoin", 70000m, 1_500_000_000_000m, 5.25m, 2, "gainer"),
-                new("ethereum", "ETH", "Ethereum", 3500m, 420_000_000_000m, -4.75m, 1, "loser")
+                new("pepe", "PEPE", "Pepe", 0.00001m, 4_500_000_000m, 15.5m, 1, "gainer", null),
+                new("bitcoin", "BTC", "Bitcoin", 70000m, 1_500_000_000_000m, 5.25m, 2, "gainer", null),
+                new("ethereum", "ETH", "Ethereum", 3500m, 420_000_000_000m, -4.75m, 1, "loser", null)
             ]));
 
         var movers = await service.GetTopMoversAsync();
@@ -99,6 +99,47 @@ public class SqlMarketStatsServiceTests
         sql.Should().Contain("FROM losers");
         sql.Should().Contain("WHERE rank <= 10");
         sql!.Split("WHERE rank <= 10").Should().HaveCount(3);
+    }
+
+    [Fact]
+    public async Task GetTopMoversAsync_SetsDataAsOf_WhenRowsIncludeLastUpdated()
+    {
+        var lastUpdated = new DateTime(2024, 6, 1, 8, 0, 0, DateTimeKind.Utc);
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([
+                new("bitcoin", "BTC", "Bitcoin", 70000m, 1_500_000_000_000m, 5.25m, 1, "gainer", lastUpdated),
+                new("ethereum", "ETH", "Ethereum", 3500m, 420_000_000_000m, -4.75m, 1, "loser", lastUpdated)
+            ]));
+
+        var movers = await service.GetTopMoversAsync();
+
+        movers.DataAsOf.Should().Be("2024-06-01T08:00:00Z");
+    }
+
+    [Fact]
+    public async Task GetTopMoversAsync_LeavesDataAsOfNull_WhenFallback()
+    {
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]));
+
+        var movers = await service.GetTopMoversAsync();
+
+        movers.DataAsOf.Should().BeNull();
+    }
+
+    [Fact]
+    public void CreateFallbackDtoFromCatalog_LeavesDataAsOfNull()
+    {
+        var method = typeof(SqlMarketStatsService).GetMethod(
+            "CreateFallbackDtoFromCatalog",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
+        method.Should().NotBeNull();
+        var result = (MarketStatsDto)method!.Invoke(null, null)!;
+
+        result.DataAsOf.Should().BeNull();
     }
 
     public static IEnumerable<object[]> ParseRankCases()

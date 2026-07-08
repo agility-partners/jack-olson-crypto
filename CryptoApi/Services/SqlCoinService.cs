@@ -87,7 +87,8 @@ public class SqlCoinService : ICoinService
                 circulating_supply,
                 total_supply,
                 max_supply,
-                sparkline_7d
+                sparkline_7d,
+                last_updated
             FROM gold.coin_prices
             """;
 
@@ -119,7 +120,8 @@ public class SqlCoinService : ICoinService
                 CirculatingSupplyRaw: reader.IsDBNull(11) ? null : reader.GetDecimal(11),
                 TotalSupplyRaw: reader.IsDBNull(12) ? null : reader.GetDecimal(12),
                 MaxSupplyRaw: reader.IsDBNull(13) ? null : reader.GetDecimal(13),
-                Sparkline: reader.IsDBNull(14) ? null : ParseSparklinePoints(reader.GetString(14)));
+                Sparkline: reader.IsDBNull(14) ? null : ParseSparklinePoints(reader.GetString(14)),
+                LastUpdated: reader.IsDBNull(15) ? null : reader.GetDateTime(15));
         }
 
         return snapshots;
@@ -152,6 +154,9 @@ public class SqlCoinService : ICoinService
             TotalSupplyRaw = snapshot.TotalSupplyRaw ?? coin.TotalSupplyRaw,
             MaxSupplyRaw = snapshot.MaxSupplyRaw ?? coin.MaxSupplyRaw,
             Sparkline = snapshot.Sparkline ?? coin.Sparkline,
+            DataAsOf = snapshot.LastUpdated.HasValue
+                ? snapshot.LastUpdated.Value.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+                : null,
         };
     }
 
@@ -204,5 +209,6 @@ public class SqlCoinService : ICoinService
         decimal? CirculatingSupplyRaw,
         decimal? TotalSupplyRaw,
         decimal? MaxSupplyRaw,
-        decimal[]? Sparkline);
+        decimal[]? Sparkline,
+        DateTime? LastUpdated);
 }
