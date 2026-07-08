@@ -22,4 +22,6 @@ public class CoinDto
     public decimal TotalSupplyRaw { get; set; }
     public decimal? MaxSupplyRaw { get; set; }
     public decimal[]? Sparkline { get; set; }
+    /// <summary>ISO-8601 UTC timestamp of the warehouse row for this coin, or null when serving catalog fallback.</summary>
+    public string? DataAsOf { get; set; }
 }

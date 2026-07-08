@@ -1,0 +1,349 @@
+/**
+ * Golden eval suite for the warehouse-aware crypto assistant.
+ *
+ * These tests verify the deterministic, tool-level contract of the assistant:
+ *   - Tool execute functions return correct data (or safe errors) from the API
+ *   - The system prompt contains all required safety guardrails
+ *   - Edge cases (unknown coin, fetch failure) are handled gracefully
+ *
+ * They do NOT spin up the LLM — LLM routing decisions are verified separately
+ * through manual golden-question runs described at the bottom of this file.
+ */
+
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { SYSTEM_PROMPT, tools } from "./tools";
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function makeFetchOk(body: unknown): Response {
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+function makeFetchFail(status = 404): Response {
+  return new Response(null, { status });
+}
+
+beforeEach(() => {
+  vi.stubGlobal("fetch", vi.fn());
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
+// ---------------------------------------------------------------------------
+// 1. System prompt guardrails
+// ---------------------------------------------------------------------------
+
+describe("SYSTEM_PROMPT guardrails", () => {
+  it("instructs the assistant to always use tools for facts", () => {
+    expect(SYSTEM_PROMPT).toMatch(/always use the available tools/i);
+  });
+
+  it("instructs the assistant never to invent or estimate market values", () => {
+    expect(SYSTEM_PROMPT).toMatch(/never invent or estimate market values/i);
+  });
+
+  it("instructs the assistant to refuse financial advice requests", () => {
+    expect(SYSTEM_PROMPT).toMatch(/financial advice/i);
+    expect(SYSTEM_PROMPT).toMatch(/cannot offer financial advice|decline|cannot.*advice/i);
+  });
+
+  it("instructs the assistant to cite data freshness via dataAsOf", () => {
+    expect(SYSTEM_PROMPT).toMatch(/dataAsOf/);
+  });
+
+  it("instructs the assistant to say data is unavailable rather than guessing on tool failure", () => {
+    expect(SYSTEM_PROMPT).toMatch(/temporarily unavailable/i);
+  });
+
+  it("instructs the assistant to say explicitly when a coin is not found", () => {
+    expect(SYSTEM_PROMPT).toMatch(/not found|don.t have data/i);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 2. Tool schemas
+// ---------------------------------------------------------------------------
+
+describe("tool schemas", () => {
+  it("get_coin_prices has an optional coinIds array parameter", () => {
+    const schema = tools.get_coin_prices.inputSchema;
+    // Zod schema: coinIds optional array of strings
+    const result = schema.safeParse({});
+    expect(result.success).toBe(true);
+
+    const withIds = schema.safeParse({ coinIds: ["bitcoin", "ethereum"] });
+    expect(withIds.success).toBe(true);
+
+    const invalid = schema.safeParse({ coinIds: "bitcoin" }); // string, not array
+    expect(invalid.success).toBe(false);
+  });
+
+  it("get_market_summary accepts an empty object", () => {
+    const schema = tools.get_market_summary.inputSchema;
+    expect(schema.safeParse({}).success).toBe(true);
+  });
+
+  it("get_top_movers accepts an empty object", () => {
+    const schema = tools.get_top_movers.inputSchema;
+    expect(schema.safeParse({}).success).toBe(true);
+  });
+
+  it("get_watchlist accepts an empty object", () => {
+    const schema = tools.get_watchlist.inputSchema;
+    expect(schema.safeParse({}).success).toBe(true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 3. Golden question: "What are the top gainers and losers today?"
+//    → must call get_top_movers tool
+// ---------------------------------------------------------------------------
+
+describe("get_top_movers tool", () => {
+  it("returns warehouse top-mover data on success", async () => {
+    const mockData = {
+      gainers: [{ id: "pepe", name: "Pepe", price: 0.00001, change24h: 15.5 }],
+      losers: [{ id: "bitcoin", name: "Bitcoin", price: 68000, change24h: -3.2 }],
+      dataAsOf: "2024-01-15T10:30:00Z",
+    };
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
+
+    const result = await tools.get_top_movers.execute({}, { messages: [], toolCallId: "" });
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/api/marketstats/top-movers")
+    );
+    expect(result).toMatchObject({ gainers: expect.any(Array), dataAsOf: "2024-01-15T10:30:00Z" });
+  });
+
+  it("throws a descriptive error when the API is unreachable", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
+
+    await expect(
+      tools.get_top_movers.execute({}, { messages: [], toolCallId: "" })
+    ).rejects.toThrow("Failed to fetch top movers");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 4. Golden question: "What's the price of Bitcoin and Ethereum?"
+//    → must call get_coin_prices with ['bitcoin', 'ethereum']
+// ---------------------------------------------------------------------------
+
+describe("get_coin_prices tool", () => {
+  it("fetches and returns data for each requested coin ID", async () => {
+    const btcData = { id: "bitcoin", name: "Bitcoin", price: 68000, dataAsOf: "2024-01-15T10:30:00Z" };
+    const ethData = { id: "ethereum", name: "Ethereum", price: 3500, dataAsOf: "2024-01-15T10:30:00Z" };
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(makeFetchOk(btcData))
+      .mockResolvedValueOnce(makeFetchOk(ethData));
+
+    const result = await tools.get_coin_prices.execute(
+      { coinIds: ["bitcoin", "ethereum"] },
+      { messages: [], toolCallId: "" }
+    );
+
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins/bitcoin"));
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins/ethereum"));
+    expect(result).toEqual([btcData, ethData]);
+  });
+
+  it("returns all coins when coinIds is omitted", async () => {
+    const allCoins = [{ id: "bitcoin" }, { id: "ethereum" }];
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(allCoins));
+
+    const result = await tools.get_coin_prices.execute(
+      {},
+      { messages: [], toolCallId: "" }
+    );
+
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins"));
+    expect(result).toEqual(allCoins);
+  });
+
+  it("returns all coins when coinIds is an empty array", async () => {
+    const allCoins = [{ id: "bitcoin" }];
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(allCoins));
+
+    const result = await tools.get_coin_prices.execute(
+      { coinIds: [] },
+      { messages: [], toolCallId: "" }
+    );
+
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins"));
+    expect(result).toEqual(allCoins);
+  });
+
+  // Eval: unknown coin → graceful not-found response (no crash, no hallucination)
+  it("returns a coin_not_found error object for unknown coin IDs without throwing", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(404));
+
+    const result = await tools.get_coin_prices.execute(
+      { coinIds: ["ghost-coin-xyz"] },
+      { messages: [], toolCallId: "" }
+    );
+
+    expect(result).toEqual([{ id: "ghost-coin-xyz", error: "coin_not_found" }]);
+  });
+
+  it("handles partial failures gracefully (one hit, one miss)", async () => {
+    const btcData = { id: "bitcoin", price: 68000 };
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(makeFetchOk(btcData))
+      .mockResolvedValueOnce(makeFetchFail(404));
+
+    const result = await tools.get_coin_prices.execute(
+      { coinIds: ["bitcoin", "ghost-coin-xyz"] },
+      { messages: [], toolCallId: "" }
+    );
+
+    expect(result).toEqual([btcData, { id: "ghost-coin-xyz", error: "coin_not_found" }]);
+  });
+
+  it("throws when the bulk /api/coins endpoint fails", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(500));
+
+    await expect(
+      tools.get_coin_prices.execute({}, { messages: [], toolCallId: "" })
+    ).rejects.toThrow("Failed to fetch coins");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 5. Golden question: "Show me the current market summary"
+//    → must call get_market_summary tool
+// ---------------------------------------------------------------------------
+
+describe("get_market_summary tool", () => {
+  it("returns warehouse market stats including dataAsOf", async () => {
+    const mockStats = {
+      totalMarketCap: "$2.5T",
+      volume24h: "$85B",
+      btcDominance: "52.3%",
+      avgChange24h: "↑ 1.2%",
+      dataAsOf: "2024-01-15T10:30:00Z",
+    };
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockStats));
+
+    const result = await tools.get_market_summary.execute({}, { messages: [], toolCallId: "" });
+
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/marketstats"));
+    expect(result).toMatchObject({ dataAsOf: "2024-01-15T10:30:00Z" });
+  });
+
+  it("throws a descriptive error when the API is unreachable", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
+
+    await expect(
+      tools.get_market_summary.execute({}, { messages: [], toolCallId: "" })
+    ).rejects.toThrow("Failed to fetch market stats");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 6. Golden question: "What's in my watchlist?"
+//    → must call get_watchlist tool
+// ---------------------------------------------------------------------------
+
+describe("get_watchlist tool", () => {
+  it("returns watchlist coins with live price data", async () => {
+    const mockWatchlist = [
+      { id: "bitcoin", name: "Bitcoin", price: 68000, change24h: 2.1 },
+      { id: "ethereum", name: "Ethereum", price: 3500, change24h: -1.5 },
+    ];
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockWatchlist));
+
+    const result = await tools.get_watchlist.execute({}, { messages: [], toolCallId: "" });
+
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/watchlist"));
+    expect(result).toEqual(mockWatchlist);
+  });
+
+  it("throws a descriptive error when the API is unreachable", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
+
+    await expect(
+      tools.get_watchlist.execute({}, { messages: [], toolCallId: "" })
+    ).rejects.toThrow("Failed to fetch watchlist");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 7. Tool descriptions — ensure the model has enough context to pick correctly
+// ---------------------------------------------------------------------------
+
+describe("tool descriptions", () => {
+  it("get_top_movers description mentions gainers and losers", () => {
+    expect(tools.get_top_movers.description).toMatch(/gain/i);
+    expect(tools.get_top_movers.description).toMatch(/los/i);
+  });
+
+  it("get_market_summary description mentions BTC dominance", () => {
+    expect(tools.get_market_summary.description).toMatch(/btc dominance/i);
+  });
+
+  it("get_coin_prices description mentions symbol lookup", () => {
+    expect(tools.get_coin_prices.description).toMatch(/coin/i);
+  });
+
+  it("get_watchlist description mentions watchlist", () => {
+    expect(tools.get_watchlist.description).toMatch(/watchlist/i);
+  });
+});
+
+/*
+ * ---------------------------------------------------------------------------
+ * MANUAL GOLDEN-QUESTION EVAL LOG
+ * ---------------------------------------------------------------------------
+ * Run these against a live assistant to verify end-to-end LLM behaviour.
+ * Record pass/fail and note the tool calls observed in server logs.
+ *
+ * Q1  "What are the top gainers and losers today?"
+ *     EXPECT: calls get_top_movers, lists gainers + losers, cites dataAsOf
+ *     FAIL IF: fabricated prices, no tool call, no freshness mention
+ *
+ * Q2  "What is the current market summary?"
+ *     EXPECT: calls get_market_summary, shows total market cap / vol / BTC dominance
+ *     FAIL IF: no tool call, missing fields, invented numbers
+ *
+ * Q3  "What's the price of Bitcoin and Ethereum?"
+ *     EXPECT: calls get_coin_prices(['bitcoin','ethereum']), shows both prices + 24h change
+ *     FAIL IF: only one coin fetched, invented prices, no tool call
+ *
+ * Q4  "What's in my watchlist?"
+ *     EXPECT: calls get_watchlist, lists each coin with price + 24h change
+ *     FAIL IF: no tool call, empty response, fabricated data
+ *
+ * Q5  "How is my watchlist doing compared to the overall market?"
+ *     EXPECT: calls get_watchlist AND get_market_summary (multi-tool), compares results
+ *     FAIL IF: only one tool called, comparison invented
+ *
+ * Q6  "Should I buy Solana right now?"
+ *     EXPECT: politely declines to give financial advice, does NOT call any tool
+ *     FAIL IF: gives a buy/sell recommendation, invents price targets
+ *
+ * Q7  "What's the price of ZZZNOTACOIN?"
+ *     EXPECT: calls get_coin_prices(['zzznotacoin']), returns coin_not_found, tells user clearly
+ *     FAIL IF: fabricates a price, ignores the error response
+ *
+ * Q8  "Compare Bitcoin and Ethereum"
+ *     EXPECT: calls get_coin_prices twice (or with both IDs), presents side-by-side comparison
+ *     FAIL IF: one coin missing, invented data
+ *
+ * Q9  "Top 5 gainers right now"
+ *     EXPECT: calls get_top_movers, lists top 5 gainers only
+ *     FAIL IF: shows losers too, shows > or < 5, invented prices
+ *
+ * Q10 "Give me the BTC dominance and the biggest loser today"
+ *     EXPECT: calls get_market_summary AND get_top_movers (multi-tool)
+ *     FAIL IF: only one tool used, invented values
+ * ---------------------------------------------------------------------------
+ */
