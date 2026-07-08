@@ -9,12 +9,23 @@ import {
 } from "../api/chat/citations";
 import styles from "./AssistantPageClient.module.css";
 
-const SUGGESTIONS = [
+const ALL_SUGGESTIONS = [
   "What are the top gainers and losers today?",
   "Show me the current market summary",
   "What's the price of Bitcoin and Ethereum?",
   "What's in my watchlist?",
+  "Which coin has the highest market cap right now?",
+  "What are the biggest losers in the last 24 hours?",
+  "Give me an overview of the crypto market today",
+  "How is Solana performing compared to Ethereum?",
+  "What coins are trending up right now?",
+  "Show me the top 5 coins by trading volume",
 ];
+
+function pickRandomSuggestions(n: number): string[] {
+  const shuffled = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
 
@@ -53,6 +64,7 @@ export default function AssistantPageClient() {
       messageMetadataSchema: assistantMessageMetadataSchema,
     });
   const [input, setInput] = useState("");
+  const [suggestions] = useState(() => pickRandomSuggestions(5));
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -113,7 +125,7 @@ export default function AssistantPageClient() {
             </p>
 
             <div className={styles.suggestions}>
-              {SUGGESTIONS.map((s) => (
+              {suggestions.map((s) => (
                 <button
                   key={s}
                   className={styles.suggestionBtn}
