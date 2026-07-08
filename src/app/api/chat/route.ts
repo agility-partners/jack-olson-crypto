@@ -12,11 +12,11 @@ import { z } from "zod";
 const API_URL = process.env.API_URL ?? "http://localhost:8080";
 
 const github = createOpenAI({
-  baseURL: "https://models.inference.ai.azure.com/v1",
+  baseURL: "https://models.github.ai/inference",
   apiKey: process.env.GITHUB_TOKEN,
 });
 
-const MODEL = process.env.GITHUB_MODELS_MODEL ?? "gpt-4.1-mini";
+const MODEL = process.env.GITHUB_MODELS_MODEL ?? "gpt-4o-mini";
 
 export const maxDuration = 30;
 
