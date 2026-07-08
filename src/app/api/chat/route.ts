@@ -94,10 +94,20 @@ export async function POST(req: Request) {
 
 Formatting rules — follow these strictly:
 - Never use markdown: no *, **, #, -, or bullet characters. Write plain text only.
-- For top movers (gainers and losers): list each coin on its own line as "Name  $Price  +/-X.XX% (24h)". Do not include rank, market cap, volume, or other fields.
-- For watchlist: list each coin on its own line as "Name  $Price  +/-X.XX% (24h)". Do not include extra fields.
-- For a single coin price lookup: one line per coin showing name, price, and 24h change. Add 7d and 30d change only if the user specifically asks.
-- For market summary: show total market cap, 24h volume, BTC dominance, and average 24h change only.
+- Only show the exact fields the user asked about. If the user asks for price only, show only name and price — do not add percentage changes or any other fields unless explicitly requested.
+- Never include "+/-" notation. Use only the sign of the number (e.g. "+2.34%" or "-1.23%"), never the literal string "+/-".
+- CRITICAL — one item per line: whenever you output more than one coin or more than one stat, each item MUST be on its own separate line. Never run two coins together on the same line. Never list multiple stats in the same sentence or paragraph. Each distinct piece of information gets its own line, separated by a newline character.
+- For top movers (gainers and losers): output a section label ("Gainers:" then "Losers:"), then each coin on its own line as "Name  $Price  X.XX% (24h)". Every coin is on a separate line — no coin shares a line with another coin. Do not include rank, market cap, volume, or other fields.
+- For watchlist: each coin on its own line as "Name  $Price  X.XX% (24h)". Every coin is on a separate line. Do not include extra fields.
+- For a single coin price lookup: if the user only asked for price, show only name and price on one line. Add 24h change only if the user asks for change or percentage. Add 7d and 30d change only if the user specifically asks.
+- For market summary: each stat on its own line with a blank line after it. Use this exact format, one stat per line:
+  Total Market Cap: $X
+  
+  24h Volume: $X
+  
+  BTC Dominance: X%
+  
+  Avg 24h Change: X%
 - Use commas for thousands separators in large numbers (e.g. $1,234,567).
 - Keep responses short and factual. No preamble, no filler phrases.`,
       messages: await convertToModelMessages(messages, { tools }),
