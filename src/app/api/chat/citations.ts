@@ -89,6 +89,22 @@ export function buildToolCitations(
   }));
 }
 
+const estFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/New_York",
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  timeZoneName: "short",
+});
+
+function formatTimestampEst(isoString: string): string {
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) return isoString;
+  return estFormatter.format(date);
+}
+
 export function formatCitationSourcesLine(citations: AssistantCitation[]) {
   if (citations.length === 0) {
     return undefined;
@@ -99,11 +115,13 @@ export function formatCitationSourcesLine(citations: AssistantCitation[]) {
       return `${citation.toolName} dataAsOf unavailable`;
     }
 
+    const formattedTimestamps = citation.dataAsOfValues.map(formatTimestampEst);
+
     if (citation.hasUnavailableDataAsOf) {
-      return `${citation.toolName} as of ${citation.dataAsOfValues.join(", ")}; some results had no dataAsOf`;
+      return `${citation.toolName} as of ${formattedTimestamps.join(", ")}; some results had no dataAsOf`;
     }
 
-    return `${citation.toolName} as of ${citation.dataAsOfValues.join(", ")}`;
+    return `${citation.toolName} as of ${formattedTimestamps.join(", ")}`;
   });
 
   return `Sources: ${entries.join("; ")}`;

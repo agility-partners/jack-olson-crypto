@@ -328,7 +328,7 @@ describe("citation metadata", () => {
     ]);
 
     expect(metadata).toMatchObject({
-      sourcesLine: "Sources: get_market_summary as of 2024-01-15T10:30:00Z",
+      sourcesLine: "Sources: get_market_summary as of Jan 15, 2024, 5:30 AM EST",
     });
   });
 
@@ -345,7 +345,7 @@ describe("citation metadata", () => {
     ]);
 
     expect(metadata?.sourcesLine).toBe(
-      "Sources: get_watchlist as of 2024-01-15T10:30:00Z; get_market_summary as of 2024-01-15T10:35:00Z"
+      "Sources: get_watchlist as of Jan 15, 2024, 5:30 AM EST; get_market_summary as of Jan 15, 2024, 5:35 AM EST"
     );
   });
 
@@ -365,7 +365,7 @@ describe("citation metadata", () => {
     ]);
 
     expect(metadata?.sourcesLine).toBe(
-      "Sources: get_coin_prices as of 2024-01-15T10:30:00Z; some results had no dataAsOf; get_watchlist dataAsOf unavailable"
+      "Sources: get_coin_prices as of Jan 15, 2024, 5:30 AM EST; some results had no dataAsOf; get_watchlist dataAsOf unavailable"
     );
   });
 
