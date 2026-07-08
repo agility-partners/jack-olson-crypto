@@ -7,9 +7,7 @@ vi.mock("@ai-sdk/react", () => ({
 }));
 
 vi.mock("ai", () => ({
-  DefaultChatTransport: class {
-    constructor(_options: unknown) {}
-  },
+  DefaultChatTransport: class {},
 }));
 
 beforeAll(() => {
