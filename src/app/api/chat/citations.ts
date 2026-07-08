@@ -38,9 +38,14 @@ function collectDataAsOfValues(
   }
 
   const record = value as Record<string, unknown>;
-  const rawDataAsOf = record.dataAsOf ?? record.DataAsOf;
+  const hasCamelCaseDataAsOf = Object.hasOwn(record, "dataAsOf");
+  const hasPascalCaseDataAsOf = Object.hasOwn(record, "DataAsOf");
 
-  if (rawDataAsOf !== undefined) {
+  if (hasCamelCaseDataAsOf || hasPascalCaseDataAsOf) {
+    const rawDataAsOf = hasCamelCaseDataAsOf
+      ? record.dataAsOf
+      : record.DataAsOf;
+
     if (typeof rawDataAsOf === "string" && rawDataAsOf.trim().length > 0) {
       values.add(rawDataAsOf);
     } else {
