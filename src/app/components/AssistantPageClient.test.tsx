@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import AssistantPageClient from "./AssistantPageClient";
@@ -47,6 +47,12 @@ describe("AssistantPageClient", () => {
       screen.getByText("Sources: get_watchlist as of 2024-01-15T10:30:00Z")
     ).toBeInTheDocument();
     expect(screen.getAllByText(/Sources:/)).toHaveLength(1);
+    await waitFor(() => {
+      const steerButtons = screen
+        .getAllByRole("button")
+        .filter((button) => button.getAttribute("aria-label") !== "Send message");
+      expect(steerButtons).toHaveLength(3);
+    });
   });
 
   it("avoids random suggestion selection during server render", async () => {
