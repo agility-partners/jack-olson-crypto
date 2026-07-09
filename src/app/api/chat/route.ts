@@ -30,6 +30,7 @@ function toClientErrorMessage(error: unknown) {
 export async function POST(req: Request) {
   try {
     const { messages }: { messages: AssistantChatMessage[] } = await req.json();
+    const toolResults: Array<{ toolName: string; output: unknown }> = [];
 
     const result = streamText({
       model: anthropic(MODEL),
@@ -37,13 +38,19 @@ export async function POST(req: Request) {
       messages: await convertToModelMessages(messages, { tools }),
       tools,
       stopWhen: isStepCount(5),
+      onStepEnd: ({ toolResults: stepToolResults }) => {
+        toolResults.push(
+          ...stepToolResults.map(({ toolName, output }) => ({
+            toolName,
+            output,
+          }))
+        );
+      },
     });
 
     return createUIMessageStreamResponse({
       stream: createUIMessageStream<AssistantChatMessage>({
         execute: async ({ writer }) => {
-          const toolResults: Array<{ toolName: string; output: unknown }> = [];
-
           for await (const part of result.stream) {
             if (part.type === "tool-result") {
               toolResults.push({
