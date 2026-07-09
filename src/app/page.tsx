@@ -1,7 +1,7 @@
 import TickerStrip from "@/app/components/TickerStrip";
 import Navigation from "@/app/components/Navigation";
 import WatchlistWrapper from "@/app/components/WatchlistWrapper";
-import { getAllCoins, getMarketStats, getWatchlistCoins, getLastUpdated } from "@/app/lib/serverCoinData";
+import { getAllCoins, getMarketStats, getWatchlistCoins, getLastUpdated, isMockData } from "@/app/lib/serverCoinData";
 
 export default async function WatchlistPage() {
   const [allCoins, initialCoins, marketStats] = await Promise.all([
@@ -21,6 +21,7 @@ export default async function WatchlistPage() {
         allCoins={allCoins}
         initialMarketStats={marketStats}
         lastUpdated={lastUpdated}
+        isMock={isMockData(allCoins)}
       />
     </>
   );

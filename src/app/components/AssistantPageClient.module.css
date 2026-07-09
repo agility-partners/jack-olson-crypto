@@ -227,8 +227,14 @@
   background: var(--bg-base);
 }
 
-.textInput {
+.inputWrap {
   flex: 1;
+  position: relative;
+  min-width: 0;
+}
+
+.textInput {
+  width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -239,10 +245,27 @@
   outline: none;
   transition: border-color 0.15s;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .textInput::placeholder { color: var(--text-muted); }
 .textInput:focus { border-color: var(--green-muted); }
+
+.counter {
+  position: absolute;
+  bottom: -18px;
+  right: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.counterLimit {
+  position: absolute;
+  bottom: -18px;
+  right: 4px;
+  font-size: 11px;
+  color: #f87171;
+}
 
 .sendBtn {
   display: flex;
