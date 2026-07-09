@@ -22,6 +22,7 @@ import time
 from pathlib import Path
 
 from ingest_coingecko import main as ingest_once
+from ingest_coingecko import purge_stale_bronze
 
 INGEST_INTERVAL_SECONDS = int(os.getenv("INGEST_INTERVAL_SECONDS", str(15 * 60)))
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -66,6 +67,7 @@ def main() -> None:
     while True:
         try:
             ingest_once()
+            purge_stale_bronze()
             run_dbt()
         except Exception as exc:
             logging.error("Ingestion run failed: %s", exc)

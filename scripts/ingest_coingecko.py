@@ -11,6 +11,7 @@ COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets"
 MAX_RETRIES = int(os.getenv("COINGECKO_MAX_RETRIES", "3"))
 BASE_BACKOFF_SECONDS = float(os.getenv("COINGECKO_BACKOFF_SECONDS", "1"))
 REQUEST_TIMEOUT_SECONDS = float(os.getenv("COINGECKO_TIMEOUT_SECONDS", "20"))
+BRONZE_RETENTION_DAYS = int(os.getenv("BRONZE_RETENTION_DAYS", "30"))
 
 
 def build_connection_string() -> str:
@@ -91,6 +92,27 @@ def insert_bronze_row(raw_json: str) -> None:
             raw_json,
         )
         conn.commit()
+    finally:
+        conn.close()
+
+
+def purge_stale_bronze() -> None:
+    """Delete bronze.raw_coin_data rows older than BRONZE_RETENTION_DAYS."""
+    conn = pyodbc.connect(build_connection_string())
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "DELETE FROM bronze.raw_coin_data WHERE ingested_at < DATEADD(day, ?, GETUTCDATE())",
+            -BRONZE_RETENTION_DAYS,
+        )
+        deleted = cursor.rowcount
+        conn.commit()
+        if deleted:
+            logging.info(
+                "Purged %d row(s) from bronze.raw_coin_data older than %d days",
+                deleted,
+                BRONZE_RETENTION_DAYS,
+            )
     finally:
         conn.close()
 

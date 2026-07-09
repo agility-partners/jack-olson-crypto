@@ -86,18 +86,8 @@ EXEC('
 ');
 GO
 
-IF OBJECT_ID('gold.top_movers', 'V') IS NULL
-    EXEC('
-        CREATE VIEW gold.top_movers AS
-        SELECT
-            CAST(NULL AS NVARCHAR(100)) AS coin_id,
-            CAST(NULL AS NVARCHAR(20))  AS symbol,
-            CAST(NULL AS NVARCHAR(200)) AS name,
-            CAST(NULL AS DECIMAL(18, 8)) AS current_price,
-            CAST(NULL AS DECIMAL(18, 2)) AS market_cap,
-            CAST(NULL AS DECIMAL(10, 4)) AS price_change_percentage_24h,
-            CAST(NULL AS INT)            AS rank,
-            CAST(NULL AS NVARCHAR(20))   AS category
-        WHERE 1 = 0
-    ');
+-- gold.top_movers was a stub view never queried by the API (SqlMarketStatsService
+-- uses an inline CTE against gold.coin_prices). Drop it if it exists.
+IF OBJECT_ID('gold.top_movers', 'V') IS NOT NULL
+    DROP VIEW gold.top_movers;
 GO
