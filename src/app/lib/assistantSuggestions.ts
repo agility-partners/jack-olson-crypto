@@ -20,9 +20,12 @@ export const DEFAULT_ASSISTANT_SUGGESTIONS = ALL_ASSISTANT_SUGGESTIONS.slice(0, 
 
 export function pickRandomAssistantSuggestions(
   count: number,
+  exclude: string[] = [],
   random: () => number = Math.random
 ): string[] {
-  const shuffled = [...ALL_ASSISTANT_SUGGESTIONS];
+  const pool = ALL_ASSISTANT_SUGGESTIONS.filter((s) => !exclude.includes(s));
+  const source = pool.length >= count ? pool : [...ALL_ASSISTANT_SUGGESTIONS];
+  const shuffled = [...source];
 
   for (let i = shuffled.length - 1; i > 0; i -= 1) {
     const swapIndex = Math.floor(random() * (i + 1));

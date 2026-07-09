@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useMemo, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import {
@@ -56,19 +56,29 @@ export default function AssistantPageClient({
       messageMetadataSchema: assistantMessageMetadataSchema,
     });
   const [input, setInput] = useState("");
+  const [followUpSuggestions, setFollowUpSuggestions] = useState<string[]>([]);
+  const prevSuggestionsRef = useRef<string[]>(initialSuggestions);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const followUpSuggestions = useMemo(() => {
-    if (messages.length === 0) {
-      return [];
-    }
+  const lastMessageRole = messages[messages.length - 1]?.role;
 
-    return pickRandomAssistantSuggestions(3);
-  }, [messages.length]);
+  useEffect(() => {
+    if (messages.length === 0) {
+      prevSuggestionsRef.current = initialSuggestions;
+      setFollowUpSuggestions([]);
+      return;
+    }
+    if (lastMessageRole !== "assistant") return;
+
+    const next = pickRandomAssistantSuggestions(3, prevSuggestionsRef.current);
+    prevSuggestionsRef.current = next;
+    setFollowUpSuggestions(next);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages.length, lastMessageRole]);
 
   const isbusy = status === "submitted" || status === "streaming";
 
