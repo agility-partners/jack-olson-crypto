@@ -19,6 +19,7 @@ export type Coin = {
   totalSupplyRaw?: number;
   maxSupplyRaw?: number | null;
   sparkline?: number[];
+  dataAsOf?: string;
 };
 
 export type CoinDetail = Coin & {
