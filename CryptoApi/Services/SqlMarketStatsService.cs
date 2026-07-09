@@ -8,6 +8,7 @@ public class SqlMarketStatsService : IMarketStatsService
 {
     private readonly string _connectionString;
     private readonly Func<CancellationToken, Task<IReadOnlyList<TopMoverRow>>> _loadTopMoversAsync;
+    private readonly Func<int, CancellationToken, Task<IReadOnlyList<TopVolumeRow>>> _loadTopByVolumeAsync;
     private const string TopMoversSql = """
         WITH filtered AS (
             SELECT
@@ -79,17 +80,19 @@ public class SqlMarketStatsService : IMarketStatsService
         """;
 
     public SqlMarketStatsService(IConfiguration configuration)
-        : this(configuration, null)
+        : this(configuration, null, null)
     {
     }
 
     public SqlMarketStatsService(
         IConfiguration configuration,
-        Func<CancellationToken, Task<IReadOnlyList<TopMoverRow>>>? loadTopMoversAsync)
+        Func<CancellationToken, Task<IReadOnlyList<TopMoverRow>>>? loadTopMoversAsync,
+        Func<int, CancellationToken, Task<IReadOnlyList<TopVolumeRow>>>? loadTopByVolumeAsync = null)
     {
         _connectionString = configuration.GetConnectionString("CryptoDb")
             ?? throw new InvalidOperationException("CryptoDb connection string is not configured.");
         _loadTopMoversAsync = loadTopMoversAsync ?? LoadTopMoversFromSqlAsync;
+        _loadTopByVolumeAsync = loadTopByVolumeAsync ?? LoadTopByVolumeFromSqlAsync;
     }
 
     public async Task<MarketStatsDto> GetMarketStatsAsync()
@@ -334,6 +337,147 @@ public class SqlMarketStatsService : IMarketStatsService
             _ => Convert.ToInt32(value, CultureInfo.InvariantCulture),
         };
     }
+
+    private const string TopByVolumeSql = """
+        WITH ranked AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                total_volume,
+                price_change_percentage_24h,
+                last_updated,
+                ROW_NUMBER() OVER (ORDER BY total_volume DESC) AS rank
+            FROM gold.coin_prices
+            WHERE total_volume IS NOT NULL
+        )
+        SELECT TOP (@Limit)
+            coin_id,
+            symbol,
+            name,
+            current_price,
+            total_volume,
+            price_change_percentage_24h,
+            last_updated,
+            rank
+        FROM ranked
+        ORDER BY rank
+        """;
+
+    public async Task<TopByVolumeDto> GetTopByVolumeAsync(int limit)
+    {
+        IReadOnlyList<TopVolumeRow> rows;
+
+        try
+        {
+            rows = await _loadTopByVolumeAsync(limit, CancellationToken.None);
+        }
+        catch (SqlException)
+        {
+            return CreateFallbackTopByVolumeFromCatalog(limit);
+        }
+        catch (InvalidOperationException)
+        {
+            return CreateFallbackTopByVolumeFromCatalog(limit);
+        }
+
+        if (rows.Count == 0)
+        {
+            return CreateFallbackTopByVolumeFromCatalog(limit);
+        }
+
+        var latestTimestamp = rows
+            .Where(r => r.LastUpdated.HasValue)
+            .Select(r => r.LastUpdated!.Value)
+            .DefaultIfEmpty()
+            .Max();
+
+        var dataAsOf = latestTimestamp == default
+            ? null
+            : latestTimestamp.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+        return new TopByVolumeDto
+        {
+            Items = rows
+                .OrderBy(r => r.Rank)
+                .Select(MapTopVolumeItem)
+                .ToList(),
+            DataAsOf = dataAsOf,
+        };
+    }
+
+    private async Task<IReadOnlyList<TopVolumeRow>> LoadTopByVolumeFromSqlAsync(int limit, CancellationToken cancellationToken)
+    {
+        await using var conn = new SqlConnection(_connectionString);
+        await conn.OpenAsync(cancellationToken);
+
+        await using var cmd = new SqlCommand(TopByVolumeSql, conn);
+        cmd.Parameters.AddWithValue("@Limit", limit);
+        await using var reader = await cmd.ExecuteReaderAsync(cancellationToken);
+
+        var rows = new List<TopVolumeRow>();
+
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            rows.Add(new TopVolumeRow(
+                CoinId: reader.IsDBNull(0) ? string.Empty : reader.GetString(0),
+                Symbol: reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
+                Name: reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
+                CurrentPrice: reader.IsDBNull(3) ? null : reader.GetDecimal(3),
+                VolumeRaw: reader.IsDBNull(4) ? null : reader.GetDecimal(4),
+                Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5),
+                LastUpdated: reader.IsDBNull(6) ? null : reader.GetDateTime(6),
+                Rank: ParseRank(reader.GetValue(7))));
+        }
+
+        return rows;
+    }
+
+    private static TopByVolumeDto CreateFallbackTopByVolumeFromCatalog(int limit)
+    {
+        var items = CoinCatalog.GetAll()
+            .Where(coin => coin.VolumeRaw > 0)
+            .OrderByDescending(coin => coin.VolumeRaw)
+            .Take(limit)
+            .Select((coin, index) => new TopVolumeItemDto
+            {
+                Id = coin.Id,
+                Symbol = coin.Symbol,
+                Name = coin.Name,
+                Price = coin.Price,
+                Volume = coin.Volume,
+                VolumeRaw = coin.VolumeRaw,
+                Change24h = coin.Change24h,
+                Rank = index + 1,
+            })
+            .ToList();
+
+        return new TopByVolumeDto { Items = items };
+    }
+
+    private static TopVolumeItemDto MapTopVolumeItem(TopVolumeRow row) =>
+        new()
+        {
+            Id = row.CoinId,
+            Symbol = row.Symbol,
+            Name = row.Name,
+            Price = row.CurrentPrice ?? 0m,
+            Volume = SqlCoinService.FormatCurrencyCompact(row.VolumeRaw ?? 0m),
+            VolumeRaw = row.VolumeRaw ?? 0m,
+            Change24h = row.Change24h ?? 0m,
+            Rank = row.Rank,
+        };
+
+    public sealed record TopVolumeRow(
+        string CoinId,
+        string Symbol,
+        string Name,
+        decimal? CurrentPrice,
+        decimal? VolumeRaw,
+        decimal? Change24h,
+        DateTime? LastUpdated,
+        int Rank);
 
     public sealed record TopMoverRow(
         string CoinId,

@@ -164,4 +164,77 @@ public class SqlMarketStatsServiceTests
 
         result.Should().Be(expected);
     }
+
+    [Fact]
+    public async Task GetTopByVolumeAsync_ReturnsItemsOrderedByVolumeDescending()
+    {
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            (_, _) => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopVolumeRow>>([
+                new("tether", "USDT", "Tether", 1.0m, 48_500_000_000m, 0.01m, null, 1),
+                new("bitcoin", "BTC", "Bitcoin", 70000m, 35_200_000_000m, 5.25m, null, 2),
+                new("ethereum", "ETH", "Ethereum", 3500m, 22_100_000_000m, -1.5m, null, 3),
+            ]));
+
+        var result = await service.GetTopByVolumeAsync(3);
+
+        result.Items.Should().HaveCount(3);
+        result.Items[0].Id.Should().Be("tether");
+        result.Items[0].Rank.Should().Be(1);
+        result.Items[0].VolumeRaw.Should().Be(48_500_000_000m);
+        result.Items[0].Volume.Should().Be("$48.5B");
+        result.Items[1].Id.Should().Be("bitcoin");
+        result.Items[2].Id.Should().Be("ethereum");
+    }
+
+    [Fact]
+    public async Task GetTopByVolumeAsync_FallsBackToCatalog_WhenSqlRowsAreEmpty()
+    {
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            (_, _) => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopVolumeRow>>([]));
+
+        var result = await service.GetTopByVolumeAsync(5);
+
+        result.Items.Should().NotBeEmpty();
+        result.Items.Should().HaveCountLessThanOrEqualTo(5);
+        result.Items.Should().BeInDescendingOrder(item => item.VolumeRaw);
+        result.DataAsOf.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task GetTopByVolumeAsync_SetsDataAsOf_WhenRowsIncludeLastUpdated()
+    {
+        var lastUpdated = new DateTime(2024, 6, 1, 8, 0, 0, DateTimeKind.Utc);
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            (_, _) => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopVolumeRow>>([
+                new("tether", "USDT", "Tether", 1.0m, 48_500_000_000m, 0.01m, lastUpdated, 1),
+            ]));
+
+        var result = await service.GetTopByVolumeAsync(5);
+
+        result.DataAsOf.Should().Be("2024-06-01T08:00:00Z");
+    }
+
+    [Fact]
+    public void TopByVolumeSql_SelectsTopNByVolume_FromCoinPrices()
+    {
+        var field = typeof(SqlMarketStatsService).GetField(
+            "TopByVolumeSql",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
+        field.Should().NotBeNull();
+
+        var sql = field!.GetRawConstantValue() as string;
+
+        sql.Should().NotBeNullOrWhiteSpace();
+        sql.Should().Contain("FROM gold.coin_prices");
+        sql.Should().Contain("total_volume");
+        sql.Should().Contain("ORDER BY total_volume DESC");
+        sql.Should().Contain("TOP (@Limit)");
+    }
 }
