@@ -184,26 +184,25 @@ export default function AssistantPageClient({
                 <p className={styles.thinking}>Thinking…</p>
               </div>
             )}
+            {!isbusy && followUpSuggestions.length > 0 && (
+              <div className={styles.followUpSuggestions}>
+                {followUpSuggestions.map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    className={styles.suggestionBtn}
+                    onClick={() => handleSuggestion(suggestion)}
+                    type="button"
+                    disabled={isbusy}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
             <div ref={bottomRef} />
           </div>
         )}
       </div>
-
-      {!isEmpty && (
-        <div className={styles.followUpSuggestions}>
-          {followUpSuggestions.map((suggestion) => (
-            <button
-              key={suggestion}
-              className={styles.suggestionBtn}
-              onClick={() => handleSuggestion(suggestion)}
-              type="button"
-              disabled={isbusy}
-            >
-              {suggestion}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* Error banner */}
       {error && (
