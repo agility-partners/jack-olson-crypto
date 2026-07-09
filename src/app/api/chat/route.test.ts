@@ -111,4 +111,79 @@ describe("POST /api/chat", () => {
       "Sources: get_market_summary as of Jan 15, 2024, 5:30 AM EST"
     );
   });
+
+  it("falls back to relevant prior citations when a follow-up answer streams without tool results", async () => {
+    mockStreamText.mockReturnValue({
+      stream: (async function* () {
+        yield { type: "start" };
+        yield {
+          type: "text-delta",
+          textDelta:
+            "Based on the top movers data already retrieved, none of the tracked losers are down more than 5% today.",
+        };
+        yield { type: "finish" };
+      })(),
+    });
+
+    const { POST } = await import("./route");
+    const response = (await POST(
+      new Request("http://localhost/api/chat", {
+        method: "POST",
+        body: JSON.stringify({
+          messages: [
+            {
+              id: "assistant-top-movers",
+              role: "assistant",
+              parts: [{ type: "text", text: "Earlier top movers answer" }],
+              metadata: {
+                citations: [
+                  {
+                    toolName: "get_top_movers",
+                    dataAsOfValues: ["2024-01-15T10:30:00Z"],
+                    hasUnavailableDataAsOf: false,
+                  },
+                ],
+                sourcesLine:
+                  "Sources: get_top_movers as of Jan 15, 2024, 5:30 AM EST",
+              },
+            },
+            {
+              id: "assistant-watchlist",
+              role: "assistant",
+              parts: [{ type: "text", text: "Watchlist answer" }],
+              metadata: {
+                citations: [
+                  {
+                    toolName: "get_watchlist",
+                    dataAsOfValues: ["2024-01-15T10:35:00Z"],
+                    hasUnavailableDataAsOf: false,
+                  },
+                ],
+                sourcesLine:
+                  "Sources: get_watchlist as of Jan 15, 2024, 5:35 AM EST",
+              },
+            },
+            {
+              id: "user-follow-up",
+              role: "user",
+              parts: [
+                {
+                  type: "text",
+                  text: "Which coins are down more than 5% today?",
+                },
+              ],
+            },
+          ],
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+    )) as { stream: Promise<Array<{ type: string; metadata?: { sourcesLine?: string } }>> };
+
+    const chunks = await response.stream;
+    const finishChunk = chunks.find((chunk) => chunk.type === "finish");
+
+    expect(finishChunk?.metadata?.sourcesLine).toBe(
+      "Sources: get_top_movers as of Jan 15, 2024, 5:30 AM EST"
+    );
+  });
 });

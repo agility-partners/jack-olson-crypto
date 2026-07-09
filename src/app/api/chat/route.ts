@@ -10,6 +10,7 @@ import {
 import {
   buildAssistantMessageMetadata,
   type AssistantChatMessage,
+  inferAssistantMessageMetadataFromHistory,
 } from "./citations";
 import { SYSTEM_PROMPT, tools } from "./tools";
 
@@ -31,6 +32,7 @@ export async function POST(req: Request) {
   try {
     const { messages }: { messages: AssistantChatMessage[] } = await req.json();
     const toolResults: Array<{ toolName: string; output: unknown }> = [];
+    const fallbackMetadata = inferAssistantMessageMetadataFromHistory(messages);
 
     const result = streamText({
       model: anthropic(MODEL),
@@ -66,7 +68,7 @@ export async function POST(req: Request) {
                 onError: toClientErrorMessage,
                 messageMetadata:
                   part.type === "finish"
-                    ? buildAssistantMessageMetadata(toolResults)
+                    ? buildAssistantMessageMetadata(toolResults) ?? fallbackMetadata
                     : undefined,
               }
             );

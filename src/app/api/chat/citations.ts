@@ -23,6 +23,17 @@ export type AssistantMessageMetadata = z.infer<
 >;
 export type AssistantChatMessage = UIMessage<AssistantMessageMetadata>;
 
+function getMessageText(message: Pick<AssistantChatMessage, "parts">) {
+  return message.parts
+    .filter(
+      (part): part is Extract<AssistantChatMessage["parts"][number], { type: "text" }> =>
+        part.type === "text"
+    )
+    .map((part) => part.text)
+    .join("")
+    .trim();
+}
+
 function collectDataAsOfValues(
   value: unknown,
   values: Set<string>,
@@ -139,4 +150,141 @@ export function buildAssistantMessageMetadata(toolResults: ToolResultLike[]) {
     citations,
     sourcesLine,
   };
+}
+
+function getMostRecentAssistantMetadata(messages: AssistantChatMessage[]) {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+
+    if (message.role !== "assistant" || !message.metadata?.sourcesLine) {
+      continue;
+    }
+
+    return {
+      citations: message.metadata.citations,
+      sourcesLine: message.metadata.sourcesLine,
+    };
+  }
+
+  return undefined;
+}
+
+function inferRelevantToolNamesFromUserMessage(text: string) {
+  const normalizedText = text.toLowerCase();
+  const toolNames: string[] = [];
+
+  if (/\bwatchlist\b/u.test(normalizedText)) {
+    toolNames.push("get_watchlist");
+  }
+
+  if (
+    /\btrading volume\b/u.test(normalizedText) ||
+    /\btop\b[\s\S]{0,40}\bvolume\b/u.test(normalizedText) ||
+    /\bby volume\b/u.test(normalizedText)
+  ) {
+    toolNames.push("get_top_by_volume");
+  }
+
+  if (
+    /\bgainers?\b/u.test(normalizedText) ||
+    /\blosers?\b/u.test(normalizedText) ||
+    /\bmovers?\b/u.test(normalizedText) ||
+    /\btrending up\b/u.test(normalizedText) ||
+    /\btrending down\b/u.test(normalizedText) ||
+    /\bmoved the most\b/u.test(normalizedText) ||
+    /\bdown more than\b/u.test(normalizedText) ||
+    /\bup more than\b/u.test(normalizedText)
+  ) {
+    toolNames.push("get_top_movers");
+  }
+
+  if (
+    /\bmarket summary\b/u.test(normalizedText) ||
+    /\bbtc dominance\b/u.test(normalizedText) ||
+    /\btotal market cap\b/u.test(normalizedText) ||
+    /\b24h volume\b/u.test(normalizedText) ||
+    /\baverage 24h change\b/u.test(normalizedText) ||
+    /\boverall market\b/u.test(normalizedText)
+  ) {
+    toolNames.push("get_market_summary");
+  }
+
+  if (
+    /\bprice\b/u.test(normalizedText) ||
+    /\bprices\b/u.test(normalizedText) ||
+    /\bstats?\b/u.test(normalizedText) ||
+    /\bmarket cap\b/u.test(normalizedText) ||
+    /\brank\b/u.test(normalizedText) ||
+    /\bsupply\b/u.test(normalizedText) ||
+    /\ball-time\b/u.test(normalizedText) ||
+    /\bcompare\b/u.test(normalizedText) ||
+    /\bversus\b/u.test(normalizedText) ||
+    /\bvs\b/u.test(normalizedText)
+  ) {
+    toolNames.push("get_coin_prices");
+  }
+
+  return Array.from(new Set(toolNames));
+}
+
+function buildMetadataFromCitations(citations: AssistantCitation[]) {
+  const sourcesLine = formatCitationSourcesLine(citations);
+
+  if (!sourcesLine) {
+    return undefined;
+  }
+
+  return {
+    citations,
+    sourcesLine,
+  };
+}
+
+export function inferAssistantMessageMetadataFromHistory(
+  messages: AssistantChatMessage[]
+) {
+  if (messages.length === 0) {
+    return undefined;
+  }
+
+  const latestUserMessage = [...messages]
+    .reverse()
+    .find((message) => message.role === "user");
+  const latestUserText = latestUserMessage ? getMessageText(latestUserMessage) : "";
+  const mostRecentAssistantMetadata = getMostRecentAssistantMetadata(messages);
+
+  if (
+    /\bsource\b/u.test(latestUserText) ||
+    /\bwhere did\b[\s\S]{0,40}\bdata\b/u.test(latestUserText)
+  ) {
+    return mostRecentAssistantMetadata;
+  }
+
+  const relevantToolNames = inferRelevantToolNamesFromUserMessage(latestUserText);
+
+  if (relevantToolNames.length === 0) {
+    return undefined;
+  }
+
+  const citationsByTool = new Map<string, AssistantCitation>();
+
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+
+    if (message.role !== "assistant") {
+      continue;
+    }
+
+    message.metadata?.citations?.forEach((citation) => {
+      if (!citationsByTool.has(citation.toolName)) {
+        citationsByTool.set(citation.toolName, citation);
+      }
+    });
+  }
+
+  const matchedCitations = relevantToolNames
+    .map((toolName) => citationsByTool.get(toolName))
+    .filter((citation): citation is AssistantCitation => Boolean(citation));
+
+  return buildMetadataFromCitations(matchedCitations);
 }
