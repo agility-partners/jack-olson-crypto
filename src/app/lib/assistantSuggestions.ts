@@ -9,6 +9,11 @@ export const ALL_ASSISTANT_SUGGESTIONS = [
   "How is Solana performing compared to Ethereum?",
   "What coins are trending up right now?",
   "Show me the top 5 coins by trading volume",
+  "How has Bitcoin dominance changed this week?",
+  "Which coins in my watchlist moved the most today?",
+  "Compare Ethereum, Solana, and Cardano by market cap",
+  "What are the top gainers with volume over $1B?",
+  "Which large-cap coins are down more than 5% today?",
 ];
 
 export const DEFAULT_ASSISTANT_SUGGESTIONS = ALL_ASSISTANT_SUGGESTIONS.slice(0, 5);

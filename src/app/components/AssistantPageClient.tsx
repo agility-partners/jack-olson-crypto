@@ -1,13 +1,16 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useMemo, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import {
   assistantMessageMetadataSchema,
   type AssistantChatMessage,
 } from "../api/chat/citations";
-import { DEFAULT_ASSISTANT_SUGGESTIONS } from "../lib/assistantSuggestions";
+import {
+  DEFAULT_ASSISTANT_SUGGESTIONS,
+  pickRandomAssistantSuggestions,
+} from "../lib/assistantSuggestions";
 import styles from "./AssistantPageClient.module.css";
 
 const transport = new DefaultChatTransport({ api: "/api/chat" });
@@ -58,6 +61,14 @@ export default function AssistantPageClient({
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const followUpSuggestions = useMemo(() => {
+    if (messages.length === 0) {
+      return [];
+    }
+
+    return pickRandomAssistantSuggestions(3);
+  }, [messages.length]);
 
   const isbusy = status === "submitted" || status === "streaming";
 
@@ -167,6 +178,22 @@ export default function AssistantPageClient({
           </div>
         )}
       </div>
+
+      {!isEmpty && (
+        <div className={styles.followUpSuggestions}>
+          {followUpSuggestions.map((suggestion) => (
+            <button
+              key={suggestion}
+              className={styles.suggestionBtn}
+              onClick={() => handleSuggestion(suggestion)}
+              type="button"
+              disabled={isbusy}
+            >
+              {suggestion}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Error banner */}
       {error && (
