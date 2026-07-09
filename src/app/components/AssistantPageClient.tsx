@@ -233,15 +233,15 @@ export default function AssistantPageClient({
             disabled={isbusy}
             autoComplete="off"
             spellCheck={false}
-            maxLength={500}
+            maxLength={200}
             aria-describedby="input-counter"
           />
-          {input.length > 400 && (
+          {input.length > 150 && (
             <span
               id="input-counter"
-              className={input.length >= 500 ? styles.counterLimit : styles.counter}
+              className={input.length >= 200 ? styles.counterLimit : styles.counter}
             >
-              {input.length}/500
+              {input.length}/200
             </span>
           )}
         </div>

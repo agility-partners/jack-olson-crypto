@@ -8,7 +8,7 @@ import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
-const REFRESH_INTERVAL_MS = 60_000;
+const REFRESH_INTERVAL_MS = 90_000;
 
 type Props = {
   initialCoins: Coin[];
