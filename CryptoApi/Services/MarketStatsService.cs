@@ -48,6 +48,28 @@ public class MarketStatsService : IMarketStatsService
         });
     }
 
+    public Task<TopByVolumeDto> GetTopByVolumeAsync(int limit)
+    {
+        var items = CoinCatalog.GetAll()
+            .Where(coin => coin.VolumeRaw > 0)
+            .OrderByDescending(coin => coin.VolumeRaw)
+            .Take(limit)
+            .Select((coin, index) => new TopVolumeItemDto
+            {
+                Id = coin.Id,
+                Symbol = coin.Symbol,
+                Name = coin.Name,
+                Price = coin.Price,
+                Volume = coin.Volume,
+                VolumeRaw = coin.VolumeRaw,
+                Change24h = coin.Change24h,
+                Rank = index + 1,
+            })
+            .ToList();
+
+        return Task.FromResult(new TopByVolumeDto { Items = items });
+    }
+
     private static TopMoverDto CreateTopMoverDto(CoinDto coin, int rank) =>
         new()
         {

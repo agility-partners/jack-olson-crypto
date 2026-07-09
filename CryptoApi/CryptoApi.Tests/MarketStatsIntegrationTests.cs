@@ -44,4 +44,32 @@ public class MarketStatsIntegrationTests : IAsyncLifetime
         movers.Losers.Should().BeInAscendingOrder(coin => coin.Change24h);
         movers.Losers.Should().OnlyContain(coin => coin.Change24h < 0);
     }
+
+    [Fact]
+    public async Task GetTopByVolume_ReturnsSuccessAndVolumeOrderedList()
+    {
+        var response = await _client.GetAsync("/api/marketstats/top-by-volume?limit=5");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Content.Headers.ContentType?.MediaType.Should().Be("application/json");
+
+        var result = await response.Content.ReadFromJsonAsync<TopByVolumeDto>();
+        result.Should().NotBeNull();
+        result!.Items.Should().NotBeEmpty();
+        result.Items.Should().HaveCountLessThanOrEqualTo(5);
+        result.Items.Should().BeInDescendingOrder(item => item.VolumeRaw);
+        result.Items.Should().OnlyContain(item => item.VolumeRaw > 0);
+    }
+
+    [Fact]
+    public async Task GetTopByVolume_DefaultsToTenItems_WhenLimitOmitted()
+    {
+        var response = await _client.GetAsync("/api/marketstats/top-by-volume");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var result = await response.Content.ReadFromJsonAsync<TopByVolumeDto>();
+        result.Should().NotBeNull();
+        result!.Items.Should().HaveCountLessThanOrEqualTo(10);
+    }
 }

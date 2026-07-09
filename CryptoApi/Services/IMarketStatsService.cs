@@ -6,4 +6,5 @@ public interface IMarketStatsService
 {
     Task<MarketStatsDto> GetMarketStatsAsync();
     Task<TopMoversDto> GetTopMoversAsync();
+    Task<TopByVolumeDto> GetTopByVolumeAsync(int limit);
 }

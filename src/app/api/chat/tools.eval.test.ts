@@ -114,6 +114,14 @@ describe("tool schemas", () => {
     const schema = tools.get_watchlist.inputSchema;
     expect(schema.safeParse({}).success).toBe(true);
   });
+
+  it("get_top_by_volume has an optional numeric limit parameter", () => {
+    const schema = tools.get_top_by_volume.inputSchema;
+    expect(schema.safeParse({}).success).toBe(true);
+    expect(schema.safeParse({ limit: 5 }).success).toBe(true);
+    expect(schema.safeParse({ limit: 0 }).success).toBe(false);
+    expect(schema.safeParse({ limit: 101 }).success).toBe(false);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -292,6 +300,53 @@ describe("get_watchlist tool", () => {
 });
 
 // ---------------------------------------------------------------------------
+// 7. Golden question: "Show me the top 5 coins by trading volume."
+//    → must call get_top_by_volume tool
+// ---------------------------------------------------------------------------
+
+describe("get_top_by_volume tool", () => {
+  it("fetches top coins by volume with the given limit", async () => {
+    const mockData = {
+      items: [
+        { id: "tether", name: "Tether", price: 1.0, volume: "$48.5B", volumeRaw: 48500000000, change24h: 0.01, rank: 1 },
+        { id: "bitcoin", name: "Bitcoin", price: 68000, volume: "$35.2B", volumeRaw: 35200000000, change24h: 2.1, rank: 2 },
+      ],
+      dataAsOf: "2024-01-15T10:30:00Z",
+    };
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
+
+    const result = await tools.get_top_by_volume.execute(
+      { limit: 5 },
+      { messages: [], toolCallId: "" }
+    );
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/api/marketstats/top-by-volume?limit=5")
+    );
+    expect(result).toMatchObject({ items: expect.any(Array), dataAsOf: "2024-01-15T10:30:00Z" });
+  });
+
+  it("defaults to limit=5 when no limit is provided", async () => {
+    const mockData = { items: [], dataAsOf: null };
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
+
+    await tools.get_top_by_volume.execute({}, { messages: [], toolCallId: "" });
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/api/marketstats/top-by-volume?limit=5")
+    );
+  });
+
+  it("throws a descriptive error when the API is unreachable", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
+
+    await expect(
+      tools.get_top_by_volume.execute({ limit: 5 }, { messages: [], toolCallId: "" })
+    ).rejects.toThrow("Failed to fetch top coins by volume");
+  });
+});
+
+// ---------------------------------------------------------------------------
 // 7. Tool descriptions — ensure the model has enough context to pick correctly
 // ---------------------------------------------------------------------------
 
@@ -311,6 +366,10 @@ describe("tool descriptions", () => {
 
   it("get_watchlist description mentions watchlist", () => {
     expect(tools.get_watchlist.description).toMatch(/watchlist/i);
+  });
+
+  it("get_top_by_volume description mentions trading volume", () => {
+    expect(tools.get_top_by_volume.description).toMatch(/trading volume/i);
   });
 });
 
