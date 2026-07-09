@@ -14,6 +14,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   buildAssistantMessageMetadata,
   buildToolCitations,
+  inferAssistantMessageMetadataFromHistory,
 } from "./citations";
 import { SYSTEM_PROMPT, tools } from "./tools";
 
@@ -454,6 +455,82 @@ describe("citation metadata", () => {
 
   it("returns no citation metadata when no tools were used", () => {
     expect(buildAssistantMessageMetadata([])).toBeUndefined();
+  });
+
+  it("reuses the most relevant prior tool citation for tool-free follow-up market questions", () => {
+    const metadata = inferAssistantMessageMetadataFromHistory([
+      {
+        id: "assistant-top-movers",
+        role: "assistant",
+        parts: [{ type: "text", text: "Top movers response" }],
+        metadata: {
+          citations: [
+            {
+              toolName: "get_top_movers",
+              dataAsOfValues: ["2024-01-15T10:30:00Z"],
+              hasUnavailableDataAsOf: false,
+            },
+          ],
+          sourcesLine:
+            "Sources: get_top_movers as of Jan 15, 2024, 5:30 AM EST",
+        },
+      },
+      {
+        id: "assistant-watchlist",
+        role: "assistant",
+        parts: [{ type: "text", text: "Watchlist response" }],
+        metadata: {
+          citations: [
+            {
+              toolName: "get_watchlist",
+              dataAsOfValues: ["2024-01-15T10:35:00Z"],
+              hasUnavailableDataAsOf: false,
+            },
+          ],
+          sourcesLine:
+            "Sources: get_watchlist as of Jan 15, 2024, 5:35 AM EST",
+        },
+      },
+      {
+        id: "user-follow-up",
+        role: "user",
+        parts: [{ type: "text", text: "Which coins are down more than 5% today?" }],
+      },
+    ]);
+
+    expect(metadata?.sourcesLine).toBe(
+      "Sources: get_top_movers as of Jan 15, 2024, 5:30 AM EST"
+    );
+  });
+
+  it("reuses the most recent assistant sources line for source questions", () => {
+    const metadata = inferAssistantMessageMetadataFromHistory([
+      {
+        id: "assistant-prices",
+        role: "assistant",
+        parts: [{ type: "text", text: "Bitcoin $68,000.00 (+2.10%)" }],
+        metadata: {
+          citations: [
+            {
+              toolName: "get_coin_prices",
+              dataAsOfValues: ["2024-01-15T10:30:00Z"],
+              hasUnavailableDataAsOf: false,
+            },
+          ],
+          sourcesLine:
+            "Sources: get_coin_prices as of Jan 15, 2024, 5:30 AM EST",
+        },
+      },
+      {
+        id: "user-source",
+        role: "user",
+        parts: [{ type: "text", text: "what is the source for that data?" }],
+      },
+    ]);
+
+    expect(metadata?.sourcesLine).toBe(
+      "Sources: get_coin_prices as of Jan 15, 2024, 5:30 AM EST"
+    );
   });
 });
 
