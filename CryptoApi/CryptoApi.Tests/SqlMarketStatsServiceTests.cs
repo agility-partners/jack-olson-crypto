@@ -80,7 +80,7 @@ public class SqlMarketStatsServiceTests
     }
 
     [Fact]
-    public void TopMoversSql_SelectsTopTenPerCategory_FromTop100Coins()
+    public void TopMoversSql_SelectsTopTenPerCategory_FromAllCoins()
     {
         var field = typeof(SqlMarketStatsService).GetField(
             "TopMoversSql",
@@ -92,7 +92,7 @@ public class SqlMarketStatsServiceTests
 
         sql.Should().NotBeNullOrWhiteSpace();
         sql.Should().Contain("FROM gold.coin_prices");
-        sql.Should().Contain("WHERE market_cap_rank <= 100");
+        sql.Should().NotContain("market_cap_rank <= 100");
         sql.Should().Contain("ROW_NUMBER() OVER (ORDER BY price_change_percentage_24h DESC) AS rank");
         sql.Should().Contain("ROW_NUMBER() OVER (ORDER BY price_change_percentage_24h ASC) AS rank");
         sql.Should().Contain("FROM gainers");
