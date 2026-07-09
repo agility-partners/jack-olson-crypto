@@ -1,0 +1,82 @@
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Shared skeleton pulse ── */
+.skeletonLine,
+.cardSkeleton,
+.statCard,
+.tickerSkeleton,
+.navSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-elevated, #1a2a1a) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+/* ── Ticker strip ── */
+.tickerSkeleton {
+  height: 36px;
+  border-radius: 0;
+}
+
+/* ── Nav bar ── */
+.navSkeleton {
+  height: 52px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Page header ── */
+.pageHeader {
+  padding: 40px 32px 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Stats row ── */
+.statsRow {
+  display: flex;
+  gap: 12px;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.statCard {
+  flex: 1;
+  height: 72px;
+  border-radius: 10px;
+}
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Coin grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 24px 32px;
+}
+
+.cardSkeleton {
+  height: 180px;
+  border-radius: 12px;
+}

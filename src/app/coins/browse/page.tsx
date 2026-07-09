@@ -1,5 +1,5 @@
 import BrowsePageClient from "@/app/components/BrowsePageClient";
-import { getAllCoins, getMarketStats, getLastUpdated } from "@/app/lib/serverCoinData";
+import { getAllCoins, getMarketStats, getLastUpdated, isMockData } from "@/app/lib/serverCoinData";
 
 export default async function BrowsePage() {
   const [initialCoins, marketStats] = await Promise.all([
@@ -8,5 +8,12 @@ export default async function BrowsePage() {
   ]);
   const lastUpdated = getLastUpdated(initialCoins);
 
-  return <BrowsePageClient initialCoins={initialCoins} initialMarketStats={marketStats} lastUpdated={lastUpdated} />;
+  return (
+    <BrowsePageClient
+      initialCoins={initialCoins}
+      initialMarketStats={marketStats}
+      lastUpdated={lastUpdated}
+      isMock={isMockData(initialCoins)}
+    />
+  );
 }

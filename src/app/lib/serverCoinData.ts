@@ -66,3 +66,8 @@ export function getLastUpdated(coins: Coin[]): string {
   const latest = timestamps.sort().at(-1)!;
   return formatRelativeTime(latest);
 }
+
+/** Returns true when the coin list is the static mock fallback (no dataAsOf timestamps). */
+export function isMockData(coins: Coin[]): boolean {
+  return coins.every((c) => !c.dataAsOf);
+}

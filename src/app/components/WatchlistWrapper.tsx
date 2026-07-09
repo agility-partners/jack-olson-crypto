@@ -14,9 +14,10 @@ type Props = {
   allCoins: Coin[];
   initialMarketStats: MarketStats;
   lastUpdated?: string;
+  isMock?: boolean;
 };
 
-export default function WatchlistWrapper({ initialCoins, allCoins, initialMarketStats, lastUpdated = "just now" }: Props) {
+export default function WatchlistWrapper({ initialCoins, allCoins, initialMarketStats, lastUpdated = "just now", isMock = false }: Props) {
   const [coinCount, setCoinCount] = useState(initialCoins.length);
   const [gainerCount, setGainerCount] = useState(
     () => initialCoins.filter((c) => c.change24h >= 0).length
@@ -29,6 +30,12 @@ export default function WatchlistWrapper({ initialCoins, allCoins, initialMarket
 
   return (
     <>
+      {isMock && (
+        <div className={styles.mockBanner} role="alert">
+          ⚠ Showing cached demo prices — live API is unavailable. Data may be outdated.
+        </div>
+      )}
+
       <div className={pageStyles.pageHeader}>
         <div className={pageStyles.pageHeaderContent}>
           <h1>My Watchlist</h1>

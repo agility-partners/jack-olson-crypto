@@ -8,6 +8,7 @@ import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+const REFRESH_INTERVAL_MS = 60_000;
 
 type Props = {
   initialCoins: Coin[];
@@ -29,6 +30,30 @@ export default function WatchlistClient({
   const [showAddModal, setShowAddModal] = useState(false);
   const [duplicateError, setDuplicateError] = useState<string | null>(null);
   const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Auto-refresh prices from the API every REFRESH_INTERVAL_MS
+  useEffect(() => {
+    const endpoint = useAllCoins ? "/api/coins" : "/api/watchlist";
+    const refresh = async () => {
+      try {
+        const res = await fetch(`${API_URL}${endpoint}`);
+        if (!res.ok) return;
+        const fresh: Coin[] = await res.json();
+        const priceMap = new Map(fresh.map((c) => [c.id, c]));
+        setCoins((prev) =>
+          prev.map((c) => {
+            const updated = priceMap.get(c.id);
+            return updated ? { ...c, ...updated } : c;
+          })
+        );
+      } catch {
+        // Silently ignore — we keep stale data rather than breaking the UI
+      }
+    };
+
+    const id = setInterval(refresh, REFRESH_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [useAllCoins]);
 
   useEffect(() => {
     const gainerCount = coins.filter((c) => c.change24h >= 0).length;

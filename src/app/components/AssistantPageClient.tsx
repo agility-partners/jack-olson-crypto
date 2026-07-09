@@ -82,6 +82,15 @@ export default function AssistantPageClient({
 
   const isbusy = status === "submitted" || status === "streaming";
 
+  // Only show the "Thinking…" placeholder when there is no assistant text yet
+  // (submitted = no response yet; streaming = tool-call phase before text begins)
+  const lastMsg = messages[messages.length - 1];
+  const lastAssistantText =
+    lastMsg?.role === "assistant"
+      ? getMessageDisplayText(lastMsg.parts, lastMsg.metadata?.sourcesLine)
+      : "";
+  const showThinking = isbusy && !lastAssistantText;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
@@ -178,7 +187,7 @@ export default function AssistantPageClient({
                 </div>
               );
             })}
-            {isbusy && (
+            {showThinking && (
               <div className={styles.assistantBubble}>
                 <span className={styles.assistantLabel} aria-hidden="true">✦</span>
                 <p className={styles.thinking}>Thinking…</p>
@@ -214,16 +223,28 @@ export default function AssistantPageClient({
 
       {/* Input bar */}
       <form className={styles.inputBar} onSubmit={handleSubmit}>
-        <input
-          className={styles.textInput}
-          type="text"
-          placeholder="Ask about prices, market trends, your watchlist…"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          disabled={isbusy}
-          autoComplete="off"
-          spellCheck={false}
-        />
+        <div className={styles.inputWrap}>
+          <input
+            className={styles.textInput}
+            type="text"
+            placeholder="Ask about prices, market trends, your watchlist…"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={isbusy}
+            autoComplete="off"
+            spellCheck={false}
+            maxLength={500}
+            aria-describedby="input-counter"
+          />
+          {input.length > 400 && (
+            <span
+              id="input-counter"
+              className={input.length >= 500 ? styles.counterLimit : styles.counter}
+            >
+              {input.length}/500
+            </span>
+          )}
+        </div>
         <button
           className={styles.sendBtn}
           type="submit"

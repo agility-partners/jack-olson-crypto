@@ -1,3 +1,6 @@
+"use client";
+
+import { useMemo } from "react";
 import { Coin } from "@/app/lib/mockData";
 import { formatPrice } from "@/app/lib/utils";
 import styles from "./TickerStrip.module.css";
@@ -5,8 +8,11 @@ import styles from "./TickerStrip.module.css";
 type Props = { coins: Coin[] };
 
 export default function TickerStrip({ coins }: Props) {
-  // Sort coins by price value (descending)
-  const sortedCoins = [...coins].sort((a, b) => b.price - a.price);
+  // Sort coins by price value (descending) — memoised so order is stable across re-renders
+  const sortedCoins = useMemo(
+    () => [...coins].sort((a, b) => b.price - a.price),
+    [coins],
+  );
 
   // Duplicate items for seamless loop
   const items = [...sortedCoins, ...sortedCoins];

@@ -1,10 +1,3 @@
-.trackingText {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin: 4px 0 0 0;
-  padding: 0;
-}
-
 .mockBanner {
   margin: 12px 32px 0;
   padding: 10px 14px;
@@ -14,4 +7,3 @@
   background: rgba(251, 191, 36, 0.07);
   border: 1px solid rgba(251, 191, 36, 0.25);
 }
-
