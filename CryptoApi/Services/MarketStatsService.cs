@@ -24,7 +24,6 @@ public class MarketStatsService : IMarketStatsService
     public Task<TopMoversDto> GetTopMoversAsync()
     {
         var coins = CoinCatalog.GetAll()
-            .Where(coin => coin.Rank <= 100)
             .ToList();
 
         var gainers = coins

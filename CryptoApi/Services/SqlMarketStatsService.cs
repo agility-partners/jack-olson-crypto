@@ -20,8 +20,7 @@ public class SqlMarketStatsService : IMarketStatsService
                 price_change_percentage_24h,
                 last_updated
             FROM gold.coin_prices
-            WHERE market_cap_rank <= 100
-                AND price_change_percentage_24h IS NOT NULL
+            WHERE price_change_percentage_24h IS NOT NULL
         ),
         gainers AS (
             SELECT
@@ -214,7 +213,6 @@ public class SqlMarketStatsService : IMarketStatsService
     private static TopMoversDto CreateFallbackTopMoversFromCatalog()
     {
         var coins = CoinCatalog.GetAll()
-            .Where(coin => coin.Rank <= 100)
             .ToList();
 
         return new TopMoversDto

@@ -6,8 +6,8 @@
 }}
 
 /*
-  Top 10 gainers and top 10 losers among coins ranked in the top 100
-  by market cap.  Refreshes automatically when coin_prices updates.
+  Top 10 gainers and top 10 losers across all coins.
+  Refreshes automatically when coin_prices updates.
 */
 
 WITH filtered AS (
@@ -19,7 +19,7 @@ WITH filtered AS (
         market_cap,
         price_change_percentage_24h
     FROM {{ ref('coin_prices') }}
-    WHERE market_cap_rank <= 100
+    WHERE price_change_percentage_24h IS NOT NULL
 ),
 
 gainers AS (
