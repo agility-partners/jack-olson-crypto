@@ -105,9 +105,17 @@ public class SqlMarketStatsService : IMarketStatsService
                 ms.total_24h_volume,
                 ms.avg_24h_change_pct,
                 ms.btc_dominance_pct,
-                cp.data_as_of
+                cp.data_as_of,
+                cp.gainers_count,
+                cp.total_tracked
             FROM gold.market_summary ms
-            CROSS JOIN (SELECT MAX(last_updated) AS data_as_of FROM gold.coin_prices) cp
+            CROSS JOIN (
+                SELECT
+                    MAX(last_updated) AS data_as_of,
+                    COUNT(CASE WHEN price_change_percentage_24h > 0 THEN 1 END) AS gainers_count,
+                    COUNT(*) AS total_tracked
+                FROM gold.coin_prices
+            ) cp
             """;
 
         await using var cmd = new SqlCommand(sql, conn);
@@ -115,7 +123,7 @@ public class SqlMarketStatsService : IMarketStatsService
 
         if (!await reader.ReadAsync())
         {
-            return CreateDto(0m, 0m, 0m, 0m, null);
+            return CreateDto(0m, 0m, 0m, 0m, null, 0, 0);
         }
 
         var totalMarketCap = reader.IsDBNull(0) ? 0m : reader.GetDecimal(0);
@@ -124,13 +132,15 @@ public class SqlMarketStatsService : IMarketStatsService
         var btcDominancePct = reader.IsDBNull(3) ? 0m : reader.GetDecimal(3);
         var dataAsOf = reader.IsDBNull(4) ? null
             : reader.GetDateTime(4).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+        var gainersCount = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+        var totalTracked = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
 
         if (totalMarketCap <= 0m && volume24h <= 0m)
         {
             return CreateFallbackDtoFromCatalog();
         }
 
-        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct, dataAsOf);
+        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct, dataAsOf, gainersCount, totalTracked);
     }
 
     public async Task<TopMoversDto> GetTopMoversAsync()
@@ -263,7 +273,7 @@ public class SqlMarketStatsService : IMarketStatsService
         var coins = CoinCatalog.GetAll();
         if (coins.Count == 0)
         {
-            return CreateDto(0m, 0m, 0m, 0m, null);
+            return CreateDto(0m, 0m, 0m, 0m, null, 0, 0);
         }
 
         var totalMarketCap = coins.Sum(c => c.MarketCapRaw);
@@ -273,8 +283,10 @@ public class SqlMarketStatsService : IMarketStatsService
         var btcDominancePct = totalMarketCap > 0m
             ? bitcoinMarketCap * 100m / totalMarketCap
             : 0m;
+        var gainersCount = coins.Count(c => c.Change24h > 0);
+        var totalTracked = coins.Count;
 
-        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct, null);
+        return CreateDto(totalMarketCap, volume24h, marketCapChangePct, btcDominancePct, null, gainersCount, totalTracked);
     }
 
     private static MarketStatsDto CreateDto(
@@ -282,7 +294,9 @@ public class SqlMarketStatsService : IMarketStatsService
         decimal volume24h,
         decimal marketCapChangePct,
         decimal btcDominancePct,
-        string? dataAsOf)
+        string? dataAsOf,
+        int gainersCount,
+        int totalTracked)
     {
         var isUp = marketCapChangePct >= 0;
 
@@ -297,6 +311,8 @@ public class SqlMarketStatsService : IMarketStatsService
             BtcDominance = $"{btcDominancePct.ToString("0.#", CultureInfo.InvariantCulture)}%",
             AvgChange24h = changeFormatted,
             AvgChange24hDir = isUp ? "up" : "down",
+            GainersCount = gainersCount,
+            TotalTracked = totalTracked,
             DataAsOf = dataAsOf,
         };
     }
