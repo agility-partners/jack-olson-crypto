@@ -4,16 +4,16 @@ export const ALL_ASSISTANT_SUGGESTIONS = [
   "What's the price of Bitcoin and Ethereum?",
   "What's in my watchlist?",
   "Which coin has the highest market cap right now?",
-  "What are the biggest losers in the last 24 hours?",
-  "Give me an overview of the crypto market today",
+  "What are the top 5 biggest losers in the last 24 hours?",
+  "How many coins are currently gainers?",
   "How is Solana performing compared to Ethereum?",
   "What coins are trending up right now?",
   "Show me the top 5 coins by trading volume",
-  "How has Bitcoin dominance changed this week?",
+  "Provide a detailed summary of Bitcoin's current stats",
   "Which coins in my watchlist moved the most today?",
   "Compare Ethereum, Solana, and Cardano by market cap",
   "What are the top gainers with volume over $1B?",
-  "Which large-cap coins are down more than 5% today?",
+  "Which coins are down more than 5% today?",
 ];
 
 export const DEFAULT_ASSISTANT_SUGGESTIONS = ALL_ASSISTANT_SUGGESTIONS.slice(0, 5);
