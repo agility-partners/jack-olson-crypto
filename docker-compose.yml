@@ -26,7 +26,11 @@ services:
       - NEXT_PUBLIC_API_URL=http://localhost:8081
       - API_URL=http://cryptoapi:8080
       - WATCHPACK_POLLING=true
-      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - CLAUDE_HIGH_DEPLOYMENT=${CLAUDE_HIGH_DEPLOYMENT:-claude-opus-4-6}
+      - CLAUDE_MID_DEPLOYMENT=${CLAUDE_MID_DEPLOYMENT:-claude-sonnet-4-6}
+      - CLAUDE_LOW_DEPLOYMENT=${CLAUDE_LOW_DEPLOYMENT:-claude-haiku-4-5}
     depends_on:
       - cryptoapi
 

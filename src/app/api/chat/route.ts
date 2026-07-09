@@ -1,4 +1,4 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
 import {
   convertToModelMessages,
   createUIMessageStream,
@@ -13,12 +13,13 @@ import {
 } from "./citations";
 import { SYSTEM_PROMPT, tools } from "./tools";
 
-const github = createOpenAI({
-  baseURL: "https://models.github.ai/inference",
-  apiKey: process.env.GITHUB_TOKEN,
+const anthropic = createAnthropic({
+  baseURL: process.env.ANTHROPIC_BASE_URL,
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-const MODEL = process.env.GITHUB_MODELS_MODEL ?? "openai/gpt-4o-mini";
+const MODEL =
+  process.env.CLAUDE_MID_DEPLOYMENT ?? "claude-sonnet-4-6";
 
 export const maxDuration = 30;
 
@@ -31,7 +32,7 @@ export async function POST(req: Request) {
     const { messages }: { messages: AssistantChatMessage[] } = await req.json();
 
     const result = streamText({
-      model: github.chat(MODEL),
+      model: anthropic(MODEL),
       system: SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages, { tools }),
       tools,
