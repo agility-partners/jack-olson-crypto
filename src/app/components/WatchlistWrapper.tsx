@@ -13,9 +13,10 @@ type Props = {
   initialCoins: Coin[];
   allCoins: Coin[];
   initialMarketStats: MarketStats;
+  lastUpdated?: string;
 };
 
-export default function WatchlistWrapper({ initialCoins, allCoins, initialMarketStats }: Props) {
+export default function WatchlistWrapper({ initialCoins, allCoins, initialMarketStats, lastUpdated = "just now" }: Props) {
   const [coinCount, setCoinCount] = useState(initialCoins.length);
   const [gainerCount, setGainerCount] = useState(
     () => initialCoins.filter((c) => c.change24h >= 0).length
@@ -32,7 +33,7 @@ export default function WatchlistWrapper({ initialCoins, allCoins, initialMarket
         <div className={pageStyles.pageHeaderContent}>
           <h1>My Watchlist</h1>
           <p className={styles.trackingText}>
-            Tracking {coinCount} assets · Last updated just now
+            Tracking {coinCount} assets · Last updated {lastUpdated}
           </p>
         </div>
         <FlappyCrypto />

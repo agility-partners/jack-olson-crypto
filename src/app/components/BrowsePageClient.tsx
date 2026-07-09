@@ -12,9 +12,10 @@ import styles from "@/app/page.module.css";
 type Props = {
   initialCoins: Coin[];
   initialMarketStats: MarketStats;
+  lastUpdated?: string;
 };
 
-export default function BrowsePageClient({ initialCoins, initialMarketStats }: Props) {
+export default function BrowsePageClient({ initialCoins, initialMarketStats, lastUpdated = "just now" }: Props) {
   const [coinCount, setCoinCount] = useState(initialCoins.length);
   const [gainerCount, setGainerCount] = useState(
     initialCoins.filter((c) => c.change24h >= 0).length
@@ -32,7 +33,7 @@ export default function BrowsePageClient({ initialCoins, initialMarketStats }: P
 
       <div className={styles.pageHeader}>
         <h1>All Coins</h1>
-        <p>Tracking {coinCount} assets · Last updated just now</p>
+        <p>Tracking {coinCount} assets · Last updated {lastUpdated}</p>
       </div>
 
       <StatsBar

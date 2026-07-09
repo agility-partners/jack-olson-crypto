@@ -1,5 +1,6 @@
 import { type Coin, watchlistCoins } from "@/app/lib/mockData";
 import { createFallbackMarketStats, type MarketStats } from "@/app/lib/marketStats";
+import { formatRelativeTime } from "@/app/lib/formatTime";
 
 const API_URL = process.env.API_URL ?? "http://localhost:8080";
 const CATALOG_REVALIDATE_SECONDS = 60;
@@ -55,4 +56,13 @@ export async function getMarketStats(): Promise<MarketStats> {
   } catch {
     return createFallbackMarketStats(watchlistCoins);
   }
+}
+
+export function getLastUpdated(coins: Coin[]): string {
+  const timestamps = coins
+    .map((c) => c.dataAsOf)
+    .filter((d): d is string => !!d);
+  if (timestamps.length === 0) return "just now";
+  const latest = timestamps.sort().at(-1)!;
+  return formatRelativeTime(latest);
 }
