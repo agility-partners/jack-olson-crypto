@@ -7,13 +7,22 @@ export const ALL_ASSISTANT_SUGGESTIONS = [
   "What are the top 5 biggest losers in the last 24 hours?",
   "How many coins are currently gainers?",
   "How is Solana performing compared to Ethereum?",
-  "What coins are trending up right now?",
+  "Show me the strongest 7-day performers right now",
   "Show me the top 5 coins by trading volume",
   "Provide a detailed summary of Bitcoin's current stats",
   "Which coins in my watchlist moved the most today?",
   "Compare Ethereum, Solana, and Cardano by market cap",
   "What are the top gainers with volume over $1B?",
   "Which coins are down more than 5% today?",
+  "Which tracked coins are priced under $1 and up today?",
+  "What's Dogecoin's current rank and market cap?",
+  "Which watchlist coin has the highest market cap?",
+  "Compare Bitcoin, Solana, and XRP by 24-hour change",
+  "Show me the 5 weakest performers over the last 30 days",
+  "Which top-volume coin is up the most today?",
+  "Show me the 3 lowest-priced tracked coins",
+  "Which tracked coin has the lowest market cap right now?",
+  "How many tracked coins are trading above $100 today?",
 ];
 
 export const DEFAULT_ASSISTANT_SUGGESTIONS = ALL_ASSISTANT_SUGGESTIONS.slice(0, 5);
