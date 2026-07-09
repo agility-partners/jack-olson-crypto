@@ -7,6 +7,10 @@ public class MarketStatsService : IMarketStatsService
     // Mock global market data — will be replaced with a live data source
     public Task<MarketStatsDto> GetMarketStatsAsync()
     {
+        var coins = CoinCatalog.GetAll();
+        var gainersCount = coins.Count(c => c.Change24h > 0);
+        var totalTracked = coins.Count;
+
         var stats = new MarketStatsDto
         {
             TotalMarketCap = "$2.41T",
@@ -16,6 +20,8 @@ public class MarketStatsService : IMarketStatsService
             BtcDominance = "52.3%",
             AvgChange24h = "↑ 1.4%",
             AvgChange24hDir = "up",
+            GainersCount = gainersCount,
+            TotalTracked = totalTracked,
         };
 
         return Task.FromResult(stats);
