@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import styles from "./AddCoinModal.module.css";
-
-type FormData = {
-  coinId: string;
-};
 
 type ValidationErrors = {
   coinId?: string;
@@ -24,10 +20,12 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoins }: Props) {
   const [fetchedCoins, setFetchedCoins] = useState<Coin[]>([]);
   const [fetchError, setFetchError] = useState(false);
-  const [formData, setFormData] = useState<FormData>({ coinId: "" });
+  const [selectedCoinId, setSelectedCoinId] = useState("");
+  const [search, setSearch] = useState("");
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const coinCatalog = allCoins ?? fetchedCoins;
 
@@ -59,6 +57,10 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
     };
   }, [allCoins]);
 
+  useEffect(() => {
+    searchInputRef.current?.focus();
+  }, []);
+
   const availableCoins = useMemo(
     () => coinCatalog
       .filter((coin) => !currentCoins.some((c) => c.id === coin.id))
@@ -66,12 +68,22 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
     [coinCatalog, currentCoins],
   );
 
+  const filteredCoins = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return availableCoins;
+    return availableCoins.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(q) ||
+        coin.symbol.toLowerCase().includes(q),
+    );
+  }, [availableCoins, search]);
+
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {};
 
-    if (!formData.coinId.trim()) {
+    if (!selectedCoinId.trim()) {
       newErrors.coinId = "Please select a cryptocurrency";
-    } else if (!coinCatalog.find((c) => c.id === formData.coinId)) {
+    } else if (!coinCatalog.find((c) => c.id === selectedCoinId)) {
       newErrors.coinId = "Invalid cryptocurrency selected";
     }
 
@@ -79,12 +91,10 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error for this field
-    if (errors[name as keyof ValidationErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
+  const handleSelect = (coinId: string) => {
+    setSelectedCoinId(coinId);
+    if (errors.coinId) {
+      setErrors((prev) => ({ ...prev, coinId: undefined }));
     }
   };
 
@@ -101,7 +111,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
       const res = await fetch(`${API_URL}/api/watchlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ coinId: formData.coinId }),
+        body: JSON.stringify({ coinId: selectedCoinId }),
       });
 
       // 409 Conflict means already in watchlist — treat as success
@@ -109,13 +119,14 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
         throw new Error("Failed to add coin to watchlist");
       }
 
-      const selectedCoin = coinCatalog.find((c) => c.id === formData.coinId);
+      const selectedCoin = coinCatalog.find((c) => c.id === selectedCoinId);
       if (selectedCoin) {
         setSubmitSuccess(true);
         setTimeout(() => {
           onAddCoin(selectedCoin);
           setIsSubmitting(false);
-          setFormData({ coinId: "" });
+          setSelectedCoinId("");
+          setSearch("");
           setSubmitSuccess(false);
         }, 1200);
       } else {
@@ -125,6 +136,8 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
       setIsSubmitting(false);
     }
   };
+
+  const selectedCoin = coinCatalog.find((c) => c.id === selectedCoinId);
 
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -141,32 +154,64 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGroup}>
-            <label htmlFor="coinId" className={styles.label}>
+            <label htmlFor="coinSearch" className={styles.label}>
               Select Cryptocurrency
             </label>
             {fetchError ? (
               <span className={styles.errorMessage}>Could not load coins. Is the API running?</span>
             ) : (
-              <select
-                id="coinId"
-                name="coinId"
-                value={formData.coinId}
-                onChange={handleChange}
-                className={`${styles.select} ${errors.coinId ? styles.error : ""}`}
-                disabled={isSubmitting || coinCatalog.length === 0}
-              >
-                <option value="">{coinCatalog.length === 0 ? "Loading…" : "Choose a coin..."}</option>
-                {availableCoins.map((coin) => (
-                  <option key={coin.id} value={coin.id}>
-                    {coin.name} ({coin.symbol})
-                  </option>
-                ))}
-              </select>
+              <>
+                <div className={styles.searchWrap}>
+                  <svg className={styles.searchIcon} width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                  </svg>
+                  <input
+                    ref={searchInputRef}
+                    id="coinSearch"
+                    className={`${styles.searchInput} ${errors.coinId ? styles.error : ""}`}
+                    type="search"
+                    placeholder={coinCatalog.length === 0 ? "Loading…" : "Search by name or symbol…"}
+                    aria-label="Search cryptocurrencies"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    disabled={isSubmitting || coinCatalog.length === 0}
+                    autoComplete="off"
+                  />
+                </div>
+                {selectedCoin && (
+                  <div className={styles.selectedBadge}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    {selectedCoin.name} ({selectedCoin.symbol})
+                  </div>
+                )}
+                <div className={`${styles.coinList} ${errors.coinId ? styles.coinListError : ""}`} role="listbox" aria-label="Available coins">
+                  {availableCoins.length === 0 ? (
+                    <div className={styles.emptyList}>All cryptocurrencies are already in your watchlist!</div>
+                  ) : filteredCoins.length === 0 ? (
+                    <div className={styles.emptyList}>No coins match &ldquo;{search}&rdquo;</div>
+                  ) : (
+                    filteredCoins.map((coin) => (
+                      <button
+                        key={coin.id}
+                        type="button"
+                        role="option"
+                        aria-selected={coin.id === selectedCoinId}
+                        className={`${styles.coinOption} ${coin.id === selectedCoinId ? styles.coinOptionSelected : ""}`}
+                        onClick={() => handleSelect(coin.id)}
+                        disabled={isSubmitting}
+                      >
+                        <span className={styles.coinName}>{coin.name}</span>
+                        <span className={styles.coinSymbol}>{coin.symbol}</span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              </>
             )}
             {errors.coinId && <span className={styles.errorMessage}>{errors.coinId}</span>}
-            {!fetchError && coinCatalog.length > 0 && availableCoins.length === 0 && (
-              <span className={styles.infoMessage}>All cryptocurrencies are already in your watchlist!</span>
-            )}
           </div>
 
           <div className={styles.actions}>

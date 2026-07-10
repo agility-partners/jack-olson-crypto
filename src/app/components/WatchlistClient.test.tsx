@@ -116,9 +116,9 @@ describe('WatchlistClient', () => {
 
     await screen.findByRole('button', { name: 'Cancel' });
 
-    fireEvent.change(screen.getByLabelText('Select Cryptocurrency'), {
-      target: { value: 'dogecoin' },
-    });
+    // Wait for coin list to load and click Dogecoin
+    const dogecoinOption = await screen.findByRole('option', { name: /Dogecoin/i });
+    fireEvent.click(dogecoinOption);
 
     fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
 
@@ -164,7 +164,7 @@ describe('WatchlistClient', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
 
     expect(screen.getByText('Please select a cryptocurrency')).toBeInTheDocument();
-    expect(screen.queryByText('Dogecoin')).not.toBeInTheDocument();
+    expect(document.querySelector('a[href="/coins/dogecoin"]')).not.toBeInTheDocument();
   });
 
   it('restores full list when search input is cleared', () => {
@@ -231,14 +231,14 @@ describe('WatchlistClient', () => {
 
     await screen.findByRole('button', { name: 'Cancel' });
 
-    fireEvent.change(screen.getByLabelText('Select Cryptocurrency'), {
-      target: { value: 'dogecoin' },
-    });
+    // Wait for coin list to load and click Dogecoin
+    const dogecoinOption = await screen.findByRole('option', { name: /Dogecoin/i });
+    fireEvent.click(dogecoinOption);
 
     fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
 
     await waitFor(() => {
-      expect(screen.getByText('Dogecoin')).toBeInTheDocument();
+      expect(document.querySelector('a[href="/coins/dogecoin"]')).toBeInTheDocument();
       expect(screen.queryByText('Add Cryptocurrency')).not.toBeInTheDocument();
       expect(screen.queryByRole('button', { name: 'Cancel' })).not.toBeInTheDocument();
     }, { timeout: 3000 });
