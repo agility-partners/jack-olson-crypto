@@ -2,6 +2,7 @@
 .toolbar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   padding: 20px 32px;
   border-bottom: 1px solid var(--border);
@@ -9,8 +10,9 @@
 
 .searchWrap {
   position: relative;
-  flex: 1;
-  max-width: 340px;
+  flex: 0 1 240px;
+  max-width: 240px;
+  min-width: 200px;
 }
 
 .searchIcon {
@@ -193,6 +195,10 @@
 
 @media (max-width: 640px) {
   .toolbar { padding-left: 16px; padding-right: 16px; }
+  .searchWrap {
+    flex-basis: 100%;
+    max-width: none;
+  }
   .coinGrid { padding: 16px; gap: 12px; }
   .duplicateError { margin: 0 16px; }
 }

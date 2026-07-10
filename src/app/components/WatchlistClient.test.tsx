@@ -49,6 +49,30 @@ describe('WatchlistClient', () => {
     expect(screen.queryByText('Bitcoin')).not.toBeInTheDocument();
   });
 
+  it('sorts displayed coins alphabetically when the Alphabetical button is clicked', () => {
+    render(
+      <WatchlistClient
+        initialCoins={[
+          watchlistCoins.find((coin) => coin.id === 'solana')!,
+          watchlistCoins.find((coin) => coin.id === 'bitcoin')!,
+          watchlistCoins.find((coin) => coin.id === 'ethereum')!,
+        ]}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Alphabetical' }));
+
+    const coinLinks = Array.from(
+      document.querySelectorAll('main a[href^="/coins/"]')
+    ).map((link) => link.getAttribute('href'));
+
+    expect(coinLinks).toEqual([
+      '/coins/bitcoin',
+      '/coins/ethereum',
+      '/coins/solana',
+    ]);
+  });
+
   it('shows empty state when no coins match the search', () => {
     render(<WatchlistClient initialCoins={watchlistCoins.slice(0, 4)} />);
 
