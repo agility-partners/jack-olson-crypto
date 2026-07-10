@@ -94,8 +94,22 @@
   letter-spacing: 0.5px;
 }
 
-.select {
-  padding: 0.75rem 1rem;
+.searchWrap {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
   background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(74, 222, 128, 0.2);
   border-radius: 8px;
@@ -103,38 +117,112 @@
   font-size: 1rem;
   font-family: inherit;
   transition: all 0.2s ease;
-  cursor: pointer;
+  box-sizing: border-box;
 }
 
-.select:hover:not(:disabled) {
-  border-color: rgba(74, 222, 128, 0.4);
-  background-color: rgba(0, 0, 0, 0.4);
+.searchInput::placeholder {
+  color: #6b7280;
 }
 
-.select:focus {
+.searchInput:focus {
   outline: none;
   border-color: rgba(74, 222, 128, 0.6);
   background-color: rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
 }
 
-.select:disabled {
+.searchInput:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.select option {
-  background-color: #0d1f0f;
+.searchInput.error {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.selectedBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #34d399;
+  padding: 0.35rem 0.6rem;
+  background-color: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: 6px;
+}
+
+.coinList {
+  max-height: 220px;
+  overflow-y: auto;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(74, 222, 128, 0.3) transparent;
+}
+
+.coinList.coinListError {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.coinOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.6rem 0.875rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(74, 222, 128, 0.07);
+  color: #d1d5db;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.coinOption:last-child {
+  border-bottom: none;
+}
+
+.coinOption:hover:not(:disabled) {
+  background-color: rgba(74, 222, 128, 0.08);
   color: #f0fdf4;
 }
 
-.select.error {
-  border-color: rgba(239, 68, 68, 0.5);
-  background-color: rgba(239, 68, 68, 0.05);
+.coinOption:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.select.error:focus {
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+.coinOption.coinOptionSelected {
+  background-color: rgba(74, 222, 128, 0.12);
+  color: #34d399;
+}
+
+.coinName {
+  font-weight: 500;
+}
+
+.coinSymbol {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.coinOptionSelected .coinSymbol {
+  color: #6ee7b7;
+}
+
+.emptyList {
+  padding: 1rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
 }
 
 .errorMessage {
