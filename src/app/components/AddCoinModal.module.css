@@ -123,6 +123,11 @@
   cursor: not-allowed;
 }
 
+.select option {
+  background-color: #0d1f0f;
+  color: #f0fdf4;
+}
+
 .select.error {
   border-color: rgba(239, 68, 68, 0.5);
   background-color: rgba(239, 68, 68, 0.05);
