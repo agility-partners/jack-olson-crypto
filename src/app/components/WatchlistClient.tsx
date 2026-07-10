@@ -197,8 +197,10 @@ export default function WatchlistClient({
         <div className={`${styles.coinGrid} ${!isGrid ? styles.listView : ""}`}>
           {visibleCoins.length === 0 ? (
             <div className={styles.emptyState}>
-              <h2>No coins found</h2>
-              <p>Try adjusting your search or filter.</p>
+              <div className={styles.emptyStateBox}>
+                <h2>No coins found</h2>
+                <p>Try adjusting your search or filter.</p>
+              </div>
             </div>
           ) : (
             visibleCoins.map((coin) => (
