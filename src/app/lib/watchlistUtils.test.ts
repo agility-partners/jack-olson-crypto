@@ -74,6 +74,11 @@ describe('watchlistUtils', () => {
       expect(result.map((coin) => coin.id)).toEqual(['bitcoin', 'ethereum', 'solana']);
     });
 
+    it('sorts alphabetically by name', () => {
+      const result = sortCoins(sampleCoins, 'alphabetical');
+      expect(result.map((coin) => coin.id)).toEqual(['bitcoin', 'ethereum', 'solana']);
+    });
+
     it('sorts by percent change descending', () => {
       const result = sortCoins(sampleCoins, 'percentchange');
       expect(result.map((coin) => coin.id)).toEqual(['solana', 'bitcoin', 'ethereum']);

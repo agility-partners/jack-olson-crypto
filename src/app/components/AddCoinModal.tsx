@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import styles from "./AddCoinModal.module.css";
 
-const MAX_SELECTION = 5;
+const MAX_SELECTION = 10;
 
 type ValidationErrors = {
   coinId?: string;

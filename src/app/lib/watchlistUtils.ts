@@ -1,5 +1,6 @@
 export type Filter =
   | "value"
+  | "alphabetical"
   | "percentchange"
   | "marketcap"
   | "24hvolume"
@@ -29,6 +30,7 @@ export function filterCoins<T extends CoinLike>(
       !q || c.name.toLowerCase().includes(q) || c.symbol.toLowerCase().includes(q);
     const matchesFilter =
       filter === "value" ||
+      filter === "alphabetical" ||
       filter === "percentchange" ||
       filter === "marketcap" ||
       filter === "24hvolume" ||
@@ -43,6 +45,8 @@ export function sortCoins<T extends CoinLike>(coins: T[], filter: Filter): T[] {
   const sorted = [...coins];
 
   switch (filter) {
+    case "alphabetical":
+      return sorted.sort((a, b) => a.name.localeCompare(b.name));
     case "percentchange":
       return sorted.sort((a, b) => b.change24h - a.change24h);
     case "marketcap":

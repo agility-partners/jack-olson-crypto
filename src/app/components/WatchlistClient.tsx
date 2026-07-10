@@ -9,6 +9,15 @@ import CryptoCard from "./CryptoCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 const REFRESH_INTERVAL_MS = 90_000;
+const FILTER_OPTIONS: Filter[] = [
+  "value",
+  "alphabetical",
+  "percentchange",
+  "marketcap",
+  "24hvolume",
+  "gainers",
+  "losers",
+];
 
 type Props = {
   initialCoins: Coin[];
@@ -103,6 +112,7 @@ export default function WatchlistClient({
 
   const filterLabels: Record<Filter, string> = {
     value: "Value",
+    alphabetical: "Alphabetical",
     percentchange: "Percent Change",
     marketcap: "Market Cap",
     "24hvolume": "24h Volume",
@@ -128,7 +138,7 @@ export default function WatchlistClient({
           />
         </div>
 
-        {(["value", "percentchange", "marketcap", "24hvolume", "gainers", "losers"] as Filter[]).map((f) => (
+        {FILTER_OPTIONS.map((f) => (
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}
