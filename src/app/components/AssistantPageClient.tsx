@@ -2,7 +2,6 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
 import {
   assistantMessageMetadataSchema,
   type AssistantChatMessage,
@@ -11,9 +10,8 @@ import {
   DEFAULT_ASSISTANT_SUGGESTIONS,
   pickRandomAssistantSuggestions,
 } from "../lib/assistantSuggestions";
+import { useChatInstance, chatTransport } from "./ChatProvider";
 import styles from "./AssistantPageClient.module.css";
-
-const transport = new DefaultChatTransport({ api: "/api/chat" });
 
 function getMessageDisplayText(
   parts: AssistantChatMessage["parts"],
@@ -50,11 +48,13 @@ type AssistantPageClientProps = {
 export default function AssistantPageClient({
   initialSuggestions = DEFAULT_ASSISTANT_SUGGESTIONS,
 }: AssistantPageClientProps) {
+  const chatInstance = useChatInstance();
   const { messages, sendMessage, status, error } =
-    useChat<AssistantChatMessage>({
-      transport,
-      messageMetadataSchema: assistantMessageMetadataSchema,
-    });
+    useChat<AssistantChatMessage>(
+      chatInstance
+        ? { chat: chatInstance }
+        : { transport: chatTransport, messageMetadataSchema: assistantMessageMetadataSchema }
+    );
   const [input, setInput] = useState("");
   const [followUpSuggestions, setFollowUpSuggestions] = useState<string[]>([]);
   const prevSuggestionsRef = useRef<string[]>(initialSuggestions);
