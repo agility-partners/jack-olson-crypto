@@ -120,7 +120,7 @@ describe('WatchlistClient', () => {
     const dogecoinOption = await screen.findByRole('option', { name: /Dogecoin/i });
     fireEvent.click(dogecoinOption);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist (1)' }));
 
     await waitFor(() => {
       expect(onStatsChange).toHaveBeenCalledWith(5, 4);
@@ -235,7 +235,7 @@ describe('WatchlistClient', () => {
     const dogecoinOption = await screen.findByRole('option', { name: /Dogecoin/i });
     fireEvent.click(dogecoinOption);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Add to Watchlist (1)' }));
 
     await waitFor(() => {
       expect(document.querySelector('a[href="/coins/dogecoin"]')).toBeInTheDocument();
