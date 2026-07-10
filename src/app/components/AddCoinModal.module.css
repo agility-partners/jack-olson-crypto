@@ -268,6 +268,12 @@
   font-weight: 500;
 }
 
+.coinOptionRight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .coinSymbol {
   font-size: 0.8125rem;
   color: #9ca3af;
@@ -277,6 +283,20 @@
 
 .coinOptionSelected .coinSymbol {
   color: #6ee7b7;
+}
+
+.changePositive {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4ade80;
+  white-space: nowrap;
+}
+
+.changeNegative {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f87171;
+  white-space: nowrap;
 }
 
 .emptyList {

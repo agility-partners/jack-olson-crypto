@@ -238,7 +238,14 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
                           disabled={isDisabled}
                         >
                           <span className={styles.coinName}>{coin.name}</span>
-                          <span className={styles.coinSymbol}>{coin.symbol}</span>
+                          <span className={styles.coinOptionRight}>
+                            <span className={styles.coinSymbol}>{coin.symbol}</span>
+                            {coin.change24h != null && (
+                              <span className={coin.change24h >= 0 ? styles.changePositive : styles.changeNegative}>
+                                {coin.change24h >= 0 ? "▲" : "▼"} {Math.abs(coin.change24h).toFixed(2)}%
+                              </span>
+                            )}
+                          </span>
                         </button>
                       );
                     })
