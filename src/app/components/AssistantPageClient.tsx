@@ -164,6 +164,12 @@ export default function AssistantPageClient({
                   ? getMessageDisplayText(msg.parts, msg.metadata?.sourcesLine)
                   : getMessageDisplayText(msg.parts);
 
+              // Skip empty assistant messages while thinking — the showThinking
+              // block below serves as the sole placeholder in that state.
+              if (showThinking && msg.role === "assistant" && !messageText) {
+                return null;
+              }
+
               return (
                 <div
                   key={msg.id}
