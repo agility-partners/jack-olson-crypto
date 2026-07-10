@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import { filterCoins, sortCoins, type Filter } from "@/app/lib/watchlistUtils";
 import AddCoinModal from "./AddCoinModal";
@@ -28,8 +28,6 @@ export default function WatchlistClient({
   const [filter, setFilter] = useState<Filter>("value");
   const [isGrid, setIsGrid] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [duplicateError, setDuplicateError] = useState<string | null>(null);
-  const dismissTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Auto-refresh prices from the API every REFRESH_INTERVAL_MS
   useEffect(() => {
@@ -60,15 +58,11 @@ export default function WatchlistClient({
     onStatsChange?.(coins.length, gainerCount);
   }, [coins, onStatsChange]);
 
-  const handleAddCoin = (newCoin: Coin) => {
-    if (coins.some((c) => c.id === newCoin.id)) {
-      setDuplicateError(`${newCoin.name} is already in your watchlist.`);
-      if (dismissTimerRef.current) clearTimeout(dismissTimerRef.current);
-      dismissTimerRef.current = setTimeout(() => setDuplicateError(null), 4000);
-      return;
+  const handleAddCoin = (newCoins: Coin[]) => {
+    const coinsToAdd = newCoins.filter((c) => !coins.some((existing) => existing.id === c.id));
+    if (coinsToAdd.length > 0) {
+      setCoins((prev) => [...prev, ...coinsToAdd]);
     }
-    setCoins((prev) => [...prev, newCoin]);
-    setDuplicateError(null);
     setShowAddModal(false);
   };
 
@@ -188,19 +182,6 @@ export default function WatchlistClient({
           </div>
         </div>
       </div>
-
-      {duplicateError && (
-        <div className={styles.duplicateError} role="alert">
-          {duplicateError}
-          <button
-            className={styles.duplicateErrorDismiss}
-            onClick={() => setDuplicateError(null)}
-            aria-label="Dismiss"
-          >
-            ✕
-          </button>
-        </div>
-      )}
 
       <main>
         <div className={`${styles.coinGrid} ${!isGrid ? styles.listView : ""}`}>

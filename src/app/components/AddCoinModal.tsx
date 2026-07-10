@@ -4,13 +4,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
 import styles from "./AddCoinModal.module.css";
 
+const MAX_SELECTION = 5;
+
 type ValidationErrors = {
   coinId?: string;
 };
 
 type Props = {
   onClose: () => void;
-  onAddCoin: (coin: Coin) => void;
+  onAddCoin: (coins: Coin[]) => void;
   currentCoins: Coin[];
   allCoins?: Coin[];
 };
@@ -20,7 +22,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
 export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoins }: Props) {
   const [fetchedCoins, setFetchedCoins] = useState<Coin[]>([]);
   const [fetchError, setFetchError] = useState(false);
-  const [selectedCoinId, setSelectedCoinId] = useState("");
+  const [selectedCoinIds, setSelectedCoinIds] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -78,24 +80,34 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
     );
   }, [availableCoins, search]);
 
+  const atLimit = selectedCoinIds.length >= MAX_SELECTION;
+
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {};
 
-    if (!selectedCoinId.trim()) {
+    if (selectedCoinIds.length === 0) {
       newErrors.coinId = "Please select a cryptocurrency";
-    } else if (!coinCatalog.find((c) => c.id === selectedCoinId)) {
-      newErrors.coinId = "Invalid cryptocurrency selected";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSelect = (coinId: string) => {
-    setSelectedCoinId(coinId);
-    if (errors.coinId) {
-      setErrors((prev) => ({ ...prev, coinId: undefined }));
-    }
+  const handleToggle = (coinId: string) => {
+    setErrors((prev) => ({ ...prev, coinId: undefined }));
+    setSelectedCoinIds((prev) => {
+      if (prev.includes(coinId)) {
+        return prev.filter((id) => id !== coinId);
+      }
+      if (prev.length >= MAX_SELECTION) {
+        return prev;
+      }
+      return [...prev, coinId];
+    });
+  };
+
+  const handleDeselect = (coinId: string) => {
+    setSelectedCoinIds((prev) => prev.filter((id) => id !== coinId));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,36 +120,40 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
     setIsSubmitting(true);
 
     try {
-      const res = await fetch(`${API_URL}/api/watchlist`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ coinId: selectedCoinId }),
-      });
+      await Promise.all(
+        selectedCoinIds.map((coinId) =>
+          fetch(`${API_URL}/api/watchlist`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ coinId }),
+          }).then((res) => {
+            // 409 Conflict means already in watchlist — treat as success
+            if (!res.ok && res.status !== 409) {
+              throw new Error(`Failed to add ${coinId}`);
+            }
+          }),
+        ),
+      );
 
-      // 409 Conflict means already in watchlist — treat as success
-      if (!res.ok && res.status !== 409) {
-        throw new Error("Failed to add coin to watchlist");
-      }
-
-      const selectedCoin = coinCatalog.find((c) => c.id === selectedCoinId);
-      if (selectedCoin) {
-        setSubmitSuccess(true);
-        setTimeout(() => {
-          onAddCoin(selectedCoin);
-          setIsSubmitting(false);
-          setSelectedCoinId("");
-          setSearch("");
-          setSubmitSuccess(false);
-        }, 1200);
-      } else {
+      const selectedCoins = coinCatalog.filter((c) => selectedCoinIds.includes(c.id));
+      setSubmitSuccess(true);
+      setTimeout(() => {
+        onAddCoin(selectedCoins);
         setIsSubmitting(false);
-      }
+        setSelectedCoinIds([]);
+        setSearch("");
+        setSubmitSuccess(false);
+      }, 1200);
     } catch {
       setIsSubmitting(false);
     }
   };
 
-  const selectedCoin = coinCatalog.find((c) => c.id === selectedCoinId);
+  const selectedCoins = coinCatalog.filter((c) => selectedCoinIds.includes(c.id));
+
+  const submitLabel = selectedCoinIds.length > 0
+    ? `Add to Watchlist (${selectedCoinIds.length})`
+    : "Add to Watchlist";
 
   return (
     <div className={styles.overlay} onClick={onClose}>
@@ -179,34 +195,53 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
                     autoComplete="off"
                   />
                 </div>
-                {selectedCoin && (
-                  <div className={styles.selectedBadge}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                    {selectedCoin.name} ({selectedCoin.symbol})
+                {selectedCoins.length > 0 && (
+                  <div className={styles.selectedChips} aria-label="Selected coins">
+                    {selectedCoins.map((coin) => (
+                      <span key={coin.id} className={styles.chip}>
+                        {coin.name}
+                        <button
+                          type="button"
+                          className={styles.chipRemove}
+                          onClick={() => handleDeselect(coin.id)}
+                          aria-label={`Remove ${coin.name}`}
+                          disabled={isSubmitting}
+                        >
+                          ✕
+                        </button>
+                      </span>
+                    ))}
                   </div>
                 )}
-                <div className={`${styles.coinList} ${errors.coinId ? styles.coinListError : ""}`} role="listbox" aria-label="Available coins">
+                <div className={styles.listHeader}>
+                  <span className={styles.selectionCounter} aria-live="polite">
+                    {selectedCoinIds.length} / {MAX_SELECTION} selected
+                  </span>
+                </div>
+                <div className={`${styles.coinList} ${errors.coinId ? styles.coinListError : ""}`} role="listbox" aria-label="Available coins" aria-multiselectable="true">
                   {availableCoins.length === 0 ? (
                     <div className={styles.emptyList}>All cryptocurrencies are already in your watchlist!</div>
                   ) : filteredCoins.length === 0 ? (
                     <div className={styles.emptyList}>No coins match &ldquo;{search}&rdquo;</div>
                   ) : (
-                    filteredCoins.map((coin) => (
-                      <button
-                        key={coin.id}
-                        type="button"
-                        role="option"
-                        aria-selected={coin.id === selectedCoinId}
-                        className={`${styles.coinOption} ${coin.id === selectedCoinId ? styles.coinOptionSelected : ""}`}
-                        onClick={() => handleSelect(coin.id)}
-                        disabled={isSubmitting}
-                      >
-                        <span className={styles.coinName}>{coin.name}</span>
-                        <span className={styles.coinSymbol}>{coin.symbol}</span>
-                      </button>
-                    ))
+                    filteredCoins.map((coin) => {
+                      const isSelected = selectedCoinIds.includes(coin.id);
+                      const isDisabled = isSubmitting || (atLimit && !isSelected);
+                      return (
+                        <button
+                          key={coin.id}
+                          type="button"
+                          role="option"
+                          aria-selected={isSelected}
+                          className={`${styles.coinOption} ${isSelected ? styles.coinOptionSelected : ""} ${atLimit && !isSelected ? styles.coinOptionDimmed : ""}`}
+                          onClick={() => handleToggle(coin.id)}
+                          disabled={isDisabled}
+                        >
+                          <span className={styles.coinName}>{coin.name}</span>
+                          <span className={styles.coinSymbol}>{coin.symbol}</span>
+                        </button>
+                      );
+                    })
                   )}
                 </div>
               </>
@@ -236,7 +271,7 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
                   Added!
                 </>
               ) : (
-                "Add to Watchlist"
+                submitLabel
               )}
             </button>
           </div>
