@@ -24,7 +24,7 @@ SELECT
         WHEN 'avalanche-2' THEN 'avalanche'
         WHEN 'theta-token' THEN 'theta'
         WHEN 'hedera-hashgraph' THEN 'hedera'
-        WHEN 'elrond-erd-2' THEN 'elrond'
+        WHEN 'elrond-erd-2' THEN 'multiversx'
         WHEN 'injective-protocol' THEN 'injective'
         WHEN 'usd-coin' THEN 'usdc'
         WHEN 'the-open-network' THEN 'toncoin'
