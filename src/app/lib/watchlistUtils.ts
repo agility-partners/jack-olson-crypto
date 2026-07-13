@@ -57,8 +57,10 @@ export function sortCoins<T extends CoinLike>(coins: T[], filter: Filter, dir?: 
       return sorted.sort((a, b) => asc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
     case "percentchange":
     case "gainers":
-    case "losers":
       return sorted.sort((a, b) => asc ? a.change24h - b.change24h : b.change24h - a.change24h);
+    case "losers":
+      // "desc" (default) = biggest loser (most negative) first; "asc" = smallest loser first
+      return sorted.sort((a, b) => asc ? b.change24h - a.change24h : a.change24h - b.change24h);
     case "marketcap":
       return sorted.sort((a, b) => asc ? a.marketCapRaw - b.marketCapRaw : b.marketCapRaw - a.marketCapRaw);
     case "24hvolume":
