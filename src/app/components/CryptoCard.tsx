@@ -11,9 +11,10 @@ type Props = {
   isBiggestGainer?: boolean;
   isBiggestLoser?: boolean;
   onRemove?: (coinId: string) => void;
+  from?: string;
 };
 
-export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRemove }: Props) {
+export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRemove, from }: Props) {
   const up = coin.change24h >= 0;
   const spark = pointsToSvgPath(coin.sparkline ?? []) ?? sparkPaths[coin.iconClass];
 
@@ -45,7 +46,7 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRe
       )}
 
       <Link
-        href={`/coins/${coin.id}`}
+        href={from ? `/coins/${coin.id}?from=${from}` : `/coins/${coin.id}`}
         className={cardClass}
       >
         <div className={`${styles.cardTop} ${onRemove ? styles.removableCardTop : ""}`.trim()}>

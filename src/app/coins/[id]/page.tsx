@@ -8,8 +8,10 @@ import Sparkline from "@/app/components/Sparkline";
 import Navigation from "@/app/components/Navigation";
 import styles from "./page.module.css";
 
-export default async function CoinDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function CoinDetailPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const { id: coinId } = await params;
+  const resolvedSearch = await searchParams;
+  const fromBrowse = resolvedSearch.from === "browse";
   const staticDetail = coinDetails[coinId];
 
   if (!staticDetail) {
@@ -19,8 +21,8 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
         <div className={styles.errorContainer}>
           <h1>Coin not found</h1>
           <p>The cryptocurrency you&apos;re looking for doesn&apos;t exist.</p>
-          <Link href="/" className={styles.backLink}>
-            ← Back to Watchlist
+          <Link href={fromBrowse ? "/coins/browse" : "/"} className={styles.backLink}>
+            ← {fromBrowse ? "Back to Browse Menu" : "Back to Watchlist"}
           </Link>
         </div>
       </>
@@ -92,8 +94,8 @@ export default async function CoinDetailPage({ params }: { params: Promise<{ id:
       <Navigation />
       <div className={`${styles.container} ${themeClassName}`.trim()}>
         {/* Back Button */}
-        <Link href="/" className={styles.backButton}>
-          ← Back to Watchlist
+        <Link href={fromBrowse ? "/coins/browse" : "/"} className={styles.backButton}>
+          ← {fromBrowse ? "Back to Browse Menu" : "Back to Watchlist"}
         </Link>
 
         {/* Header Section */}

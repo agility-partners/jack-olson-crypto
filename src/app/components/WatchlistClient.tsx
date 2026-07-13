@@ -210,6 +210,7 @@ export default function WatchlistClient({
                 isBiggestGainer={biggestGainer?.id === coin.id}
                 isBiggestLoser={biggestLoser?.id === coin.id}
                 onRemove={!useAllCoins ? handleRemoveCoin : undefined}
+                from={useAllCoins ? "browse" : undefined}
               />
             ))
           )}
