@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
-import { filterCoins, sortCoins, type Filter } from "@/app/lib/watchlistUtils";
+import { filterCoins, sortCoins, defaultSortDir, type Filter, type SortDir } from "@/app/lib/watchlistUtils";
 import AddCoinModal from "./AddCoinModal";
 import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
@@ -35,6 +35,7 @@ export default function WatchlistClient({
   const [coins, setCoins] = useState<Coin[]>(initialCoins);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("value");
+  const [sortDir, setSortDir] = useState<SortDir>(defaultSortDir("value"));
   const [isGrid, setIsGrid] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
 
@@ -86,13 +87,22 @@ export default function WatchlistClient({
     fetch(`${API_URL}/api/watchlist/${coinId}`, { method: "DELETE" }).catch(() => {});
   };
 
+  const handleFilterClick = (f: Filter) => {
+    if (f === filter) {
+      setSortDir((d) => (d === "desc" ? "asc" : "desc"));
+    } else {
+      setFilter(f);
+      setSortDir(defaultSortDir(f));
+    }
+  };
+
   const filtered = useMemo(
     () => filterCoins(coins, search, filter),
     [coins, filter, search],
   );
   const visibleCoins = useMemo(
-    () => sortCoins(filtered, filter),
-    [filtered, filter],
+    () => sortCoins(filtered, filter, sortDir),
+    [filtered, filter, sortDir],
   );
 
   const biggestGainer = useMemo(
@@ -142,9 +152,15 @@ export default function WatchlistClient({
           <button
             key={f}
             className={`${styles.filterBtn} ${filter === f ? styles.active : ""}`}
-            onClick={() => setFilter(f)}
+            onClick={() => handleFilterClick(f)}
+            aria-label={filter === f ? `${filterLabels[f]}, sorted ${sortDir === "asc" ? "ascending" : "descending"}` : filterLabels[f]}
           >
             {filterLabels[f]}
+            {filter === f && (
+              <span className={styles.sortArrow} aria-hidden="true">
+                {sortDir === "asc" ? "↑" : "↓"}
+              </span>
+            )}
           </button>
         ))}
 

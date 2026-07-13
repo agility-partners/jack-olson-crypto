@@ -267,4 +267,42 @@ describe('WatchlistClient', () => {
       expect(screen.queryByRole('button', { name: 'Cancel' })).not.toBeInTheDocument();
     }, { timeout: 3000 });
   });
+
+  it('shows a sort direction arrow on the active filter button', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    // Value is active by default, default dir is desc → ↓
+    const valueBtn = screen.getByRole('button', { name: /Value, sorted descending/i });
+    expect(valueBtn).toBeInTheDocument();
+    expect(valueBtn.textContent).toContain('↓');
+  });
+
+  it('toggles sort direction when the active filter is clicked again', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    const valueBtn = screen.getByRole('button', { name: /Value, sorted descending/i });
+    fireEvent.click(valueBtn);
+
+    // After toggle: ascending → ↑
+    expect(screen.getByRole('button', { name: /Value, sorted ascending/i })).toBeInTheDocument();
+  });
+
+  it('resets sort direction to default when switching to a new filter', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    // Toggle Value to ascending
+    fireEvent.click(screen.getByRole('button', { name: /Value, sorted descending/i }));
+    expect(screen.getByRole('button', { name: /Value, sorted ascending/i })).toBeInTheDocument();
+
+    // Switch to Market Cap — should reset to descending
+    fireEvent.click(screen.getByRole('button', { name: 'Market Cap' }));
+    expect(screen.getByRole('button', { name: /Market Cap, sorted descending/i })).toBeInTheDocument();
+  });
+
+  it('defaults alphabetical sort to ascending (A→Z)', () => {
+    render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Alphabetical' }));
+    expect(screen.getByRole('button', { name: /Alphabetical, sorted ascending/i })).toBeInTheDocument();
+  });
 });

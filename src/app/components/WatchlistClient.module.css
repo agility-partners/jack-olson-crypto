@@ -62,6 +62,12 @@
 
 .filterBtn.active { background: var(--bg-elevated); }
 
+.sortArrow {
+  margin-left: 4px;
+  font-size: 0.75em;
+  color: var(--green-bright);
+}
+
 .toolbarRight {
   margin-left: auto;
   display: flex;
