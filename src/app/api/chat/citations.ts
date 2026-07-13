@@ -116,23 +116,40 @@ function formatTimestampEst(isoString: string): string {
   return estFormatter.format(date);
 }
 
+function getCitationDisplayDataAsOf(citation: AssistantCitation): string | undefined {
+  if (citation.dataAsOfValues.length === 0) {
+    return undefined;
+  }
+
+  const datedValues = citation.dataAsOfValues
+    .map((value) => ({ value, time: new Date(value).getTime() }))
+    .filter((entry) => !Number.isNaN(entry.time))
+    .sort((a, b) => b.time - a.time);
+
+  if (datedValues.length > 0) {
+    return formatTimestampEst(datedValues[0].value);
+  }
+
+  return formatTimestampEst(citation.dataAsOfValues[0]);
+}
+
 export function formatCitationSourcesLine(citations: AssistantCitation[]) {
   if (citations.length === 0) {
     return undefined;
   }
 
   const entries = citations.map((citation) => {
-    if (citation.dataAsOfValues.length === 0) {
+    const displayDataAsOf = getCitationDisplayDataAsOf(citation);
+
+    if (!displayDataAsOf) {
       return `${citation.toolName} dataAsOf unavailable`;
     }
 
-    const formattedTimestamps = citation.dataAsOfValues.map(formatTimestampEst);
-
     if (citation.hasUnavailableDataAsOf) {
-      return `${citation.toolName} as of ${formattedTimestamps.join(", ")}; some results had no dataAsOf`;
+      return `${citation.toolName} as of ${displayDataAsOf}; some results had no dataAsOf`;
     }
 
-    return `${citation.toolName} as of ${formattedTimestamps.join(", ")}`;
+    return `${citation.toolName} as of ${displayDataAsOf}`;
   });
 
   return `Sources: ${entries.join("; ")}`;

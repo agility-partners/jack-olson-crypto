@@ -409,6 +409,23 @@ describe("citation metadata", () => {
     );
   });
 
+  it("uses a single latest timestamp per tool in the sources line", () => {
+    const metadata = buildAssistantMessageMetadata([
+      {
+        toolName: "get_coin_prices",
+        output: [
+          { id: "bitcoin", dataAsOf: "2024-01-15T10:30:30Z" },
+          { id: "ethereum", dataAsOf: "2024-01-15T10:30:10Z" },
+          { id: "solana", dataAsOf: "2024-01-15T10:30:20Z" },
+        ],
+      },
+    ]);
+
+    expect(metadata?.sourcesLine).toBe(
+      "Sources: get_coin_prices as of Jan 15, 2024, 5:30 AM EST"
+    );
+  });
+
   it("marks null or missing dataAsOf values as unavailable", () => {
     const metadata = buildAssistantMessageMetadata([
       {
