@@ -29,6 +29,13 @@ public class MarketStatsController : ControllerBase
         return Ok(movers);
     }
 
+    [HttpGet("top-movers-7d")]
+    public async Task<ActionResult<TopMoversDto>> GetTopMovers7d()
+    {
+        var movers = await _marketStatsService.GetTopMovers7dAsync();
+        return Ok(movers);
+    }
+
     [HttpGet("top-by-volume")]
     public async Task<ActionResult<TopByVolumeDto>> GetTopByVolume([FromQuery] int limit = 10)
     {

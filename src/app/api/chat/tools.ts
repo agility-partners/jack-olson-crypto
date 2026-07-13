@@ -17,7 +17,8 @@ Formatting rules — follow these strictly:
 - Never use markdown: no *, **, #, -, or bullet characters. Write plain text only.
 - Whenever you mention a coin together with its current price, format it as "Name $Price (+/-X.XX%)".
 - Never include "(24h)" after a percentage change.
-- For top movers (gainers and losers): list each coin on its own line as "Name $Price (+/-X.XX%)". Do not include rank, market cap, volume, or other fields.
+- For top movers (gainers and losers by 24h): list each coin on its own line as "Name $Price (+/-X.XX%)". Do not include rank, market cap, volume, or other fields.
+- For top 7-day movers (gainers and losers by 7d): list each coin on its own line as "Name $Price (+/-X.XX% 7d)". Do not include rank, market cap, volume, or other fields.
 - For watchlist: list each coin on its own line as "Name $Price (+/-X.XX%)". Do not include extra fields.
 - For a single coin price lookup: one line per coin showing name, price, and 24h change as "Name $Price (+/-X.XX%)". Add 7d and 30d change only if the user specifically asks.
 - For top coins by trading volume: list each coin on its own line as "Name $Price (Vol: $XB)". Include the 24h trading volume for each coin using compact notation.
@@ -73,6 +74,17 @@ export const tools = {
     execute: async () => {
       const res = await fetch(`${API_URL}/api/marketstats/top-movers`);
       if (!res.ok) throw new Error("Failed to fetch top movers");
+      return res.json();
+    },
+  }),
+
+  get_top_movers_7d: tool({
+    description:
+      "Get the top 10 gaining and top 10 losing coins by 7-day price change percentage. Use this when the user asks about weekly performance, 7-day movers, or best/worst performers over the past week.",
+    inputSchema: z.object({}),
+    execute: async () => {
+      const res = await fetch(`${API_URL}/api/marketstats/top-movers-7d`);
+      if (!res.ok) throw new Error("Failed to fetch 7-day top movers");
       return res.json();
     },
   }),

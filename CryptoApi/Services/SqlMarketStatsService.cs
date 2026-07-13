@@ -8,6 +8,7 @@ public class SqlMarketStatsService : IMarketStatsService
 {
     private readonly string _connectionString;
     private readonly Func<CancellationToken, Task<IReadOnlyList<TopMoverRow>>> _loadTopMoversAsync;
+    private readonly Func<CancellationToken, Task<IReadOnlyList<TopMoverRow7d>>> _loadTopMovers7dAsync;
     private readonly Func<int, CancellationToken, Task<IReadOnlyList<TopVolumeRow>>> _loadTopByVolumeAsync;
     private const string TopMoversSql = """
         WITH filtered AS (
@@ -78,20 +79,96 @@ public class SqlMarketStatsService : IMarketStatsService
         ORDER BY category, rank
         """;
 
+    private const string TopMovers7dSql = """
+        WITH filtered AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                market_cap,
+                price_change_percentage_24h,
+                price_change_percentage_7d,
+                last_updated
+            FROM gold.coin_prices
+            WHERE price_change_percentage_7d IS NOT NULL
+        ),
+        gainers AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                market_cap,
+                price_change_percentage_24h,
+                price_change_percentage_7d,
+                last_updated,
+                ROW_NUMBER() OVER (ORDER BY price_change_percentage_7d DESC) AS rank,
+                'gainer' AS category
+            FROM filtered
+            WHERE price_change_percentage_7d > 0
+        ),
+        losers AS (
+            SELECT
+                coin_id,
+                symbol,
+                name,
+                current_price,
+                market_cap,
+                price_change_percentage_24h,
+                price_change_percentage_7d,
+                last_updated,
+                ROW_NUMBER() OVER (ORDER BY price_change_percentage_7d ASC) AS rank,
+                'loser' AS category
+            FROM filtered
+            WHERE price_change_percentage_7d < 0
+        )
+        SELECT
+            coin_id,
+            symbol,
+            name,
+            current_price,
+            market_cap,
+            price_change_percentage_24h,
+            price_change_percentage_7d,
+            rank,
+            category,
+            last_updated
+        FROM gainers
+        WHERE rank <= 10
+        UNION ALL
+        SELECT
+            coin_id,
+            symbol,
+            name,
+            current_price,
+            market_cap,
+            price_change_percentage_24h,
+            price_change_percentage_7d,
+            rank,
+            category,
+            last_updated
+        FROM losers
+        WHERE rank <= 10
+        ORDER BY category, rank
+        """;
+
     public SqlMarketStatsService(IConfiguration configuration)
-        : this(configuration, null, null)
+        : this(configuration, null, null, null)
     {
     }
 
     public SqlMarketStatsService(
         IConfiguration configuration,
         Func<CancellationToken, Task<IReadOnlyList<TopMoverRow>>>? loadTopMoversAsync,
-        Func<int, CancellationToken, Task<IReadOnlyList<TopVolumeRow>>>? loadTopByVolumeAsync = null)
+        Func<int, CancellationToken, Task<IReadOnlyList<TopVolumeRow>>>? loadTopByVolumeAsync = null,
+        Func<CancellationToken, Task<IReadOnlyList<TopMoverRow7d>>>? loadTopMovers7dAsync = null)
     {
         _connectionString = configuration.GetConnectionString("CryptoDb")
             ?? throw new InvalidOperationException("CryptoDb connection string is not configured.");
         _loadTopMoversAsync = loadTopMoversAsync ?? LoadTopMoversFromSqlAsync;
         _loadTopByVolumeAsync = loadTopByVolumeAsync ?? LoadTopByVolumeFromSqlAsync;
+        _loadTopMovers7dAsync = loadTopMovers7dAsync ?? LoadTopMovers7dFromSqlAsync;
     }
 
     public async Task<MarketStatsDto> GetMarketStatsAsync()
@@ -448,6 +525,134 @@ public class SqlMarketStatsService : IMarketStatsService
         return rows;
     }
 
+    public async Task<TopMoversDto> GetTopMovers7dAsync()
+    {
+        IReadOnlyList<TopMoverRow7d> rows;
+
+        try
+        {
+            rows = await _loadTopMovers7dAsync(CancellationToken.None);
+        }
+        catch (SqlException)
+        {
+            return CreateFallbackTopMovers7dFromCatalog();
+        }
+        catch (InvalidOperationException)
+        {
+            return CreateFallbackTopMovers7dFromCatalog();
+        }
+
+        if (rows.Count == 0)
+        {
+            return CreateFallbackTopMovers7dFromCatalog();
+        }
+
+        var latestTimestamp = rows
+            .Where(r => r.LastUpdated.HasValue)
+            .Select(r => r.LastUpdated!.Value)
+            .DefaultIfEmpty()
+            .Max();
+
+        var dataAsOf = latestTimestamp == default
+            ? null
+            : latestTimestamp.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+        return new TopMoversDto
+        {
+            Gainers = rows
+                .Where(row => string.Equals(row.Category, "gainer", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(row => row.Rank)
+                .Take(10)
+                .Select(MapTopMover7d)
+                .ToList(),
+            Losers = rows
+                .Where(row => string.Equals(row.Category, "loser", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(row => row.Rank)
+                .Take(10)
+                .Select(MapTopMover7d)
+                .ToList(),
+            DataAsOf = dataAsOf,
+        };
+    }
+
+    private async Task<IReadOnlyList<TopMoverRow7d>> LoadTopMovers7dFromSqlAsync(CancellationToken cancellationToken)
+    {
+        await using var conn = new SqlConnection(_connectionString);
+        await conn.OpenAsync(cancellationToken);
+
+        await using var cmd = new SqlCommand(TopMovers7dSql, conn);
+        await using var reader = await cmd.ExecuteReaderAsync(cancellationToken);
+
+        var rows = new List<TopMoverRow7d>();
+
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            rows.Add(new TopMoverRow7d(
+                CoinId: reader.IsDBNull(0) ? string.Empty : reader.GetString(0),
+                Symbol: reader.IsDBNull(1) ? string.Empty : reader.GetString(1),
+                Name: reader.IsDBNull(2) ? string.Empty : reader.GetString(2),
+                CurrentPrice: reader.IsDBNull(3) ? null : reader.GetDecimal(3),
+                MarketCapRaw: reader.IsDBNull(4) ? null : reader.GetDecimal(4),
+                Change24h: reader.IsDBNull(5) ? null : reader.GetDecimal(5),
+                Change7d: reader.IsDBNull(6) ? null : reader.GetDecimal(6),
+                Rank: ParseRank(reader.GetValue(7)),
+                Category: reader.IsDBNull(8) ? string.Empty : reader.GetString(8),
+                LastUpdated: reader.IsDBNull(9) ? null : reader.GetDateTime(9)));
+        }
+
+        return rows;
+    }
+
+    private static TopMoversDto CreateFallbackTopMovers7dFromCatalog()
+    {
+        var coins = CoinCatalog.GetAll()
+            .ToList();
+
+        return new TopMoversDto
+        {
+            Gainers = coins
+                .Where(coin => coin.Change7d > 0)
+                .OrderByDescending(coin => coin.Change7d)
+                .Take(10)
+                .Select((coin, index) => CreateTopMover7dDto(coin, index + 1))
+                .ToList(),
+            Losers = coins
+                .Where(coin => coin.Change7d < 0)
+                .OrderBy(coin => coin.Change7d)
+                .Take(10)
+                .Select((coin, index) => CreateTopMover7dDto(coin, index + 1))
+                .ToList(),
+        };
+    }
+
+    private static TopMoverDto MapTopMover7d(TopMoverRow7d row) =>
+        new()
+        {
+            Id = row.CoinId,
+            Symbol = row.Symbol,
+            Name = row.Name,
+            Price = row.CurrentPrice ?? 0m,
+            MarketCapRaw = row.MarketCapRaw ?? 0m,
+            MarketCap = SqlCoinService.FormatCurrencyCompact(row.MarketCapRaw ?? 0m),
+            Change24h = row.Change24h ?? 0m,
+            Change7d = row.Change7d ?? 0m,
+            Rank = row.Rank,
+        };
+
+    private static TopMoverDto CreateTopMover7dDto(CoinDto coin, int rank) =>
+        new()
+        {
+            Id = coin.Id,
+            Symbol = coin.Symbol,
+            Name = coin.Name,
+            Price = coin.Price,
+            MarketCap = coin.MarketCap,
+            MarketCapRaw = coin.MarketCapRaw,
+            Change24h = coin.Change24h,
+            Change7d = coin.Change7d,
+            Rank = rank,
+        };
+
     private static TopByVolumeDto CreateFallbackTopByVolumeFromCatalog(int limit)
     {
         var items = CoinCatalog.GetAll()
@@ -500,6 +705,18 @@ public class SqlMarketStatsService : IMarketStatsService
         decimal? CurrentPrice,
         decimal? MarketCapRaw,
         decimal? Change24h,
+        int Rank,
+        string Category,
+        DateTime? LastUpdated);
+
+    public sealed record TopMoverRow7d(
+        string CoinId,
+        string Symbol,
+        string Name,
+        decimal? CurrentPrice,
+        decimal? MarketCapRaw,
+        decimal? Change24h,
+        decimal? Change7d,
         int Rank,
         string Category,
         DateTime? LastUpdated);

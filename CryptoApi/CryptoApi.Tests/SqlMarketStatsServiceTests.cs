@@ -237,4 +237,101 @@ public class SqlMarketStatsServiceTests
         sql.Should().Contain("ORDER BY total_volume DESC");
         sql.Should().Contain("TOP (@Limit)");
     }
+
+    [Fact]
+    public async Task GetTopMovers7dAsync_ReturnsCategorizedMoversOrderedBy7dChange()
+    {
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            null,
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow7d>>([
+                new("solana", "SOL", "Solana", 150m, 65_000_000_000m, 2.1m, 22.5m, 1, "gainer", null),
+                new("bitcoin", "BTC", "Bitcoin", 70000m, 1_500_000_000_000m, 0.5m, 8.3m, 2, "gainer", null),
+                new("terra", "LUNA", "Terra", 0.5m, 500_000_000m, -3.2m, -18.7m, 1, "loser", null)
+            ]));
+
+        var movers = await service.GetTopMovers7dAsync();
+
+        movers.Gainers.Should().HaveCount(2);
+        movers.Gainers[0].Id.Should().Be("solana");
+        movers.Gainers[0].Rank.Should().Be(1);
+        movers.Gainers[0].Change7d.Should().Be(22.5m);
+        movers.Gainers[1].Id.Should().Be("bitcoin");
+        movers.Gainers[1].Change7d.Should().Be(8.3m);
+        movers.Losers.Should().ContainSingle();
+        movers.Losers[0].Id.Should().Be("terra");
+        movers.Losers[0].Change7d.Should().Be(-18.7m);
+    }
+
+    [Fact]
+    public async Task GetTopMovers7dAsync_FallsBackToCatalog_WhenSqlRowsAreEmpty()
+    {
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            null,
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow7d>>([]));
+
+        var movers = await service.GetTopMovers7dAsync();
+
+        // The C# catalog does not populate Change7d values, so the 7d fallback
+        // returns empty lists. Real 7d data comes exclusively from the SQL layer.
+        movers.Should().NotBeNull();
+        movers.Gainers.Should().HaveCountLessThanOrEqualTo(10);
+        movers.Losers.Should().HaveCountLessThanOrEqualTo(10);
+        movers.DataAsOf.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task GetTopMovers7dAsync_SetsDataAsOf_WhenRowsIncludeLastUpdated()
+    {
+        var lastUpdated = new DateTime(2024, 6, 1, 8, 0, 0, DateTimeKind.Utc);
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            null,
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow7d>>([
+                new("bitcoin", "BTC", "Bitcoin", 70000m, 1_500_000_000_000m, 0.5m, 8.3m, 1, "gainer", lastUpdated),
+            ]));
+
+        var movers = await service.GetTopMovers7dAsync();
+
+        movers.DataAsOf.Should().Be("2024-06-01T08:00:00Z");
+    }
+
+    [Fact]
+    public async Task GetTopMovers7dAsync_LeavesDataAsOfNull_WhenFallback()
+    {
+        var service = new SqlMarketStatsService(
+            CreateServiceConfiguration(),
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow>>([]),
+            null,
+            _ => Task.FromResult<IReadOnlyList<SqlMarketStatsService.TopMoverRow7d>>([]));
+
+        var movers = await service.GetTopMovers7dAsync();
+
+        movers.DataAsOf.Should().BeNull();
+    }
+
+    [Fact]
+    public void TopMovers7dSql_SelectsTopTenPerCategory_OrderedBy7dChange()
+    {
+        var field = typeof(SqlMarketStatsService).GetField(
+            "TopMovers7dSql",
+            BindingFlags.NonPublic | BindingFlags.Static);
+
+        field.Should().NotBeNull();
+
+        var sql = field!.GetRawConstantValue() as string;
+
+        sql.Should().NotBeNullOrWhiteSpace();
+        sql.Should().Contain("FROM gold.coin_prices");
+        sql.Should().Contain("price_change_percentage_7d");
+        sql.Should().Contain("ROW_NUMBER() OVER (ORDER BY price_change_percentage_7d DESC) AS rank");
+        sql.Should().Contain("ROW_NUMBER() OVER (ORDER BY price_change_percentage_7d ASC) AS rank");
+        sql.Should().Contain("FROM gainers");
+        sql.Should().Contain("FROM losers");
+        sql.Should().Contain("WHERE rank <= 10");
+    }
 }
