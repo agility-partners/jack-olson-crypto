@@ -8,7 +8,7 @@ import styles from "./WatchlistClient.module.css";
 import CryptoCard from "./CryptoCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
-const REFRESH_INTERVAL_MS = 90_000;
+const REFRESH_INTERVAL_MS = 120_000;
 const FILTER_OPTIONS: Filter[] = [
   "value",
   "alphabetical",
@@ -38,10 +38,25 @@ export default function WatchlistClient({
   const [sortDir, setSortDir] = useState<SortDir>(defaultSortDir("value"));
   const [isGrid, setIsGrid] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [secondsUntilRefresh, setSecondsUntilRefresh] = useState(
+    Math.ceil(REFRESH_INTERVAL_MS / 1000)
+  );
+
+  const formatCountdown = (totalSeconds: number) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   // Auto-refresh prices from the API every REFRESH_INTERVAL_MS
   useEffect(() => {
     const endpoint = useAllCoins ? "/api/coins" : "/api/watchlist";
+    let nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+    const syncCountdown = () => {
+      const secondsRemaining = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
+      setSecondsUntilRefresh(secondsRemaining);
+    };
+
     const refresh = async () => {
       try {
         const res = await fetch(`${API_URL}${endpoint}`);
@@ -56,11 +71,22 @@ export default function WatchlistClient({
         );
       } catch {
         // Silently ignore — we keep stale data rather than breaking the UI
+      } finally {
+        nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
+        syncCountdown();
       }
     };
 
-    const id = setInterval(refresh, REFRESH_INTERVAL_MS);
-    return () => clearInterval(id);
+    syncCountdown();
+    const refreshIntervalId = setInterval(() => {
+      void refresh();
+    }, REFRESH_INTERVAL_MS);
+    const countdownIntervalId = setInterval(syncCountdown, 1000);
+
+    return () => {
+      clearInterval(refreshIntervalId);
+      clearInterval(countdownIntervalId);
+    };
   }, [useAllCoins]);
 
   useEffect(() => {
@@ -165,6 +191,9 @@ export default function WatchlistClient({
         ))}
 
         <div className={styles.toolbarRight}>
+          <p className={styles.refreshCountdown} aria-live="polite">
+            Auto-refresh in {formatCountdown(secondsUntilRefresh)}
+          </p>
           {!useAllCoins && (
             <button
               className={styles.addCoinBtn}
