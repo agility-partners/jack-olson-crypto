@@ -93,5 +93,30 @@ describe('watchlistUtils', () => {
       const result = sortCoins(sampleCoins, '24hvolume');
       expect(result.map((coin) => coin.id)).toEqual(['bitcoin', 'ethereum', 'solana']);
     });
+
+    it('sorts by price ascending when dir is "asc"', () => {
+      const result = sortCoins(sampleCoins, 'value', 'asc');
+      expect(result.map((coin) => coin.id)).toEqual(['solana', 'ethereum', 'bitcoin']);
+    });
+
+    it('sorts alphabetically Z→A when dir is "desc"', () => {
+      const result = sortCoins(sampleCoins, 'alphabetical', 'desc');
+      expect(result.map((coin) => coin.id)).toEqual(['solana', 'ethereum', 'bitcoin']);
+    });
+
+    it('sorts by market cap ascending when dir is "asc"', () => {
+      const result = sortCoins(sampleCoins, 'marketcap', 'asc');
+      expect(result.map((coin) => coin.id)).toEqual(['solana', 'ethereum', 'bitcoin']);
+    });
+
+    it('sorts by volume ascending when dir is "asc"', () => {
+      const result = sortCoins(sampleCoins, '24hvolume', 'asc');
+      expect(result.map((coin) => coin.id)).toEqual(['solana', 'ethereum', 'bitcoin']);
+    });
+
+    it('sorts by percent change ascending when dir is "asc"', () => {
+      const result = sortCoins(sampleCoins, 'percentchange', 'asc');
+      expect(result.map((coin) => coin.id)).toEqual(['ethereum', 'bitcoin', 'solana']);
+    });
   });
 });

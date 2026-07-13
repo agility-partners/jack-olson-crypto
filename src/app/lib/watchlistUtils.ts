@@ -7,6 +7,13 @@ export type Filter =
   | "gainers"
   | "losers";
 
+export type SortDir = "asc" | "desc";
+
+/** Default sort direction for each filter when first selected. */
+export function defaultSortDir(filter: Filter): SortDir {
+  return filter === "alphabetical" ? "asc" : "desc";
+}
+
 export type CoinLike = {
   id: string;
   name: string;
@@ -41,20 +48,23 @@ export function filterCoins<T extends CoinLike>(
   });
 }
 
-export function sortCoins<T extends CoinLike>(coins: T[], filter: Filter): T[] {
+export function sortCoins<T extends CoinLike>(coins: T[], filter: Filter, dir?: SortDir): T[] {
   const sorted = [...coins];
+  const asc = (dir ?? defaultSortDir(filter)) === "asc";
 
   switch (filter) {
     case "alphabetical":
-      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      return sorted.sort((a, b) => asc ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
     case "percentchange":
-      return sorted.sort((a, b) => b.change24h - a.change24h);
+    case "gainers":
+    case "losers":
+      return sorted.sort((a, b) => asc ? a.change24h - b.change24h : b.change24h - a.change24h);
     case "marketcap":
-      return sorted.sort((a, b) => b.marketCapRaw - a.marketCapRaw);
+      return sorted.sort((a, b) => asc ? a.marketCapRaw - b.marketCapRaw : b.marketCapRaw - a.marketCapRaw);
     case "24hvolume":
-      return sorted.sort((a, b) => b.volumeRaw - a.volumeRaw);
+      return sorted.sort((a, b) => asc ? a.volumeRaw - b.volumeRaw : b.volumeRaw - a.volumeRaw);
     case "value":
     default:
-      return sorted.sort((a, b) => b.price - a.price);
+      return sorted.sort((a, b) => asc ? a.price - b.price : b.price - a.price);
   }
 }
