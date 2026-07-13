@@ -118,5 +118,25 @@ describe('watchlistUtils', () => {
       const result = sortCoins(sampleCoins, 'percentchange', 'asc');
       expect(result.map((coin) => coin.id)).toEqual(['ethereum', 'bitcoin', 'solana']);
     });
+
+    it('sorts losers by biggest loser first by default (desc)', () => {
+      const losers = [
+        { ...sampleCoins[1], id: 'coin-a', change24h: -1.0 },
+        { ...sampleCoins[1], id: 'coin-b', change24h: -5.0 },
+        { ...sampleCoins[1], id: 'coin-c', change24h: -2.5 },
+      ];
+      const result = sortCoins(losers, 'losers');
+      expect(result.map((c) => c.id)).toEqual(['coin-b', 'coin-c', 'coin-a']);
+    });
+
+    it('sorts losers smallest loser first when dir is "asc"', () => {
+      const losers = [
+        { ...sampleCoins[1], id: 'coin-a', change24h: -1.0 },
+        { ...sampleCoins[1], id: 'coin-b', change24h: -5.0 },
+        { ...sampleCoins[1], id: 'coin-c', change24h: -2.5 },
+      ];
+      const result = sortCoins(losers, 'losers', 'asc');
+      expect(result.map((c) => c.id)).toEqual(['coin-a', 'coin-c', 'coin-b']);
+    });
   });
 });
