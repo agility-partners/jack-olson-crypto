@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import WatchlistClient from './WatchlistClient';
 import { watchlistCoins } from '@/app/lib/mockData';
@@ -304,5 +304,45 @@ describe('WatchlistClient', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Alphabetical' }));
     expect(screen.getByRole('button', { name: /Alphabetical, sorted ascending/i })).toBeInTheDocument();
+  });
+
+  it('shows a 2-minute countdown and decrements each second', () => {
+    vi.useFakeTimers();
+    try {
+      render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+
+      expect(screen.getByText('Auto-refresh in 2:00')).toBeInTheDocument();
+
+      act(() => {
+        vi.advanceTimersByTime(1_000);
+      });
+
+      expect(screen.getByText('Auto-refresh in 1:59')).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('refreshes watchlist data every 2 minutes', () => {
+    vi.useFakeTimers();
+    try {
+      render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
+      const fetchMock = vi.mocked(fetch);
+      fetchMock.mockClear();
+
+      act(() => {
+        vi.advanceTimersByTime(119_000);
+      });
+      expect(fetchMock).not.toHaveBeenCalled();
+
+      act(() => {
+        vi.advanceTimersByTime(1_000);
+      });
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining('/api/watchlist')
+      );
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
