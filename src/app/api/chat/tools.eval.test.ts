@@ -111,6 +111,11 @@ describe("tool schemas", () => {
     expect(schema.safeParse({}).success).toBe(true);
   });
 
+  it("get_top_movers_7d accepts an empty object", () => {
+    const schema = tools.get_top_movers_7d.inputSchema;
+    expect(schema.safeParse({}).success).toBe(true);
+  });
+
   it("get_watchlist accepts an empty object", () => {
     const schema = tools.get_watchlist.inputSchema;
     expect(schema.safeParse({}).success).toBe(true);
@@ -153,6 +158,37 @@ describe("get_top_movers tool", () => {
     await expect(
       tools.get_top_movers.execute({}, { messages: [], toolCallId: "" })
     ).rejects.toThrow("Failed to fetch top movers");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 3b. Golden question: "What coins had the best 7-day performance?"
+//    → must call get_top_movers_7d tool
+// ---------------------------------------------------------------------------
+
+describe("get_top_movers_7d tool", () => {
+  it("returns 7d warehouse top-mover data on success", async () => {
+    const mockData = {
+      gainers: [{ id: "solana", name: "Solana", price: 150, change24h: 2.1, change7d: 22.5 }],
+      losers: [{ id: "terra", name: "Terra", price: 0.5, change24h: -3.2, change7d: -18.7 }],
+      dataAsOf: "2024-01-15T10:30:00Z",
+    };
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
+
+    const result = await tools.get_top_movers_7d.execute({}, { messages: [], toolCallId: "" });
+
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringContaining("/api/marketstats/top-movers-7d")
+    );
+    expect(result).toMatchObject({ gainers: expect.any(Array), dataAsOf: "2024-01-15T10:30:00Z" });
+  });
+
+  it("throws a descriptive error when the API is unreachable", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
+
+    await expect(
+      tools.get_top_movers_7d.execute({}, { messages: [], toolCallId: "" })
+    ).rejects.toThrow("Failed to fetch 7-day top movers");
   });
 });
 
@@ -355,6 +391,12 @@ describe("tool descriptions", () => {
   it("get_top_movers description mentions gainers and losers", () => {
     expect(tools.get_top_movers.description).toMatch(/gain/i);
     expect(tools.get_top_movers.description).toMatch(/los/i);
+  });
+
+  it("get_top_movers_7d description mentions 7-day and gainers/losers", () => {
+    expect(tools.get_top_movers_7d.description).toMatch(/7.day/i);
+    expect(tools.get_top_movers_7d.description).toMatch(/gain/i);
+    expect(tools.get_top_movers_7d.description).toMatch(/los/i);
   });
 
   it("get_market_summary description mentions BTC dominance", () => {

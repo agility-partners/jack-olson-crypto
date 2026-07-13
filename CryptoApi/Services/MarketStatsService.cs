@@ -53,6 +53,32 @@ public class MarketStatsService : IMarketStatsService
         });
     }
 
+    public Task<TopMoversDto> GetTopMovers7dAsync()
+    {
+        var coins = CoinCatalog.GetAll()
+            .ToList();
+
+        var gainers = coins
+            .Where(coin => coin.Change7d > 0)
+            .OrderByDescending(coin => coin.Change7d)
+            .Take(10)
+            .Select((coin, index) => CreateTopMover7dDto(coin, index + 1))
+            .ToList();
+
+        var losers = coins
+            .Where(coin => coin.Change7d < 0)
+            .OrderBy(coin => coin.Change7d)
+            .Take(10)
+            .Select((coin, index) => CreateTopMover7dDto(coin, index + 1))
+            .ToList();
+
+        return Task.FromResult(new TopMoversDto
+        {
+            Gainers = gainers,
+            Losers = losers,
+        });
+    }
+
     public Task<TopByVolumeDto> GetTopByVolumeAsync(int limit)
     {
         var items = CoinCatalog.GetAll()
@@ -85,6 +111,20 @@ public class MarketStatsService : IMarketStatsService
             MarketCap = coin.MarketCap,
             MarketCapRaw = coin.MarketCapRaw,
             Change24h = coin.Change24h,
+            Rank = rank,
+        };
+
+    private static TopMoverDto CreateTopMover7dDto(CoinDto coin, int rank) =>
+        new()
+        {
+            Id = coin.Id,
+            Symbol = coin.Symbol,
+            Name = coin.Name,
+            Price = coin.Price,
+            MarketCap = coin.MarketCap,
+            MarketCapRaw = coin.MarketCapRaw,
+            Change24h = coin.Change24h,
+            Change7d = coin.Change7d,
             Rank = rank,
         };
 }

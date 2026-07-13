@@ -9,5 +9,6 @@ public class TopMoverDto
     public string MarketCap { get; set; } = string.Empty;
     public decimal MarketCapRaw { get; set; }
     public decimal Change24h { get; set; }
+    public decimal Change7d { get; set; }
     public int Rank { get; set; }
 }
