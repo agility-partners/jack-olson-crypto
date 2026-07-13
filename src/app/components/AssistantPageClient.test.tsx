@@ -69,7 +69,7 @@ describe("AssistantPageClient", () => {
     const html = renderToString(<AssistantPageClient />);
 
     expect(randomSpy).not.toHaveBeenCalled();
-    expect(html).toContain("What are the top gainers and losers today?");
+    expect(html).toContain("What are the top 10 gainers and losers today?");
     expect(html).toContain("Show me the current market summary");
     expect(html).toContain("Bitcoin and Ethereum?");
 
