@@ -9,6 +9,7 @@ import {
 } from "../api/chat/citations";
 
 const STORAGE_KEY = "assistant_chat_history";
+const INSTANCE_KEY = "assistant_server_instance";
 
 export const chatTransport = new DefaultChatTransport({ api: "/api/chat" });
 
@@ -29,34 +30,72 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const chat = chatRef.current;
 
   useEffect(() => {
-    // Restore messages from sessionStorage after client hydration
-    try {
-      const stored = sessionStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed: AssistantChatMessage[] = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          chat.messages = parsed;
+    // Check the server instance ID to detect a container/server restart.
+    // If the ID has changed since the last time this tab loaded, clear the
+    // stored history so stale conversation context is not sent to the new
+    // server process.
+    let cancelled = false;
+
+    async function initSession() {
+      let serverInstanceId: string | null = null;
+      try {
+        const res = await fetch("/api/instance");
+        if (res.ok) {
+          const data: { instanceId: string } = await res.json();
+          serverInstanceId = data.instanceId;
+        }
+      } catch {
+        // Network error (e.g. dev server not ready) — fall through and
+        // preserve existing history for this session.
+      }
+
+      if (cancelled) return;
+
+      try {
+        const storedInstanceId = sessionStorage.getItem(INSTANCE_KEY);
+
+        if (serverInstanceId && storedInstanceId !== serverInstanceId) {
+          // Server has restarted since we last stored history — clear it.
+          sessionStorage.removeItem(STORAGE_KEY);
+          sessionStorage.setItem(INSTANCE_KEY, serverInstanceId);
+        } else {
+          // Same server instance: restore saved messages.
+          const stored = sessionStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            const parsed: AssistantChatMessage[] = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              chat.messages = parsed;
+            }
+          }
+        }
+      } catch {
+        // Ignore storage or parse errors; start with a fresh session
+        try {
+          sessionStorage.removeItem(STORAGE_KEY);
+          sessionStorage.removeItem(INSTANCE_KEY);
+        } catch {
+          // ignore
         }
       }
-    } catch {
-      // Ignore storage or parse errors; start with a fresh session
-      try {
-        sessionStorage.removeItem(STORAGE_KEY);
-      } catch {
-        // ignore
-      }
+
+      // Persist messages whenever they change
+      const unregister = chat["~registerMessagesCallback"](() => {
+        try {
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(chat.messages));
+        } catch {
+          // Ignore storage errors (e.g. private-browsing quota limits)
+        }
+      });
+
+      return unregister;
     }
 
-    // Persist messages whenever they change
-    const unregister = chat["~registerMessagesCallback"](() => {
-      try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(chat.messages));
-      } catch {
-        // Ignore storage errors (e.g. private-browsing quota limits)
-      }
-    });
+    const cleanupPromise = initSession();
 
-    return unregister;
+    return () => {
+      cancelled = true;
+      cleanupPromise.then((unregister) => unregister?.());
+    };
   }, [chat]);
 
   return <ChatContext.Provider value={chat}>{children}</ChatContext.Provider>;
