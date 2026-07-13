@@ -2,6 +2,7 @@ import logging
 import os
 import time
 from datetime import datetime, timezone
+from typing import Optional
 
 import pyodbc
 import requests
@@ -11,6 +12,7 @@ COINGECKO_URL = "https://api.coingecko.com/api/v3/coins/markets"
 MAX_RETRIES = int(os.getenv("COINGECKO_MAX_RETRIES", "3"))
 BASE_BACKOFF_SECONDS = float(os.getenv("COINGECKO_BACKOFF_SECONDS", "1"))
 REQUEST_TIMEOUT_SECONDS = float(os.getenv("COINGECKO_TIMEOUT_SECONDS", "20"))
+MIN_AGE_SECONDS = float(os.getenv("COINGECKO_MIN_AGE_SECONDS", "300"))
 
 
 def build_connection_string() -> str:
@@ -32,6 +34,28 @@ def build_connection_string() -> str:
         "Encrypt=yes;"
         "TrustServerCertificate=yes;"
     )
+
+
+def get_last_ingested_at() -> Optional[datetime]:
+    """Return the most recent ingested_at timestamp from bronze.raw_coin_data, or None."""
+    try:
+        conn = pyodbc.connect(build_connection_string())
+        try:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT MAX(ingested_at) FROM bronze.raw_coin_data"
+            )
+            row = cursor.fetchone()
+            if row and row[0] is not None:
+                ts = row[0]
+                if ts.tzinfo is None:
+                    ts = ts.replace(tzinfo=timezone.utc)
+                return ts
+        finally:
+            conn.close()
+    except Exception as exc:
+        logging.warning("Could not query last ingested_at: %s — will fetch anyway.", exc)
+    return None
 
 
 def fetch_market_payload() -> str:
@@ -100,6 +124,17 @@ def main() -> None:
         level=os.getenv("LOG_LEVEL", "INFO").upper(),
         format="%(asctime)s %(levelname)s %(message)s",
     )
+
+    last = get_last_ingested_at()
+    if last is not None:
+        age = (datetime.now(timezone.utc) - last).total_seconds()
+        if age < MIN_AGE_SECONDS:
+            logging.info(
+                "Skipping CoinGecko fetch — last ingestion was %.0fs ago (threshold: %.0fs).",
+                age,
+                MIN_AGE_SECONDS,
+            )
+            return
 
     payload = fetch_market_payload()
     insert_bronze_row(payload)

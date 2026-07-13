@@ -13,6 +13,7 @@ Environment variables:
   MSSQL_DATABASE           — target database (default: crypto_data)
   MSSQL_USER               — SQL login (default: sa)
   MSSQL_DRIVER             — ODBC driver name (default: ODBC Driver 18 for SQL Server)
+  COINGECKO_MIN_AGE_SECONDS — skip fetch if last ingestion is fresher than this (default: 300)
 """
 
 import logging
