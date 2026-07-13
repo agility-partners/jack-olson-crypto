@@ -126,7 +126,9 @@ export function formatCitationSourcesLine(citations: AssistantCitation[]) {
       return `${citation.toolName} dataAsOf unavailable`;
     }
 
-    const formattedTimestamps = citation.dataAsOfValues.map(formatTimestampEst);
+    const formattedTimestamps = Array.from(
+      new Set(citation.dataAsOfValues.map(formatTimestampEst))
+    );
 
     if (citation.hasUnavailableDataAsOf) {
       return `${citation.toolName} as of ${formattedTimestamps.join(", ")}; some results had no dataAsOf`;
