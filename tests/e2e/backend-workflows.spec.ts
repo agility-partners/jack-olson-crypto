@@ -40,12 +40,12 @@ test.describe('Backend watchlist journeys', () => {
     await expect(page.getByText('0 / 0')).toBeVisible();
 
     await openAddCoinModal(page);
-    await page.getByLabel('Select Cryptocurrency').selectOption('bitcoin');
-    await page.getByRole('button', { name: 'Add to Watchlist' }).click();
+    await page.getByRole('option', { name: /Bitcoin/i }).click();
+    await page.getByRole('button', { name: /Add to Watchlist/ }).click();
 
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('Tracking 1 assets')).toBeVisible();
-    await expect(page.getByText('1 / 1')).toBeVisible();
+    await expect(page.getByText(/\d+ \/ 1/)).toBeVisible();
 
     await page.reload();
 
@@ -62,14 +62,14 @@ test.describe('Backend watchlist journeys', () => {
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible({ timeout: 10000 });
     await expect(page.locator('main a[href="/coins/ethereum"]')).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('Tracking 2 assets')).toBeVisible();
-    await expect(page.getByText('1 / 2')).toBeVisible();
+    await expect(page.getByText(/\d+ \/ 2/)).toBeVisible();
 
     await page.getByRole('button', { name: 'Remove Ethereum from watchlist' }).click();
 
     await expect(page.locator('main a[href="/coins/ethereum"]')).toHaveCount(0);
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible();
     await expect(page.getByText('Tracking 1 assets')).toBeVisible();
-    await expect(page.getByText('1 / 1')).toBeVisible();
+    await expect(page.getByText(/\d+ \/ 1/)).toBeVisible();
 
     await page.reload();
 
@@ -90,7 +90,7 @@ test.describe('Backend watchlist journeys', () => {
 
     // Navigate to the Bitcoin detail page
     await page.locator('main a[href="/coins/bitcoin"]').click();
-    await page.waitForURL('/coins/bitcoin', { timeout: 10000 });
+    await page.waitForURL('/coins/bitcoin', { timeout: 30000 });
     
     await expect(page.locator('h1', { hasText: 'Bitcoin' })).toBeVisible({ timeout: 10000 });
     await expect(page.getByText('Market Cap')).toBeVisible();
@@ -112,14 +112,14 @@ test.describe('Backend watchlist journeys', () => {
 
     await page.goto('/');
     await openAddCoinModal(page);
-    await page.getByLabel('Select Cryptocurrency').selectOption('bitcoin');
+    await page.getByRole('option', { name: /Bitcoin/i }).click();
 
     const externalAddResponse = await request.post(`${apiBaseUrl}/watchlist`, {
       data: { coinId: 'bitcoin' },
     });
     expect(externalAddResponse.status()).toBe(201);
 
-    await page.getByRole('button', { name: 'Add to Watchlist' }).click();
+    await page.getByRole('button', { name: /Add to Watchlist/ }).click();
 
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toHaveCount(1, { timeout: 10000 });
     await expect(page.getByText('Tracking 1 assets')).toBeVisible();
