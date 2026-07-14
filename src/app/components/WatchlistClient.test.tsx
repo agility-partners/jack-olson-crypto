@@ -271,10 +271,10 @@ describe('WatchlistClient', () => {
   it('shows a sort direction arrow on the active filter button', () => {
     render(<WatchlistClient initialCoins={deterministicInitialCoins} />);
 
-    // Value is active by default, default dir is desc → ↓
+    // Value is active by default, default dir is desc
     const valueBtn = screen.getByRole('button', { name: /Value, sorted descending/i });
     expect(valueBtn).toBeInTheDocument();
-    expect(valueBtn.textContent).toContain('↓');
+    expect(valueBtn.querySelector('svg')).toBeTruthy();
   });
 
   it('toggles sort direction when the active filter is clicked again', () => {

@@ -132,8 +132,13 @@ export default function WatchlistClient({
           >
             {filterLabels[f]}
             {filter === f && (
-              <span className={styles.sortArrow} aria-hidden="true">
-                {sortDir === "asc" ? "↑" : "↓"}
+              <span
+                className={`${styles.sortArrow} ${sortDir === "asc" ? styles.sortArrowAsc : styles.sortArrowDesc}`}
+                aria-hidden="true"
+              >
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="2,7 5,3 8,7" />
+                </svg>
               </span>
             )}
           </button>
