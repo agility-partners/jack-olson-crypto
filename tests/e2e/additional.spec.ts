@@ -29,9 +29,11 @@ test.describe('Browse page additional coverage', () => {
 
     await expect(page.locator('a[href*="/coins/"]').first()).toBeVisible({ timeout: 10000 });
 
-    await expect(page.getByText('Total market cap')).toBeVisible();
-    await expect(page.getByText('24h volume')).toBeVisible();
-    await expect(page.getByText('BTC dominance')).toBeVisible();
+    // Scope to the StatsBar container to avoid matching coin-card labels with the same text
+    const statsBar = page.locator('[class*="statsBar"]');
+    await expect(statsBar.getByText('Total market cap', { exact: true })).toBeVisible();
+    await expect(statsBar.getByText('24h volume', { exact: true })).toBeVisible();
+    await expect(statsBar.getByText('BTC dominance', { exact: true })).toBeVisible();
   });
 
   test('search input filters the coin list on browse page', async ({ page }) => {
@@ -63,8 +65,9 @@ test.describe('Coin detail page additional coverage', () => {
     await expect(page.locator('h1', { hasText: 'Bitcoin' })).toBeVisible({ timeout: 10000 });
 
     // Each timeframe label should appear in the changes strip
+    // Use exact:true so '24h' doesn't also match '24h Volume'
     for (const label of ['24h', '7d', '30d', '1y']) {
-      await expect(page.getByText(label)).toBeVisible();
+      await expect(page.getByText(label, { exact: true })).toBeVisible();
     }
   });
 
