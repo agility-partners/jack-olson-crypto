@@ -40,7 +40,7 @@ test.describe('Backend watchlist journeys', () => {
     await expect(page.getByText('0 / 0')).toBeVisible();
 
     await openAddCoinModal(page);
-    await page.getByRole('option', { name: /Bitcoin/i }).click();
+    await page.getByRole('option', { name: /^Bitcoin\b/i }).click();
     await page.getByRole('button', { name: /Add to Watchlist/ }).click();
 
     await expect(page.locator('main a[href="/coins/bitcoin"]')).toBeVisible({ timeout: 10000 });
@@ -112,7 +112,7 @@ test.describe('Backend watchlist journeys', () => {
 
     await page.goto('/');
     await openAddCoinModal(page);
-    await page.getByRole('option', { name: /Bitcoin/i }).click();
+    await page.getByRole('option', { name: /^Bitcoin\b/i }).click();
 
     const externalAddResponse = await request.post(`${apiBaseUrl}/watchlist`, {
       data: { coinId: 'bitcoin' },
