@@ -66,7 +66,7 @@ export default function CryptoCard({
               <span className={styles.coinSymbol}>{coin.symbol}</span>
             </div>
           </div>
-          <span className={styles.coinRank}>#{coin.rank}</span>
+          {!isListView && <span className={styles.coinRank}>#{coin.rank}</span>}
         </div>
 
         <div className={styles.sparklineWrap}>
@@ -78,8 +78,11 @@ export default function CryptoCard({
             <div className={styles.coinPrice}>{formatPrice(coin.price)}</div>
             <div className={styles.coinPriceSub}>USD</div>
           </div>
-          <div className={`${styles.changeBadge} ${up ? styles.up : styles.dn}`}>
-            {up ? "↑" : "↓"} {Math.abs(coin.change24h).toFixed(2)}%
+          <div className={styles.cardBottomRight}>
+            {isListView && <span className={styles.coinRankInline}>#{coin.rank}</span>}
+            <div className={`${styles.changeBadge} ${up ? styles.up : styles.dn}`}>
+              {up ? "↑" : "↓"} {Math.abs(coin.change24h).toFixed(2)}%
+            </div>
           </div>
         </div>
 

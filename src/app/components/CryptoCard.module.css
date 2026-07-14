@@ -83,7 +83,8 @@
   border-color: #d4a017;
 }
 
-.biggestGainer .coinRank {
+.biggestGainer .coinRank,
+.biggestGainer .coinRankInline {
   color: #d4a017;
   background: #d4a01720;
   border-color: #d4a01755;
@@ -111,7 +112,8 @@
   border-color: #660195;
 }
 
-.biggestLoser .coinRank {
+.biggestLoser .coinRank,
+.biggestLoser .coinRankInline {
   color: #9c00c4;
   background: #5c1a1a20;
   border-color: #9c00c455;
@@ -233,6 +235,23 @@
   font-weight: 600;
   padding: 5px 10px;
   border-radius: 6px;
+}
+
+.cardBottomRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coinRankInline {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
 }
 
 .up { background: #14532d40; color: var(--green-bright); }
