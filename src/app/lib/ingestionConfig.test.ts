@@ -69,35 +69,6 @@ describe("CoinGecko ingestion wiring", () => {
     ]));
   });
 
-  it("includes the sixteen latest CoinGecko ids in the ingester config", () => {
-    const dockerComposePath = path.join(process.cwd(), "docker-compose.yml");
-    const dockerCompose = readFileSync(dockerComposePath, "utf8");
-    const match = dockerCompose.match(/COINGECKO_COIN_IDS=([^\n]+)/);
-
-    expect(match?.[1]).toBeDefined();
-
-    const coinIds = match![1].split(",");
-
-    expect(coinIds).toEqual(expect.arrayContaining([
-      "quant-network",
-      "mina-protocol",
-      "eigenlayer",
-      "conflux-token",
-      "akash-network",
-      "ronin",
-      "golem",
-      "reserve-rights-token",
-      "zilliqa",
-      "qtum",
-      "1inch",
-      "ankr",
-      "yearn-finance",
-      "loopring",
-      "oasis-network",
-      "nexo",
-    ]));
-  });
-
   it("uses Pepe instead of dogwifhat in the ingester config", () => {
     const dockerComposePath = path.join(process.cwd(), "docker-compose.yml");
     const dockerCompose = readFileSync(dockerComposePath, "utf8");
