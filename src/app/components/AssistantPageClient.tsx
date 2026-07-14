@@ -69,7 +69,6 @@ export default function AssistantPageClient({
   useEffect(() => {
     if (messages.length === 0) {
       prevSuggestionsRef.current = initialSuggestions;
-      setFollowUpSuggestions([]);
       return;
     }
     if (lastMessageRole !== "assistant") return;

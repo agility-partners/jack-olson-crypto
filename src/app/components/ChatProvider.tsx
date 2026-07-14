@@ -27,6 +27,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     });
   }
 
+  // eslint-disable-next-line react-hooks/refs
   const chat = chatRef.current;
 
   useEffect(() => {

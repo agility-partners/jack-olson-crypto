@@ -46,3 +46,7 @@ next-env.d.ts
 # .NET build outputs
 **/bin/
 **/obj/
+
+# Python
+__pycache__/
+*.py[cod]
