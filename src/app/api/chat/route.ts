@@ -21,6 +21,7 @@ const anthropic = createAnthropic({
 
 const MODEL =
   process.env.CLAUDE_MID_DEPLOYMENT ?? "claude-sonnet-4-6";
+const MAX_TOOL_STEPS = 7;
 
 export const maxDuration = 30;
 
@@ -39,7 +40,7 @@ export async function POST(req: Request) {
       system: SYSTEM_PROMPT,
       messages: await convertToModelMessages(messages, { tools }),
       tools,
-      stopWhen: isStepCount(5),
+      stopWhen: isStepCount(MAX_TOOL_STEPS),
       onStepEnd: ({ toolResults: stepToolResults }) => {
         toolResults.push(
           ...stepToolResults.map(({ toolName, output }) => ({

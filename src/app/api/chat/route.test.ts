@@ -110,6 +110,9 @@ describe("POST /api/chat", () => {
     expect(finishChunk?.metadata?.sourcesLine).toBe(
       "Sources: get_market_summary as of Jan 15, 2024, 5:30 AM EST"
     );
+    expect(mockStreamText).toHaveBeenCalledWith(
+      expect.objectContaining({ stopWhen: 7 })
+    );
   });
 
   it("falls back to relevant prior citations when a follow-up answer streams without tool results", async () => {

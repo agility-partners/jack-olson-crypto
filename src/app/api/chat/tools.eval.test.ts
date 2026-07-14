@@ -55,6 +55,12 @@ describe("SYSTEM_PROMPT guardrails", () => {
     expect(SYSTEM_PROMPT).toMatch(/never invent or estimate market values/i);
   });
 
+  it("instructs the assistant to use deterministic screening for threshold-based list questions", () => {
+    expect(SYSTEM_PROMPT).toMatch(/screen_coins/i);
+    expect(SYSTEM_PROMPT).toMatch(/threshold|range|complete filtered list|count/i);
+    expect(SYSTEM_PROMPT).toMatch(/accuracy matters more than speed/i);
+  });
+
   it("instructs the assistant to refuse financial advice requests", () => {
     expect(SYSTEM_PROMPT).toMatch(/financial advice/i);
     expect(SYSTEM_PROMPT).toMatch(/cannot offer financial advice|decline|cannot.*advice/i);
@@ -105,6 +111,23 @@ describe("tool schemas", () => {
   it("get_market_summary accepts an empty object", () => {
     const schema = tools.get_market_summary.inputSchema as z.ZodTypeAny;
     expect(schema.safeParse({}).success).toBe(true);
+  });
+
+  it("screen_coins accepts supported numeric filters and rejects invalid limits", () => {
+    const schema = tools.screen_coins.inputSchema as z.ZodTypeAny;
+    expect(
+      schema.safeParse({
+        minPrice: 100,
+        maxPrice: 1000,
+        minChange24h: 5,
+        maxRank: 25,
+        sortBy: "price",
+        sortDirection: "desc",
+        limit: 10,
+      }).success
+    ).toBe(true);
+    expect(schema.safeParse({ limit: 0 }).success).toBe(false);
+    expect(schema.safeParse({ sortBy: "unknown" }).success).toBe(false);
   });
 
   it("get_top_movers accepts an empty object", () => {
@@ -278,6 +301,112 @@ describe("get_coin_prices tool", () => {
   });
 });
 
+describe("screen_coins tool", () => {
+  it("filters, sorts, and counts matching coins deterministically", async () => {
+    const allCoins = [
+      {
+        id: "bitcoin",
+        name: "Bitcoin",
+        price: 68000,
+        change24h: 2.4,
+        change7d: 5.1,
+        marketCapRaw: 1300000000000,
+        volumeRaw: 35000000000,
+        rank: 1,
+        dataAsOf: "2024-01-15T10:30:00Z",
+      },
+      {
+        id: "bitcoin-cash",
+        name: "Bitcoin Cash",
+        price: 425,
+        change24h: 1.2,
+        change7d: 8.4,
+        marketCapRaw: 9000000000,
+        volumeRaw: 650000000,
+        rank: 17,
+        dataAsOf: "2024-01-15T10:30:00Z",
+      },
+      {
+        id: "litecoin",
+        name: "Litecoin",
+        price: 84,
+        change24h: -0.5,
+        change7d: 1.8,
+        marketCapRaw: 6500000000,
+        volumeRaw: 500000000,
+        rank: 21,
+        dataAsOf: "2024-01-15T10:30:00Z",
+      },
+    ];
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(allCoins));
+
+    const result = await tools.screen_coins.execute(
+      { minPrice: 100, sortBy: "price", sortDirection: "desc" },
+      { messages: [], toolCallId: "", context: {} }
+    );
+
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins"));
+    expect(result).toMatchObject({
+      totalMatches: 2,
+      items: [allCoins[0], allCoins[1]],
+    });
+  });
+
+  it("supports exact threshold ranges without omitting lower-priced coins", async () => {
+    const allCoins = [
+      {
+        id: "bitcoin",
+        name: "Bitcoin",
+        price: 68000,
+        change24h: 2.4,
+        change7d: 5.1,
+        marketCapRaw: 1300000000000,
+        volumeRaw: 35000000000,
+        rank: 1,
+      },
+      {
+        id: "bitcoin-cash",
+        name: "Bitcoin Cash",
+        price: 425,
+        change24h: 1.2,
+        change7d: 8.4,
+        marketCapRaw: 9000000000,
+        volumeRaw: 650000000,
+        rank: 17,
+      },
+      {
+        id: "litecoin",
+        name: "Litecoin",
+        price: 84,
+        change24h: -0.5,
+        change7d: 1.8,
+        marketCapRaw: 6500000000,
+        volumeRaw: 500000000,
+        rank: 21,
+      },
+    ];
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(allCoins));
+
+    const result = await tools.screen_coins.execute(
+      { minPrice: 100, maxPrice: 1000, sortBy: "price", sortDirection: "asc" },
+      { messages: [], toolCallId: "", context: {} }
+    );
+
+    expect(result).toMatchObject({
+      totalMatches: 1,
+      items: [allCoins[1]],
+    });
+  });
+
+  it("throws when screening cannot fetch the full coin list", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(500));
+
+    await expect(
+      tools.screen_coins.execute({}, { messages: [], toolCallId: "", context: {} })
+    ).rejects.toThrow("Failed to fetch coins");
+  });
+});
+
 // ---------------------------------------------------------------------------
 // 5. Golden question: "Show me the current market summary"
 //    → must call get_market_summary tool
@@ -402,6 +531,11 @@ describe("tool descriptions", () => {
 
   it("get_market_summary description mentions BTC dominance", () => {
     expect(tools.get_market_summary.description).toMatch(/btc dominance/i);
+  });
+
+  it("screen_coins description mentions threshold screening and complete matching lists", () => {
+    expect(tools.screen_coins.description).toMatch(/threshold|range/i);
+    expect(tools.screen_coins.description).toMatch(/complete matching list|without omissions/i);
   });
 
   it("get_coin_prices description mentions symbol lookup", () => {
