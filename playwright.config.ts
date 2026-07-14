@@ -29,7 +29,7 @@ export default defineConfig({
   webServer: {
     command: "bun run dev:docker",
     url: "http://localhost:3000",
-    reuseExistingServer: false,
+    reuseExistingServer: !process.env.CI,
     timeout: 180000,
     stderr: "pipe",
     stdout: "pipe",
