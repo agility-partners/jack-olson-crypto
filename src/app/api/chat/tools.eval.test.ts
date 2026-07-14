@@ -11,6 +11,7 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { z } from "zod";
 import {
   buildAssistantMessageMetadata,
   buildToolCitations,
@@ -89,7 +90,7 @@ describe("SYSTEM_PROMPT guardrails", () => {
 
 describe("tool schemas", () => {
   it("get_coin_prices has an optional coinIds array parameter", () => {
-    const schema = tools.get_coin_prices.inputSchema;
+    const schema = tools.get_coin_prices.inputSchema as z.ZodTypeAny;
     // Zod schema: coinIds optional array of strings
     const result = schema.safeParse({});
     expect(result.success).toBe(true);
@@ -102,27 +103,27 @@ describe("tool schemas", () => {
   });
 
   it("get_market_summary accepts an empty object", () => {
-    const schema = tools.get_market_summary.inputSchema;
+    const schema = tools.get_market_summary.inputSchema as z.ZodTypeAny;
     expect(schema.safeParse({}).success).toBe(true);
   });
 
   it("get_top_movers accepts an empty object", () => {
-    const schema = tools.get_top_movers.inputSchema;
+    const schema = tools.get_top_movers.inputSchema as z.ZodTypeAny;
     expect(schema.safeParse({}).success).toBe(true);
   });
 
   it("get_top_movers_7d accepts an empty object", () => {
-    const schema = tools.get_top_movers_7d.inputSchema;
+    const schema = tools.get_top_movers_7d.inputSchema as z.ZodTypeAny;
     expect(schema.safeParse({}).success).toBe(true);
   });
 
   it("get_watchlist accepts an empty object", () => {
-    const schema = tools.get_watchlist.inputSchema;
+    const schema = tools.get_watchlist.inputSchema as z.ZodTypeAny;
     expect(schema.safeParse({}).success).toBe(true);
   });
 
   it("get_top_by_volume has an optional numeric limit parameter", () => {
-    const schema = tools.get_top_by_volume.inputSchema;
+    const schema = tools.get_top_by_volume.inputSchema as z.ZodTypeAny;
     expect(schema.safeParse({}).success).toBe(true);
     expect(schema.safeParse({ limit: 5 }).success).toBe(true);
     expect(schema.safeParse({ limit: 0 }).success).toBe(false);
@@ -144,7 +145,7 @@ describe("get_top_movers tool", () => {
     };
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
 
-    const result = await tools.get_top_movers.execute({}, { messages: [], toolCallId: "" });
+    const result = await tools.get_top_movers.execute({}, { messages: [], toolCallId: "", context: {} });
 
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining("/api/marketstats/top-movers")
@@ -156,7 +157,7 @@ describe("get_top_movers tool", () => {
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
 
     await expect(
-      tools.get_top_movers.execute({}, { messages: [], toolCallId: "" })
+      tools.get_top_movers.execute({}, { messages: [], toolCallId: "", context: {} })
     ).rejects.toThrow("Failed to fetch top movers");
   });
 });
@@ -175,7 +176,7 @@ describe("get_top_movers_7d tool", () => {
     };
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
 
-    const result = await tools.get_top_movers_7d.execute({}, { messages: [], toolCallId: "" });
+    const result = await tools.get_top_movers_7d.execute({}, { messages: [], toolCallId: "", context: {} });
 
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining("/api/marketstats/top-movers-7d")
@@ -187,7 +188,7 @@ describe("get_top_movers_7d tool", () => {
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
 
     await expect(
-      tools.get_top_movers_7d.execute({}, { messages: [], toolCallId: "" })
+      tools.get_top_movers_7d.execute({}, { messages: [], toolCallId: "", context: {} })
     ).rejects.toThrow("Failed to fetch 7-day top movers");
   });
 });
@@ -207,7 +208,7 @@ describe("get_coin_prices tool", () => {
 
     const result = await tools.get_coin_prices.execute(
       { coinIds: ["bitcoin", "ethereum"] },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "", context: {} }
     );
 
     expect(fetch).toHaveBeenCalledTimes(2);
@@ -222,7 +223,7 @@ describe("get_coin_prices tool", () => {
 
     const result = await tools.get_coin_prices.execute(
       {},
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "", context: {} }
     );
 
     expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins"));
@@ -235,7 +236,7 @@ describe("get_coin_prices tool", () => {
 
     const result = await tools.get_coin_prices.execute(
       { coinIds: [] },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "", context: {} }
     );
 
     expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/coins"));
@@ -248,7 +249,7 @@ describe("get_coin_prices tool", () => {
 
     const result = await tools.get_coin_prices.execute(
       { coinIds: ["ghost-coin-xyz"] },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "", context: {} }
     );
 
     expect(result).toEqual([{ id: "ghost-coin-xyz", error: "coin_not_found" }]);
@@ -262,7 +263,7 @@ describe("get_coin_prices tool", () => {
 
     const result = await tools.get_coin_prices.execute(
       { coinIds: ["bitcoin", "ghost-coin-xyz"] },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "", context: {} }
     );
 
     expect(result).toEqual([btcData, { id: "ghost-coin-xyz", error: "coin_not_found" }]);
@@ -272,7 +273,7 @@ describe("get_coin_prices tool", () => {
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(500));
 
     await expect(
-      tools.get_coin_prices.execute({}, { messages: [], toolCallId: "" })
+      tools.get_coin_prices.execute({}, { messages: [], toolCallId: "", context: {} })
     ).rejects.toThrow("Failed to fetch coins");
   });
 });
@@ -293,7 +294,7 @@ describe("get_market_summary tool", () => {
     };
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockStats));
 
-    const result = await tools.get_market_summary.execute({}, { messages: [], toolCallId: "" });
+    const result = await tools.get_market_summary.execute({}, { messages: [], toolCallId: "", context: {} });
 
     expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/marketstats"));
     expect(result).toMatchObject({ dataAsOf: "2024-01-15T10:30:00Z" });
@@ -303,7 +304,7 @@ describe("get_market_summary tool", () => {
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
 
     await expect(
-      tools.get_market_summary.execute({}, { messages: [], toolCallId: "" })
+      tools.get_market_summary.execute({}, { messages: [], toolCallId: "", context: {} })
     ).rejects.toThrow("Failed to fetch market stats");
   });
 });
@@ -321,7 +322,7 @@ describe("get_watchlist tool", () => {
     ];
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockWatchlist));
 
-    const result = await tools.get_watchlist.execute({}, { messages: [], toolCallId: "" });
+    const result = await tools.get_watchlist.execute({}, { messages: [], toolCallId: "", context: {} });
 
     expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/api/watchlist"));
     expect(result).toEqual(mockWatchlist);
@@ -331,7 +332,7 @@ describe("get_watchlist tool", () => {
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
 
     await expect(
-      tools.get_watchlist.execute({}, { messages: [], toolCallId: "" })
+      tools.get_watchlist.execute({}, { messages: [], toolCallId: "", context: {} })
     ).rejects.toThrow("Failed to fetch watchlist");
   });
 });
@@ -354,7 +355,7 @@ describe("get_top_by_volume tool", () => {
 
     const result = await tools.get_top_by_volume.execute(
       { limit: 5 },
-      { messages: [], toolCallId: "" }
+      { messages: [], toolCallId: "", context: {} }
     );
 
     expect(fetch).toHaveBeenCalledWith(
@@ -367,7 +368,7 @@ describe("get_top_by_volume tool", () => {
     const mockData = { items: [], dataAsOf: null };
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchOk(mockData));
 
-    await tools.get_top_by_volume.execute({}, { messages: [], toolCallId: "" });
+    await tools.get_top_by_volume.execute({}, { messages: [], toolCallId: "", context: {} });
 
     expect(fetch).toHaveBeenCalledWith(
       expect.stringContaining("/api/marketstats/top-by-volume?limit=5")
@@ -378,7 +379,7 @@ describe("get_top_by_volume tool", () => {
     vi.mocked(fetch).mockResolvedValueOnce(makeFetchFail(503));
 
     await expect(
-      tools.get_top_by_volume.execute({ limit: 5 }, { messages: [], toolCallId: "" })
+      tools.get_top_by_volume.execute({ limit: 5 }, { messages: [], toolCallId: "", context: {} })
     ).rejects.toThrow("Failed to fetch top coins by volume");
   });
 });

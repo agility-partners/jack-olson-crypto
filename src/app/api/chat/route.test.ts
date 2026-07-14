@@ -102,7 +102,7 @@ describe("POST /api/chat", () => {
         body: JSON.stringify({ messages: [] }),
         headers: { "Content-Type": "application/json" },
       })
-    )) as { stream: Promise<Array<{ type: string; metadata?: { sourcesLine?: string } }>> };
+    )) as unknown as { stream: Promise<Array<{ type: string; metadata?: { sourcesLine?: string } }>> };
 
     const chunks = await response.stream;
     const finishChunk = chunks.find((chunk) => chunk.type === "finish");
@@ -177,7 +177,7 @@ describe("POST /api/chat", () => {
         }),
         headers: { "Content-Type": "application/json" },
       })
-    )) as { stream: Promise<Array<{ type: string; metadata?: { sourcesLine?: string } }>> };
+    )) as unknown as { stream: Promise<Array<{ type: string; metadata?: { sourcesLine?: string } }>> };
 
     const chunks = await response.stream;
     const finishChunk = chunks.find((chunk) => chunk.type === "finish");

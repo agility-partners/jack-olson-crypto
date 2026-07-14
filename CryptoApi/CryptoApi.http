@@ -1,6 +1,16 @@
 @CryptoApi_HostAddress = http://localhost:5274
 
-GET {{CryptoApi_HostAddress}}/weatherforecast/
+GET {{CryptoApi_HostAddress}}/api/coins
+Accept: application/json
+
+###
+
+GET {{CryptoApi_HostAddress}}/api/marketstats
+Accept: application/json
+
+###
+
+GET {{CryptoApi_HostAddress}}/api/marketstats/top-movers
 Accept: application/json
 
 ###
