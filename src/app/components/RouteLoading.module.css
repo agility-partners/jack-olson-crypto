@@ -1,0 +1,222 @@
+@keyframes shimmer {
+  0% { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.container,
+.assistantShell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.assistantShell {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.skeletonLine,
+.cardSkeleton,
+.statCard,
+.tickerSkeleton,
+.navSkeleton,
+.heroSkeleton,
+.iconSkeleton,
+.sendSkeleton,
+.disclaimerSkeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-elevated, #1a2a1a) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+.tickerSkeleton {
+  height: 36px;
+  border-radius: 0;
+}
+
+.navSkeleton {
+  height: 52px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 40px 32px 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pageHeaderContent {
+  flex: 1;
+}
+
+.heroSkeleton {
+  width: 176px;
+  height: 76px;
+  flex-shrink: 0;
+}
+
+.statsRow {
+  display: flex;
+  gap: 12px;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.statCard {
+  flex: 1;
+  height: 72px;
+  border-radius: 10px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.toolbarActions {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 24px 32px;
+}
+
+.cardSkeleton {
+  height: 180px;
+  border-radius: 12px;
+}
+
+.assistantWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.assistantHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.assistantHeaderContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconSkeleton {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.chatArea {
+  flex: 1;
+  overflow: hidden;
+  padding: 24px 16px 8px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 16px 24px;
+  gap: 16px;
+}
+
+.suggestionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.inputBar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 16px 16px 12px;
+  border-top: 1px solid var(--border);
+}
+
+.sendSkeleton {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.disclaimerSkeleton {
+  width: 280px;
+  height: 12px;
+  margin: 6px auto 12px;
+}
+
+@media (max-width: 1200px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .heroSkeleton {
+    width: 100%;
+    height: 56px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pageHeader,
+  .statsRow,
+  .toolbar,
+  .grid {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .statsRow {
+    flex-direction: column;
+  }
+
+  .toolbarActions {
+    margin-left: 0;
+  }
+
+  .assistantWrapper {
+    padding: 0;
+  }
+
+  .assistantHeader {
+    padding: 20px 16px 16px;
+  }
+}
