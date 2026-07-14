@@ -8,18 +8,27 @@ import styles from "./CryptoCard.module.css";
 
 type Props = {
   coin: Coin;
+  isListView?: boolean;
   isBiggestGainer?: boolean;
   isBiggestLoser?: boolean;
   onRemove?: (coinId: string) => void;
   from?: string;
 };
 
-export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRemove, from }: Props) {
+export default function CryptoCard({
+  coin,
+  isListView = false,
+  isBiggestGainer,
+  isBiggestLoser,
+  onRemove,
+  from,
+}: Props) {
   const up = coin.change24h >= 0;
   const spark = pointsToSvgPath(coin.sparkline ?? []) ?? sparkPaths[coin.iconClass];
 
   const cardClass = [
     styles.coinCard,
+    isListView ? styles.listCard : "",
     isBiggestGainer ? styles.biggestGainer : "",
     isBiggestLoser ? styles.biggestLoser : "",
     !up && !isBiggestGainer && !isBiggestLoser ? styles.loser : "",
@@ -60,7 +69,9 @@ export default function CryptoCard({ coin, isBiggestGainer, isBiggestLoser, onRe
           <span className={styles.coinRank}>#{coin.rank}</span>
         </div>
 
-        <Sparkline spark={spark} id={coin.iconClass} up={up} />
+        <div className={styles.sparklineWrap}>
+          <Sparkline spark={spark} id={coin.iconClass} up={up} tall={isListView} />
+        </div>
 
         <div className={styles.cardBottom}>
           <div>

@@ -198,6 +198,7 @@ export default function WatchlistClient({
               <CryptoCard
                 key={coin.id}
                 coin={coin}
+                isListView={!isGrid}
                 isBiggestGainer={biggestGainer?.id === coin.id}
                 isBiggestLoser={biggestLoser?.id === coin.id}
                 onRemove={!useAllCoins ? handleRemoveCoin : undefined}
