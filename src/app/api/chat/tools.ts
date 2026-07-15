@@ -7,6 +7,8 @@ export const SYSTEM_PROMPT = `You are a warehouse-aware crypto assistant. Always
 
 Data freshness and citations: tool-grounded answers must rely on the tool results and their dataAsOf values, but the UI renders the final "Sources:" footer separately. Do not add a "Sources:" line or repeat tool names / dataAsOf timestamps in the main response text. If dataAsOf is absent or null, do not guess freshness.
 
+Pre-fetched snapshot: On the first message of each conversation a full market data snapshot (all coins, market summary, top movers, 7-day movers, top by volume, and watchlist) is appended to this prompt as JSON under the key "Pre-fetched Market Snapshot". When that snapshot is present, consult it first to answer the query. Only call tools if the snapshot lacks the specific data needed, or if the user explicitly requests fresh data.
+
 Accuracy rules: for any request that asks which coins meet numeric criteria, cross a threshold, fall in a range, or requires a complete filtered list or count, use the screen_coins tool instead of manually filtering in your head. Accuracy matters more than speed: spend extra tool steps to verify threshold comparisons, counts, and completeness before answering. Never name a coin unless it appears in the latest relevant tool result and satisfies the requested criteria exactly.
 
 If asked for financial advice, investment recommendations, or whether to buy, sell, or hold any asset, decline politely: say you only provide factual market data and cannot offer financial advice. Direct the user to a licensed financial advisor.
@@ -235,3 +237,37 @@ export const tools = {
     },
   }),
 };
+
+/**
+ * Fetches a full data snapshot from every API endpoint in parallel at the
+ * start of a conversation.  Failed individual sources are silently omitted so
+ * a single unavailable endpoint never blocks the rest.
+ */
+export async function fetchInitialSnapshot(): Promise<Record<string, unknown>> {
+  const [allCoins, marketSummary, topMovers, topMovers7d, topByVolume, watchlist] =
+    await Promise.allSettled([
+      fetchAllCoins(),
+      fetch(`${API_URL}/api/marketstats`).then((r) => (r.ok ? r.json() : null)),
+      fetch(`${API_URL}/api/marketstats/top-movers`).then((r) => (r.ok ? r.json() : null)),
+      fetch(`${API_URL}/api/marketstats/top-movers-7d`).then((r) => (r.ok ? r.json() : null)),
+      fetch(`${API_URL}/api/marketstats/top-by-volume?limit=10`).then((r) =>
+        r.ok ? r.json() : null
+      ),
+      fetch(`${API_URL}/api/watchlist`).then((r) => (r.ok ? r.json() : null)),
+    ]);
+
+  const snapshot: Record<string, unknown> = {};
+  if (allCoins.status === "fulfilled" && allCoins.value != null)
+    snapshot.allCoins = allCoins.value;
+  if (marketSummary.status === "fulfilled" && marketSummary.value != null)
+    snapshot.marketSummary = marketSummary.value;
+  if (topMovers.status === "fulfilled" && topMovers.value != null)
+    snapshot.topMovers = topMovers.value;
+  if (topMovers7d.status === "fulfilled" && topMovers7d.value != null)
+    snapshot.topMovers7d = topMovers7d.value;
+  if (topByVolume.status === "fulfilled" && topByVolume.value != null)
+    snapshot.topByVolume = topByVolume.value;
+  if (watchlist.status === "fulfilled" && watchlist.value != null)
+    snapshot.watchlist = watchlist.value;
+  return snapshot;
+}
