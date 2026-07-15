@@ -38,6 +38,8 @@
 .price { color: var(--text-primary); }
 .up    { color: var(--green-bright); }
 .dn    { color: var(--red); }
+.topGainer { color: #d4a017; }
+.topLoser  { color: #9c00c4; }
 
 .cycleMarker {
   display: flex;
