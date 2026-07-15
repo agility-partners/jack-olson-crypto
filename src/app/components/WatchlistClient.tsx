@@ -35,7 +35,14 @@ export default function WatchlistClient({
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<Filter>("value");
   const [sortDir, setSortDir] = useState<SortDir>(defaultSortDir("value"));
+  const storageKey = useAllCoins ? "browse-view-mode" : "watchlist-view-mode";
   const [isGrid, setIsGrid] = useState(true);
+
+  // Restore persisted view mode after mount (localStorage is client-only)
+  useEffect(() => {
+    const stored = localStorage.getItem(storageKey);
+    if (stored !== null) setIsGrid(stored !== "list");
+  }, [storageKey]);
   const [showAddModal, setShowAddModal] = useState(false);
 
   useEffect(() => {
@@ -164,7 +171,7 @@ export default function WatchlistClient({
               className={`${styles.viewBtn} ${isGrid ? styles.active : ""}`}
               aria-label="Grid view"
               title="Grid view"
-              onClick={() => setIsGrid(true)}
+              onClick={() => { setIsGrid(true); localStorage.setItem(storageKey, "grid"); }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -177,7 +184,7 @@ export default function WatchlistClient({
               className={`${styles.viewBtn} ${!isGrid ? styles.active : ""}`}
               aria-label="List view"
               title="List view"
-              onClick={() => setIsGrid(false)}
+              onClick={() => { setIsGrid(false); localStorage.setItem(storageKey, "list"); }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <line x1="3" y1="6" x2="21" y2="6" />
