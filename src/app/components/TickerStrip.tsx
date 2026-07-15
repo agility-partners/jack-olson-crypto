@@ -14,24 +14,27 @@ export default function TickerStrip({ coins }: Props) {
     [coins],
   );
 
-  // Duplicate items for seamless loop
-  const items = [...sortedCoins, ...sortedCoins];
+  const renderCoins = (suffix: string) =>
+    sortedCoins.map((coin) => {
+      const up = coin.change24h >= 0;
+      return (
+        <span key={`${coin.id}-${suffix}`} className={styles.tickerItem}>
+          <span className={styles.sym}>{coin.symbol}</span>
+          <span className={styles.price}>{formatPrice(coin.price)}</span>
+          <span className={up ? styles.up : styles.dn}>
+            {up ? "+" : ""}{coin.change24h.toFixed(2)}%
+          </span>
+        </span>
+      );
+    });
 
   return (
     <div className={styles.tickerWrap} aria-hidden="true">
       <div className={styles.tickerTrack}>
-        {items.map((coin, i) => {
-          const up = coin.change24h >= 0;
-          return (
-            <span key={`${coin.id}-${i}`} className={styles.tickerItem}>
-              <span className={styles.sym}>{coin.symbol}</span>
-              <span className={styles.price}>{formatPrice(coin.price)}</span>
-              <span className={up ? styles.up : styles.dn}>
-                {up ? "+" : ""}{coin.change24h.toFixed(2)}%
-              </span>
-            </span>
-          );
-        })}
+        {renderCoins("a")}
+        <span className={styles.cycleMarker}>✦</span>
+        {renderCoins("b")}
+        <span className={styles.cycleMarker}>✦</span>
       </div>
     </div>
   );
