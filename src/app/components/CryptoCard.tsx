@@ -42,6 +42,17 @@ export default function CryptoCard({
 
   return (
     <div className={styles.coinCardWrap}>
+      {onRemove && (
+        <button
+          type="button"
+          className={styles.removeBtn}
+          onClick={handleRemoveClick}
+          aria-label={`Remove ${coin.name} from watchlist`}
+          title={`Remove ${coin.name} from watchlist`}
+        >
+          ×
+        </button>
+      )}
       <Link
         href={from ? `/coins/${coin.id}?from=${from}` : `/coins/${coin.id}`}
         className={cardClass}
@@ -68,17 +79,6 @@ export default function CryptoCard({
           </div>
           <div className={styles.cardBottomRight}>
             {isListView && <span className={styles.coinRankInline}>#{coin.rank}</span>}
-            {onRemove && (
-              <button
-                type="button"
-                className={styles.removeBtn}
-                onClick={handleRemoveClick}
-                aria-label={`Remove ${coin.name} from watchlist`}
-                title={`Remove ${coin.name} from watchlist`}
-              >
-                ×
-              </button>
-            )}
             <div className={`${styles.changeBadge} ${up ? styles.up : styles.dn}`}>
               {up ? "↑" : "↓"} {Math.abs(coin.change24h).toFixed(2)}%
             </div>

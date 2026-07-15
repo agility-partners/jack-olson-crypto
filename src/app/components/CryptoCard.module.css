@@ -51,8 +51,12 @@
 .coinCard:hover::before { opacity: 0.04; }
 
 .removeBtn {
-  width: 24px;
-  height: 24px;
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
