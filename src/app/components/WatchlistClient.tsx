@@ -36,12 +36,19 @@ export default function WatchlistClient({
   const [filter, setFilter] = useState<Filter>("value");
   const [sortDir, setSortDir] = useState<SortDir>(defaultSortDir("value"));
   const storageKey = useAllCoins ? "browse-view-mode" : "watchlist-view-mode";
-  const [isGrid, setIsGrid] = useState(true);
+  type ViewMode = "grid" | "list" | "compact";
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+
+  const setView = (mode: ViewMode) => {
+    setViewMode(mode);
+    localStorage.setItem(storageKey, mode);
+  };
 
   // Restore persisted view mode after mount (localStorage is client-only)
   useEffect(() => {
     const stored = localStorage.getItem(storageKey);
-    if (stored !== null) setIsGrid(stored !== "list");
+    if (stored === "list" || stored === "compact") setViewMode(stored);
+    else if (stored === "grid") setViewMode("grid");
   }, [storageKey]);
   const [showAddModal, setShowAddModal] = useState(false);
 
@@ -168,10 +175,10 @@ export default function WatchlistClient({
 
           <div className={styles.viewToggle} role="group" aria-label="View mode">
             <button
-              className={`${styles.viewBtn} ${isGrid ? styles.active : ""}`}
+              className={`${styles.viewBtn} ${viewMode === "grid" ? styles.active : ""}`}
               aria-label="Grid view"
               title="Grid view"
-              onClick={() => { setIsGrid(true); localStorage.setItem(storageKey, "grid"); }}
+              onClick={() => setView("grid")}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -181,10 +188,10 @@ export default function WatchlistClient({
               </svg>
             </button>
             <button
-              className={`${styles.viewBtn} ${!isGrid ? styles.active : ""}`}
+              className={`${styles.viewBtn} ${viewMode === "list" ? styles.active : ""}`}
               aria-label="List view"
               title="List view"
-              onClick={() => { setIsGrid(false); localStorage.setItem(storageKey, "list"); }}
+              onClick={() => setView("list")}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
                 <line x1="3" y1="6" x2="21" y2="6" />
@@ -192,12 +199,37 @@ export default function WatchlistClient({
                 <line x1="3" y1="18" x2="21" y2="18" />
               </svg>
             </button>
+            <button
+              className={`${styles.viewBtn} ${viewMode === "compact" ? styles.active : ""}`}
+              aria-label="Compact view"
+              title="Compact view"
+              onClick={() => setView("compact")}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="2" width="4" height="4" rx="0.5" />
+                <rect x="8" y="2" width="4" height="4" rx="0.5" />
+                <rect x="14" y="2" width="4" height="4" rx="0.5" />
+                <rect x="20" y="2" width="2" height="4" rx="0.5" />
+                <rect x="2" y="8" width="4" height="4" rx="0.5" />
+                <rect x="8" y="8" width="4" height="4" rx="0.5" />
+                <rect x="14" y="8" width="4" height="4" rx="0.5" />
+                <rect x="20" y="8" width="2" height="4" rx="0.5" />
+                <rect x="2" y="14" width="4" height="4" rx="0.5" />
+                <rect x="8" y="14" width="4" height="4" rx="0.5" />
+                <rect x="14" y="14" width="4" height="4" rx="0.5" />
+                <rect x="20" y="14" width="2" height="4" rx="0.5" />
+                <rect x="2" y="20" width="4" height="2" rx="0.5" />
+                <rect x="8" y="20" width="4" height="2" rx="0.5" />
+                <rect x="14" y="20" width="4" height="2" rx="0.5" />
+                <rect x="20" y="20" width="2" height="2" rx="0.5" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
 
       <main>
-        <div className={`${styles.coinGrid} ${!isGrid ? styles.listView : ""}`}>
+        <div className={`${styles.coinGrid} ${viewMode === "list" ? styles.listView : ""} ${viewMode === "compact" ? styles.compactView : ""}`}>
           {visibleCoins.length === 0 ? (
             <div className={styles.emptyState}>
               <div className={styles.emptyStateBox}>
@@ -210,7 +242,8 @@ export default function WatchlistClient({
               <CryptoCard
                 key={coin.id}
                 coin={coin}
-                isListView={!isGrid}
+                isListView={viewMode === "list"}
+                isCompactView={viewMode === "compact"}
                 isBiggestGainer={biggestGainer?.id === coin.id}
                 isBiggestLoser={biggestLoser?.id === coin.id}
                 onRemove={!useAllCoins ? handleRemoveCoin : undefined}
