@@ -264,6 +264,44 @@
   cursor: not-allowed;
 }
 
+.coinOption.coinOptionGainer {
+  background-color: #d4a01718;
+  border-bottom-color: #d4a01730;
+}
+
+.coinOption.coinOptionGainer:hover:not(:disabled) {
+  background-color: #d4a01730;
+  color: #d4a017;
+}
+
+.coinOption.coinOptionGainer .coinName {
+  color: #d4a017;
+}
+
+.coinOption.coinOptionGainer .coinSymbol {
+  color: #d4a017;
+  opacity: 0.8;
+}
+
+.coinOption.coinOptionLoser {
+  background-color: #9c00c418;
+  border-bottom-color: #9c00c430;
+}
+
+.coinOption.coinOptionLoser:hover:not(:disabled) {
+  background-color: #9c00c430;
+  color: #9c00c4;
+}
+
+.coinOption.coinOptionLoser .coinName {
+  color: #9c00c4;
+}
+
+.coinOption.coinOptionLoser .coinSymbol {
+  color: #9c00c4;
+  opacity: 0.8;
+}
+
 .coinName {
   font-weight: 500;
 }

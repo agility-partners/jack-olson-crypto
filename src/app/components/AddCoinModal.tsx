@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Coin } from "@/app/lib/mockData";
+import { findBiggestGainer, findBiggestLoser } from "@/app/lib/coinMovers";
 import styles from "./AddCoinModal.module.css";
 
 const MAX_SELECTION = 10;
@@ -81,6 +82,9 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
   }, [availableCoins, search]);
 
   const atLimit = selectedCoinIds.length >= MAX_SELECTION;
+
+  const biggestGainer = useMemo(() => findBiggestGainer(availableCoins), [availableCoins]);
+  const biggestLoser = useMemo(() => findBiggestLoser(availableCoins), [availableCoins]);
 
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {};
@@ -227,13 +231,15 @@ export default function AddCoinModal({ onClose, onAddCoin, currentCoins, allCoin
                     filteredCoins.map((coin) => {
                       const isSelected = selectedCoinIds.includes(coin.id);
                       const isDisabled = isSubmitting || (atLimit && !isSelected);
+                      const isGainer = !isSelected && biggestGainer?.id === coin.id;
+                      const isLoser = !isSelected && biggestLoser?.id === coin.id;
                       return (
                         <button
                           key={coin.id}
                           type="button"
                           role="option"
                           aria-selected={isSelected}
-                          className={`${styles.coinOption} ${isSelected ? styles.coinOptionSelected : ""} ${atLimit && !isSelected ? styles.coinOptionDimmed : ""}`}
+                          className={`${styles.coinOption} ${isSelected ? styles.coinOptionSelected : ""} ${atLimit && !isSelected ? styles.coinOptionDimmed : ""} ${isGainer ? styles.coinOptionGainer : ""} ${isLoser ? styles.coinOptionLoser : ""}`}
                           onClick={() => handleToggle(coin.id)}
                           disabled={isDisabled}
                         >
