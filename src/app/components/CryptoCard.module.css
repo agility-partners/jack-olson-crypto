@@ -51,17 +51,16 @@
 .coinCard:hover::before { opacity: 0.04; }
 
 .removeBtn {
-  position: absolute;
-  top: 13px;
-  right: 58px;
-  z-index: 1;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: rgba(10, 18, 25, 0.92);
   color: var(--text-muted);
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1;
   cursor: pointer;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
@@ -152,10 +151,6 @@
 .listCard .cardTop {
   grid-area: top;
   margin-bottom: 0;
-}
-
-.removableCardTop {
-  padding-right: 40px;
 }
 
 .coinIdentity {
