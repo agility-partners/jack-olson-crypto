@@ -14,14 +14,24 @@ export default function TickerStrip({ coins }: Props) {
     [coins],
   );
 
+  const { gainerId, loserId } = useMemo(() => {
+    if (coins.length === 0) return { gainerId: null, loserId: null };
+    const top = coins.reduce((a, b) => (b.change24h > a.change24h ? b : a));
+    const bot = coins.reduce((a, b) => (b.change24h < a.change24h ? b : a));
+    return { gainerId: top.id, loserId: bot.id };
+  }, [coins]);
+
   const renderCoins = (suffix: string) =>
     sortedCoins.map((coin) => {
       const up = coin.change24h >= 0;
+      let changeClass = up ? styles.up : styles.dn;
+      if (coin.id === gainerId) changeClass = styles.topGainer;
+      else if (coin.id === loserId) changeClass = styles.topLoser;
       return (
         <span key={`${coin.id}-${suffix}`} className={styles.tickerItem}>
           <span className={styles.sym}>{coin.symbol}</span>
           <span className={styles.price}>{formatPrice(coin.price)}</span>
-          <span className={up ? styles.up : styles.dn}>
+          <span className={changeClass}>
             {up ? "+" : ""}{coin.change24h.toFixed(2)}%
           </span>
         </span>
