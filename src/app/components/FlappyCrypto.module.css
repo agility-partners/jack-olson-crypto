@@ -23,6 +23,14 @@
   transform: translateY(0);
 }
 
+.highScore {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #00d9ff;
+  text-align: center;
+}
+
 .backdrop {
   position: fixed;
   top: 0;
