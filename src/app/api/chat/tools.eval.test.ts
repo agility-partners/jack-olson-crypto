@@ -17,7 +17,7 @@ import {
   buildToolCitations,
   inferAssistantMessageMetadataFromHistory,
 } from "./citations";
-import { SYSTEM_PROMPT, tools } from "./tools";
+import { SYSTEM_PROMPT, tools, fetchInitialSnapshot } from "./tools";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -87,6 +87,11 @@ describe("SYSTEM_PROMPT guardrails", () => {
 
   it("instructs the assistant to say explicitly when a coin is not found", () => {
     expect(SYSTEM_PROMPT).toMatch(/not found|don.t have data/i);
+  });
+
+  it("instructs the assistant to consult the pre-fetched snapshot before calling tools", () => {
+    expect(SYSTEM_PROMPT).toMatch(/pre-fetched snapshot/i);
+    expect(SYSTEM_PROMPT).toMatch(/consult it first/i);
   });
 });
 
@@ -759,3 +764,67 @@ describe("citation metadata", () => {
  *     FAIL IF: only one tool used, invented values, duplicate sources
  * ---------------------------------------------------------------------------
  */
+
+// ---------------------------------------------------------------------------
+// 9. fetchInitialSnapshot
+// ---------------------------------------------------------------------------
+
+describe("fetchInitialSnapshot", () => {
+  it("fetches all 6 data sources in parallel and returns named results", async () => {
+    const allCoinsData = [{ id: "bitcoin" }];
+    const marketData = { dataAsOf: "2024-01-15T10:30:00Z" };
+    const moversData = { gainers: [], losers: [], dataAsOf: "2024-01-15T10:30:00Z" };
+    const movers7dData = { gainers: [], losers: [], dataAsOf: "2024-01-15T10:30:00Z" };
+    const volumeData = { items: [], dataAsOf: "2024-01-15T10:30:00Z" };
+    const watchlistData = [{ id: "bitcoin" }];
+
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(makeFetchOk(allCoinsData))
+      .mockResolvedValueOnce(makeFetchOk(marketData))
+      .mockResolvedValueOnce(makeFetchOk(moversData))
+      .mockResolvedValueOnce(makeFetchOk(movers7dData))
+      .mockResolvedValueOnce(makeFetchOk(volumeData))
+      .mockResolvedValueOnce(makeFetchOk(watchlistData));
+
+    const snapshot = await fetchInitialSnapshot();
+
+    expect(snapshot).toMatchObject({
+      allCoins: allCoinsData,
+      marketSummary: marketData,
+      topMovers: moversData,
+      topMovers7d: movers7dData,
+      topByVolume: volumeData,
+      watchlist: watchlistData,
+    });
+    expect(fetch).toHaveBeenCalledTimes(6);
+  });
+
+  it("omits keys for failed fetch calls and returns available data", async () => {
+    const allCoinsData = [{ id: "bitcoin" }];
+
+    vi.mocked(fetch)
+      .mockResolvedValueOnce(makeFetchOk(allCoinsData))
+      .mockResolvedValueOnce(makeFetchFail(503))
+      .mockResolvedValueOnce(makeFetchFail(503))
+      .mockResolvedValueOnce(makeFetchFail(503))
+      .mockResolvedValueOnce(makeFetchFail(503))
+      .mockResolvedValueOnce(makeFetchFail(503));
+
+    const snapshot = await fetchInitialSnapshot();
+
+    expect(snapshot).toMatchObject({ allCoins: allCoinsData });
+    expect(snapshot).not.toHaveProperty("marketSummary");
+    expect(snapshot).not.toHaveProperty("topMovers");
+    expect(snapshot).not.toHaveProperty("topMovers7d");
+    expect(snapshot).not.toHaveProperty("topByVolume");
+    expect(snapshot).not.toHaveProperty("watchlist");
+  });
+
+  it("returns an empty object when all fetches fail", async () => {
+    vi.mocked(fetch).mockResolvedValue(makeFetchFail(503));
+
+    const snapshot = await fetchInitialSnapshot();
+
+    expect(snapshot).toEqual({});
+  });
+});

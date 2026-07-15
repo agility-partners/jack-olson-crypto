@@ -12,7 +12,7 @@ import {
   type AssistantChatMessage,
   inferAssistantMessageMetadataFromHistory,
 } from "./citations";
-import { SYSTEM_PROMPT, tools } from "./tools";
+import { SYSTEM_PROMPT, tools, fetchInitialSnapshot } from "./tools";
 
 const anthropic = createAnthropic({
   baseURL: process.env.ANTHROPIC_BASE_URL,
@@ -35,9 +35,24 @@ export async function POST(req: Request) {
     const toolResults: Array<{ toolName: string; output: unknown }> = [];
     const fallbackMetadata = inferAssistantMessageMetadataFromHistory(messages);
 
+    // On the first user message, pre-fetch all data sources so the model has
+    // the full market snapshot in context before it reasons about the query.
+    const isFirstMessage = messages.length === 1;
+    let systemPrompt = SYSTEM_PROMPT;
+    if (isFirstMessage) {
+      try {
+        const snapshot = await fetchInitialSnapshot();
+        if (Object.keys(snapshot).length > 0) {
+          systemPrompt = `${SYSTEM_PROMPT}\n\n## Pre-fetched Market Snapshot\n${JSON.stringify(snapshot)}`;
+        }
+      } catch {
+        // snapshot fetch failed; the model will fall back to tool-calling
+      }
+    }
+
     const result = streamText({
       model: anthropic(MODEL),
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: await convertToModelMessages(messages, { tools }),
       tools,
       stopWhen: isStepCount(MAX_TOOL_STEPS),
